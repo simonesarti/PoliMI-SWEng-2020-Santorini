@@ -11,5 +11,6 @@ public class App
         System.out.println( "Hello World!" );
         System.out.println( "test modifica" );
         System.out.println("test3: modificato da Alessandro");
+        //Olimpia rispondi al commento se ti funziona:
     }
 }
