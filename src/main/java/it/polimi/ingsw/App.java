@@ -10,6 +10,6 @@ public class App
     {
         System.out.println( "Hello World!" );
         System.out.println( "test modifica" );
-        System.out.println("test2");
+        System.out.println("test3: modificato da Alessandro");
     }
 }
