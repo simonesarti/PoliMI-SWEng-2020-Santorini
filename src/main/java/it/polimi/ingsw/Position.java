@@ -4,14 +4,12 @@ import java.util.Objects;
 
 public class Position {
 
-    private final int x;
-    private final int y;
-    private final int z;
+    private int x;
+    private int y;
 
-    public Position(int x, int y, int z) {
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
-        this.z = z;
     }
 
     @Override
@@ -20,8 +18,7 @@ public class Position {
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
         return x == position.x &&
-                y == position.y &&
-                z == position.z;
+                y == position.y;
     }
 
 

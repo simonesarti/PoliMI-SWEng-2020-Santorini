@@ -12,5 +12,5 @@ public enum Colour {
             return true;
         }
     }
-    
+
 }

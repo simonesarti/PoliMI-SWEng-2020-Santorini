@@ -10,6 +10,4 @@ public class Worker {
         this.currentPosition=startingPosition;
     }
 
-
-
 }

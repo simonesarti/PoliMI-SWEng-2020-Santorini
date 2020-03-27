@@ -29,7 +29,7 @@ public class Deck{
 
     }
 
-    public GodCard chooseCardFromDeck(String divinityName) {
+    public GodCard chooseCardFromDeck(String divinityName){
 
         int i;
 
