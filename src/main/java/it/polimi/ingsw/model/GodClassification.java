@@ -4,9 +4,9 @@ public enum GodClassification {
 
     SIMPLE, ADVANCED;
 
-    //converte stringa con la classificazione del dio nel cosrrispondente valore enumerativo
+    //converts the string containing the gods' classification into the corresponding enumeration value
     public static GodClassification parseInput(String classification){
-        return Enum.valueOf(GodClassification.class, classification);
+        return Enum.valueOf(GodClassification.class, classification.toUpperCase());
     }
 
 }

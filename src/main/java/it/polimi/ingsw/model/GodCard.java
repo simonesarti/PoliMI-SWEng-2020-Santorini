@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 public class GodCard{
 
@@ -7,6 +7,8 @@ public class GodCard{
     private final GodClassification classification;
     private final Boolean[] numberOfPlayers = new Boolean[2];
     private final String powerDescription;
+
+
 
     public GodCard(String[] godsData){
         name=godsData[0];
@@ -21,17 +23,26 @@ public class GodCard{
         return name;
     }
 
+    public Boolean[] getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
     private boolean toBoolean(String s){
 
         if(s.equals("true")){
             return true;
         }else{
-            return false;
+            if(s.equals("false")){
+                return false;
+            }else{
+                throw new IllegalArgumentException("MESSAGE: error in file, boolean value is neither true nor false");
+            }
         }
+
     }
 
     public void cardDeclaration(){
-        System.out.println(name+" ("+title+")\n"+"POWER: "+powerDescription);
+        System.out.println("GOD: "+name+" ("+title+")\n"+"POWER: "+powerDescription);
     }
 
 
