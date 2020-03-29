@@ -87,7 +87,7 @@ public class Connection extends Observable<String> implements Runnable {
             System.err.println("Error!" + e.getMessage());
         }finally{
 
-            closeConnection(); //    TODO sostituirla con una close() che chiami questa e inoltre tolga la registrazione al client
+            closeConnection(); //    TODO sostituirla con una close() che chiami questa e inoltre tolga la registrazione al client.
         }
 
     }
