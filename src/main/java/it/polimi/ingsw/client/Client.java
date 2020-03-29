@@ -34,7 +34,7 @@ public class Client {
         socketOut.println("Voglio mandare questa frase");
         socketOut.flush();
 
-        //socketOut.close(); TODO imparare a chiudere connessione
+        //socketOut.close(); TODO imparare a chiudere connessione..
 
 
 
