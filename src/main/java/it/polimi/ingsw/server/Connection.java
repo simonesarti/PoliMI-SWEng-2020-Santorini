@@ -72,15 +72,24 @@ public class Connection extends Observable<String> implements Runnable {
             name = read;
             System.out.println("NAME: "+name);
             //server.lobby(this, name);                                      TODO aggiungere lobby(Connection c, String name) e deRegisterConnection(Connection c)
+            /*
             while(isActive()){
+
                 read = in.nextLine();
-                notify(read);
+                System.out.println(read);
+                //notify(read);
             }
+            */
+            read = in.nextLine();
+            System.out.println(read);
+
         } catch (IOException | NoSuchElementException e) {
             System.err.println("Error!" + e.getMessage());
         }finally{
+
             closeConnection(); //    TODO sostituirla con una close() che chiami questa e inoltre tolga la registrazione al client
         }
+
     }
 
 
