@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.piece.Piece;
+
 import java.util.Objects;
 
 public class Position {
