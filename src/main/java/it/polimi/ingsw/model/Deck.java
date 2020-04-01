@@ -13,7 +13,7 @@ public class Deck{
     public Deck(){
 
         try{
-            File godsDescriptionsFile=new File("C:\\Users\\simon\\Desktop\\godS.txt");
+            File godsDescriptionsFile=new File("C:\\Users\\simon\\Desktop\\gods.txt");
             Scanner fileLineReader=new Scanner(godsDescriptionsFile);
 
             while(fileLineReader.hasNextLine()){

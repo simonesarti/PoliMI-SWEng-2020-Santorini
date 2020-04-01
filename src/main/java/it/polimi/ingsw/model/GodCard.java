@@ -17,6 +17,7 @@ public class GodCard{
         numberOfPlayers[0]=toBoolean(godsData[3]);
         numberOfPlayers[1]=toBoolean(godsData[4]);
         powerDescription=godsData[5];
+
     }
 
     public String getGodName() {
@@ -41,8 +42,8 @@ public class GodCard{
 
     }
 
-    public void cardDeclaration(){
-        System.out.println("GOD: "+name+" ("+title+")\n"+"POWER: "+powerDescription);
+    public String cardDeclaration(){
+        return "GOD: " + name + " (" + title + ")\n" + "POWER: " + powerDescription;
     }
 
 

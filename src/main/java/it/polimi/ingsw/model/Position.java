@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.piece.Piece;
-
 import java.util.Objects;
 
 public class Position {
@@ -10,17 +8,10 @@ public class Position {
     private final int y;
     private final int z;
 
-    private Worker worker;
-    private Piece piece;
-
     public Position(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-
-    public Position getPosition() {
-        return this;
     }
 
     public int getX() {
@@ -35,21 +26,6 @@ public class Position {
         return z;
     }
 
-    public boolean isOccupied(){
-        return ((worker == null) && (piece == null));
-    }
-
-    public void workerMoved(){
-        this.worker=null;
-    }
-
-    public void towerPieceRemoved(){
-        this.piece=null;
-    }
-
-    //setter pezzo
-
-    //setter worker
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,7 +35,6 @@ public class Position {
                 y == position.y &&
                 z == position.z;
     }
-
 
 }
 
