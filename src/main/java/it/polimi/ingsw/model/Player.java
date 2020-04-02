@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 public class Player{
 
+    //TODO il colour e forse anche la GodCard e forse anche i Workers sono variabili final (e quindi vanno assegnate nel costruttore)
     private final String nickname;
     private final Calendar birthday;
     private Worker[] workers = new Worker[2];
@@ -26,9 +27,13 @@ public class Player{
     }
 
     public void setWorkers(){
-        workers[0]=new Worker(this.colour);
+        workers[0]=new Worker(this.colour); //mi sa che qua puoi togliere i this
         workers[1]=new Worker(this.colour);
     }
+
+    public Worker getWorker(int i){return workers[i];}
+
+    public Colour getColour(){return colour;}
 
     public String getNickname() {
         return nickname;

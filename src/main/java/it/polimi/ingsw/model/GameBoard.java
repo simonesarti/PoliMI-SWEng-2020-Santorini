@@ -12,4 +12,6 @@ public class GameBoard {
         }
     }
 
+    public TowerCell getTowerCell(int x, int y){ return towerCells[x][y];}
+
 }

@@ -43,4 +43,6 @@ public class TowerCell {
     public void decreaseTowerHeight(){
         towerHeight--;
     }
+
+    public TowerLevel getTowerLevel(){ return towerLevels[towerHeight];}
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.messages;
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Worker;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ public class PlayerMovementChoice implements Serializable {
     private int chosenWorker;
     private final int[] movingTo = new int[2];
 
+    //ricorda che chosenWorker è  0 oppure 1
     public PlayerMovementChoice(Player player, int chosenWorker, int x, int y) {
 
         this.player = player;
@@ -22,9 +24,7 @@ public class PlayerMovementChoice implements Serializable {
         return player;
     }
 
-    public int getChosenWorker() {
-        return chosenWorker;
-    }
+    public int getChosenWorker() { return chosenWorker;}
 
     public int[] getMovingTo() {
         return movingTo;
