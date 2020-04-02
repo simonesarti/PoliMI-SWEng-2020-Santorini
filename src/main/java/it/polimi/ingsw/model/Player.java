@@ -1,18 +1,33 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.messages.PlayerInfo;
+
 import java.util.Calendar;
 
 public class Player{
 
     private final String nickname;
     private final Calendar birthday;
-    private Worker[] workers;
+    private Worker[] workers = new Worker[2];
     private Colour colour;
+    private GodCard godCard;
 
-    public Player(String nickname, Calendar birthday){
-        this.nickname=nickname;
-        this.birthday=birthday;
-        this.workers=new Worker[2];
+    public Player(PlayerInfo playerInfo){
+        this.nickname=playerInfo.getPlayerNickname();
+        this.birthday=playerInfo.getBirthday();
+    }
+
+    public void setColour(Colour colour) {
+        this.colour = colour;
+    }
+
+    public void setGodCard(GodCard godCard) {
+        this.godCard = godCard;
+    }
+
+    public void setWorkers(){
+        workers[0]=new Worker(this.colour);
+        workers[1]=new Worker(this.colour);
     }
 
     public String getNickname() {
@@ -22,12 +37,5 @@ public class Player{
     public Calendar getBirthday() {
         return birthday;
     }
-
-    public void setColour(Colour colour) {
-        this.colour = colour;
-    }
-
-    /*setter worker*/
-
 
 }

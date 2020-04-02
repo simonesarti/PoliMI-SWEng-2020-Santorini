@@ -4,14 +4,17 @@ import java.util.Objects;
 
 public class Position {
 
-    private final int x;
-    private final int y;
-    private final int z;
+    private int x;
+    private int y;
+    private int z;
 
-    public Position(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public Position() {
+    }
+
+    public void setPosition(int x, int y, int z){
+        this.x=x;
+        this.y=y;
+        this.z=z;
     }
 
     public int getX() {
