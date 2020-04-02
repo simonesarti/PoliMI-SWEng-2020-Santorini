@@ -2,7 +2,12 @@ package it.polimi.ingsw.model.piece;
 
 public class Level2Block extends Block {
 
-    public Level2Block() {
+    private static int piecesLeft=18;
+
+    public Level2Block() { }
+
+    public static void decreasePiecesNumber(){
+        piecesLeft--;
     }
 
 }
