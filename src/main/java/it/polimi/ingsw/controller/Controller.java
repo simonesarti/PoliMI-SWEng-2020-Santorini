@@ -32,6 +32,8 @@ public class Controller implements Observer<PlayerMovementChoice>{
             //message.getView().reportError(gameMessage.wrongTurnMessage); //TODO il messaggio dovrà includere anche la view per mostrare il messaggio di errore in queste occasioni
             return;
         }
+
+        //TODO qui fa un controllo per la basicmove e poi chiama la move generica della godcard. DA AGGIUSTARE
         if(!match.isFeasibleBasicMove( message.getMovingTo(), match.getCurrentPlayer().getWorker(message.getChosenWorker()) )  ){
             //message.getView().reportError(gameMessage.CannotMoveHereMessage);
             return;
