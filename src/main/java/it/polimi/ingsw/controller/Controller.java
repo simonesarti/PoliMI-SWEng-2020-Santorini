@@ -4,16 +4,27 @@ import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.observe.Observer;
 
+
 public class Controller implements Observer<PlayerMovementChoice> {
 
     private Match match;
 
+    /**
+     * Costruttore della classe Controller
+     * @param match
+     */
     public Controller(Match match){
 
         super();
         this.match = match;
     }
 
+    /**
+     * Si assicura che sia il turno del player, che la mossa sia possibile e infine chiama la move() giusta in base alla
+     * GodCard del player giocante
+     *
+     * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
+     */
     private void performMove(PlayerMovementChoice message) {
 
         if(!match.isPlayerTurn(message.getPlayer())){
@@ -32,6 +43,10 @@ public class Controller implements Observer<PlayerMovementChoice> {
 
     }
 
+    /**
+     * Si occupa di chiamare la performMove() del controller in seguito ad una notify(PlayerMovementChoice message) della view
+     * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
+     */
     @Override
     public void update(PlayerMovementChoice message) {performMove(message);}
 
