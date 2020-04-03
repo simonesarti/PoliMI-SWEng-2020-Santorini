@@ -1,11 +1,12 @@
 package it.polimi.ingsw.controller;
 
+
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.observe.Observer;
 
 
-public class Controller implements Observer<PlayerMovementChoice> {
+public class Controller implements Observer<PlayerMovementChoice>{
 
     private Match match;
 

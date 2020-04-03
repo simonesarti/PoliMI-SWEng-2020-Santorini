@@ -19,7 +19,7 @@ public class BasicMove implements MoveStrategy {
     public void move(GameBoard gameboard, Worker worker, int x, int y) {
 
         //getting selected worker to the new towerCell
-        gameboard.getTowerCell(worker.getCurrentPosition().getX(),worker.getCurrentPosition().getX()).getTowerLevel().workerMoved();
+        gameboard.getTowerCell(worker.getCurrentPosition().getX(),worker.getCurrentPosition().getY()).getTowerLevel().workerMoved();
         gameboard.getTowerCell(x,y).getTowerLevel().setWorker(worker);
         //worker position values are modified
         Position position = new Position(x,y,gameboard.getTowerCell(x,y).getTowerHeight());
