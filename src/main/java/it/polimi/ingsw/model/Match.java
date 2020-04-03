@@ -10,15 +10,29 @@ public class Match {
 
     public Match(){
 
-
-
-
     }
 
+    /**
+     * Controlla che il Colour del turno corrente corrisponda al Colour del player
+     * @param player
+     * @return boolean
+     */
     public boolean isPlayerTurn(Player player){ return player.getColour()== turn;}
 
+
+    /**
+     * Ritorna il Colour del turno
+     * @return turn
+     */
     public Colour getTurn(){ return turn;}
 
+    /**
+     * Si assicura che x,y siano nei limiti della board, che la towerCell di arrivo sia vuota e più alta al massimo di 1
+     *
+     * @param movingTo coppia di parametri x,y della posizione in cui ci si vuole muovere
+     * @param ChosenWorker worker scelto per il movimento
+     * @return boolean
+     */
     public boolean isFeasibleBasicMove(int[] movingTo, Worker ChosenWorker){
 
         if (movingTo[0] < 0 || movingTo[0] > 4 || movingTo[1] < 0 || movingTo[1] > 4) {
@@ -32,6 +46,9 @@ public class Match {
         else return true;
     }
 
+    /**
+     * Passa al turno successivo cambiando la variabile turn
+     */
     public void updateTurn(){
         if(turn == Colour.BLUE){
             turn = Colour.GREY;
@@ -48,6 +65,12 @@ public class Match {
 
         return;
     }
+
+    /**
+     * Ritorna il player giocante durante il turno corrente
+     *
+     * @return player che sta giocando durante questo turno
+     */
 
     public Player getCurrentPlayer() {
 
