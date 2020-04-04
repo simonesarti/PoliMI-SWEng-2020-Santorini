@@ -1,12 +1,13 @@
 package it.polimi.ingsw.controller;
 
 
+import it.polimi.ingsw.messages.Message;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.observe.Observer;
 
 
-public class Controller implements Observer<PlayerMovementChoice>{
+public class Controller implements Observer<Message>{
 
     private Match match;
 
@@ -48,7 +49,14 @@ public class Controller implements Observer<PlayerMovementChoice>{
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */
     @Override
-    public void update(PlayerMovementChoice message) {performMove(message);}
+    public void update(Message message) {
+
+        if(message instanceof PlayerMovementChoice){
+            //faccio il cast direttamente dentro. Funziona?
+            performMove( (PlayerMovementChoice) message );
+        }
+
+    }
 
 
 }

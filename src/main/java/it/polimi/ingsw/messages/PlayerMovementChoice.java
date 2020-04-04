@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.Worker;
 
 import java.io.Serializable;
 
-public class PlayerMovementChoice implements Serializable {
+public class PlayerMovementChoice extends Message implements Serializable {
 
     private final Player player;
     private int chosenWorker;

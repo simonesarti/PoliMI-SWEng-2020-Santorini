@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.Player;
 
 import java.io.Serializable;
 
-public class PlayerBuildChoice implements Serializable {
+public class PlayerBuildChoice extends Message implements Serializable {
 
     private final Player player;
     private int chosenWorker;

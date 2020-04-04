@@ -3,7 +3,7 @@ package it.polimi.ingsw.messages;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class PlayerInfo implements Serializable {
+public class PlayerInfo extends Message implements Serializable {
 
     private final String playerNickname;
     private final Calendar birthday;
