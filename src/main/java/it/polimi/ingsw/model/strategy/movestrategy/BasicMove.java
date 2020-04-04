@@ -57,13 +57,13 @@ public class BasicMove implements MoveStrategy {
 
         else {
             //getting selected worker to the new towerCell
-            gameboard.getTowerCell(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY()).getTowerLevel().workerMoved();
+            gameboard.getTowerCell(workerStartingPosition.getX(), workerStartingPosition.getY()).getTowerLevel().workerMoved();
             gameboard.getTowerCell(x, y).getTowerLevel().setWorker(worker);
             //worker position values are modified
 
             worker.movedToPosition(destinationPosition);
-            //TODO basta chiamare la movedToPosition() o bisogna fare altro per cambiare la posizione del worker???
-            //TODO notify() -> spedire messaggio fine spostamento (probabilmente passeremo una clone della board)
+            worker.trimMovementHistory(); //TODO devo trimmare la coda di movimenti alla fine della basic move?
+
             return ;
         }
 
