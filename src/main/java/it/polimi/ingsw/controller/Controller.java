@@ -21,7 +21,7 @@ public class Controller implements Observer<PlayerMovementChoice>{
     }
 
     /**
-     * Si assicura che sia il turno del player, che la mossa sia possibile e infine chiama la move() giusta in base alla
+     * Si assicura che sia il turno del player, e chiama la move() giusta in base alla
      * GodCard del player giocante
      *
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
@@ -37,10 +37,7 @@ public class Controller implements Observer<PlayerMovementChoice>{
 
         match.getCurrentPlayer().getGodCard().movestrategy.move(match.getGameBoard(), match.getCurrentPlayer().getWorker(message.getChosenWorker()), message.getMovingTo()[0], message.getMovingTo()[1]);
 
-
-
         match.updateTurn();
-
 
     }
 

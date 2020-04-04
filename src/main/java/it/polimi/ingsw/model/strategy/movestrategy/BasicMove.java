@@ -19,17 +19,24 @@ public class BasicMove implements MoveStrategy {
     public void move(GameBoard gameboard, Worker worker, int x, int y) {
         //controllo feasible basic move
         if (x < 0 || x > 4 || y < 0 || y > 4) {
+
+            //TODO notify() -> spedire messaggio errore alla view
             return ;
         }
-        //TODO riportare errore alla view
 
         //towercell must be empty
-        else if(gameboard.getTowerCell(x,y).getTowerLevel().isOccupied()) return;
-        //TODO riportare errore alla view
+        else if(gameboard.getTowerCell(x,y).getTowerLevel().isOccupied()){
+
+            //TODO notify() -> spedire messaggio errore alla view
+            return;
+        }
+
 
         //towercell height must be <= (worker height +1)
-        else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) return ;
-        //TODO riportare errore alla view
+        else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
+            //TODO notify() -> spedire messaggio errore alla view
+            return;
+        }
 
         else {
             //getting selected worker to the new towerCell
@@ -39,6 +46,7 @@ public class BasicMove implements MoveStrategy {
             Position position = new Position(x, y, gameboard.getTowerCell(x, y).getTowerHeight());
             worker.movedToPosition(position);
             //TODO basta chiamare la movedToPosition() o bisogna fare altro per cambiare la posizione del worker???
+            //TODO notify() -> spedire messaggio fine spostamento (probabilmente passeremo una clone della board)
             return ;
         }
 
