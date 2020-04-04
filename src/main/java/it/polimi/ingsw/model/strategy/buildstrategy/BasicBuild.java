@@ -6,7 +6,18 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.piece.Block;
 import it.polimi.ingsw.model.piece.Piece;
 
+
 public class BasicBuild implements BuildStrategy {
+
+    /**
+     * Modifica l'altezza della torre in cui il worker costruisce e controlla se la torre è completa
+     * cs
+     * @param gameboard
+     * @param worker worker scelto per il turno
+     * @param x x della towerCell in cui il player ha deciso di costruire
+     * @param y y della towerCell in cui il player ha deciso di costruire
+     */
+
 
     @Override
     public void build(GameBoard gameboard, Worker worker, Piece piece, int x, int y) {
