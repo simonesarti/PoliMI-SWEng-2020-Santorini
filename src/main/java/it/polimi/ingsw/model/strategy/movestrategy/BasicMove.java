@@ -16,19 +16,19 @@ public class BasicMove implements MoveStrategy {
      * @param y y della towerCell in cui il player ha deciso di muoversi
      */
     @Override
-    public boolean move(GameBoard gameboard, Worker worker, int x, int y) {
+    public void move(GameBoard gameboard, Worker worker, int x, int y) {
         //controllo feasible basic move
         if (x < 0 || x > 4 || y < 0 || y > 4) {
-            return false;
+            return ;
         }
         //TODO riportare errore alla view
 
         //towercell must be empty
-        else if(gameboard.getTowerCell(x,y).getTowerLevel().isOccupied()) return false;
+        else if(gameboard.getTowerCell(x,y).getTowerLevel().isOccupied()) return;
         //TODO riportare errore alla view
 
         //towercell height must be <= (worker height +1)
-        else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) return false;
+        else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) return ;
         //TODO riportare errore alla view
 
         else {
@@ -39,7 +39,7 @@ public class BasicMove implements MoveStrategy {
             Position position = new Position(x, y, gameboard.getTowerCell(x, y).getTowerHeight());
             worker.movedToPosition(position);
             //TODO basta chiamare la movedToPosition() o bisogna fare altro per cambiare la posizione del worker???
-            return true;
+            return ;
         }
 
     }
