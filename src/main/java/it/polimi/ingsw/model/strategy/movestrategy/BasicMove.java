@@ -64,6 +64,9 @@ public class BasicMove implements MoveStrategy {
             worker.movedToPosition(destinationPosition);
             worker.trimMovementHistory(); //TODO devo trimmare la coda di movimenti alla fine della basic move?
 
+            //la nuova posizione è occupata
+            //TODO nel TowerLevel di partenza va messo worker nullo e nel nuovo TowerLevel va associato il worker (con la setWorker?)
+
             return ;
         }
 

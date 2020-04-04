@@ -34,6 +34,13 @@ public class Position {
         return z;
     }
 
+    /**
+     *
+     *Controlla che otherPosition si trovi tra le posizioni che circondano this.Position
+     * senza fare alcun controllo sulla quota delle posizioni.
+     * @return false se le due celle non sono adiacenti
+     */
+
     public boolean adjacent(Position otherPosition){
 
         if(     otherPosition.getX() < this.getX()-1 ||
@@ -44,12 +51,6 @@ public class Position {
                         otherPosition.getY() < this.getY()-1 ||
                         otherPosition.getY() == this.getY() ||
                         otherPosition.getY() > this.getY()+1
-        )return false;
-        else if(
-                        otherPosition.getZ() < this.getZ()-1 ||
-                        otherPosition.getZ() == this.getZ() ||
-                        otherPosition.getZ() > this.getZ()+1
-
         )return false;
 
         else return true;
