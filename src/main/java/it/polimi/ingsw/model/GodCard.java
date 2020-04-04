@@ -1,5 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.strategy.buildstrategy.BuildStrategy;
+import it.polimi.ingsw.model.strategy.losestrategy.LoseStrategy;
+import it.polimi.ingsw.model.strategy.movestrategy.MoveStrategy;
+import it.polimi.ingsw.model.strategy.winstrategy.WinStrategy;
+
 public class GodCard{
 
     //TODO aggiungere le strategy
@@ -9,9 +14,14 @@ public class GodCard{
     private final GodClassification classification;
     private final Boolean[] numberOfPlayers = new Boolean[2];
     private final String powerDescription;
+    private MoveStrategy moveStrategy;
+    private BuildStrategy buildStrategy;
+    private WinStrategy winStrategy;
+    private LoseStrategy loseStrategy;
 
 
 
+    //TODO nel costruttore devono essere impostate le strategy
 
     public GodCard(String[] godsData){
         name=godsData[0];
@@ -50,4 +60,7 @@ public class GodCard{
     }
 
 
+    public MoveStrategy getMoveStrategy() {
+        return moveStrategy;
+    }
 }

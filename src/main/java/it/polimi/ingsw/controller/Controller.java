@@ -34,9 +34,8 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        //TODO DA AGGIUSTARE LA CHIAMATA DELLA STRATEGY DALLA GODCARD (bisogna ancora collegare le strategy alle carte)
 
-        match.getCurrentPlayer().getGodCard().movestrategy.move(match.getGameBoard(), match.getCurrentPlayer().getWorker(message.getChosenWorker()), message.getMovingTo()[0], message.getMovingTo()[1]);
+        match.getCurrentPlayer().getGodCard().getMoveStrategy().move(match.getGameBoard(), match.getCurrentPlayer().getWorker(message.getChosenWorker()), message.getMovingTo()[0], message.getMovingTo()[1]);
 
         match.updateTurn();
 
