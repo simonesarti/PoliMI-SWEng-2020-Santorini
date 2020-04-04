@@ -34,6 +34,28 @@ public class Position {
         return z;
     }
 
+    public boolean adjacent(Position otherPosition){
+
+        if(     otherPosition.getX() < this.getX()-1 ||
+                otherPosition.getX() == this.getX() ||
+                otherPosition.getX() > this.getX()+1
+            )return false;
+        else if(
+                        otherPosition.getY() < this.getY()-1 ||
+                        otherPosition.getY() == this.getY() ||
+                        otherPosition.getY() > this.getY()+1
+        )return false;
+        else if(
+                        otherPosition.getZ() < this.getZ()-1 ||
+                        otherPosition.getZ() == this.getZ() ||
+                        otherPosition.getZ() > this.getZ()+1
+
+        )return false;
+
+        else return true;
+
+
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

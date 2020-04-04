@@ -17,6 +17,10 @@ public class BasicMove implements MoveStrategy {
      */
     @Override
     public void move(GameBoard gameboard, Worker worker, int x, int y) {
+
+        Position destinationPosition = new Position(x, y, gameboard.getTowerCell(x, y).getTowerHeight());
+        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
+
         //controllo feasible basic move
         if (x < 0 || x > 4 || y < 0 || y > 4) {
 
@@ -38,13 +42,26 @@ public class BasicMove implements MoveStrategy {
             return;
         }
 
+        //workerPosition must be adjacent to destinationPosition
+        else if (!workerStartingPosition.adjacent(destinationPosition)){
+            //TODO notify() -> spedire messaggio errore alla view
+            return;
+        }
+
+        //towerCell must not be completed by a dome
+        else if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
+
+            //TODO notify() -> spedire messaggio errore alla view
+            return;
+        }
+
         else {
             //getting selected worker to the new towerCell
             gameboard.getTowerCell(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY()).getTowerLevel().workerMoved();
             gameboard.getTowerCell(x, y).getTowerLevel().setWorker(worker);
             //worker position values are modified
-            Position position = new Position(x, y, gameboard.getTowerCell(x, y).getTowerHeight());
-            worker.movedToPosition(position);
+
+            worker.movedToPosition(destinationPosition);
             //TODO basta chiamare la movedToPosition() o bisogna fare altro per cambiare la posizione del worker???
             //TODO notify() -> spedire messaggio fine spostamento (probabilmente passeremo una clone della board)
             return ;

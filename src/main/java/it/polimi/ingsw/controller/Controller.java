@@ -42,9 +42,10 @@ public class Controller implements Observer<Message>{
     }
 
 
-    //TODO QUANDO VENGONO CHIAMATE LE DETERMINATE UPDATE? DIPENDE DAL MESSAGGIO
+
     /**
-     * Si occupa di chiamare la performMove() del controller in seguito ad una notify(PlayerMovementChoice message) della view
+     * Si occupa di chiamare i medìtodi del controller discriminando in base al sottotipo di Message messaggio
+     * in seguito ad una notify(Message message) della view
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */
     @Override
