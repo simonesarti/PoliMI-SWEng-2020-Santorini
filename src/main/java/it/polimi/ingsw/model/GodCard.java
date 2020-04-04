@@ -2,11 +2,14 @@ package it.polimi.ingsw.model;
 
 public class GodCard{
 
+    //TODO aggiungere le strategy
+
     private final String name;
     private final String title;
     private final GodClassification classification;
     private final Boolean[] numberOfPlayers = new Boolean[2];
     private final String powerDescription;
+
 
 
 

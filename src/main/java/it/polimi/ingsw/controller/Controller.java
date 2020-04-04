@@ -33,19 +33,19 @@ public class Controller implements Observer<PlayerMovementChoice>{
             return;
         }
 
-        //TODO qui fa un controllo per la basicmove e poi chiama la move generica della godcard. DA AGGIUSTARE
-        if(!match.isFeasibleBasicMove( message.getMovingTo(), match.getCurrentPlayer().getWorker(message.getChosenWorker()) )  ){
-            //message.getView().reportError(gameMessage.CannotMoveHereMessage);
-            return;
-        }
+        //TODO DA AGGIUSTARE LA CHIAMATA DELLA STRATEGY DALLA GODCARD (bisogna ancora collegare le strategy alle carte)
 
-        //manca chiamare effettivamente la move (la cosa del to do scritto qua sotto)
-        // TODO match.getPlayer().GodCard.move(message.getMovingTo(), message.getPlayer());
+        match.getCurrentPlayer().getGodCard().movestrategy.move(match.getGameBoard(), match.getCurrentPlayer().getWorker(message.getChosenWorker()), message.getMovingTo()[0], message.getMovingTo()[1]);
+
+
+
         match.updateTurn();
 
 
     }
 
+
+    //TODO QUANDO VENGONO CHIAMATE LE DETERMINATE UPDATE? DIPENDE DAL MESSAGGIO
     /**
      * Si occupa di chiamare la performMove() del controller in seguito ad una notify(PlayerMovementChoice message) della view
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento

@@ -26,25 +26,7 @@ public class Match {
      */
     public Colour getTurn(){ return turn;}
 
-    /**
-     * Si assicura che x,y siano nei limiti della board, che la towerCell di arrivo sia vuota e più alta al massimo di 1
-     *
-     * @param movingTo coppia di parametri x,y della posizione in cui ci si vuole muovere
-     * @param ChosenWorker worker scelto per il movimento
-     * @return boolean
-     */
-    public boolean isFeasibleBasicMove(int[] movingTo, Worker ChosenWorker){
-
-        if (movingTo[0] < 0 || movingTo[0] > 4 || movingTo[1] < 0 || movingTo[1] > 4) {
-            return false;
-        }
-
-        //towercell must be empty
-        else if(gameboard.getTowerCell(movingTo[0],movingTo[1]).getTowerLevel().isOccupied()) return false;
-        //towercell height must be <= (worker height +1)
-        else if(gameboard.getTowerCell(movingTo[0],movingTo[1]).getTowerHeight() > (ChosenWorker.getCurrentPosition().getZ() +1)) return false;
-        else return true;
-    }
+    public GameBoard getGameBoard(){return gameboard;}
 
     /**
      * Passa al turno successivo cambiando la variabile turn

@@ -43,4 +43,7 @@ public class Player{
         return birthday;
     }
 
+    public GodCard getGodCard() {
+        return godCard;
+    }
 }
