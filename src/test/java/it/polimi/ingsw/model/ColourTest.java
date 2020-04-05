@@ -9,10 +9,6 @@ public class ColourTest {
 
     Colour colour;
 
-    @Before
-    public void setup(){
-        //non serve fare niente perché le enum non si istanziano
-    }
 
     @Test
     public void isEnemy_enemyInput_correctOutput(){

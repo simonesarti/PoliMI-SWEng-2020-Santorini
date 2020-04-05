@@ -27,8 +27,8 @@ public class TowerLevel {
     public void pieceWasRemoved(){piece=null;}
 
     /**
-     * Checks if towerlevel is occupied by a worker. The towerlevel's attribute "worker" is either null or associated to
-     * a worker
+     * Checks if towerlevel is occupied by a worker or piece
+     *
      * @return boolean
      */
     public boolean isOccupied() {
