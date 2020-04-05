@@ -36,9 +36,9 @@ public class Position {
 
     /**
      *
-     *Controlla che otherPosition si trovi tra le posizioni che circondano this.Position
-     * senza fare alcun controllo sulla quota delle posizioni.
-     * @return false se le due celle non sono adiacenti
+     * checks if otherPosition is adjacent to this position
+     * it does not deal with z-axis
+     * @return false if positions are not adjacent
      */
 
     public boolean adjacent(Position otherPosition){

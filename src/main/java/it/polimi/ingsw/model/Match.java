@@ -13,7 +13,7 @@ public class Match {
     }
 
     /**
-     * Controlla che il Colour del turno corrente corrisponda al Colour del player
+     * Checks that current player's colour is equals to current turn's colour
      * @param player
      * @return boolean
      */
@@ -21,7 +21,7 @@ public class Match {
 
 
     /**
-     * Ritorna il Colour del turno
+     * returns current turn's colour
      * @return turn
      */
     public Colour getTurn(){ return turn;}
@@ -29,7 +29,7 @@ public class Match {
     public GameBoard getGameBoard(){return gameboard;}
 
     /**
-     * Passa al turno successivo cambiando la variabile turn
+     * updates turn (blue->grey, grey->white, white->blue)
      */
     public void updateTurn(){
         if(turn == Colour.BLUE){
@@ -49,9 +49,9 @@ public class Match {
     }
 
     /**
-     * Ritorna il player giocante durante il turno corrente
+     * returns current player
      *
-     * @return player che sta giocando durante questo turno
+     * @return current player
      */
 
     public Player getCurrentPlayer() {

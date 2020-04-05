@@ -7,13 +7,13 @@ import it.polimi.ingsw.model.Worker;
 public class BasicMove implements MoveStrategy {
 
     /**
-     * Rimuove il worker dalla towerCell iniziale, lo aggiunge alla towerCell in posizione x,y e cambia la posizione
-     * associata al worker
+     * Removes worker from starting towercell's towerlevel, changes worker's position values and sets the worker in the
+     * destination's towercell's towerlevel
      *
      * @param gameboard
-     * @param worker worker scelto per il turno
-     * @param x x della towerCell in cui il player ha deciso di muoversi
-     * @param y y della towerCell in cui il player ha deciso di muoversi
+     * @param worker chosen worker
+     * @param x  destination-towercell's x
+     * @param y destination-towercell's y
      */
     @Override
     public void move(GameBoard gameboard, Worker worker, int x, int y) {
