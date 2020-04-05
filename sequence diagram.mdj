@@ -3021,7 +3021,7 @@
 									"top": 752,
 									"width": 161,
 									"height": 81,
-									"text": "continua a succedere finchè utente sbaglia o cerca di cosruire prima di muovere, quindi deve ripartire da capo"
+									"text": "continua a succedere finchè utente sbaglia o cerca di costruire prima di muovere, quindi deve ripartire da capo"
 								},
 								{
 									"_type": "UMLSeqMessageView",
