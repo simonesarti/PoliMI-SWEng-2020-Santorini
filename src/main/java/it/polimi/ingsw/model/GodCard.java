@@ -43,4 +43,12 @@ public class GodCard{
     public MoveStrategy getMoveStrategy() {
         return moveStrategy;
     }
+
+    public BuildStrategy getBuildStrategy() {
+        return buildStrategy;
+    }
+
+    public void setBuildStrategy(BuildStrategy buildStrategy) {
+        this.buildStrategy = buildStrategy;
+    }
 }

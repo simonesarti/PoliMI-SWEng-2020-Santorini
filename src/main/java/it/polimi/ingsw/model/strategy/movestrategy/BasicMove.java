@@ -59,13 +59,12 @@ public class BasicMove implements MoveStrategy {
             //getting selected worker to the new towerCell
             gameboard.getTowerCell(workerStartingPosition.getX(), workerStartingPosition.getY()).getTowerLevel().workerMoved();
             gameboard.getTowerCell(x, y).getTowerLevel().setWorker(worker);
-            //worker position values are modified
 
+            //modifing worker's associated position
             worker.movedToPosition(destinationPosition);
             worker.trimMovementHistory(); //TODO devo trimmare la coda di movimenti alla fine della basic move?
 
-            //la nuova posizione è occupata
-            //TODO nel TowerLevel di partenza va messo worker nullo e nel nuovo TowerLevel va associato il worker (con la setWorker?)
+            //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
             return ;
         }

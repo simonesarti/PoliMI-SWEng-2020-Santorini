@@ -18,14 +18,9 @@ public class TowerCell {
         towerCompleted=false;
     }
 
-    public int getTowerHeight() {
-        return towerHeight;
-    }
-
-    public boolean isTowerCompleted() {
-        return towerCompleted;
-    }
-
+    /**
+     * Checks if the towercell is occupied by a dome
+     */
     public void checkCompletion(){
 
         for(TowerLevel level: towerLevels){
@@ -34,6 +29,14 @@ public class TowerCell {
                 break;
             }
         }
+    }
+
+    public int getTowerHeight() {
+        return towerHeight;
+    }
+
+    public boolean isTowerCompleted() {
+        return towerCompleted;
     }
 
     public void increaseTowerHeight(){
