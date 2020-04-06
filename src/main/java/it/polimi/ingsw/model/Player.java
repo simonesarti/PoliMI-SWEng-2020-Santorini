@@ -27,7 +27,7 @@ public class Player{
     }
 
     public void setWorkers(){
-        workers[0]=new Worker(this.colour); //mi sa che qua puoi togliere i this
+        workers[0]=new Worker(this.colour);
         workers[1]=new Worker(this.colour);
     }
 

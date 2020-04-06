@@ -26,6 +26,11 @@ public class TowerLevel {
 
     public void pieceWasRemoved(){piece=null;}
 
+    /**
+     * Checks if towerlevel is occupied by a worker or piece
+     *
+     * @return boolean
+     */
     public boolean isOccupied() {
         return ((worker != null) || (piece != null));
     }

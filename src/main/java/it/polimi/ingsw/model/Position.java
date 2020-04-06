@@ -8,8 +8,10 @@ public class Position {
     private int y;
     private int z;
 
+
     public Position() {
     }
+
     public Position(int x, int y, int z){
         this.x=x;
         this.y=y;
@@ -44,19 +46,25 @@ public class Position {
     public boolean adjacent(Position otherPosition){
 
         if(     otherPosition.getX() < this.getX()-1 ||
-                otherPosition.getX() == this.getX() ||
+
                 otherPosition.getX() > this.getX()+1
             )return false;
         else if(
                         otherPosition.getY() < this.getY()-1 ||
-                        otherPosition.getY() == this.getY() ||
+
                         otherPosition.getY() > this.getY()+1
+        )return false;
+
+        else if(
+                otherPosition.getX() == this.getX() && otherPosition.getY() == this.getY()
         )return false;
 
         else return true;
 
 
     }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
