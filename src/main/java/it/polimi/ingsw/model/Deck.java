@@ -28,14 +28,11 @@ public class Deck{
 
     }
 
-
     public GodCard chooseCardFromDeck(String divinityName){
 
-        int i;
-
-        for (i = 0; i < deck.size(); i++) {
-            if (divinityName.equals(deck.get(i).getGodName())) {
-                return deck.get(i);
+        for (GodCard godCard : deck) {
+            if (divinityName.equals(godCard.getGodName())) {
+                return godCard;
             }
         }
         throw new IllegalArgumentException("MESSAGE: No divinity with such a name was found in the deck");

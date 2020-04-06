@@ -13,12 +13,7 @@ public enum Colour {
      * @return boolean
      */
     public boolean isEnemy(Colour other) {
-
-        if (this == other) {
-            return false;
-        } else {
-            return true;
-        }
+        return this != other;
     }
 
 }
