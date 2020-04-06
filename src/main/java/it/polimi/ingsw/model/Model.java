@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public class Match {
+public class Model {
     //TODO bisogna stare attenti alla gestione dei turni (i turni sono di tipo Colour). Come partire? forse mettere nel costruttore turn = coloreChepartePerPrimo?
     private Colour turn;
     private GameBoard gameboard;
@@ -8,7 +8,7 @@ public class Match {
     private Player greyPlayer;
     private Player whitePlayer;
 
-    public Match(){
+    public Model(){
 
     }
 
