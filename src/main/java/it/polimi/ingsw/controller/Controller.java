@@ -34,7 +34,7 @@ public class Controller implements Observer<Message>{
         }
 
 
-        model.getCurrentPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), model.getCurrentPlayer().getWorker(message.getChosenWorker()), message.getMovingTo()[0], message.getMovingTo()[1]);
+        model.getCurrentPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
 
         return;
     }

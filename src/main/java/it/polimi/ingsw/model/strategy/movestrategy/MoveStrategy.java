@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
+import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Worker;
 
@@ -9,10 +10,9 @@ import it.polimi.ingsw.model.Worker;
 public interface MoveStrategy {
 
     /**
+     *
      * @param gameboard
-     * @param worker chosen worker
-     * @param x  destination-towercell's x
-     * @param y destination-towercell's y
+     * @param message PlayerMovementChoice message
      */
-    void move(GameBoard gameboard, Worker worker, int x, int y);
+    void move(GameBoard gameboard, PlayerMovementChoice message);
 }

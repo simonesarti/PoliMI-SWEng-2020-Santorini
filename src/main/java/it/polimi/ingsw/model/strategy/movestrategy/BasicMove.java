@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
+import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
@@ -11,13 +12,15 @@ public class BasicMove implements MoveStrategy {
      * destination's towercell's towerlevel
      *
      * @param gameboard
-     * @param worker chosen worker
-     * @param x  destination-towercell's x
-     * @param y destination-towercell's y
+     * @param message messaggio PlayerMovementChoice
      */
     @Override
-    public void move(GameBoard gameboard, Worker worker, int x, int y) {
+    public void move(GameBoard gameboard, PlayerMovementChoice message) {
 
+
+        Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
+        int x = message.getMovingTo()[0];
+        int y = message.getMovingTo()[1];
         Position destinationPosition = new Position(x, y, gameboard.getTowerCell(x, y).getTowerHeight());
         Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
