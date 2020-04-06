@@ -22,8 +22,6 @@ public class View extends Observable implements Runnable, Observer {
     @Override
     public void run(){
 
-        System.out.println("Please insert your nickname: ");
-
     }
 
     @Override
