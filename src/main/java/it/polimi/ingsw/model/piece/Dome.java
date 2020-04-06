@@ -6,7 +6,11 @@ public class Dome extends Piece {
 
     public Dome(){}
 
-    public static void decreasePiecesNumber(){
+    public void decreasePiecesNumber(){
         piecesLeft--;
+    }
+
+    public boolean areTherePiecesLeft(){
+        return piecesLeft > 0;
     }
 }

@@ -6,7 +6,13 @@ public class Level3Block extends Block {
 
     public Level3Block() {}
 
-    public static void decreasePiecesNumber(){
+    public void decreasePiecesNumber(){
         piecesLeft--;
+    }
+
+    public void increasePiecesNumber(){ piecesLeft++;}
+
+    public boolean areTherePiecesLeft(){
+        return piecesLeft > 0;
     }
 }
