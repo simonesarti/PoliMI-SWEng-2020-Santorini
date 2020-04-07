@@ -14,6 +14,7 @@ public class BasicMove implements MoveStrategy {
      * @param message message PlayerMovementChoice
      * @return
      */
+    @Override
     public boolean checkMove(GameBoard gameboard, PlayerMovementChoice message){
 
         Worker worker = message.getPlayer().getWorker(message.getChosenWorker());

@@ -58,8 +58,12 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        //TODO nel messaggio di build abbiamo il tipo di pezzo come stringa. Siamo sicuri di non voler mettere direttamente un tipo "Pezzo"? (per ora ho messo "???" come parametro)
-        //model.getCurrentPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), model.getCurrentPlayer().getWorker(message.getChosenWorker()), ???, message.getBuildingInto()[0],message.getBuildingInto()[1]);
+        if( model.getCurrentPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message) ) {
+            model.getCurrentPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message);
+        }
+        else{
+            //TODO manda messaggio di errore a view?
+        }
 
         model.updateTurn();
         return;
