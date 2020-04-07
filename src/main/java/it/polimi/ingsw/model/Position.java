@@ -43,20 +43,20 @@ public class Position {
      * @return false if positions are not adjacent
      */
 
-    public boolean adjacent(Position otherPosition){
+    public boolean adjacent(int z, int y){
 
-        if(     otherPosition.getX() < this.getX()-1 ||
+        if(     x < this.getX()-1 ||
 
-                otherPosition.getX() > this.getX()+1
+                x > this.getX()+1
             )return false;
         else if(
-                        otherPosition.getY() < this.getY()-1 ||
+                        y < this.getY()-1 ||
 
-                        otherPosition.getY() > this.getY()+1
+                        y > this.getY()+1
         )return false;
 
         else if(
-                otherPosition.getX() == this.getX() && otherPosition.getY() == this.getY()
+                x == this.getX() && y == this.getY()
         )return false;
 
         else return true;
