@@ -20,8 +20,8 @@ public class PositionTest {
     public void adjacent_samePosition(){
 
         position.setPosition(1,1,1);
-        Position otherPosition = new Position(1,1,3);
-        assertFalse(position.adjacent(otherPosition));
+
+        assertFalse(position.adjacent(1,1));
 
     }
 
@@ -29,10 +29,9 @@ public class PositionTest {
     public void adjacent_NotAdjacent(){
 
         position.setPosition(1,1,1);
-        Position otherPosition = new Position(1,3,3);
-        Position anotherPosition = new Position(3,1,3);
-        assertFalse(position.adjacent(otherPosition));
-        assertFalse(position.adjacent(anotherPosition));
+
+        assertFalse(position.adjacent(1,3));
+        assertFalse(position.adjacent(3,1));
 
     }
 
@@ -40,8 +39,8 @@ public class PositionTest {
     public void adjacent_areAdjacent(){
 
         position.setPosition(1,2,1);
-        Position otherPosition = new Position(0,2,3);
-        assertTrue(position.adjacent(otherPosition));
+
+        assertTrue(position.adjacent(0,2));
 
     }
 

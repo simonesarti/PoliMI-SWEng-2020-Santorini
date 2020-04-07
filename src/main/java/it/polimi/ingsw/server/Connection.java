@@ -71,7 +71,7 @@ public class Connection extends Observable<String> implements Runnable {
             String read = in.nextLine();
             name = read;
             System.out.println("NAME: "+name);
-            //server.lobby(this, name);                                      TODO aggiungere lobby(Connection c, String name) e deRegisterConnection(Connection c)
+            //server.lobby(this, name);           TODO aggiungere lobby(Connection c, String name) e deRegisterConnection(Connection c)
             /*
             while(isActive()){
 
