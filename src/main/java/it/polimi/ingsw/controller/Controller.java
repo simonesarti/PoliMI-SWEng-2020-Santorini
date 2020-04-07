@@ -65,6 +65,8 @@ public class Controller implements Observer<Message>{
             //TODO manda messaggio di errore a view?
         }
 
+
+
         model.updateTurn();
         return;
     }
