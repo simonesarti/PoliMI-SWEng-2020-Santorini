@@ -11,7 +11,7 @@ public class BasicMove implements MoveStrategy {
      * Checks if player's move is feasible
      *
      * @param gameboard
-     * @param message messaggio PlayerMovementChoice
+     * @param message message PlayerMovementChoice
      * @return
      */
     public boolean checkMove(GameBoard gameboard, PlayerMovementChoice message){
@@ -24,7 +24,7 @@ public class BasicMove implements MoveStrategy {
 
         Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
-        //controllo feasible basic move
+        //x and y must be inside the board
         if (x < 0 || x > 4 || y < 0 || y > 4) {
 
 
@@ -67,7 +67,7 @@ public class BasicMove implements MoveStrategy {
      * destination's towercell's towerlevel
      *
      * @param gameboard
-     * @param message messaggio PlayerMovementChoice
+     * @param message message PlayerMovementChoice
      */
     @Override
     public void move(GameBoard gameboard, PlayerMovementChoice message) {
