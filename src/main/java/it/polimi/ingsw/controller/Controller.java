@@ -22,7 +22,7 @@ public class Controller implements Observer<Message>{
     }
 
     /**
-     * checks if it's the player's turn and calls the player's GodCard's MoveStrategy
+     * checks if it's the player's turn and calls the player's GodCard's MoveStrategy methods;
      *
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */

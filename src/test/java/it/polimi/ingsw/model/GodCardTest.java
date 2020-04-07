@@ -1,14 +1,15 @@
 package it.polimi.ingsw.model;
 
 
-import org.junit.Before;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GodCardTest {
     GodCard godcard = null;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         String[] s = {"Apollo", "GodofMusic", "SIMPLE", "move"};
         godcard = new GodCard(s);
