@@ -33,8 +33,13 @@ public class Controller implements Observer<Message>{
             return;
         }
 
+        if( model.getCurrentPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message) ) {
 
-        model.getCurrentPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
+            model.getCurrentPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
+        }
+        else{
+            //TODO manda messaggio di errore a view?
+        }
 
         return;
     }

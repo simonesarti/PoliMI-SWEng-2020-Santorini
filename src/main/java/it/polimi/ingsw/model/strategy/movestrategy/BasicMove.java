@@ -7,6 +7,13 @@ import it.polimi.ingsw.model.Worker;
 
 public class BasicMove implements MoveStrategy {
 
+    /**
+     * Checks if player's move is feasible
+     *
+     * @param gameboard
+     * @param message messaggio PlayerMovementChoice
+     * @return
+     */
     public boolean checkMove(GameBoard gameboard, PlayerMovementChoice message){
 
         Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
@@ -54,6 +61,7 @@ public class BasicMove implements MoveStrategy {
         else return true;
 
     }
+
     /**
      * Removes worker from starting towercell's towerlevel, changes worker's position values and sets the worker in the
      * destination's towercell's towerlevel
