@@ -12,7 +12,7 @@ public class Level2Block extends Block {
 
     public void increasePiecesNumber(){ piecesLeft++;}
 
-    public boolean areTherePiecesLeft(){
+    public static boolean areTherePiecesLeft(){
         return piecesLeft > 0;
     }
 }

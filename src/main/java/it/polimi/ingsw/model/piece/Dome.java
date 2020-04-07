@@ -10,7 +10,7 @@ public class Dome extends Piece {
         piecesLeft--;
     }
 
-    public boolean areTherePiecesLeft(){
+    public static boolean areTherePiecesLeft(){
         return piecesLeft > 0;
     }
 }

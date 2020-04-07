@@ -1,39 +1,54 @@
 package it.polimi.ingsw.model;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class Worker {
 
-    private Colour colour;
-    private List<Position> turnMovementList = new ArrayList<>();
+    private final Colour colour;
+    private Position currentPosition;
+    private Position previousPosition;
 
+    /**
+     * sets the worker's colour on creation
+     * @param colour player's colour
+     */
     public Worker(Colour colour) {
         this.colour=colour;
     }
 
+    /**
+     * @return the worker's current position on the gameboard
+     */
     public Position getCurrentPosition(){
-        return turnMovementList.get(0);
+        return currentPosition;
     }
 
-    public Position getPreviousPosition(int index) {
-        if (index >= turnMovementList.size()) {
-            throw new IllegalArgumentException("your worker didn't move so many times");
-        } else {
-            return turnMovementList.get(index);
-        }
+    /**
+     *
+     * @return the worker's previous position on the gameboard
+     */
+    public Position getPreviousPosition(){
+        return previousPosition;
     }
 
-    //to use also when setting the worker's starting position
-    public void movedToPosition(Position position){
-        Position pos = new Position(position.getX(),position.getY(),position.getZ());
-        turnMovementList.add(0,pos);
+    /**
+     * sets the worker's starting position, and initializes to null the field previousPosition
+     * @param x starting coordinate
+     * @param y staring coordinate
+     */
+    public void setStartingPosition(int x, int y){
+        currentPosition=new Position(x,y,0);
+        previousPosition=null;
     }
 
-    public void trimMovementHistory(){
-        Position p=turnMovementList.get(0);
-        turnMovementList.clear();
-        turnMovementList.add(p);
+    /**
+     * sets the worker's current position to newPosition, and previousPosition to the position
+     * it was occupying before this change
+     * @param x new x coordinate
+     * @param y new y coordinate
+     * @param z new z coordinate
+     */
+    public void movedToPosition(int x, int y, int z){
+        previousPosition.setPosition(currentPosition.getX(),currentPosition.getY(),currentPosition.getZ());
+        currentPosition.setPosition(x,y,z);
     }
 
 }
