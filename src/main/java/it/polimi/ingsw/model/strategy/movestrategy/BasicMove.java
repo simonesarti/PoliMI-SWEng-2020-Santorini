@@ -6,11 +6,17 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
 
-
-
+/**
+ * This class represents the basic move strategy
+ */
 public class BasicMove implements MoveStrategy {
 
+    private boolean alreadyMoved;
 
+
+    public BasicMove(){
+        alreadyMoved = false;
+    }
     /**
      * Checks if player's move is feasible
      *
@@ -29,9 +35,12 @@ public class BasicMove implements MoveStrategy {
 
         Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
-
+        //alreadyMoved must be false
+        if(alreadyMoved){
+            return GameMessage.alreadyMoved;
+        }
         //x and y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
+        else if (x < 0 || x > 4 || y < 0 || y > 4) {
 
 
             return GameMessage.notInSurroundings;
@@ -90,7 +99,7 @@ public class BasicMove implements MoveStrategy {
 
         //modifing worker's associated position
         worker.movedToPosition(x,y,z);
-
+        this.alreadyMoved = true;
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
 

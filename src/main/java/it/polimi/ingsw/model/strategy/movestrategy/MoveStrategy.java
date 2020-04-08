@@ -4,7 +4,7 @@ import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
 
 /**
- * Interface used to manage different move-algorithms
+ * Move strategies interface
  */
 public interface MoveStrategy {
 

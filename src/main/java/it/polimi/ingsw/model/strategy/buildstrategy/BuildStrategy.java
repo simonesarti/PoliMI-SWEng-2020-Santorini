@@ -8,6 +8,9 @@ import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.piece.Piece;
 import it.polimi.ingsw.messages.PlayerBuildChoice;
 
+/**
+ * Build strategies interface
+ */
 public interface BuildStrategy {
 
     //TODO Se vogliamo mettere attributo hasMoved, allora bisogna rimetterlo a false alla fine delle fasi di gioco dal controller.

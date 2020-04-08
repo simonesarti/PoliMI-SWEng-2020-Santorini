@@ -3,6 +3,10 @@ package it.polimi.ingsw.messages;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
 
+/**
+ * PlayerBuildChoice message contains information about a specific build (what player, what type of Piece, which worker and so on...)
+ * View is needed to report errors
+ */
 public class PlayerBuildChoice extends Message{
 
     private final View view;

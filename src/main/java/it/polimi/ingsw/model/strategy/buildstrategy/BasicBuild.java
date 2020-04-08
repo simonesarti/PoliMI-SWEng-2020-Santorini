@@ -8,13 +8,15 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.piece.*;
 import it.polimi.ingsw.messages.PlayerBuildChoice;
 
-
+/**
+ * This class represents the basic build strategy
+ */
 public class BasicBuild implements BuildStrategy {
 
-    boolean alreadyMoved;
+    boolean alreadyBuilt;
 
     public BasicBuild(){
-        this.alreadyMoved = false;
+        this.alreadyBuilt = false;
     }
 
     /**
@@ -34,12 +36,12 @@ public class BasicBuild implements BuildStrategy {
 
        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
-       //alreadyMoved must be false
-       if(alreadyMoved){
-           return GameMessage.alreadyMoved;
+       //alreadyBuilt must be false
+       if(alreadyBuilt){
+           return GameMessage.alreadyBuilt;
        }
        //x e y must be inside the board
-       if (x < 0 || x > 4 || y < 0 || y > 4) {
+       else if (x < 0 || x > 4 || y < 0 || y > 4) {
 
           return GameMessage.notInGameboard;
        }
@@ -114,7 +116,7 @@ public class BasicBuild implements BuildStrategy {
         int x = message.getBuildingInto()[0];
         int y = message.getBuildingInto()[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
-        Piece piece;
+        Piece piece = null;
 
        //create the right Piece and decrease the number
 
@@ -141,7 +143,7 @@ public class BasicBuild implements BuildStrategy {
        //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
-        this.alreadyMoved = true;
+        this.alreadyBuilt = true;
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
         return ;

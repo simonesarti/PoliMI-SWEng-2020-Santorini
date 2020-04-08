@@ -3,6 +3,10 @@ package it.polimi.ingsw.messages;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
 
+/**
+ *
+ * View is needed to report errors
+ */
 public class PlayerEndOfTurnChoice extends Message{
 
     private final View view;

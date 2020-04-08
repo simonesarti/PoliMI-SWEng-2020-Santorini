@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 /**
- * Enumeration representing the three colours. Every player's workers have one colour.
+ * Enumeration representing the three colours. Every player and worker have a colour. Every player has two workers of the same colour
  */
 public enum Colour {
 

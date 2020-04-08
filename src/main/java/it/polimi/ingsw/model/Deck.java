@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * GodCards Deck
+ */
 public class Deck{
 
     private List<GodCard> deck = new ArrayList<>();

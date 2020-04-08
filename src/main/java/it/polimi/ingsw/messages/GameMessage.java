@@ -1,5 +1,8 @@
 package it.polimi.ingsw.messages;
 
+/**
+ * This class contains messages that will appear on screen
+ */
 public class GameMessage {
 
     //classic messages
@@ -11,7 +14,7 @@ public class GameMessage {
     public static String moveRequest = "Make your move (worker number (1/2),x,y)";
 
     //Generic move error messages
-    public static String alreadyMoved = "You already moved, please build\n";
+    public static String alreadyMoved = "You have already moved, please build\n";
     public static String noMoveToCompleteTower = "You can't move here, this space already contains a complete tower, please choose another position\n";
     public static String noMovedToOccupiedTower = "You can't move here, this space already contains another worker, please choose another position\n";
     public static String noHighJump = "This move isn't allowed, you can't move up more than one level. Choose another position\n";
@@ -23,6 +26,7 @@ public class GameMessage {
     public static String buildRequest = "Choose your build (Piece type (block/dome), worker number (1/2),x,y)";
 
     //generic build error messages
+    public static String alreadyBuilt = "You have already built\n";
     public static String noBuildToCompleteTower = "You can't build here, this space already contains a complete tower, please choose another position\n";
     public static String noBuildToOccupiedTower = "You can't build here, this space already contains a worker, please choose another position\n";
     public static String noLevel1Left = "No more first level blocks left. Please try something else\n";

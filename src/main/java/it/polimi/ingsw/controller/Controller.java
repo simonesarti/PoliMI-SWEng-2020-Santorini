@@ -72,6 +72,7 @@ public class Controller implements Observer<Message>{
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
         //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
+
             //message.getView().reportError(gameMessage.wrongTurn);
             return;
 
@@ -80,8 +81,8 @@ public class Controller implements Observer<Message>{
     }
 
     /**
-     * Si occupa di chiamare i metodi del controller discriminando in base al sottotipo di Message messaggio
-     * in seguito ad una notify(Message message) della view
+     * Invokes Controller's methods on the basis of message's subclass
+     *
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */
     @Override
