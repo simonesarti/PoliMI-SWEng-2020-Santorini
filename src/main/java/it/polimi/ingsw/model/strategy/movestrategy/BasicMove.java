@@ -37,7 +37,7 @@ public class BasicMove implements MoveStrategy {
         }
 
         //towercell must be empty
-        else if(gameboard.getTowerCell(x,y).getTowerLevel().isOccupied()){
+        else if(gameboard.getTowerCell(x,y).getFirstUnoccupiedTowerLevel().isOccupied()){
 
 
             return false;
@@ -84,17 +84,13 @@ public class BasicMove implements MoveStrategy {
         Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
         //getting selected worker to the new towerCell
-        gameboard.getTowerCell(workerStartingPosition.getX(), workerStartingPosition.getY()).getTowerLevel().workerMoved();
-        gameboard.getTowerCell(x, y).getTowerLevel().setWorker(worker);
+        gameboard.getTowerCell(workerStartingPosition.getX(), workerStartingPosition.getY()).getFirstUnoccupiedTowerLevel().workerMoved();
+        gameboard.getTowerCell(x, y).getFirstUnoccupiedTowerLevel().setWorker(worker);
 
         //modifing worker's associated position
         worker.movedToPosition(x,y,z);
 
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
-
-
-
-        return ;
 
 
     }

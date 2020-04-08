@@ -2,6 +2,14 @@ package it.polimi.ingsw.messages;
 
 public class GameMessage {
 
+    //classic messages
+    public static String newTurn = "The previous turn has been completed\n";
+    public static String wrongTurn = "This isn't your turn, please wait\n";
+    public static String eliminated = "You've already been eliminated\n";
+
+    //move request
+    public static String moveRequest = "Make your move (worker number (1/2),x,y)";
+
     //Generic move error messages
     public static String noMoveToCompleteTower = "You can't move here, this space already contains a complete tower, please choose another position\n";
     public static String noMovedToOccupiedTower = "You can't move here, this space already contains another worker, please choose another position\n";
@@ -9,6 +17,9 @@ public class GameMessage {
 
     //move ok
     public static String moveOK= "ok";
+
+    //move request
+    public static String buildRequest = "Choose your build (Piece type (block/dome), worker number (1/2),x,y)";
 
     //generic build error messages
     public static String noBuildToCompleteTower = "You can't build here, this space already contains a complete tower, please choose another position\n";

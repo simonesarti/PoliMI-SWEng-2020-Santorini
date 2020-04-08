@@ -12,6 +12,8 @@ public class TowerLevel {
         piece = null;
     }
 
+    public Worker getWorker(){return worker;}
+
     public Piece getPiece(){
         return piece;
     }

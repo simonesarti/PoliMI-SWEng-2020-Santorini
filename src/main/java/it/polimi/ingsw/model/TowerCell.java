@@ -47,7 +47,9 @@ public class TowerCell {
         towerHeight--;
     }
 
-    public TowerLevel getTowerLevel(){ return towerLevels[towerHeight];}
+    public TowerLevel getFirstUnoccupiedTowerLevel(){ return towerLevels[towerHeight];}
+
+    public boolean hasWorkerOnTop() {return getFirstUnoccupiedTowerLevel().getWorker()!=null;}
 
 
 }
