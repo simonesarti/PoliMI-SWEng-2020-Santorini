@@ -105,13 +105,31 @@ public class BasicBuild implements BuildStrategy {
         int x = message.getBuildingInto()[0];
         int y = message.getBuildingInto()[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
+        Piece piece;
 
-       //TODO istanziare pezzo di tipo Piece e inserirlo
+       //create the right Piece and decrease the number
 
-        //increase tower's height
+       if (gameboard.getTowerCell(x,y).getTowerHeight()==0){
+           piece = new Level1Block();
+           
+       }
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==1){
+           piece = new Level2Block();
+       }
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==2){
+           piece = new Level3Block();
+       }
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==3){
+           piece = new Dome();
+       }
+
+       //set the Piece
+        gameboard.getTowerCell(x,y).getFirstUnoccupiedTowerLevel().setPiece(piece);
+
+       //increase tower's height
         gameboard.getTowerCell(x, y).increaseTowerHeight();
 
-        //check if tower is completed
+       //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
