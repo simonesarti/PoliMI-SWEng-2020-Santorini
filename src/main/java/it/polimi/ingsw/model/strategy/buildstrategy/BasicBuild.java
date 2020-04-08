@@ -49,6 +49,11 @@ public class BasicBuild implements BuildStrategy {
           return GameMessage.notInGameboard;
        }
 
+       //workerPosition must not be the destination position
+       if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
+           return GameMessage.notTheSame;
+       }
+
        //workerPosition must be adjacent to buildingPosition
        if (!worker.getCurrentPosition().adjacent(x,y)){
            return GameMessage.notInSurroundings;
