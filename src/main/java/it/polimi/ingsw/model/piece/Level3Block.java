@@ -4,13 +4,15 @@ public class Level3Block extends Block {
 
     private static int piecesLeft=19;
 
-    public Level3Block() {}
+    public Level3Block() {
+        Level3Block.decreasePiecesNumber();
+    }
 
-    public void decreasePiecesNumber(){
+    public static void decreasePiecesNumber(){
         piecesLeft--;
     }
 
-    public void increasePiecesNumber(){ piecesLeft++;}
+    public static void increasePiecesNumber(){ piecesLeft++;}
 
     public static boolean areTherePiecesLeft(){
         return piecesLeft > 0;

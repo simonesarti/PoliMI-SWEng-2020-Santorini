@@ -72,12 +72,16 @@ public class Controller implements Observer<Message>{
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
         //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
-
             //message.getView().reportError(gameMessage.wrongTurn);
             return;
+        }
 
-            //TODO check vittoria giocatore e check sconfitta giocatore successivo
-         }
+        //TODO check vittoria giocatore
+
+            model.updateTurn();
+
+            // TODO check sconfitta giocatore successivo con eventule rimoione dal gioco
+
     }
 
     /**

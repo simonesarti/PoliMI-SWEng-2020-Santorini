@@ -11,12 +11,10 @@ public class PlayerEndOfTurnChoice extends Message{
 
     private final View view;
     private final Player player;
-    private final String end;
 
     public PlayerEndOfTurnChoice(View view, Player player) {
         this.view = view;
         this.player = player;
-        this.end = "endOfTurn";
     }
 
     public View getView() {
@@ -27,7 +25,4 @@ public class PlayerEndOfTurnChoice extends Message{
         return player;
     }
 
-    public String getEnd() {
-        return end;
-    }
 }
