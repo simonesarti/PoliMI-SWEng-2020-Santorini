@@ -22,5 +22,6 @@ public interface MoveStrategy {
      */
     String checkMove(GameBoard gameboard, PlayerMovementChoice message);
 
+
     public boolean getAlreadyMoved();
 }

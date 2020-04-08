@@ -19,7 +19,7 @@ public class TowerCell {
     }
 
     /**
-     * Checks if in the towercell there is a dome
+     * Checks if there is a dome on the TowerCell
      */
     public void checkCompletion(){
 

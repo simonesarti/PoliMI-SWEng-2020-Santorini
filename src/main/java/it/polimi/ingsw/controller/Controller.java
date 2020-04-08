@@ -18,7 +18,7 @@ public class Controller implements Observer<Message>{
     }
 
     /**
-     * checks if it's the player's turn and calls the player's GodCard's MoveStrategy methods;
+     * Checks if it's the player's turn and calls the player's GodCard's MoveStrategy methods;
      *
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */
@@ -45,7 +45,7 @@ public class Controller implements Observer<Message>{
 
     /**
      *
-     * checks if it's the player's turn and calls the player's GodCard's BuildStrategy
+     * Checks if it's the player's turn and calls the player's GodCard's BuildStrategy
      *
      * @param message messaggio di tipo PlayerBuildChoice
      */
@@ -69,6 +69,10 @@ public class Controller implements Observer<Message>{
         }
     }
 
+    /**
+     * Checks if it's player's turn, checks this player win conditions and next player lose conditions. Updates turn
+     * @param message PlayerEndOfTurnChoice message
+     */
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
         //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
@@ -87,7 +91,7 @@ public class Controller implements Observer<Message>{
     /**
      * Invokes Controller's methods on the basis of message's subclass
      *
-     * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
+     * @param message Message
      */
     @Override
     public void update(Message message) {

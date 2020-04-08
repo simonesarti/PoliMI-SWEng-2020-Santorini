@@ -42,7 +42,6 @@ public class Position {
      * it does not deal with z-axis
      * @return false if positions are not adjacent
      */
-
     public boolean adjacent(int z, int y){
 
         if(     x < this.getX()-1 ||
@@ -60,7 +59,6 @@ public class Position {
         )return false;
 
         else return true;
-
 
     }
 
