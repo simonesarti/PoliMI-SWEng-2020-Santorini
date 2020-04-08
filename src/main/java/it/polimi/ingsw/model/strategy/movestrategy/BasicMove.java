@@ -32,48 +32,37 @@ public class BasicMove implements MoveStrategy {
         int y = message.getMovingTo()[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
-
-        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
-
         //alreadyMoved must be false
         if(alreadyMoved){
             return GameMessage.alreadyMoved;
         }
+
         //x and y must be inside the board
-        else if (x < 0 || x > 4 || y < 0 || y > 4) {
-
-
-            return GameMessage.notInSurroundings;
-        }
-
-        //towercell must be empty
-        else if(gameboard.getTowerCell(x,y).getFirstUnoccupiedTowerLevel().isOccupied()){
-
-
-            return GameMessage.noMovedToOccupiedTower;
-        }
-
-
-        //towercell height must be <= (worker height +1)
-        else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
-
-            return GameMessage.noHighJump;
+        if (x < 0 || x > 4 || y < 0 || y > 4) {
+            return GameMessage.notInGameboard;
         }
 
         //workerPosition must be adjacent to destinationPosition
-        else if (!workerStartingPosition.adjacent(x,y)){
-
+        if (!worker.getCurrentPosition().adjacent(x,y)){
             return GameMessage.notInSurroundings;
         }
 
         //towerCell must not be completed by a dome
-        else if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
-
-
+        if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
             return GameMessage.noMoveToCompleteTower;
         }
 
-        else return GameMessage.moveOK;
+        //towercell height must be <= (worker height +1)
+        if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
+            return GameMessage.noHighJump;
+        }
+
+        //towercell must be empty
+        if(gameboard.getTowerCell(x,y).hasWorkerOnTop()){
+            return GameMessage.noMovedToOccupiedTower;
+        }
+
+        return GameMessage.moveOK;
 
     }
 
@@ -91,13 +80,12 @@ public class BasicMove implements MoveStrategy {
         int x = message.getMovingTo()[0];
         int y = message.getMovingTo()[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
-        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
         //getting selected worker to the new towerCell
-        gameboard.getTowerCell(workerStartingPosition.getX(), workerStartingPosition.getY()).getFirstUnoccupiedTowerLevel().workerMoved();
-        gameboard.getTowerCell(x, y).getFirstUnoccupiedTowerLevel().setWorker(worker);
+        gameboard.getTowerCell(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY()).getFirstNotPieceLevel().workerMoved();
+        gameboard.getTowerCell(x, y).getFirstNotPieceLevel().setWorker(worker);
 
-        //modifing worker's associated position
+        //modifying worker's associated position
         worker.movedToPosition(x,y,z);
         this.alreadyMoved = true;
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board

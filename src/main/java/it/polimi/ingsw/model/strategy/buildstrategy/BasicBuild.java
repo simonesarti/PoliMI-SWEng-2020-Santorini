@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
@@ -35,10 +34,7 @@ public class BasicBuild implements BuildStrategy {
        int y = message.getBuildingInto()[1];
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
-       Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
-
        //Player has not moved yet
-
        if(!message.getPlayer().getGodCard().getMoveStrategy().getAlreadyMoved()){
            return GameMessage.hasNotMoved;
        }
@@ -47,66 +43,55 @@ public class BasicBuild implements BuildStrategy {
        if(alreadyBuilt){
            return GameMessage.alreadyBuilt;
        }
-       //x e y must be inside the board
-       else if (x < 0 || x > 4 || y < 0 || y > 4) {
 
+       //x e y must be inside the board
+       if (x < 0 || x > 4 || y < 0 || y > 4) {
           return GameMessage.notInGameboard;
        }
 
+       //workerPosition must be adjacent to buildingPosition
+       if (!worker.getCurrentPosition().adjacent(x,y)){
+           return GameMessage.notInSurroundings;
+       }
 
        //tower must not be completed
-       else if(gameboard.getTowerCell(x,y).isTowerCompleted()==true) {
-
+       if(gameboard.getTowerCell(x,y).isTowerCompleted()) {
           return GameMessage.noBuildToCompleteTower;
        }
 
-       //workerPosition must be adjacent to buildingPosition
-       else if (!workerStartingPosition.adjacent(x,y)){
-
-          return GameMessage.notInSurroundings;
-       }
-
        //the chosen piece must not be a "Block" when tower's height is 3
-       else if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  message.getPieceType().equals("Block")){
-
+       if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  message.getPieceType().equals("Block")){
            return GameMessage.noBlocksInDome;
        }
 
        //the chosen piece must not be a "Dome" when tower's height is <3
-       else if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  message.getPieceType().equals("Dome")) {
-
+       if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  message.getPieceType().equals("Dome")) {
            return GameMessage.noDomesInBlock;
        }
 
        //control whether there are pieces left
-       else if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && Level1Block.areTherePiecesLeft()==false){
-
+       if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && !Level1Block.areTherePiecesLeft()){
           return GameMessage.noLevel1Left;
        }
 
-       else if (gameboard.getTowerCell(x,y).getTowerHeight()==1 && Level2Block.areTherePiecesLeft()==false){
-
+       if (gameboard.getTowerCell(x,y).getTowerHeight()==1 && !Level2Block.areTherePiecesLeft()){
            return GameMessage.noLevel2Left;
        }
 
-       else if (gameboard.getTowerCell(x,y).getTowerHeight()==2 && Level3Block.areTherePiecesLeft()==false){
-
+       if (gameboard.getTowerCell(x,y).getTowerHeight()==2 && !Level3Block.areTherePiecesLeft()){
            return GameMessage.noLevel3Left;
        }
 
-       else if (gameboard.getTowerCell(x,y).getTowerHeight()==3 && Dome.areTherePiecesLeft()==false){
-
+       if (gameboard.getTowerCell(x,y).getTowerHeight()==3 && !Dome.areTherePiecesLeft()){
            return GameMessage.noDomesLeft;
        }
 
        //there must not be a worker in the building position
-       else if (gameboard.getTowerCell(x,y).hasWorkerOnTop()==true){
-
+       if (gameboard.getTowerCell(x, y).hasWorkerOnTop()){
            return GameMessage.noBuildToOccupiedTower;
        }
 
-       else return GameMessage.buildOK;
-
+       return GameMessage.buildOK;
    }
 
 
@@ -142,7 +127,7 @@ public class BasicBuild implements BuildStrategy {
        }
 
        //set the Piece
-        gameboard.getTowerCell(x,y).getFirstUnoccupiedTowerLevel().setPiece(piece);
+        gameboard.getTowerCell(x,y).getFirstNotPieceLevel().setPiece(piece);
 
        //increase tower's height
         gameboard.getTowerCell(x, y).increaseTowerHeight();
@@ -152,11 +137,6 @@ public class BasicBuild implements BuildStrategy {
 
         this.alreadyBuilt = true;
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
-
-        return ;
-
-
-
 
     }
 }
