@@ -26,6 +26,7 @@ public class GameMessage {
     public static String buildRequest = "Choose your build (Piece type (block/dome), worker number (1/2),x,y)";
 
     //generic build error messages
+    public static String hasNotMoved = "You have not moved yet\n";
     public static String alreadyBuilt = "You have already built\n";
     public static String noBuildToCompleteTower = "You can't build here, this space already contains a complete tower, please choose another position\n";
     public static String noBuildToOccupiedTower = "You can't build here, this space already contains a worker, please choose another position\n";

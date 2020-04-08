@@ -105,4 +105,9 @@ public class BasicMove implements MoveStrategy {
 
     }
 
+
+    @Override
+    public boolean getAlreadyMoved() {
+        return this.alreadyMoved;
+    }
 }

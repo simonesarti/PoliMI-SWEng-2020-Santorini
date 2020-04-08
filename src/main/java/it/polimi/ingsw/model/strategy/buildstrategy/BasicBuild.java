@@ -15,6 +15,7 @@ public class BasicBuild implements BuildStrategy {
 
     boolean alreadyBuilt;
 
+
     public BasicBuild(){
         this.alreadyBuilt = false;
     }
@@ -35,6 +36,12 @@ public class BasicBuild implements BuildStrategy {
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
+
+       //Player has not moved yet
+
+       if(!message.getPlayer().getGodCard().getMoveStrategy().getAlreadyMoved()){
+           return GameMessage.hasNotMoved;
+       }
 
        //alreadyBuilt must be false
        if(alreadyBuilt){
