@@ -14,6 +14,7 @@ public class Player{
     private GodCard godCard;
 
     public Player(PlayerInfo playerInfo){
+
         this.nickname=playerInfo.getPlayerNickname();
         this.birthday=playerInfo.getBirthday();
     }

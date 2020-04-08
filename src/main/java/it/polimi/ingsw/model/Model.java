@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+/**
+ * This class contains an instance of Gameboard and schedules players' turns
+ */
 public class Model {
     //TODO bisogna stare attenti alla gestione dei turni (i turni sono di tipo Colour). Come partire? forse mettere nel costruttore turn = coloreChepartePerPrimo?
 
@@ -7,6 +10,7 @@ public class Model {
     private Colour turn;
     private int numberOfPlayers;
     private Colour eliminated;
+
 
     public Model(int numberOfPlayers){
         gameboard = new GameBoard();
