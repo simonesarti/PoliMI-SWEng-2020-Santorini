@@ -14,6 +14,7 @@ public class GameMessage {
     public static String moveRequest = "Make your move (worker number (1/2),x,y)";
 
     //Generic move error messages
+    public static String notTheSame = "You have to change position, please choose another one\n";
     public static String alreadyMoved = "You have already moved, please build\n";
     public static String noMoveToCompleteTower = "You can't move here, this space already contains a complete tower, please choose another position\n";
     public static String noMovedToOccupiedTower = "You can't move here, this space already contains another worker, please choose another position\n";

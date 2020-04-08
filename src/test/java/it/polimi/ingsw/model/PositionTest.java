@@ -4,10 +4,7 @@ package it.polimi.ingsw.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PositionTest {
 
@@ -17,15 +14,6 @@ public class PositionTest {
     public void setUp(){
 
         position = new Position();
-    }
-
-    @Test
-    public void adjacent_samePosition(){
-
-        position.setPosition(1,1,1);
-
-        assertFalse(position.adjacent(1,1));
-
     }
 
     @Test
@@ -42,6 +30,7 @@ public class PositionTest {
     public void adjacent_areAdjacent(){
 
         position.setPosition(1,2,1);
+
 
         assertTrue(position.adjacent(0,2));
 

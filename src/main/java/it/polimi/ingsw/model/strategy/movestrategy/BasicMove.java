@@ -42,7 +42,11 @@ public class BasicMove implements MoveStrategy {
             return GameMessage.notInGameboard;
         }
 
-        //workerPosition must be adjacent to destinationPosition
+        //workerPosition must not be the destination position
+        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
+            return GameMessage.notTheSame;
+        }
+        //workerPosition must be adjacent to destination position
         if (!worker.getCurrentPosition().adjacent(x,y)){
             return GameMessage.notInSurroundings;
         }
