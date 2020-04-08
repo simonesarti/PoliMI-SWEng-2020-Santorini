@@ -1,12 +1,8 @@
 package it.polimi.ingsw.controller;
 
-
-import it.polimi.ingsw.messages.Message;
-import it.polimi.ingsw.messages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.*;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.observe.Observer;
-
 
 public class Controller implements Observer<Message>{
 
@@ -26,24 +22,26 @@ public class Controller implements Observer<Message>{
      *
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */
-    private void performMove(PlayerMovementChoice message) {
+    private synchronized void performMove(PlayerMovementChoice message) {
 
+        String checkResult;
+
+        //TODO implementare reportError
         if(!model.isPlayerTurn(message.getPlayer())){
-            //message.getView().reportError(gameMessage.wrongTurnMessage); //TODO il messaggio dovrà includere anche la view per mostrare il messaggio di errore in queste occasioni
+            //message.getView().reportError(gameMessage.wrongTurn);
             return;
         }
+        //TODO fare ritornare a check una stringa di GameMessage
+        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message);
 
-        if( model.getCurrentPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message) ) {
-
-            model.getCurrentPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
+        if(checkResult.equals(GameMessage.moveOK)){
+            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
         }
         else{
-            //TODO manda messaggio di errore a view?
+            //TODO impementare reportError
+            //message.getView().reportError(checkResult);
         }
-
-        return;
     }
-
 
     /**
      *
@@ -51,26 +49,35 @@ public class Controller implements Observer<Message>{
      *
      * @param message messaggio di tipo PlayerBuildChoice
      */
-    public void  performBuild(PlayerBuildChoice message){
+    private synchronized void performBuild(PlayerBuildChoice message){
 
+        String checkResult;
+
+        //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
-            //message.getView().reportError(gameMessage.wrongTurnMessage); //TODO il messaggio dovrà includere anche la view per mostrare il messaggio di errore in queste occasioni
+            //message.getView().reportError(gameMessage.wrongTurn);
             return;
         }
 
-        if( model.getCurrentPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message) ) {
-            model.getCurrentPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message);
+        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message);
+        if(checkResult.equals(GameMessage.buildOK) ) {
+            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message);
         }
         else{
-            //TODO manda messaggio di errore a view?
+            //TODO impementare reportError
+            //message.getView().reportError(checkResult);
         }
-
-
-
-        model.updateTurn();
-        return;
     }
 
+    private synchronized void endTurn(PlayerEndOfTurnChoice message){
+        //TODO implementare reporError
+        if(!model.isPlayerTurn(message.getPlayer())){
+            //message.getView().reportError(gameMessage.wrongTurn);
+            return;
+
+            //TODO check vittoria giocatore e check sconfitta giocatore successivo
+         }
+    }
 
     /**
      * Si occupa di chiamare i metodi del controller discriminando in base al sottotipo di Message messaggio
@@ -85,7 +92,11 @@ public class Controller implements Observer<Message>{
         }
 
         if (message instanceof PlayerBuildChoice){
-            performBuild( (PlayerBuildChoice)message );
+            performBuild((PlayerBuildChoice)message);
+        }
+
+        if(message instanceof PlayerEndOfTurnChoice){
+            endTurn((PlayerEndOfTurnChoice)message);
         }
 
     }
