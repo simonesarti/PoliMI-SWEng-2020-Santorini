@@ -11,6 +11,12 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
 
 public class BasicBuild implements BuildStrategy {
 
+    boolean alreadyMoved;
+
+    public BasicBuild(){
+        this.alreadyMoved = false;
+    }
+
     /**
      * Checks if player can build
      *
@@ -28,7 +34,10 @@ public class BasicBuild implements BuildStrategy {
 
        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
-
+       //alreadyMoved must be false
+       if(alreadyMoved){
+           return GameMessage.alreadyMoved;
+       }
        //x e y must be inside the board
        if (x < 0 || x > 4 || y < 0 || y > 4) {
 
@@ -114,6 +123,7 @@ public class BasicBuild implements BuildStrategy {
         //check if tower is completed
         gameboard.getTowerCell(x,y).checkCompletion();
 
+        this.alreadyMoved = true;
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
         return ;
