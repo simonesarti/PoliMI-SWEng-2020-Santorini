@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
+import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Position;
@@ -18,7 +19,7 @@ public class BasicMove implements MoveStrategy {
      * @return
      */
     @Override
-    public boolean checkMove(GameBoard gameboard, PlayerMovementChoice message){
+    public String checkMove(GameBoard gameboard, PlayerMovementChoice message){
 
         Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
         int x = message.getMovingTo()[0];
@@ -33,37 +34,37 @@ public class BasicMove implements MoveStrategy {
         if (x < 0 || x > 4 || y < 0 || y > 4) {
 
 
-            return false;
+            return GameMessage.notInSurroundings;
         }
 
         //towercell must be empty
         else if(gameboard.getTowerCell(x,y).getFirstUnoccupiedTowerLevel().isOccupied()){
 
 
-            return false;
+            return GameMessage.noMovedToOccupiedTower;
         }
 
 
         //towercell height must be <= (worker height +1)
         else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
 
-            return false;
+            return GameMessage.noHighJump;
         }
 
         //workerPosition must be adjacent to destinationPosition
         else if (!workerStartingPosition.adjacent(x,y)){
 
-            return false;
+            return GameMessage.notInSurroundings;
         }
 
         //towerCell must not be completed by a dome
         else if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
 
 
-            return false;
+            return GameMessage.noMoveToCompleteTower;
         }
 
-        else return true;
+        else return GameMessage.moveOK;
 
     }
 

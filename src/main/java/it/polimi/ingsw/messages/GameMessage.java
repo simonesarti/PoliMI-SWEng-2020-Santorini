@@ -18,7 +18,7 @@ public class GameMessage {
     //move ok
     public static String moveOK= "ok";
 
-    //move request
+    //build request
     public static String buildRequest = "Choose your build (Piece type (block/dome), worker number (1/2),x,y)";
 
     //generic build error messages

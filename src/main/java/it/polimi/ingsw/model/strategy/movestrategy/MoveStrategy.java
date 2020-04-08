@@ -20,5 +20,5 @@ public interface MoveStrategy {
      * @param message PlayerMovementChoice message
      * @return
      */
-    boolean checkMove(GameBoard gameboard, PlayerMovementChoice message);
+    String checkMove(GameBoard gameboard, PlayerMovementChoice message);
 }

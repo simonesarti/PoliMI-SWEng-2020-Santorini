@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 
+import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.piece.Block;
-import it.polimi.ingsw.model.piece.Piece;
+import it.polimi.ingsw.model.piece.*;
 import it.polimi.ingsw.messages.PlayerBuildChoice;
 
 
@@ -19,7 +19,7 @@ public class BasicBuild implements BuildStrategy {
      * @return
      */
    @Override
-   public boolean checkBuild(GameBoard gameboard, PlayerBuildChoice message){
+   public String checkBuild(GameBoard gameboard, PlayerBuildChoice message){
 
        Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
        int x = message.getBuildingInto()[0];
@@ -32,37 +32,62 @@ public class BasicBuild implements BuildStrategy {
        //x e y must be inside the board
        if (x < 0 || x > 4 || y < 0 || y > 4) {
 
-           return false;
+          return GameMessage.notInGameboard;
        }
 
 
        //tower must not be completed
        else if(gameboard.getTowerCell(x,y).isTowerCompleted()==true) {
 
-           return false;
+          return GameMessage.noBuildToCompleteTower;
        }
 
        //workerPosition must be adjacent to buildingPosition
        else if (!workerStartingPosition.adjacent(x,y)){
 
-           return false;
+          return GameMessage.notInSurroundings;
        }
 
        //the chosen piece must not be a "Block" when tower's height is 3
        else if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  message.getPieceType().equals("Block")){
 
-           return false;
+           return GameMessage.noBlocksInDome;
        }
 
        //the chosen piece must not be a "Dome" when tower's height is <3
        else if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  message.getPieceType().equals("Dome")) {
 
-           return false;
+           return GameMessage.noDomesInBlock;
        }
 
-       //TODO controllare che esistano ancora pezzi disponibili
+       //control whether there are pieces left
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && Level1Block.areTherePiecesLeft()==false){
 
-       else return true;
+          return GameMessage.noLevel1Left;
+       }
+
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==1 && Level2Block.areTherePiecesLeft()==false){
+
+           return GameMessage.noLevel2Left;
+       }
+
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==2 && Level3Block.areTherePiecesLeft()==false){
+
+           return GameMessage.noLevel3Left;
+       }
+
+       else if (gameboard.getTowerCell(x,y).getTowerHeight()==3 && Dome.areTherePiecesLeft()==false){
+
+           return GameMessage.noDomesLeft;
+       }
+
+       //there must not be a worker in the building position
+       else if (gameboard.getTowerCell(x,y).hasWorkerOnTop()==true){
+
+           return GameMessage.noBuildToOccupiedTower;
+       }
+
+       else return GameMessage.buildOK;
 
    }
 

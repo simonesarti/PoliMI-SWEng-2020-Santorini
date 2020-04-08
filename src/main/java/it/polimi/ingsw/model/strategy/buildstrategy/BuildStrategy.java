@@ -14,6 +14,7 @@ public interface BuildStrategy {
     //TODO qesto vuol dire che getter e setter devono essere già presenti nell'interfaccia
 
     /**
+     * Checks if player can build
      * @param gameboard
      * @param  message PlayerBuildChoice message
      */
@@ -21,9 +22,10 @@ public interface BuildStrategy {
 
 
     /**
+     * changes tower's height and checks if tower is complete
      * @param gameboard
      * @param message PlayerBuildChoice message
      * @return
      */
-    boolean checkBuild(GameBoard gameboard, PlayerBuildChoice message);
+    public String checkBuild(GameBoard gameboard, PlayerBuildChoice message);
 }
