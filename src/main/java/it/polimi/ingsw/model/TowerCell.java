@@ -19,7 +19,7 @@ public class TowerCell {
     }
 
     /**
-     * Checks if in the towercell there is a dome
+     * Checks if there is a dome on the TowerCell
      */
     public void checkCompletion(){
 
@@ -35,6 +35,7 @@ public class TowerCell {
         return towerHeight;
     }
 
+
     public boolean isTowerCompleted() {
         return towerCompleted;
     }
@@ -47,9 +48,17 @@ public class TowerCell {
         towerHeight--;
     }
 
-    public TowerLevel getFirstUnoccupiedTowerLevel(){ return towerLevels[towerHeight];}
+    public TowerLevel getFirstNotPieceLevel(){
+        if (towerHeight==4) throw new NullPointerException("MESSAGE: Towercell[4] doesn't exist");
+        return towerLevels[towerHeight];}
 
-    public boolean hasWorkerOnTop() {return getFirstUnoccupiedTowerLevel().getWorker()!=null;}
+    public boolean hasWorkerOnTop() {return getFirstNotPieceLevel().getWorker()!=null;}
 
+    public void resetTower() {
 
+        for(int i=0;i<4;i++){
+            towerLevels[i].workerMoved();
+            towerLevels[i].pieceWasRemoved();
+        }
+    }
 }

@@ -4,9 +4,11 @@ public class Dome extends Piece {
 
     private static int piecesLeft=22;
 
-    public Dome(){}
+    public Dome(){
+        Dome.decreasePiecesNumber();
+    }
 
-    public void decreasePiecesNumber(){
+    public static void decreasePiecesNumber(){
         piecesLeft--;
     }
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.strategy.movestrategy;
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
 
@@ -17,87 +18,75 @@ public class BasicMove implements MoveStrategy {
     public BasicMove(){
         alreadyMoved = false;
     }
-    /**
-     * Checks if player's move is feasible
-     *
-     * @param gameboard
-     * @param message message PlayerMovementChoice
-     * @return
-     */
+
     @Override
-    public String checkMove(GameBoard gameboard, PlayerMovementChoice message){
+    public String checkMove(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
 
-        Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
-        int x = message.getMovingTo()[0];
-        int y = message.getMovingTo()[1];
+        Worker worker = player.getWorker(chosenWorker);
+        int x = movingTo[0];
+        int y = movingTo[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
-
-
-        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
         //alreadyMoved must be false
         if(alreadyMoved){
             return GameMessage.alreadyMoved;
         }
+
         //x and y must be inside the board
-        else if (x < 0 || x > 4 || y < 0 || y > 4) {
-
-
-            return GameMessage.notInSurroundings;
+        if (x < 0 || x > 4 || y < 0 || y > 4) {
+            return GameMessage.notInGameboard;
         }
 
-        //towercell must be empty
-        else if(gameboard.getTowerCell(x,y).getFirstUnoccupiedTowerLevel().isOccupied()){
-
-
-            return GameMessage.noMovedToOccupiedTower;
+        //workerPosition must not be the destination position
+        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
+            return GameMessage.notTheSame;
         }
-
-
-        //towercell height must be <= (worker height +1)
-        else if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
-
-            return GameMessage.noHighJump;
-        }
-
-        //workerPosition must be adjacent to destinationPosition
-        else if (!workerStartingPosition.adjacent(x,y)){
-
+        //workerPosition must be adjacent to destination position
+        if (!worker.getCurrentPosition().adjacent(x,y)){
             return GameMessage.notInSurroundings;
         }
 
         //towerCell must not be completed by a dome
-        else if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
-
-
+        if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
             return GameMessage.noMoveToCompleteTower;
         }
 
-        else return GameMessage.moveOK;
+        //towercell height must be <= (worker height +1)
+        if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
+            return GameMessage.noHighJump;
+        }
+
+        //towercell must be empty
+        if(gameboard.getTowerCell(x,y).hasWorkerOnTop()){
+            return GameMessage.noMovedToOccupiedTower;
+        }
+
+        //if Athena's power is active, worker can not move up
+        if(gameboard.getAthenaPowerStatus()){
+            //if worker moves up return error, else do nothing
+            if(worker.getCurrentPosition().getZ() < z){
+                return GameMessage.athenaNoMoveUp;
+            }
+        }
+
+        return GameMessage.moveOK;
 
     }
 
-    /**
-     * Removes worker from starting towercell's towerlevel, changes worker's position values and sets the worker in the
-     * destination's towercell's towerlevel
-     *
-     * @param gameboard
-     * @param message message PlayerMovementChoice
-     */
-    @Override
-    public void move(GameBoard gameboard, PlayerMovementChoice message) {
 
-        Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
-        int x = message.getMovingTo()[0];
-        int y = message.getMovingTo()[1];
+    @Override
+    public void move(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
+
+        Worker worker = player.getWorker(chosenWorker);
+        int x = movingTo[0];
+        int y = movingTo[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
-        Position workerStartingPosition = new Position(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY(),worker.getCurrentPosition().getZ());
 
         //getting selected worker to the new towerCell
-        gameboard.getTowerCell(workerStartingPosition.getX(), workerStartingPosition.getY()).getFirstUnoccupiedTowerLevel().workerMoved();
-        gameboard.getTowerCell(x, y).getFirstUnoccupiedTowerLevel().setWorker(worker);
+        gameboard.getTowerCell(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY()).getFirstNotPieceLevel().workerMoved();
+        gameboard.getTowerCell(x, y).getFirstNotPieceLevel().setWorker(worker);
 
-        //modifing worker's associated position
+        //modifying worker's associated position
         worker.movedToPosition(x,y,z);
         this.alreadyMoved = true;
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
@@ -105,4 +94,8 @@ public class BasicMove implements MoveStrategy {
 
     }
 
+    @Override
+    public boolean getAlreadyMoved() {
+        return this.alreadyMoved;
+    }
 }

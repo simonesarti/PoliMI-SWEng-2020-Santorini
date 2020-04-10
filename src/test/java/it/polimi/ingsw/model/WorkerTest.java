@@ -11,7 +11,7 @@ class WorkerTest {
 
     @BeforeEach
     void init() {
-        worker = new Worker(Colour.WHITE);
+        worker = new Worker(Colour.WHITE,0);
         worker.setStartingPosition(1, 2);
     }
 
@@ -22,8 +22,7 @@ class WorkerTest {
         assertAll(
                 () -> assertEquals(worker.getCurrentPosition().getX(), 1),
                 () -> assertEquals(worker.getCurrentPosition().getY(), 2),
-                () -> assertEquals(worker.getCurrentPosition().getZ(), 0),
-                () -> assertNull(worker.getPreviousPosition())
+                () -> assertEquals(worker.getCurrentPosition().getZ(), 0)
         );
     }
 

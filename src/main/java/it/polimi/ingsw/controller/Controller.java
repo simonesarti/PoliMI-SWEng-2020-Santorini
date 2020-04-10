@@ -18,7 +18,7 @@ public class Controller implements Observer<Message>{
     }
 
     /**
-     * checks if it's the player's turn and calls the player's GodCard's MoveStrategy methods;
+     * Checks if it's the player's turn and calls the player's GodCard's MoveStrategy methods;
      *
      * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
      */
@@ -32,10 +32,10 @@ public class Controller implements Observer<Message>{
             return;
         }
         //TODO fare ritornare a check una stringa di GameMessage
-        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message);
+        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
         if(checkResult.equals(GameMessage.moveOK)){
-            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
+            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
         }
         else{
             //TODO impementare reportError
@@ -45,7 +45,7 @@ public class Controller implements Observer<Message>{
 
     /**
      *
-     * checks if it's the player's turn and calls the player's GodCard's BuildStrategy
+     * Checks if it's the player's turn and calls the player's GodCard's BuildStrategy
      *
      * @param message messaggio di tipo PlayerBuildChoice
      */
@@ -59,9 +59,10 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message);
+        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+
         if(checkResult.equals(GameMessage.buildOK) ) {
-            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message);
+            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
         }
         else{
             //TODO impementare reportError
@@ -69,21 +70,33 @@ public class Controller implements Observer<Message>{
         }
     }
 
+    /**
+     * Checks if it's player's turn, checks this player win conditions and next player lose conditions. Updates turn
+     * @param message PlayerEndOfTurnChoice message
+     */
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
         //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
-
             //message.getView().reportError(gameMessage.wrongTurn);
             return;
+        }
 
-            //TODO check vittoria giocatore e check sconfitta giocatore successivo
-         }
+        if(!model.getTurnCanEnd()){
+            //message.getView().reportError(gameMessage.turnNotEnded);
+        }
+
+        //TODO check vittoria giocatore
+
+            model.updateTurn();
+
+            // TODO check sconfitta giocatore successivo con eventule rimoione dal gioco
+
     }
 
     /**
      * Invokes Controller's methods on the basis of message's subclass
      *
-     * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
+     * @param message Message
      */
     @Override
     public void update(Message message) {

@@ -13,6 +13,9 @@ public class Deck{
 
     private List<GodCard> deck = new ArrayList<>();
 
+    /**
+     * Constructor. It scans Godcards' descriptions from a file
+     */
     public Deck(){
 
         try{
@@ -31,6 +34,11 @@ public class Deck{
 
     }
 
+    /**
+     * returns the chosen GodCard
+     * @param divinityName God's name
+     * @return returns GodCard object
+     */
     public GodCard chooseCardFromDeck(String divinityName){
 
         for (GodCard godCard : deck) {

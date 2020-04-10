@@ -14,21 +14,23 @@ public class Player{
     private GodCard godCard;
 
     public Player(PlayerInfo playerInfo){
+
         this.nickname=playerInfo.getPlayerNickname();
         this.birthday=playerInfo.getBirthday();
     }
 
     public void setColour(Colour colour) {
         this.colour = colour;
+        setWorkers();
+    }
+
+    private void setWorkers(){
+        workers[0]=new Worker(this.colour,0);
+        workers[1]=new Worker(this.colour,1);
     }
 
     public void setGodCard(GodCard godCard) {
         this.godCard = godCard;
-    }
-
-    public void setWorkers(){
-        workers[0]=new Worker(this.colour);
-        workers[1]=new Worker(this.colour);
     }
 
     public Worker getWorker(int i){return workers[i];}

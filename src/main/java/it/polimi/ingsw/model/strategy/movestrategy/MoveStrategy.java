@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
 
 /**
  * Move strategies interface
@@ -11,14 +12,14 @@ public interface MoveStrategy {
     /**
      *
      * @param gameboard
-     * @param message PlayerMovementChoice message
      */
-    void move(GameBoard gameboard, PlayerMovementChoice message);
+    void move(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo);
 
     /**
      *  @param gameboard
-     * @param message PlayerMovementChoice message
      * @return
      */
-    String checkMove(GameBoard gameboard, PlayerMovementChoice message);
+    String checkMove(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo);
+
+    boolean getAlreadyMoved();
 }
