@@ -122,7 +122,6 @@ public class BasicBuild implements BuildStrategy {
 
        if (gameboard.getTowerCell(x,y).getTowerHeight()==0){
            piece = new Level1Block();
-           
        }
        else if (gameboard.getTowerCell(x,y).getTowerHeight()==1){
            piece = new Level2Block();
