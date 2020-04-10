@@ -32,10 +32,10 @@ public class Controller implements Observer<Message>{
             return;
         }
         //TODO fare ritornare a check una stringa di GameMessage
-        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message);
+        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
         if(checkResult.equals(GameMessage.moveOK)){
-            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message);
+            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
         }
         else{
             //TODO impementare reportError
@@ -59,9 +59,10 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message);
+        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+
         if(checkResult.equals(GameMessage.buildOK) ) {
-            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message);
+            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
         }
         else{
             //TODO impementare reportError

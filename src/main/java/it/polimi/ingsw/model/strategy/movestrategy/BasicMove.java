@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.strategy.movestrategy;
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
 
@@ -17,19 +18,13 @@ public class BasicMove implements MoveStrategy {
     public BasicMove(){
         alreadyMoved = false;
     }
-    /**
-     * Checks if player's move is feasible
-     *
-     * @param gameboard
-     * @param message message PlayerMovementChoice
-     * @return
-     */
-    @Override
-    public String checkMove(GameBoard gameboard, PlayerMovementChoice message){
 
-        Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
-        int x = message.getMovingTo()[0];
-        int y = message.getMovingTo()[1];
+    @Override
+    public String checkMove(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
+
+        Worker worker = player.getWorker(chosenWorker);
+        int x = movingTo[0];
+        int y = movingTo[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //alreadyMoved must be false
@@ -70,19 +65,13 @@ public class BasicMove implements MoveStrategy {
 
     }
 
-    /**
-     * Removes worker from starting towercell's towerlevel, changes worker's position values and sets the worker in the
-     * destination's towercell's towerlevel
-     *
-     * @param gameboard
-     * @param message message PlayerMovementChoice
-     */
-    @Override
-    public void move(GameBoard gameboard, PlayerMovementChoice message) {
 
-        Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
-        int x = message.getMovingTo()[0];
-        int y = message.getMovingTo()[1];
+    @Override
+    public void move(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
+
+        Worker worker = player.getWorker(chosenWorker);
+        int x = movingTo[0];
+        int y = movingTo[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //getting selected worker to the new towerCell
@@ -96,7 +85,6 @@ public class BasicMove implements MoveStrategy {
 
 
     }
-
 
     @Override
     public boolean getAlreadyMoved() {

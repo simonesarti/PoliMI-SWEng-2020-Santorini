@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.strategy.buildstrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Position;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.piece.*;
@@ -19,23 +20,16 @@ public class BasicBuild implements BuildStrategy {
         this.alreadyBuilt = false;
     }
 
-    /**
-     * Checks if player can build
-     *
-     * @param gameboard is the gameboard
-     * @param message message PlayerBuildChoice
-     * @return a string which may be an "ok" or a message error
-     */
    @Override
-   public String checkBuild(GameBoard gameboard, PlayerBuildChoice message){
+   public String checkBuild(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType){
 
-       Worker worker = message.getPlayer().getWorker(message.getChosenWorker());
-       int x = message.getBuildingInto()[0];
-       int y = message.getBuildingInto()[1];
+       Worker worker = player.getWorker(chosenWorker);
+       int x = buildingInto[0];
+       int y = buildingInto[1];
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
        //Player has not moved yet
-       if(!message.getPlayer().getGodCard().getMoveStrategy().getAlreadyMoved()){
+       if(!player.getGodCard().getMoveStrategy().getAlreadyMoved()){
            return GameMessage.hasNotMoved;
        }
 
@@ -65,12 +59,12 @@ public class BasicBuild implements BuildStrategy {
        }
 
        //the chosen piece must not be a "Block" when tower's height is 3
-       if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  message.getPieceType().equals("Block")){
+       if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  pieceType.equals("Block")){
            return GameMessage.noBlocksInDome;
        }
 
        //the chosen piece must not be a "Dome" when tower's height is <3
-       if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  message.getPieceType().equals("Dome")) {
+       if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  pieceType.equals("Dome")) {
            return GameMessage.noDomesInBlock;
        }
 
@@ -99,19 +93,11 @@ public class BasicBuild implements BuildStrategy {
        return GameMessage.buildOK;
    }
 
-
-    /**
-     * changes tower's height and checks if tower is complete
-     *
-     * @param gameboard is the gameboard
-     * @param message message PlayerBuildChoice
-     */
     @Override
-    public void build(GameBoard gameboard, PlayerBuildChoice message) {
+    public void build(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
 
-
-        int x = message.getBuildingInto()[0];
-        int y = message.getBuildingInto()[1];
+        int x = buildingInto[0];
+        int y = buildingInto[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
         Piece piece = null;
 
@@ -119,7 +105,6 @@ public class BasicBuild implements BuildStrategy {
 
        if (z==0){
            piece = new Level1Block();
-           
        }
        else if (z==1){
            piece = new Level2Block();
