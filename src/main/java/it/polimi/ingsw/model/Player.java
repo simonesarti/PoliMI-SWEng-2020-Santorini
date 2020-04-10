@@ -28,8 +28,8 @@ public class Player{
     }
 
     public void setWorkers(){
-        workers[0]=new Worker(this.colour);
-        workers[1]=new Worker(this.colour);
+        workers[0]=new Worker(this.colour,0);
+        workers[1]=new Worker(this.colour,1);
     }
 
     public Worker getWorker(int i){return workers[i];}
