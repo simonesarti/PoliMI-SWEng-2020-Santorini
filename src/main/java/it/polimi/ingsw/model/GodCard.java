@@ -2,8 +2,10 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.strategy.buildstrategy.BasicBuild;
 import it.polimi.ingsw.model.strategy.buildstrategy.BuildStrategy;
+import it.polimi.ingsw.model.strategy.losestrategy.ApolloLose;
 import it.polimi.ingsw.model.strategy.losestrategy.BasicLose;
 import it.polimi.ingsw.model.strategy.losestrategy.LoseStrategy;
+import it.polimi.ingsw.model.strategy.losestrategy.MinotaurLose;
 import it.polimi.ingsw.model.strategy.movestrategy.BasicMove;
 import it.polimi.ingsw.model.strategy.movestrategy.MoveStrategy;
 import it.polimi.ingsw.model.strategy.winstrategy.BasicWin;
@@ -40,55 +42,63 @@ public class GodCard{
                 //moveStrategy = new ApolloMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
+                loseStrategy= new ApolloLose();
                 break;
 
             case "Artemis" :
                 //moveStrategy = new ArtemisMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
-                loseStrategy = new BasicLose();
+                //loseStrategy = new LOSE();
                 break;
+
             case "Athena" :
                 //moveStrategy = new AthenaMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new BasicLose();
                 break;
+
             case "Atlas" :
                 moveStrategy = new BasicMove();
                 //buildStrategy = new AtlasBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new BasicLose();
                 break;
+
             case "Demeter" :
                 moveStrategy = new BasicMove();
                 //buildStrategy = new DemeterBuild();
                 winStrategy = new BasicWin();
-                loseStrategy = new BasicLose();
+                //loseStrategy = new LOSE();
                 break;
+
             case "Hephaestus" :
                 moveStrategy = new BasicMove();
                 //buildStrategy = new HephaestusBuild();
                 winStrategy = new BasicWin();
-                loseStrategy = new BasicLose();
+                //loseStrategy = new LOSE();
                 break;
+
             case "Minotaur" :
                 //moveStrategy = new MinotaurMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
-                loseStrategy = new BasicLose();
+                loseStrategy = new MinotaurLose();
                 break;
+
             case "Pan" :
                 moveStrategy = new BasicMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new PanWin();
                 loseStrategy = new BasicLose();
                 break;
+
             case "Prometheus" :
                 //moveStrategy = new PrometheusMove();
                 //buildStrategy = new PrometheusBuild();
-                winStrategy = new PanWin();
-                loseStrategy = new BasicLose();
+                winStrategy = new BasicWin();
+                //loseStrategy = new LOSE();
                 break;
 
         }
