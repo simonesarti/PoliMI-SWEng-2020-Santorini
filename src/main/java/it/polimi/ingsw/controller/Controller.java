@@ -81,6 +81,10 @@ public class Controller implements Observer<Message>{
             return;
         }
 
+        if(!model.getTurnCanEnd()){
+            //message.getView().reportError(gameMessage.turnNotEnded);
+        }
+
         //TODO check vittoria giocatore
 
             model.updateTurn();

@@ -9,6 +9,7 @@ public class GameMessage {
     public static String newTurn = "The previous turn has been completed\n";
     public static String wrongTurn = "This isn't your turn, please wait\n";
     public static String eliminated = "You've already been eliminated\n";
+    public static String turnNotEnded = "You haven't completed your turn yet, please proceed to complete it with a move/build\n";
 
     //move request
     public static String moveRequest = "Make your move (worker number (1/2),x,y)";

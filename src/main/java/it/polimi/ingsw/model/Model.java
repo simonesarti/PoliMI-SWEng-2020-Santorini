@@ -7,19 +7,27 @@ public class Model {
     //TODO bisogna stare attenti alla gestione dei turni (i turni sono di tipo Colour). Come partire? forse mettere nel costruttore turn = coloreChepartePerPrimo?
 
     private GameBoard gameboard;
-    private Colour turn;
     private int numberOfPlayers;
+
+    private Colour turn;
+    private boolean turnCanEnd;
     private Colour eliminated;
 
+    private boolean athenaPowerActive;
+
+//----------------------------------------------------------------------------------------------------------
 
     public Model(int numberOfPlayers){
         gameboard = new GameBoard();
         turn=Colour.WHITE;
-        this.numberOfPlayers=numberOfPlayers;
+        turnCanEnd=false;
 
+        this.numberOfPlayers=numberOfPlayers;
         if(this.numberOfPlayers==2){
             eliminated=Colour.GREY;
         }
+
+        athenaPowerActive=false;
     }
 
     public GameBoard getGameBoard(){return gameboard;}
@@ -30,12 +38,6 @@ public class Model {
      * @return boolean
      */
     public boolean isPlayerTurn(Player player){ return player.getColour()== turn;}
-
-    /**
-     * returns current turn's colour
-     * @return turn
-     */
-    public Colour getTurn(){ return turn;}
 
     /**
      * updates the turn based on the order of the player
@@ -74,9 +76,23 @@ public class Model {
                 }
                 break;
         }
+
+        turnCanEnd=false;
+    }
+
+    public boolean getTurnCanEnd(){ return this.turnCanEnd; }
+
+    public void setTurnCanEnd() {
+        this.turnCanEnd = true;
     }
 
     public boolean isEliminated(Colour colour){
-        return eliminated==colour;
+        return this.eliminated==colour;
+    }
+
+    public boolean getAthenaPowerStatus(){ return athenaPowerActive;}
+
+    public void setAthenaPowerActive() {
+        athenaPowerActive=true;
     }
 }
