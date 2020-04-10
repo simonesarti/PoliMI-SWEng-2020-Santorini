@@ -47,7 +47,7 @@ public class BasicMove implements MoveStrategy {
         }
 
         //towerCell must not be completed by a dome
-        if (!gameboard.getTowerCell(x,y).isTowerCompleted()){
+        if (gameboard.getTowerCell(x,y).isTowerCompleted()){
             return GameMessage.noMoveToCompleteTower;
         }
 
@@ -95,7 +95,7 @@ public class BasicMove implements MoveStrategy {
     }
 
     @Override
-    public boolean getAlreadyMoved() {
-        return this.alreadyMoved;
-    }
+    public boolean getAlreadyMoved() { return this.alreadyMoved;}
+
+    public void setAlreadyMoved(boolean x){ alreadyMoved = x;}
 }

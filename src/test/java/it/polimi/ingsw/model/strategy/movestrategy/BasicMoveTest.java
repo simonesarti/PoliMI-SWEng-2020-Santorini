@@ -1,4 +1,5 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
+import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
@@ -8,7 +9,9 @@ import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.model.piece.Level3Block;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -26,7 +29,7 @@ public class BasicMoveTest {
     PlayerInfo playerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
-    int[] movingTo;
+    int[] movingTo = new int[2];
 
 
     @BeforeEach
@@ -81,6 +84,7 @@ public class BasicMoveTest {
         gameBoard.getTowerCell(1,2).increaseTowerHeight();
         gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setPiece(new Dome());
         gameBoard.getTowerCell(1,2).increaseTowerHeight();
+        gameBoard.getTowerCell(1,2).checkCompletion();
 
 
         gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().setPiece(new Level1Block());
@@ -98,10 +102,12 @@ public class BasicMoveTest {
         gameBoard.getTowerCell(4,2).increaseTowerHeight();
         gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Dome());
         gameBoard.getTowerCell(4,2).increaseTowerHeight();
+        gameBoard.getTowerCell(4,2).checkCompletion();
 
 
         gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Dome());
         gameBoard.getTowerCell(1,3).increaseTowerHeight();
+        gameBoard.getTowerCell(1,3).checkCompletion();
 
         gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setPiece(new Level1Block());
         gameBoard.getTowerCell(2,3).increaseTowerHeight();
@@ -130,6 +136,54 @@ public class BasicMoveTest {
 
         return;
     }
+
+    @Test
+    void checkMove(){
+
+        //alreadyMoved must be false
+        movingTo[0]=1;
+        movingTo[1]=1;
+        basicmove.setAlreadyMoved(true);
+        assertEquals(GameMessage.alreadyMoved, basicmove.checkMove(gameBoard,player,0,movingTo));
+        basicmove.setAlreadyMoved(false);
+        //x and y must be inside the board
+        //TODO probabilmente bisogna mettere un try attorno alla checkMove e nella catch mandare il messaggio. perché il metodo crasha subito se gli dai un movingTo outofbounds
+        //workerPosition must not be the destination position
+        movingTo[0]=player.getWorker(0).getCurrentPosition().getX();
+        movingTo[1]=player.getWorker(0).getCurrentPosition().getY();
+        assertEquals(GameMessage.notTheSame, basicmove.checkMove(gameBoard,player,0,movingTo));
+        //workerPosition must be adjacent to destination position
+        movingTo[0]=2;
+        movingTo[1]=0;
+        assertEquals(GameMessage.notInSurroundings, basicmove.checkMove(gameBoard,player,0,movingTo));
+        //towerCell must not be completed by a dome
+        player.getWorker(0).movedToPosition(0,3,0);
+        movingTo[0]=1;
+        movingTo[1]=3;
+        assertEquals(GameMessage.noMoveToCompleteTower, basicmove.checkMove(gameBoard,player,0,movingTo));
+        //towercell height must be <= (worker height +1)
+        player.getWorker(0).movedToPosition(3,1,0);
+        movingTo[0]=3;
+        movingTo[1]=2;
+        assertEquals(GameMessage.noHighJump, basicmove.checkMove(gameBoard,player,0,movingTo));
+        //towercell must be empty
+        player.getWorker(0).movedToPosition(3,0,2);
+        movingTo[0]=4;
+        movingTo[1]=0;
+        assertEquals(GameMessage.noMovedToOccupiedTower, basicmove.checkMove(gameBoard,player,0,movingTo));
+        //if Athena's power is active, worker can not move up
+        gameBoard.setAthenaPowerTrue();
+        player.getWorker(0).movedToPosition(2,2,0);
+        movingTo[0]=2;
+        movingTo[1]=3;
+        assertEquals(GameMessage.athenaNoMoveUp, basicmove.checkMove(gameBoard,player,0,movingTo));
+        gameBoard.setAthenaPowerFalse();
+        //move ok
+        assertEquals(GameMessage.moveOK, basicmove.checkMove(gameBoard,player,0,movingTo));
+
+    }
+
+
 
 
 
