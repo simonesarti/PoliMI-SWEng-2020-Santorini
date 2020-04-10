@@ -35,6 +35,7 @@ public class TowerCell {
         return towerHeight;
     }
 
+
     public boolean isTowerCompleted() {
         return towerCompleted;
     }

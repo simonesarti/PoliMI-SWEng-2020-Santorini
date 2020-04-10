@@ -61,6 +61,14 @@ public class BasicMove implements MoveStrategy {
             return GameMessage.noMovedToOccupiedTower;
         }
 
+        //if Athena's power is active, worker can not move up
+        if(gameboard.getAthenaPowerStatus()){
+            //if worker moves up return error, else do nothing
+            if(worker.getCurrentPosition().getZ() < z){
+                return GameMessage.athenaNoMoveUp;
+            }
+        }
+
         return GameMessage.moveOK;
 
     }

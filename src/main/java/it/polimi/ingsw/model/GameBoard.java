@@ -7,9 +7,10 @@ package it.polimi.ingsw.model;
 public class GameBoard {
 
     private TowerCell[][] towerCells = new TowerCell[5][5];
+    private boolean athenaPowerActive;
 
     /**
-     * Builds the gameboard. Every "square" is associated with a towerCell object.
+     * Builds the gameboard. Every "square" is associated with a towerCell object. Sets athenaPowerActive to "false"
      */
     public GameBoard(){
         for(int j = 0; j<5; j++){
@@ -17,6 +18,8 @@ public class GameBoard {
                 towerCells[j][i]=new TowerCell();
             }
         }
+
+        athenaPowerActive=false;
     }
 
     public TowerCell getTowerCell(int x, int y){ return towerCells[x][y];}
@@ -28,5 +31,11 @@ public class GameBoard {
                 towerCells[j][i].resetTower();
             }
         }
+    }
+
+    public boolean getAthenaPowerStatus(){ return athenaPowerActive;}
+
+    public void setAthenaPowerActive() {
+        athenaPowerActive=true;
     }
 }

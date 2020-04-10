@@ -4,7 +4,6 @@ package it.polimi.ingsw.model;
  * This class contains an instance of Gameboard and schedules players' turns
  */
 public class Model {
-    //TODO bisogna stare attenti alla gestione dei turni (i turni sono di tipo Colour). Come partire? forse mettere nel costruttore turn = coloreChepartePerPrimo?
 
     private GameBoard gameboard;
     private int numberOfPlayers;
@@ -13,7 +12,7 @@ public class Model {
     private boolean turnCanEnd;
     private Colour eliminated;
 
-    private boolean athenaPowerActive;
+
 
 //----------------------------------------------------------------------------------------------------------
 
@@ -27,7 +26,7 @@ public class Model {
             eliminated=Colour.GREY;
         }
 
-        athenaPowerActive=false;
+
     }
 
     public GameBoard getGameBoard(){return gameboard;}
@@ -90,9 +89,5 @@ public class Model {
         return this.eliminated==colour;
     }
 
-    public boolean getAthenaPowerStatus(){ return athenaPowerActive;}
 
-    public void setAthenaPowerActive() {
-        athenaPowerActive=true;
-    }
 }
