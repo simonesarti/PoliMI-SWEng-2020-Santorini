@@ -14,6 +14,8 @@ public class Worker {
     public Worker(Colour colour, int number) {
         this.colour=colour;
         this.number=number;
+        currentPosition=new Position();
+        previousPosition=new Position();
     }
 
     public Colour getColour() {
@@ -45,7 +47,7 @@ public class Worker {
      * @param y staring coordinate
      */
     public void setStartingPosition(int x, int y){
-        currentPosition=new Position(x,y,0);
+        currentPosition.setPosition(x,y,0);
         previousPosition=null;
     }
 
