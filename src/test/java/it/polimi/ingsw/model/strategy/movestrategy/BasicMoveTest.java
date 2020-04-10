@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
@@ -33,10 +34,21 @@ public class BasicMoveTest {
         basicmove = new BasicMove();
         playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9));
         player = new Player(playerInfo);
+        player.setColour(Colour.WHITE);
+        player.getWorker(0).setStartingPosition(0,0);
+
         enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
         enemy1Player = new Player(playerInfo);
+        enemy1Player.setColour(Colour.BLUE);
+        enemy1Player.getWorker(0).setStartingPosition(0,1);
+        enemy1Player.getWorker(1).setStartingPosition(0,2);
+
         enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7));
         enemy2Player = new Player(playerInfo);
+        enemy2Player.setColour(Colour.GREY);
+        enemy2Player.getWorker(0).setStartingPosition(0,3);
+        enemy2Player.getWorker(1).setStartingPosition(0,4);
+
         gameBoard = new GameBoard();
 
         ///////////////////////////////////////////////GAMEBOARD SETUP//////////////////////////////////////////////////
@@ -56,6 +68,7 @@ public class BasicMoveTest {
         gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setPiece(new Level2Block());
         gameBoard.getTowerCell(4,0).increaseTowerHeight();
         gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+        enemy1Player.getWorker(0).movedToPosition(4,0,2);
 
         gameBoard.getTowerCell(4,1).getFirstNotPieceLevel().setPiece(new Level1Block());
         gameBoard.getTowerCell(4,1).increaseTowerHeight();
@@ -105,12 +118,15 @@ public class BasicMoveTest {
         gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setPiece(new Level3Block());
         gameBoard.getTowerCell(4,3).increaseTowerHeight();
         gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+        enemy1Player.getWorker(1).movedToPosition(4,3,3);
 
         gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setPiece(new Level1Block());
         gameBoard.getTowerCell(2,4).increaseTowerHeight();
         gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+        enemy2Player.getWorker(0).movedToPosition(2,4,1);
 
         gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+        enemy2Player.getWorker(1).movedToPosition(3,4,0);
 
         return;
     }
