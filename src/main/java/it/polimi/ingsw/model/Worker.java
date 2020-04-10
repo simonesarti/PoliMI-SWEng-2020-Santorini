@@ -48,7 +48,6 @@ public class Worker {
      */
     public void setStartingPosition(int x, int y){
         currentPosition.setPosition(x,y,0);
-        previousPosition=null;
     }
 
     /**

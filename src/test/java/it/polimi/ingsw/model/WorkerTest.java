@@ -22,8 +22,7 @@ class WorkerTest {
         assertAll(
                 () -> assertEquals(worker.getCurrentPosition().getX(), 1),
                 () -> assertEquals(worker.getCurrentPosition().getY(), 2),
-                () -> assertEquals(worker.getCurrentPosition().getZ(), 0),
-                () -> assertNull(worker.getPreviousPosition())
+                () -> assertEquals(worker.getCurrentPosition().getZ(), 0)
         );
     }
 
