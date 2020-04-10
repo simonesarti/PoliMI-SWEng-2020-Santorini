@@ -67,6 +67,7 @@ public class BasicMoveTest {
         gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setPiece(new Level1Block());
         gameBoard.getTowerCell(1,2).increaseTowerHeight();
         gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setPiece(new Dome());
+        gameBoard.getTowerCell(1,2).increaseTowerHeight();
 
 
         gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().setPiece(new Level1Block());
@@ -83,10 +84,11 @@ public class BasicMoveTest {
         gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Level3Block());
         gameBoard.getTowerCell(4,2).increaseTowerHeight();
         gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Dome());
+        gameBoard.getTowerCell(4,2).increaseTowerHeight();
 
 
         gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Dome());
-
+        gameBoard.getTowerCell(1,3).increaseTowerHeight();
 
         gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setPiece(new Level1Block());
         gameBoard.getTowerCell(2,3).increaseTowerHeight();
