@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 public class Worker {
 
     private final Colour colour;
+    private int number;
     private Position currentPosition;
     private Position previousPosition;
 
@@ -12,6 +13,10 @@ public class Worker {
      */
     public Worker(Colour colour) {
         this.colour=colour;
+    }
+
+    public int getNumber(){
+        return number;
     }
 
     /**
@@ -34,7 +39,8 @@ public class Worker {
      * @param x starting coordinate
      * @param y staring coordinate
      */
-    public void setStartingPosition(int x, int y){
+    public void setStartingPosition(int n, int x, int y){
+        number=n;
         currentPosition=new Position(x,y,0);
         previousPosition=null;
     }

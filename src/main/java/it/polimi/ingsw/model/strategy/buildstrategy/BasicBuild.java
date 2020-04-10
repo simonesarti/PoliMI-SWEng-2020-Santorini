@@ -22,9 +22,9 @@ public class BasicBuild implements BuildStrategy {
     /**
      * Checks if player can build
      *
-     * @param gameboard
+     * @param gameboard is the gameboard
      * @param message message PlayerBuildChoice
-     * @return
+     * @return a string which may be an "ok" or a message error
      */
    @Override
    public String checkBuild(GameBoard gameboard, PlayerBuildChoice message){
@@ -103,7 +103,7 @@ public class BasicBuild implements BuildStrategy {
     /**
      * changes tower's height and checks if tower is complete
      *
-     * @param gameboard
+     * @param gameboard is the gameboard
      * @param message message PlayerBuildChoice
      */
     @Override
@@ -115,19 +115,19 @@ public class BasicBuild implements BuildStrategy {
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
         Piece piece = null;
 
-       //create the right Piece and decrease the number
+        //create the right Piece and decrease the number
 
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==0){
+       if (z==0){
            piece = new Level1Block();
            
        }
-       else if (gameboard.getTowerCell(x,y).getTowerHeight()==1){
+       else if (z==1){
            piece = new Level2Block();
        }
        else if (gameboard.getTowerCell(x,y).getTowerHeight()==2){
            piece = new Level3Block();
        }
-       else if (gameboard.getTowerCell(x,y).getTowerHeight()==3){
+       else if (z==3){
            piece = new Dome();
        }
 

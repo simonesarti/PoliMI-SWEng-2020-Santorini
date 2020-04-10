@@ -47,9 +47,17 @@ public class TowerCell {
         towerHeight--;
     }
 
-    public TowerLevel getFirstNotPieceLevel(){ return towerLevels[towerHeight];}
+    public TowerLevel getFirstNotPieceLevel(){
+        if (towerHeight==4) throw new NullPointerException("MESSAGE: Towercell[4] doesn't exist");
+        return towerLevels[towerHeight];}
 
     public boolean hasWorkerOnTop() {return getFirstNotPieceLevel().getWorker()!=null;}
 
+    public void resetTower() {
 
+        for(int i=0;i<4;i++){
+            towerLevels[i].workerMoved();
+            towerLevels[i].pieceWasRemoved();
+        }
+    }
 }
