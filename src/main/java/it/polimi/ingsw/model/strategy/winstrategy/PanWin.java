@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.Worker;
 public class PanWin implements WinStrategy {
 
     @Override
-    public boolean checkWin(GameBoard gameBoard, Player player, int chosenWorker) {
+    public boolean checkWin(Player player, int chosenWorker) {
 
         Worker worker=player.getWorker(chosenWorker);
         return (

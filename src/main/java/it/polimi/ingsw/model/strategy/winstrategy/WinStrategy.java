@@ -5,5 +5,5 @@ import it.polimi.ingsw.model.Player;
 
 public interface WinStrategy {
 
-    boolean checkWin(GameBoard gameBoard, Player player, int chosenWorker);
+    boolean checkWin(Player player, int chosenWorker);
 }
