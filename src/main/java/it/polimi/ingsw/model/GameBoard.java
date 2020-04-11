@@ -35,7 +35,10 @@ public class GameBoard {
 
     public boolean getAthenaPowerStatus(){ return athenaPowerActive;}
 
-    public void setAthenaPowerActive() {
+    public void setAthenaPowerTrue() {
         athenaPowerActive=true;
+    }
+    public void setAthenaPowerFalse() {
+        athenaPowerActive=false;
     }
 }
