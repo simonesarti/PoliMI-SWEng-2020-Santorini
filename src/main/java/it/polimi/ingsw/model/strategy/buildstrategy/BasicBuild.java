@@ -26,6 +26,12 @@ public class BasicBuild implements BuildStrategy {
        Worker worker = player.getWorker(chosenWorker);
        int x = buildingInto[0];
        int y = buildingInto[1];
+
+       //x e y must be inside the board
+       if (x < 0 || x > 4 || y < 0 || y > 4) {
+           return GameMessage.notInGameboard;
+       }
+
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
        //Player has not moved yet
@@ -33,15 +39,12 @@ public class BasicBuild implements BuildStrategy {
            return GameMessage.hasNotMoved;
        }
 
+
        //alreadyBuilt must be false
        if(alreadyBuilt){
            return GameMessage.alreadyBuilt;
        }
 
-       //x e y must be inside the board
-       if (x < 0 || x > 4 || y < 0 || y > 4) {
-          return GameMessage.notInGameboard;
-       }
 
        //workerPosition must not be the destination position
        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
