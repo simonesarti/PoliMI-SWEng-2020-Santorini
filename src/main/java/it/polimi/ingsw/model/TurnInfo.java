@@ -55,10 +55,12 @@ public class TurnInfo {
     public void setTurnCanEnd(){turnCanEnd=true;}
 
     public boolean getAthenaPowerActive(){return athenaPowerActive;}
-    public void setAthenaPowerActive(){athenaPowerActive=true;}
+    public void activateAthenaPower(){athenaPowerActive=true;}
+    public void deactivateAthenaPower(){athenaPowerActive=false;}
+
 
     public boolean getHasAlreadyMoved(){return hasAlreadyMoved;}
-    public void setHasAlreadyMoved(){hasAlreadyMoved=true;}
+    public void setHasMoved(){hasAlreadyMoved=true;}
 
     public int getNumberOfMoves(){return numberOfMoves;}
     public void addMove(){numberOfMoves++;}

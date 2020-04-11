@@ -10,20 +10,18 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
  */
 public class BasicBuild implements BuildStrategy {
 
-    boolean alreadyBuilt;
-
-
-    public BasicBuild(){
-        this.alreadyBuilt = false;
-    }
-
    @Override
    public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player, int[] buildingInto, String pieceType){
 
         //TODO prendere worker da turnInfo
-       Worker worker = player.getWorker(chosenWorker);
+       Worker worker = player.getWorker(turnInfo.getChosenWorker());
        int x = buildingInto[0];
        int y = buildingInto[1];
+
+       //Player must have moved
+       if(!turnInfo.getHasAlreadyMoved()){
+           return GameMessage.hasNotMoved;
+       }
 
        //x e y must be inside the board
        if (x < 0 || x > 4 || y < 0 || y > 4) {
@@ -31,18 +29,6 @@ public class BasicBuild implements BuildStrategy {
        }
 
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
-
-       //Player must have moved
-       if(!player.getGodCard().getMoveStrategy().getAlreadyMoved()){
-           return GameMessage.hasNotMoved;
-       }
-
-
-       //alreadyBuilt must be false
-       if(alreadyBuilt){
-           return GameMessage.alreadyBuilt;
-       }
-
 
        //workerPosition must not be the destination position
        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
@@ -109,7 +95,8 @@ public class BasicBuild implements BuildStrategy {
        //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
-        this.alreadyBuilt = true;
+        turnInfo.setTurnCanEnd();
+        turnInfo.setTurnHasEnded();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
     }

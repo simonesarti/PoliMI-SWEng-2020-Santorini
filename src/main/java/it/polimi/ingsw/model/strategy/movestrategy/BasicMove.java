@@ -9,13 +9,6 @@ import it.polimi.ingsw.model.*;
  */
 public class BasicMove implements MoveStrategy {
 
-    private boolean alreadyMoved;
-
-
-    public BasicMove(){
-        alreadyMoved = false;
-    }
-
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
 
@@ -32,7 +25,7 @@ public class BasicMove implements MoveStrategy {
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //alreadyMoved must be false
-        if(alreadyMoved){
+        if(turnInfo.getHasAlreadyMoved()){
             return GameMessage.alreadyMoved;
         }
 
@@ -61,7 +54,7 @@ public class BasicMove implements MoveStrategy {
         }
 
         //if Athena's power is active, worker can not move up
-        if(gameboard.getAthenaPowerStatus()){
+        if(turnInfo.getAthenaPowerActive()){
             //if worker moves up return error, else do nothing
             if(worker.getCurrentPosition().getZ() < z){
                 return GameMessage.athenaNoMoveUp;
@@ -87,7 +80,10 @@ public class BasicMove implements MoveStrategy {
 
         //modifying worker's associated position
         worker.movedToPosition(x,y,z);
-        this.alreadyMoved = true;
+
+        turnInfo.setHasMoved();
+        turnInfo.setChosenWorker(chosenWorker);
+        turnInfo.addMove();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
 
