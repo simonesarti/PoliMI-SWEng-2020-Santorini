@@ -27,7 +27,7 @@ public class GameMessage {
     public static String moveOK= "ok";
 
     //build request
-    public static String buildRequest = "Choose your build (Piece type (block/dome), worker number (1/2),x,y)";
+    public static String buildRequest = "Choose your build (Piece type (block/dome),x,y)";
 
     //generic build error messages
     public static String hasNotMoved = "You have not moved yet\n";

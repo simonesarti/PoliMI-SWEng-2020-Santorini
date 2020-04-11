@@ -46,7 +46,7 @@ public class Controller implements Observer<Message>{
 
             //execute win check
             if(message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(),message.getChosenWorker())){
-                //fare qualcosa
+                endMatch();
             }
 
         }else{
@@ -132,5 +132,9 @@ public class Controller implements Observer<Message>{
 
     }
 
+
+    private void startMatch(){}
+
+    private void endMatch(){}
 
 }

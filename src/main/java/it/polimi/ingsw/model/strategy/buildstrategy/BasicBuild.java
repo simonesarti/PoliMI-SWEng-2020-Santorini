@@ -13,7 +13,6 @@ public class BasicBuild implements BuildStrategy {
    @Override
    public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player, int[] buildingInto, String pieceType){
 
-        //TODO prendere worker da turnInfo
        Worker worker = player.getWorker(turnInfo.getChosenWorker());
        int x = buildingInto[0];
        int y = buildingInto[1];
