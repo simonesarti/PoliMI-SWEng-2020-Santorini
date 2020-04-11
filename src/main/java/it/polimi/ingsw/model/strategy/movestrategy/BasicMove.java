@@ -25,16 +25,18 @@ public class BasicMove implements MoveStrategy {
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
         int y = movingTo[1];
+
+
+        //x and y must be inside the board
+        if (x < 0 || x > 4 || y < 0 || y > 4) {
+            return GameMessage.notInGameboard;
+        }
+
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //alreadyMoved must be false
         if(alreadyMoved){
             return GameMessage.alreadyMoved;
-        }
-
-        //x and y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
-            return GameMessage.notInGameboard;
         }
 
         //workerPosition must not be the destination position
@@ -96,6 +98,6 @@ public class BasicMove implements MoveStrategy {
 
     @Override
     public boolean getAlreadyMoved() { return this.alreadyMoved;}
-
+    @Override
     public void setAlreadyMoved(boolean x){ alreadyMoved = x;}
 }

@@ -21,4 +21,6 @@ public interface MoveStrategy {
     String checkMove(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo);
 
     boolean getAlreadyMoved();
+
+    void setAlreadyMoved(boolean x);
 }

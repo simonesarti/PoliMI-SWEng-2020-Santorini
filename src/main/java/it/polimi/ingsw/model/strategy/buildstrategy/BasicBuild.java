@@ -26,22 +26,25 @@ public class BasicBuild implements BuildStrategy {
        Worker worker = player.getWorker(chosenWorker);
        int x = buildingInto[0];
        int y = buildingInto[1];
+
+       //x e y must be inside the board
+       if (x < 0 || x > 4 || y < 0 || y > 4) {
+           return GameMessage.notInGameboard;
+       }
+
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
-       //Player has not moved yet
+       //Player must have moved
        if(!player.getGodCard().getMoveStrategy().getAlreadyMoved()){
            return GameMessage.hasNotMoved;
        }
+
 
        //alreadyBuilt must be false
        if(alreadyBuilt){
            return GameMessage.alreadyBuilt;
        }
 
-       //x e y must be inside the board
-       if (x < 0 || x > 4 || y < 0 || y > 4) {
-          return GameMessage.notInGameboard;
-       }
 
        //workerPosition must not be the destination position
        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
@@ -68,7 +71,7 @@ public class BasicBuild implements BuildStrategy {
            return GameMessage.noDomesInBlock;
        }
 
-       //control whether there are pieces left
+       //there must be pieces left
        if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && !Level1Block.areTherePiecesLeft()){
           return GameMessage.noLevel1Left;
        }
@@ -129,4 +132,9 @@ public class BasicBuild implements BuildStrategy {
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
     }
+
+    @Override
+    public boolean getAlreadyBuilt() { return this.alreadyBuilt;}
+    @Override
+    public void setAlreadyBuilt(boolean x){ alreadyBuilt = x;}
 }
