@@ -32,10 +32,6 @@ public class GameMessage {
     public static String alreadyBuilt = "You have already built\n";
     public static String noBuildToCompleteTower = "You can't build here, this space already contains a complete tower, please choose another position\n";
     public static String noBuildToOccupiedTower = "You can't build here, this space already contains a worker, please choose another position\n";
-    public static String noLevel1Left = "No more first level blocks left. Please try something else\n";
-    public static String noLevel2Left = "No more second level blocks left. Please try something else\n";
-    public static String noLevel3Left = "No more third level blocks left. Please try something else\n";
-    public static String noDomesLeft = "No more domes left. Please try something else\n";
     public static String noDomesInBlock = "You can't place a dome in a space reserved to a block. Please try something else\n";
     public static String noBlocksInDome = "You can't place a block in a space reserved to a dome. Please try something else\n";
 

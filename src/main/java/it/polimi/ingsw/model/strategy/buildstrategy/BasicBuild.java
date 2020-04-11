@@ -62,30 +62,13 @@ public class BasicBuild implements BuildStrategy {
        }
 
        //the chosen piece must not be a "Block" when tower's height is 3
-       if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  pieceType.equals("Block")){
+       if(z==3 &&  pieceType.equals("Block")){
            return GameMessage.noBlocksInDome;
        }
 
        //the chosen piece must not be a "Dome" when tower's height is <3
-       if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  pieceType.equals("Dome")) {
+       if(z<3 &&  pieceType.equals("Dome")) {
            return GameMessage.noDomesInBlock;
-       }
-
-       //there must be pieces left
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && !Level1Block.areTherePiecesLeft()){
-          return GameMessage.noLevel1Left;
-       }
-
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==1 && !Level2Block.areTherePiecesLeft()){
-           return GameMessage.noLevel2Left;
-       }
-
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==2 && !Level3Block.areTherePiecesLeft()){
-           return GameMessage.noLevel3Left;
-       }
-
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==3 && !Dome.areTherePiecesLeft()){
-           return GameMessage.noDomesLeft;
        }
 
        //there must not be a worker in the building position

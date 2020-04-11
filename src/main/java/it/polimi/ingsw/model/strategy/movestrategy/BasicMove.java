@@ -54,7 +54,7 @@ public class BasicMove implements MoveStrategy {
         }
 
         //towercell height must be <= (worker height +1)
-        if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
+        if(z > (worker.getCurrentPosition().getZ() +1)) {
             return GameMessage.noHighJump;
         }
 
