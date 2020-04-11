@@ -13,7 +13,7 @@ public interface MoveStrategy {
      *
      * @param gameboard
      */
-    void move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo);
+    String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo);
 
     /**
      *  @param gameboard

@@ -25,6 +25,7 @@ public class Controller implements Observer<Message>{
     private synchronized void performMove(PlayerMovementChoice message) {
 
         String checkResult;
+        String nextStep;
 
         //TODO implementare reportError
         if(!model.isPlayerTurn(message.getPlayer())){
@@ -41,7 +42,7 @@ public class Controller implements Observer<Message>{
 
         if(checkResult.equals(GameMessage.moveOK)){
             //execute move
-            message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+            nextStep=message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
             //execute win check
             if(message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(),message.getChosenWorker())){
@@ -63,6 +64,7 @@ public class Controller implements Observer<Message>{
     private synchronized void performBuild(PlayerBuildChoice message){
 
         String checkResult;
+        String nextStep;
 
         //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
@@ -77,8 +79,8 @@ public class Controller implements Observer<Message>{
 
         checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model. getTurnInfo(), model.getGameBoard(), message.getPlayer(),message.getBuildingInto(), message.getPieceType());
 
-        if(checkResult.equals(GameMessage.buildOK) ) {
-            message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getBuildingInto(), message.getPieceType());
+        if(checkResult.equals(GameMessage.buildOK)) {
+            nextStep=message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getBuildingInto(), message.getPieceType());
         }
         else{
             //TODO impementare reportError

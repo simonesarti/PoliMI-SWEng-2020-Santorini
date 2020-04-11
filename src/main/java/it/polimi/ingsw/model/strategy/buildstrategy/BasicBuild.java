@@ -64,7 +64,7 @@ public class BasicBuild implements BuildStrategy {
    }
 
     @Override
-    public void build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType) {
+    public String build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType) {
 
         int x = buildingInto[0];
         int y = buildingInto[1];
@@ -99,6 +99,7 @@ public class BasicBuild implements BuildStrategy {
         turnInfo.setTurnHasEnded();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
+        return GameMessage.turnCompleted;
     }
 
 }

@@ -6,6 +6,7 @@ package it.polimi.ingsw.messages;
 public class GameMessage {
 
     //classic messages
+    public static String turnCompleted = "You completed your turn, please enter END to confirm that you want to end it\n";
     public static String newTurn = "The previous turn has been completed\n";
     public static String wrongTurn = "This isn't your turn, please wait\n";
     public static String eliminated = "You've already been eliminated\n";

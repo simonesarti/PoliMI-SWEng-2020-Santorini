@@ -11,7 +11,7 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
  */
 public interface BuildStrategy {
 
-    void build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType);
+    String build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType);
 
     String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType);
 

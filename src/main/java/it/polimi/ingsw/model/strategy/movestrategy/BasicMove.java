@@ -67,7 +67,7 @@ public class BasicMove implements MoveStrategy {
 
 
     @Override
-    public void move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
+    public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
 
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
@@ -86,6 +86,7 @@ public class BasicMove implements MoveStrategy {
         turnInfo.addMove();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
+        return GameMessage.buildRequest;
 
     }
 
