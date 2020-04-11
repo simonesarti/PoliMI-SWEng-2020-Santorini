@@ -31,11 +31,16 @@ public class Controller implements Observer<Message>{
             //message.getView().reportError(gameMessage.wrongTurn);
             return;
         }
-        //TODO fare ritornare a check una stringa di GameMessage
-        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+
+        if(model.getTurnInfo().getTurnHasEnded()){
+            //message.getView().reportError(gameMessage.turnAlreadyEnded);
+            return;
+        }
+
+        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
         if(checkResult.equals(GameMessage.moveOK)){
-            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+            message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
         }
         else{
             //TODO impementare reportError
@@ -59,10 +64,15 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+        if(model.getTurnInfo().getTurnHasEnded()){
+            //message.getView().reportError(gameMessage.turnAlreadyEnded);
+            return;
+        }
+
+        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model. getTurnInfo(), model.getGameBoard(), message.getPlayer(),message.getBuildingInto(), message.getPieceType());
 
         if(checkResult.equals(GameMessage.buildOK) ) {
-            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+            message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getBuildingInto(), message.getPieceType());
         }
         else{
             //TODO impementare reportError
@@ -81,15 +91,14 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        if(!model.getTurnCanEnd()){
+        if(!model.getTurnInfo().getTurnCanEnd()){
             //message.getView().reportError(gameMessage.turnNotEnded);
         }
 
-        //TODO check vittoria giocatore
+        //TODO stabilire cosa va qui
+        model.updateTurn();
 
-            model.updateTurn();
-
-            // TODO check sconfitta giocatore successivo con eventule rimoione dal gioco
+        // TODO check sconfitta giocatore successivo con eventule rimoione dal gioco
 
     }
 

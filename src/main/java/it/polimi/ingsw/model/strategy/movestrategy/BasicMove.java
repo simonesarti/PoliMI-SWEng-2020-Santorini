@@ -2,10 +2,7 @@ package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Position;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 /**
  * This class represents the basic move strategy
@@ -20,7 +17,7 @@ public class BasicMove implements MoveStrategy {
     }
 
     @Override
-    public String checkMove(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
+    public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
 
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
@@ -77,7 +74,7 @@ public class BasicMove implements MoveStrategy {
 
 
     @Override
-    public void move(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
+    public void move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
 
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
@@ -96,8 +93,4 @@ public class BasicMove implements MoveStrategy {
 
     }
 
-    @Override
-    public boolean getAlreadyMoved() { return this.alreadyMoved;}
-    @Override
-    public void setAlreadyMoved(boolean x){ alreadyMoved = x;}
 }

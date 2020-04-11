@@ -6,20 +6,21 @@ package it.polimi.ingsw.model;
 public class Model {
 
     private GameBoard gameboard;
-    private int numberOfPlayers;
-
+    private TurnInfo turnInfo;
     private Colour turn;
-    private boolean turnCanEnd;
+
+    private int numberOfPlayers;
     private Colour eliminated;
 
 //----------------------------------------------------------------------------------------------------------
 
     public Model(int numberOfPlayers){
         gameboard = new GameBoard();
+        turnInfo=new TurnInfo();
         turn=Colour.WHITE;
-        turnCanEnd=false;
 
         this.numberOfPlayers=numberOfPlayers;
+
         if(this.numberOfPlayers==2){
             eliminated=Colour.GREY;
         }
@@ -29,6 +30,8 @@ public class Model {
 
     public GameBoard getGameBoard(){return gameboard;}
 
+    public TurnInfo getTurnInfo(){return turnInfo;}
+
     /**
      * Checks that current player's colour is equals to current turn's colour
      * @param player
@@ -37,7 +40,7 @@ public class Model {
     public boolean isPlayerTurn(Player player){ return player.getColour()== turn;}
 
     /**
-     * updates the turn based on the order of the player
+     * updates the turn based on the order of the player, and resets turnInfo
     */
     public void updateTurn() {
 
@@ -74,13 +77,7 @@ public class Model {
                 break;
         }
 
-        turnCanEnd=false;
-    }
-
-    public boolean getTurnCanEnd(){ return this.turnCanEnd; }
-
-    public void setTurnCanEnd() {
-        this.turnCanEnd = true;
+        turnInfo.turnInfoReset();
     }
 
     public boolean isEliminated(Colour colour){

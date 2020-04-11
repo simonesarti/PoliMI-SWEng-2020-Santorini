@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Position;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.*;
 import it.polimi.ingsw.messages.PlayerBuildChoice;
 
@@ -21,8 +18,9 @@ public class BasicBuild implements BuildStrategy {
     }
 
    @Override
-   public String checkBuild(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType){
+   public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player, int[] buildingInto, String pieceType){
 
+        //TODO prendere worker da turnInfo
        Worker worker = player.getWorker(chosenWorker);
        int x = buildingInto[0];
        int y = buildingInto[1];
@@ -80,7 +78,7 @@ public class BasicBuild implements BuildStrategy {
    }
 
     @Override
-    public void build(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
+    public void build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType) {
 
         int x = buildingInto[0];
         int y = buildingInto[1];
@@ -116,8 +114,4 @@ public class BasicBuild implements BuildStrategy {
 
     }
 
-    @Override
-    public boolean getAlreadyBuilt() { return this.alreadyBuilt;}
-    @Override
-    public void setAlreadyBuilt(boolean x){ alreadyBuilt = x;}
 }
