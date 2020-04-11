@@ -12,8 +12,6 @@ public class Model {
     private boolean turnCanEnd;
     private Colour eliminated;
 
-
-
 //----------------------------------------------------------------------------------------------------------
 
     public Model(int numberOfPlayers){
