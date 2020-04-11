@@ -6,10 +6,12 @@ package it.polimi.ingsw.messages;
 public class GameMessage {
 
     //classic messages
+    public static String turnCompleted = "You completed your turn, please enter END to confirm that you want to end it\n";
     public static String newTurn = "The previous turn has been completed\n";
     public static String wrongTurn = "This isn't your turn, please wait\n";
     public static String eliminated = "You've already been eliminated\n";
     public static String turnNotEnded = "You haven't completed your turn yet, please proceed to complete it with a move/build\n";
+    public static String turnAlreadyEnded = "You have already completed your turn, please confirmi that you want to end it\n";
 
     //move request
     public static String moveRequest = "Make your move (worker number (1/2),x,y)";
@@ -32,10 +34,6 @@ public class GameMessage {
     public static String alreadyBuilt = "You have already built\n";
     public static String noBuildToCompleteTower = "You can't build here, this space already contains a complete tower, please choose another position\n";
     public static String noBuildToOccupiedTower = "You can't build here, this space already contains a worker, please choose another position\n";
-    public static String noLevel1Left = "No more first level blocks left. Please try something else\n";
-    public static String noLevel2Left = "No more second level blocks left. Please try something else\n";
-    public static String noLevel3Left = "No more third level blocks left. Please try something else\n";
-    public static String noDomesLeft = "No more domes left. Please try something else\n";
     public static String noDomesInBlock = "You can't place a dome in a space reserved to a block. Please try something else\n";
     public static String noBlocksInDome = "You can't place a block in a space reserved to a dome. Please try something else\n";
 

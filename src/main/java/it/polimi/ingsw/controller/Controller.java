@@ -25,19 +25,31 @@ public class Controller implements Observer<Message>{
     private synchronized void performMove(PlayerMovementChoice message) {
 
         String checkResult;
+        String nextStep;
 
         //TODO implementare reportError
         if(!model.isPlayerTurn(message.getPlayer())){
             //message.getView().reportError(gameMessage.wrongTurn);
             return;
         }
-        //TODO fare ritornare a check una stringa di GameMessage
-        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+
+        if(model.getTurnInfo().getTurnHasEnded()){
+            //message.getView().reportError(gameMessage.turnAlreadyEnded);
+            return;
+        }
+
+        checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
         if(checkResult.equals(GameMessage.moveOK)){
-            message.getPlayer().getGodCard().getMoveStrategy().move(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
-        }
-        else{
+            //execute move
+            nextStep=message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+
+            //execute win check
+            if(message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(),message.getChosenWorker())){
+                //fare qualcosa
+            }
+
+        }else{
             //TODO impementare reportError
             //message.getView().reportError(checkResult);
         }
@@ -52,6 +64,7 @@ public class Controller implements Observer<Message>{
     private synchronized void performBuild(PlayerBuildChoice message){
 
         String checkResult;
+        String nextStep;
 
         //TODO implementare reporError
         if(!model.isPlayerTurn(message.getPlayer())){
@@ -59,10 +72,15 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+        if(model.getTurnInfo().getTurnHasEnded()){
+            //message.getView().reportError(gameMessage.turnAlreadyEnded);
+            return;
+        }
 
-        if(checkResult.equals(GameMessage.buildOK) ) {
-            message.getPlayer().getGodCard().getBuildStrategy().build(model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model. getTurnInfo(), model.getGameBoard(), message.getPlayer(),message.getBuildingInto(), message.getPieceType());
+
+        if(checkResult.equals(GameMessage.buildOK)) {
+            nextStep=message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getBuildingInto(), message.getPieceType());
         }
         else{
             //TODO impementare reportError
@@ -81,15 +99,14 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        if(!model.getTurnCanEnd()){
+        if(!model.getTurnInfo().getTurnCanEnd()){
             //message.getView().reportError(gameMessage.turnNotEnded);
         }
 
-        //TODO check vittoria giocatore
+        //TODO stabilire cosa va qui
+        model.updateTurn();
 
-            model.updateTurn();
-
-            // TODO check sconfitta giocatore successivo con eventule rimoione dal gioco
+        // TODO check sconfitta giocatore successivo con eventule rimozione dal gioco
 
     }
 

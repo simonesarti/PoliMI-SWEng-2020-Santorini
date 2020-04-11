@@ -81,5 +81,10 @@ class PanWinTest {
         player.getWorker(0).movedToPosition(2,0,3);
         player.getWorker(0).movedToPosition(3,0,3);
         assertFalse(win.checkWin(player,0));
+
+        //VICTORY, jumps down from level 2 to 0 (is >=2 levels of difference)
+        player.getWorker(0).movedToPosition(2,0,2);
+        player.getWorker(0).movedToPosition(3,0,0);
+        assertTrue(win.checkWin(player,0));
     }
 }

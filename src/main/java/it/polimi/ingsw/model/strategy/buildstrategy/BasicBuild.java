@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Position;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.*;
 import it.polimi.ingsw.messages.PlayerBuildChoice;
 
@@ -13,19 +10,18 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
  */
 public class BasicBuild implements BuildStrategy {
 
-    boolean alreadyBuilt;
-
-
-    public BasicBuild(){
-        this.alreadyBuilt = false;
-    }
-
    @Override
-   public String checkBuild(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType){
+   public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player, int[] buildingInto, String pieceType){
 
-       Worker worker = player.getWorker(chosenWorker);
+        //TODO prendere worker da turnInfo
+       Worker worker = player.getWorker(turnInfo.getChosenWorker());
        int x = buildingInto[0];
        int y = buildingInto[1];
+
+       //Player must have moved
+       if(!turnInfo.getHasAlreadyMoved()){
+           return GameMessage.hasNotMoved;
+       }
 
        //x e y must be inside the board
        if (x < 0 || x > 4 || y < 0 || y > 4) {
@@ -33,18 +29,6 @@ public class BasicBuild implements BuildStrategy {
        }
 
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
-
-       //Player must have moved
-       if(!player.getGodCard().getMoveStrategy().getAlreadyMoved()){
-           return GameMessage.hasNotMoved;
-       }
-
-
-       //alreadyBuilt must be false
-       if(alreadyBuilt){
-           return GameMessage.alreadyBuilt;
-       }
-
 
        //workerPosition must not be the destination position
        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
@@ -62,30 +46,13 @@ public class BasicBuild implements BuildStrategy {
        }
 
        //the chosen piece must not be a "Block" when tower's height is 3
-       if(gameboard.getTowerCell(x,y).getTowerHeight()==3 &&  pieceType.equals("Block")){
+       if(z==3 &&  pieceType.equals("Block")){
            return GameMessage.noBlocksInDome;
        }
 
        //the chosen piece must not be a "Dome" when tower's height is <3
-       if(gameboard.getTowerCell(x,y).getTowerHeight()<3 &&  pieceType.equals("Dome")) {
+       if(z<3 &&  pieceType.equals("Dome")) {
            return GameMessage.noDomesInBlock;
-       }
-
-       //there must be pieces left
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && !Level1Block.areTherePiecesLeft()){
-          return GameMessage.noLevel1Left;
-       }
-
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==1 && !Level2Block.areTherePiecesLeft()){
-           return GameMessage.noLevel2Left;
-       }
-
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==2 && !Level3Block.areTherePiecesLeft()){
-           return GameMessage.noLevel3Left;
-       }
-
-       if (gameboard.getTowerCell(x,y).getTowerHeight()==3 && !Dome.areTherePiecesLeft()){
-           return GameMessage.noDomesLeft;
        }
 
        //there must not be a worker in the building position
@@ -97,7 +64,7 @@ public class BasicBuild implements BuildStrategy {
    }
 
     @Override
-    public void build(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
+    public String build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType) {
 
         int x = buildingInto[0];
         int y = buildingInto[1];
@@ -128,13 +95,11 @@ public class BasicBuild implements BuildStrategy {
        //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
-        this.alreadyBuilt = true;
+        turnInfo.setTurnCanEnd();
+        turnInfo.setTurnHasEnded();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
+        return GameMessage.turnCompleted;
     }
 
-    @Override
-    public boolean getAlreadyBuilt() { return this.alreadyBuilt;}
-    @Override
-    public void setAlreadyBuilt(boolean x){ alreadyBuilt = x;}
 }

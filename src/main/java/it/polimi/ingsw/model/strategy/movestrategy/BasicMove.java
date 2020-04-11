@@ -2,25 +2,15 @@ package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerMovementChoice;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Position;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 /**
  * This class represents the basic move strategy
  */
 public class BasicMove implements MoveStrategy {
 
-    private boolean alreadyMoved;
-
-
-    public BasicMove(){
-        alreadyMoved = false;
-    }
-
     @Override
-    public String checkMove(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
+    public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
 
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
@@ -35,7 +25,7 @@ public class BasicMove implements MoveStrategy {
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //alreadyMoved must be false
-        if(alreadyMoved){
+        if(turnInfo.getHasAlreadyMoved()){
             return GameMessage.alreadyMoved;
         }
 
@@ -54,7 +44,7 @@ public class BasicMove implements MoveStrategy {
         }
 
         //towercell height must be <= (worker height +1)
-        if(gameboard.getTowerCell(x,y).getTowerHeight() > (worker.getCurrentPosition().getZ() +1)) {
+        if(z > (worker.getCurrentPosition().getZ() +1)) {
             return GameMessage.noHighJump;
         }
 
@@ -64,7 +54,7 @@ public class BasicMove implements MoveStrategy {
         }
 
         //if Athena's power is active, worker can not move up
-        if(gameboard.getAthenaPowerStatus()){
+        if(turnInfo.getAthenaPowerActive()){
             //if worker moves up return error, else do nothing
             if(worker.getCurrentPosition().getZ() < z){
                 return GameMessage.athenaNoMoveUp;
@@ -77,7 +67,7 @@ public class BasicMove implements MoveStrategy {
 
 
     @Override
-    public void move(GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
+    public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
 
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
@@ -90,14 +80,14 @@ public class BasicMove implements MoveStrategy {
 
         //modifying worker's associated position
         worker.movedToPosition(x,y,z);
-        this.alreadyMoved = true;
+
+        turnInfo.setHasMoved();
+        turnInfo.setChosenWorker(chosenWorker);
+        turnInfo.addMove();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
+        return GameMessage.buildRequest;
 
     }
 
-    @Override
-    public boolean getAlreadyMoved() { return this.alreadyMoved;}
-    @Override
-    public void setAlreadyMoved(boolean x){ alreadyMoved = x;}
 }
