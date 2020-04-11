@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
@@ -22,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BasicBuildTest {
 
     BasicMove basicmove;
+    
     BasicBuild basicbuild;
     GameBoard gameBoard;
     Player player;
@@ -43,6 +41,8 @@ class BasicBuildTest {
         player = new Player(playerInfo);
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(0,0);
+
+
 
         enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
         enemy1Player = new Player(playerInfo);
