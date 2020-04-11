@@ -39,7 +39,7 @@ class BasicBuildTest {
         basicmove = new BasicMove();
         
         basicbuild = new BasicBuild();
-        playerInfo  =new PlayerInfo("Alessandruccio",new GregorianCalendar(1997, Calendar.NOVEMBER, 11));
+        playerInfo  =new PlayerInfo("Gianpaolo",new GregorianCalendar(1970, Calendar.JULY, 15));
         player = new Player(playerInfo);
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(0,0);
@@ -149,6 +149,7 @@ class BasicBuildTest {
         assertEquals(GameMessage.alreadyBuilt, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
         basicbuild.setAlreadyBuilt(false);
 
+        //TODO dobbiamo cambiare posizionamento attributi (li mettiamo in TurnInfo), quindi questa parte cambia
         //player must have moved
         buildingTo[0]=1;
         buildingTo[1]=1;
