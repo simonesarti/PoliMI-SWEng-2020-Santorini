@@ -1153,7 +1153,7 @@
 											"top": 664,
 											"width": 111,
 											"height": 13,
-											"text": "+gameboard()",
+											"text": "+Gameboard()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -16245,7 +16245,7 @@
 											"top": 423,
 											"width": 119,
 											"height": 13,
-											"text": "InfoTurno"
+											"text": "TurnInfo"
 										},
 										{
 											"_type": "LabelView",
@@ -16328,7 +16328,7 @@
 											"top": 456,
 											"width": 119,
 											"height": 13,
-											"text": "+infoTurno()",
+											"text": "+TurnInfo()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -17666,7 +17666,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFwu6rc4AS+bwY="
 							},
-							"name": "gameboard"
+							"name": "Gameboard"
 						}
 					]
 				},
@@ -20393,7 +20393,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "InfoTurno",
+					"name": "TurnInfo",
 					"operations": [
 						{
 							"_type": "UMLOperation",
@@ -20401,7 +20401,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxaHc4I+tojUc="
 							},
-							"name": "infoTurno"
+							"name": "TurnInfo"
 						}
 					]
 				}
