@@ -40,9 +40,15 @@ public class Controller implements Observer<Message>{
         checkResult=message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
         if(checkResult.equals(GameMessage.moveOK)){
+            //execute move
             message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
-        }
-        else{
+
+            //execute win check
+            if(message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(),message.getChosenWorker())){
+                //fare qualcosa
+            }
+
+        }else{
             //TODO impementare reportError
             //message.getView().reportError(checkResult);
         }
@@ -98,7 +104,7 @@ public class Controller implements Observer<Message>{
         //TODO stabilire cosa va qui
         model.updateTurn();
 
-        // TODO check sconfitta giocatore successivo con eventule rimoione dal gioco
+        // TODO check sconfitta giocatore successivo con eventule rimozione dal gioco
 
     }
 
