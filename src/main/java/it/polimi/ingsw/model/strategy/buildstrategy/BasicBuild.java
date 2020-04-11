@@ -34,7 +34,7 @@ public class BasicBuild implements BuildStrategy {
 
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
-       //Player has not moved yet
+       //Player must have moved
        if(!player.getGodCard().getMoveStrategy().getAlreadyMoved()){
            return GameMessage.hasNotMoved;
        }
@@ -71,7 +71,7 @@ public class BasicBuild implements BuildStrategy {
            return GameMessage.noDomesInBlock;
        }
 
-       //control whether there are pieces left
+       //there must be pieces left
        if (gameboard.getTowerCell(x,y).getTowerHeight()==0 && !Level1Block.areTherePiecesLeft()){
           return GameMessage.noLevel1Left;
        }
@@ -132,4 +132,9 @@ public class BasicBuild implements BuildStrategy {
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
     }
+
+    @Override
+    public boolean getAlreadyBuilt() { return this.alreadyBuilt;}
+    @Override
+    public void setAlreadyBuilt(boolean x){ alreadyBuilt = x;}
 }

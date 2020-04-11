@@ -23,5 +23,8 @@ public interface BuildStrategy {
 
     String checkBuild(GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType);
 
+    boolean getAlreadyBuilt();
+
+    void setAlreadyBuilt(boolean x);
 
 }
