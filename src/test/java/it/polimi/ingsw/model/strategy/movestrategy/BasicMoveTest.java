@@ -148,6 +148,9 @@ public class BasicMoveTest {
         basicmove.setAlreadyMoved(false);
         //x and y must be inside the board
         //TODO probabilmente bisogna mettere un try attorno alla checkMove e nella catch mandare il messaggio. perché il metodo crasha subito se gli dai un movingTo outofbounds
+        movingTo[0]=28;
+        movingTo[1]=1;
+        assertEquals(GameMessage.notInGameboard, basicmove.checkMove(gameBoard,player,0,movingTo));
         //workerPosition must not be the destination position
         movingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         movingTo[1]=player.getWorker(0).getCurrentPosition().getY();
