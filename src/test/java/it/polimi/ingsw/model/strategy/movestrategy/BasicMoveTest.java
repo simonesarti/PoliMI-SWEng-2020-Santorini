@@ -140,7 +140,7 @@ public class BasicMoveTest {
     }
 
     @Test
-    void checkMove(){
+    void checkMoveTesting(){
 
         //alreadyMoved must be false
         movingTo[0]=1;
@@ -192,6 +192,33 @@ public class BasicMoveTest {
 
         //move ok
         assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+    }
+
+    @Test
+    void moveTesting(){
+
+        turnInfo.turnInfoReset();
+
+        //moving from a level1block to another level1block
+        player.getWorker(0).movedToPosition(2,4,1);
+        movingTo[0]=2;
+        movingTo[1]=3;
+        assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.buildRequest, basicmove.move(turnInfo, gameBoard,player,0,movingTo));
+        assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getCurrentPosition()));
+        assertEquals(1, turnInfo.getNumberOfMoves());
+
+        turnInfo.turnInfoReset();
+        movingTo[0]=3;
+        movingTo[1]=3;
+        assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.buildRequest, basicmove.move(turnInfo, gameBoard,player,0,movingTo));
+        assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
+        assertEquals(1, turnInfo.getNumberOfMoves());
+
+
+
 
     }
 

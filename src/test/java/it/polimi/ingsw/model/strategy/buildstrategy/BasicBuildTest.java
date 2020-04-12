@@ -197,6 +197,7 @@ class BasicBuildTest {
         assertEquals(GameMessage.noBuildToCompleteTower, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //the chosen piece must not be a "Block" when tower's height is 3
+        piece = "Block";
         player.getWorker(0).movedToPosition(2,2,0);
         buildingTo[0]=3;
         buildingTo[1]=2;
@@ -218,7 +219,7 @@ class BasicBuildTest {
 
 
         //there must be pieces left
-        //TODO controllare pezzi rimasti
+        //TODO controllare pezzi rimasti?
 
         player.getWorker(0).movedToPosition(1,4,0);
         piece = "Block";
