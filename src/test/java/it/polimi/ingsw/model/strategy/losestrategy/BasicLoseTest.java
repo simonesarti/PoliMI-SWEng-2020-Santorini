@@ -207,7 +207,12 @@ class BasicLoseTest {
     void movementLoss() {
 
         assertEquals(0,loseStrategy.movementLoss(turnInfo,gameBoard,playerTest));
-
+        gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().workerMoved();
+        gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(playerTest.getWorker(0));
+        playerTest.getWorker(0).movedToPosition(3,3,1);
+        assertEquals(3,loseStrategy.movementLoss(turnInfo,gameBoard,playerTest));
+        turnInfo.activateAthenaPower();
+        assertEquals(0,loseStrategy.movementLoss(turnInfo,gameBoard,playerTest));
     }
 
     @Test
