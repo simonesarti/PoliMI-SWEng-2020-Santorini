@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
@@ -22,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BasicMoveTest {
 
     BasicMove basicmove;
+    TurnInfo turnInfo;
     GameBoard gameBoard;
     Player player;
     Player enemy1Player;
@@ -32,9 +30,11 @@ public class BasicMoveTest {
     int[] movingTo = new int[2];
 
 
+
     @BeforeEach
     void init(){
         basicmove = new BasicMove();
+
         playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9));
         player = new Player(playerInfo);
         player.setColour(Colour.WHITE);
@@ -53,6 +53,8 @@ public class BasicMoveTest {
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 
         gameBoard = new GameBoard();
+
+        turnInfo = new TurnInfo();
 
         ///////////////////////////////////////////////GAMEBOARD SETUP//////////////////////////////////////////////////
 
@@ -143,46 +145,53 @@ public class BasicMoveTest {
         //alreadyMoved must be false
         movingTo[0]=1;
         movingTo[1]=1;
-        basicmove.setAlreadyMoved(true);
-        assertEquals(GameMessage.alreadyMoved, basicmove.checkMove(gameBoard,player,0,movingTo));
-        basicmove.setAlreadyMoved(false);
-        //x and y must be inside the board
+        turnInfo.setHasMoved();
+        assertEquals(GameMessage.alreadyMoved, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        turnInfo.turnInfoReset();
 
+        //x and y must be inside the board
         movingTo[0]=28;
         movingTo[1]=1;
-        assertEquals(GameMessage.notInGameboard, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notInGameboard, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
         //workerPosition must not be the destination position
         movingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         movingTo[1]=player.getWorker(0).getCurrentPosition().getY();
-        assertEquals(GameMessage.notTheSame, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notTheSame, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
         //workerPosition must be adjacent to destination position
         movingTo[0]=2;
         movingTo[1]=0;
-        assertEquals(GameMessage.notInSurroundings, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notInSurroundings, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
         //towerCell must not be completed by a dome
         player.getWorker(0).movedToPosition(0,3,0);
         movingTo[0]=1;
         movingTo[1]=3;
-        assertEquals(GameMessage.noMoveToCompleteTower, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.noMoveToCompleteTower, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
         //towercell height must be <= (worker height +1)
         player.getWorker(0).movedToPosition(3,1,0);
         movingTo[0]=3;
         movingTo[1]=2;
-        assertEquals(GameMessage.noHighJump, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.noHighJump, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
         //towercell must be empty
         player.getWorker(0).movedToPosition(3,0,2);
         movingTo[0]=4;
         movingTo[1]=0;
-        assertEquals(GameMessage.noMovedToOccupiedTower, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.noMovedToOccupiedTower, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
         //if Athena's power is active, worker can not move up
-        gameBoard.setAthenaPowerTrue();
+        turnInfo.activateAthenaPower();
         player.getWorker(0).movedToPosition(2,2,0);
         movingTo[0]=2;
         movingTo[1]=3;
-        assertEquals(GameMessage.athenaNoMoveUp, basicmove.checkMove(gameBoard,player,0,movingTo));
-        gameBoard.setAthenaPowerFalse();
+        assertEquals(GameMessage.athenaNoMoveUp, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        turnInfo.deactivateAthenaPower();
+
         //move ok
-        assertEquals(GameMessage.moveOK, basicmove.checkMove(gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
 
     }
 
