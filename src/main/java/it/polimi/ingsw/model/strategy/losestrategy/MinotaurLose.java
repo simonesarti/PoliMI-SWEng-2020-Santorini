@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.TurnInfo;
 public class MinotaurLose implements LoseStrategy{
 
     @Override
-    public boolean movementLoss(TurnInfo turnInfo,GameBoard gameBoard, Player player) {
-        return false;
+    public int movementLoss(TurnInfo turnInfo,GameBoard gameBoard, Player player) {
+        return 0;
     }
 
     @Override

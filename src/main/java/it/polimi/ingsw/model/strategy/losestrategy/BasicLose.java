@@ -3,36 +3,32 @@ package it.polimi.ingsw.model.strategy.losestrategy;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
-import it.polimi.ingsw.model.Worker;
 
 public class BasicLose implements LoseStrategy {
 
 
     @Override
-    public boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player) {
+    public int movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player) {
 
-        int possibility=14;
-        Worker worker;
+        int possibility = 16;
         int x;
         int y;
         int z;
 
         for(int w=0;w<2;w++){
-            worker=player.getWorker(w);
-            x=worker.getCurrentPosition().getX();
-            y=worker.getCurrentPosition().getY();
-            z=worker.getCurrentPosition().getZ();
+            x = player.getWorker(w).getCurrentPosition().getX();
+            y = player.getWorker(w).getCurrentPosition().getY();
+            z = player.getWorker(w).getCurrentPosition().getZ();
 
-            for(int j=x-1;j<x+2;j++){
-                for(int i=y-1; i<y+2;i++){
+            for(int j=y-1;j<=y+1;j++){
+                for(int i=x-1;i<=x+1;i++){
 
-                    if(j!=x && i!=y){
-
-                        if( j<0 || j>4 || i<0 || i>4 ||
-                            gameBoard.getTowerCell(j,i).hasWorkerOnTop() ||
-                            gameBoard.getTowerCell(j,i).isTowerCompleted() ||
-                            gameBoard.getTowerCell(j,i).getTowerHeight()> z+1 ||
-                            (turnInfo.getAthenaPowerActive() && gameBoard.getTowerCell(j,i).getTowerHeight()>z)){
+                    if(!(j==y && i==x)) {
+                        if (j < 0 || j > 4 || i < 0 || i > 4 ||
+                                gameBoard.getTowerCell(i,j).isTowerCompleted() ||
+                                gameBoard.getTowerCell(i,j).hasWorkerOnTop() ||
+                                gameBoard.getTowerCell(i,j).getTowerHeight() > z + 1 ||
+                                (turnInfo.getAthenaPowerActive() && gameBoard.getTowerCell(i,j).getTowerHeight() > z)) {
 
                             possibility--;
                         }
@@ -41,30 +37,28 @@ public class BasicLose implements LoseStrategy {
             }
         }
 
-        return possibility == 0;
+        return possibility;
     }
 
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player) {
 
-        int possibility = 14;
-        Worker worker;
+        int possibility = 16;
         int x;
         int y;
 
         for(int w=0;w<2;w++){
-            worker=player.getWorker(w);
-            x=worker.getCurrentPosition().getX();
-            y=worker.getCurrentPosition().getY();
+            x = player.getWorker(w).getCurrentPosition().getX();
+            y = player.getWorker(w).getCurrentPosition().getY();
 
-            for(int j=x-1;j<x+2;j++){
-                for(int i=y-1; i<y+2;i++){
+            for(int j=y-1;j<=y+1;j++){
+                for(int i=x-1; i<=x+1;i++){
 
-                    if(j!=x && i!=y){
+                    if(!(j==y && i==x)){
 
                         if( j<0 || j>4 || i<0 || i>4 ||
-                                gameBoard.getTowerCell(j,i).hasWorkerOnTop() ||
-                                gameBoard.getTowerCell(j,i).isTowerCompleted()){
+                            gameBoard.getTowerCell(i,j).isTowerCompleted() ||
+                            gameBoard.getTowerCell(i,j).hasWorkerOnTop()){
 
                             possibility--;
                         }
@@ -72,6 +66,6 @@ public class BasicLose implements LoseStrategy {
                 }
             }
         }
-        return possibility==0;
+        return possibility == 0;
     }
 }
