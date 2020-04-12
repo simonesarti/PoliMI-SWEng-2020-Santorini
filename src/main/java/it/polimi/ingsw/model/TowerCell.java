@@ -52,7 +52,13 @@ public class TowerCell {
         if (towerHeight==4) throw new NullPointerException("MESSAGE: Towercell[4] doesn't exist");
         return towerLevels[towerHeight];}
 
-    public boolean hasWorkerOnTop() {return getFirstNotPieceLevel().getWorker()!=null;}
+    public boolean hasWorkerOnTop() {
+        if(towerCompleted){
+            return false;
+        }else {
+            return getFirstNotPieceLevel().getWorker() != null;
+        }
+    }
 
     public void resetTower() {
 
