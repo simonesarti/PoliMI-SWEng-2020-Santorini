@@ -87,7 +87,7 @@ public class ApolloMove implements MoveStrategy {
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
 
-
+        //in realtà basterebbe verificare che è presente un worker, perché la checkMove è già stata superata
         if(gameboard.getTowerCell(x,y).hasWorkerOnTop() && (gameboard.getTowerCell(x,y).getFirstNotPieceLevel().getWorker().getColour() != player.getColour()) ){
 
 
