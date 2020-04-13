@@ -47,164 +47,44 @@ class BasicLoseTest {
         player2.setColour(Colour.BLUE);
         player2.getWorker(0).setStartingPosition(1,0);
         player2.getWorker(1).setStartingPosition(1,1);
+    }
 
+    @Test
+    void movementLoss() {
 
-        /*
+        //GAMEBOARD GENERATION
+        int[][] towers=
+                {
+                        {0,0,4,0,2},
+                        {0,0,3,0,3},
+                        {0,0,2,2,4},
+                        {4,3,3,1,2},
+                        {0,2,4,0,4}
+                };
 
-        y\x
-            No | No | X | W2 | L2
-            ---------------------
-            No | No | L3| WT | L3
-            ---------------------
-            No | No | L2 |L2 | D
-            ---------------------
-            D  | L3 | L3 |   | L2
-            ---------------------
-            WT | L2 | X | W2 | L1
+        gameBoard.generateBoard(towers);
 
-
-         */
-
-        //dome (2,0)
-        gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(2,0).increaseTowerHeight();
-        gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(2,0).increaseTowerHeight();
-        gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(2,0).increaseTowerHeight();
-        gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(2,0).increaseTowerHeight();
-        gameBoard.getTowerCell(2,0).checkCompletion();
-
-        //W2 (3,0)
-        gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player2.getWorker(0));
-        player2.getWorker(0).movedToPosition(3,0,0);
-
-        //LV2 (4,0)
-        gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(4,0).increaseTowerHeight();
-        gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(4,0).increaseTowerHeight();
-
-        //LV3 (2,1)
-        gameBoard.getTowerCell(2,1).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(2,1).increaseTowerHeight();
-        gameBoard.getTowerCell(2,1).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(2,1).increaseTowerHeight();
-        gameBoard.getTowerCell(2,1).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(2,1).increaseTowerHeight();
+        //POSITIONING WORKERS
 
         //WT (3,1)
         gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().setWorker(playerTest.getWorker(0));
         playerTest.getWorker(0).movedToPosition(3,1,0);
 
-        //LV3 (4,1)
-        gameBoard.getTowerCell(4,1).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(4,1).increaseTowerHeight();
-        gameBoard.getTowerCell(4,1).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(4,1).increaseTowerHeight();
-        gameBoard.getTowerCell(4,1).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(4,1).increaseTowerHeight();
-
-        //LV2 (2,2)
-        gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(2,2).increaseTowerHeight();
-        gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(2,2).increaseTowerHeight();
-
-        //LV2 (3,2)
-        gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(3,2).increaseTowerHeight();
-        gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(3,2).increaseTowerHeight();
-
-        //dome (4,2)
-        gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(4,2).increaseTowerHeight();
-        gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(4,2).increaseTowerHeight();
-        gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(4,2).increaseTowerHeight();
-        gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(4,2).increaseTowerHeight();
-        gameBoard.getTowerCell(4,2).checkCompletion();
-
-        //dome (0,3)
-        gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(0,3).increaseTowerHeight();
-        gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(0,3).increaseTowerHeight();
-        gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(0,3).increaseTowerHeight();
-        gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(0,3).increaseTowerHeight();
-        gameBoard.getTowerCell(0,3).checkCompletion();
-
-        //LV3 (1,3)
-        gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(1,3).increaseTowerHeight();
-        gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(1,3).increaseTowerHeight();
-        gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(1,3).increaseTowerHeight();
-
-        //LV3 (2,3)
-        gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(2,3).increaseTowerHeight();
-        gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(2,3).increaseTowerHeight();
-        gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(2,3).increaseTowerHeight();
-
-        //LV1 (3,3)
-        gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(3,3).increaseTowerHeight();
-
-        //LV2 (4,3)
-        gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(4,3).increaseTowerHeight();
-        gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(4,3).increaseTowerHeight();
-
         //WT (0,4)
         gameBoard.getTowerCell(0,4).getFirstNotPieceLevel().setWorker(playerTest.getWorker(1));
         playerTest.getWorker(1).movedToPosition(0,4,0);
 
-        //LV2 (1,4)
-        gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(1,4).increaseTowerHeight();
-        gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(1,4).increaseTowerHeight();
-
-        //dome (2,4)
-        gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(2,4).increaseTowerHeight();
-        gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(2,4).increaseTowerHeight();
-        gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(2,4).increaseTowerHeight();
-        gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(2,4).increaseTowerHeight();
-        gameBoard.getTowerCell(2,4).checkCompletion();
-
-        //W2 (3,4)
+        //ENEMY W2 (3,4)
         gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().setWorker(player2.getWorker(1));
         player2.getWorker(1).movedToPosition(3,4,0);
 
-        //dome (4,4)
-        gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setPiece(new Level1Block());
-        gameBoard.getTowerCell(4,4).increaseTowerHeight();
-        gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setPiece(new Level2Block());
-        gameBoard.getTowerCell(4,4).increaseTowerHeight();
-        gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setPiece(new Level3Block());
-        gameBoard.getTowerCell(4,4).increaseTowerHeight();
-        gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(4,4).increaseTowerHeight();
-        gameBoard.getTowerCell(4,4).checkCompletion();
-    }
+        //W2 (3,0)
+        gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player2.getWorker(0));
+        player2.getWorker(0).movedToPosition(3,0,0);
 
-    @Test
-    void movementLoss() {
+
+        //TEST:
+
         //blocked
         assertTrue(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,0));
 
