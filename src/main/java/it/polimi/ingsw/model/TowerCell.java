@@ -66,5 +66,6 @@ public class TowerCell {
             towerLevels[i].workerMoved();
             towerLevels[i].pieceWasRemoved();
         }
+        towerHeight=0;
     }
 }
