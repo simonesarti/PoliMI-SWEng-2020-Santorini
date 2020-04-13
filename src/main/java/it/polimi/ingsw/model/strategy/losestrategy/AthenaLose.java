@@ -39,7 +39,6 @@ public class AthenaLose implements LoseStrategy {
                 }
             }
         }
-        System.out.println("possibility="+possibility);
         return possibility==0;
     }
 
