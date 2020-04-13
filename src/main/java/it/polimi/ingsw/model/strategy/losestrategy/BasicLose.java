@@ -48,18 +48,18 @@ public class BasicLose implements LoseStrategy {
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
-        //lose condition checked only after a movement, and only on first build
+        //lose condition checked only after a movement, and only on first build. chosenworker cant't be unsetted if the player moved
         if(!turnInfo.getHasAlreadyMoved() || turnInfo.getHasAlreadyBuilt()){
             return false;
         }
 
-        int possibility = 16;
+        int possibility = 8;
         int x;
         int y;
 
         //only the worker that moved must be checked
-        x = player.getWorker(chosenWorker).getCurrentPosition().getX();
-        y = player.getWorker(chosenWorker).getCurrentPosition().getY();
+        x = player.getWorker(turnInfo.getChosenWorker()).getCurrentPosition().getX();
+        y = player.getWorker(turnInfo.getChosenWorker()).getCurrentPosition().getY();
 
         for(int j=y-1;j<=y+1;j++){
             for(int i=x-1; i<=x+1;i++){
