@@ -2,10 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.strategy.buildstrategy.BasicBuild;
 import it.polimi.ingsw.model.strategy.buildstrategy.BuildStrategy;
-import it.polimi.ingsw.model.strategy.losestrategy.ApolloLose;
-import it.polimi.ingsw.model.strategy.losestrategy.BasicLose;
-import it.polimi.ingsw.model.strategy.losestrategy.LoseStrategy;
-import it.polimi.ingsw.model.strategy.losestrategy.MinotaurLose;
+import it.polimi.ingsw.model.strategy.losestrategy.*;
 import it.polimi.ingsw.model.strategy.movestrategy.BasicMove;
 import it.polimi.ingsw.model.strategy.movestrategy.MoveStrategy;
 import it.polimi.ingsw.model.strategy.winstrategy.BasicWin;
@@ -49,14 +46,14 @@ public class GodCard{
                 //moveStrategy = new ArtemisMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
-                //loseStrategy = new LOSE();
+                loseStrategy = new BasicLose();
                 break;
 
             case "Athena" :
                 //moveStrategy = new AthenaMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
-                loseStrategy = new BasicLose();
+                loseStrategy = new AthenaLose();
                 break;
 
             case "Atlas" :
