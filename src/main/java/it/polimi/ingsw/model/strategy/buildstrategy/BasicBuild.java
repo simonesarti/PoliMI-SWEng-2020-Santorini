@@ -105,6 +105,7 @@ public class BasicBuild implements BuildStrategy {
        //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
+        turnInfo.setHasBuilt();
         turnInfo.setTurnCanEnd();
         turnInfo.setTurnHasEnded();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
