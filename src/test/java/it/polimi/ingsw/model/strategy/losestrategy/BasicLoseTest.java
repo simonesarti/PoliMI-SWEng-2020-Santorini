@@ -205,14 +205,23 @@ class BasicLoseTest {
 
     @Test
     void movementLoss() {
+        //blocked
+        assertTrue(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,0));
 
-        assertEquals(0,loseStrategy.movementLoss(turnInfo,gameBoard,playerTest));
+        //moved to a level 1 where he can move to level2
         gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().workerMoved();
         gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(playerTest.getWorker(0));
         playerTest.getWorker(0).movedToPosition(3,3,1);
-        assertEquals(3,loseStrategy.movementLoss(turnInfo,gameBoard,playerTest));
+        assertFalse(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,0));
+
+        //activate athenaPower, he can no longer go up on level 2, so he loses
         turnInfo.activateAthenaPower();
-        assertEquals(0,loseStrategy.movementLoss(turnInfo,gameBoard,playerTest));
+        assertTrue(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,0));
+
+        //deactivate athena power but he has already moved, should not execute and return false
+        turnInfo.deactivateAthenaPower();
+        turnInfo.setHasMoved();
+        assertFalse(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,0));
     }
 
     @Test

@@ -7,12 +7,12 @@ import it.polimi.ingsw.model.TurnInfo;
 public class ApolloLose implements LoseStrategy{
 
     @Override
-    public int movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player) {
-        return 0;
+    public boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
+        return false;
     }
 
     @Override
-    public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player) {
+    public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
         return false;
     }
 }

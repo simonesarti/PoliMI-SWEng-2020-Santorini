@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.TurnInfo;
 
 public interface LoseStrategy {
 
-    int movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player);
+    boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker);
 
-    boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player);
+    boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker);
 }
