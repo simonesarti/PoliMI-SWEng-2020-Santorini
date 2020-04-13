@@ -8,11 +8,14 @@ public class TurnInfo {
     //da usare per verificare che il turno può finire se viene mandato un messaggio di fine turno
     private boolean turnCanEnd;
 
-    //da usare per check attiazione potere di Atena
+    //da usare per check attivazione potere di Atena
     private boolean athenaPowerActive;
 
     //da usare con move base
     private boolean hasAlreadyMoved;
+
+    //da usare con build base
+    private boolean hasAlreadyBuilt;
 
     //da usare con move multiple
     private int numberOfMoves;
@@ -29,6 +32,7 @@ public class TurnInfo {
         turnCanEnd=false;
         athenaPowerActive=false;
         hasAlreadyMoved=false;
+        hasAlreadyBuilt=false;
         numberOfMoves=0;
 
         chosenWorker=-1;
@@ -41,6 +45,7 @@ public class TurnInfo {
         turnHasEnded=false;
         turnCanEnd=false;
         hasAlreadyMoved=false;
+        hasAlreadyBuilt=false;
         numberOfMoves=0;
 
         chosenWorker=-1;
@@ -61,6 +66,9 @@ public class TurnInfo {
 
     public boolean getHasAlreadyMoved(){return hasAlreadyMoved;}
     public void setHasMoved(){hasAlreadyMoved=true;}
+
+    public boolean getHasAlreadyBuilt(){return hasAlreadyBuilt;}
+    public void setHasBuilt(){hasAlreadyBuilt=true;}
 
     public int getNumberOfMoves(){return numberOfMoves;}
     public void addMove(){numberOfMoves++;}

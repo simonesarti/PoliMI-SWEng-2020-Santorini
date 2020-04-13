@@ -2,10 +2,11 @@ package it.polimi.ingsw.model.strategy.losestrategy;
 
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.TurnInfo;
 
 public interface LoseStrategy {
 
-    boolean movementLoss(GameBoard gameBoard, Player player);
+    boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker);
 
-    boolean buildingLoss(GameBoard gameBoard, Player player);
+    boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker);
 }

@@ -11,9 +11,8 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
 public class BasicBuild implements BuildStrategy {
 
    @Override
-   public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player, int[] buildingInto, String pieceType){
+   public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType){
 
-        //TODO prendere worker da turnInfo
        Worker worker = player.getWorker(turnInfo.getChosenWorker());
        int x = buildingInto[0];
        int y = buildingInto[1];
@@ -23,12 +22,22 @@ public class BasicBuild implements BuildStrategy {
            return GameMessage.hasNotMoved;
        }
 
+       //Player has not already built
+       if(turnInfo.getHasAlreadyBuilt()){
+           return GameMessage.alreadyBuilt;
+       }
+
        //x e y must be inside the board
        if (x < 0 || x > 4 || y < 0 || y > 4) {
            return GameMessage.notInGameboard;
        }
 
        int z = gameboard.getTowerCell(x, y).getTowerHeight();
+
+       //worker must be the same that has moved
+       if(chosenWorker != turnInfo.getChosenWorker()){
+           return GameMessage.notSameThatMoved;
+       }
 
        //workerPosition must not be the destination position
        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
@@ -50,6 +59,7 @@ public class BasicBuild implements BuildStrategy {
            return GameMessage.noBlocksInDome;
        }
 
+
        //the chosen piece must not be a "Dome" when tower's height is <3
        if(z<3 &&  pieceType.equals("Dome")) {
            return GameMessage.noDomesInBlock;
@@ -64,7 +74,7 @@ public class BasicBuild implements BuildStrategy {
    }
 
     @Override
-    public String build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType) {
+    public String build(TurnInfo turnInfo, GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType) {
 
         int x = buildingInto[0];
         int y = buildingInto[1];
@@ -95,6 +105,7 @@ public class BasicBuild implements BuildStrategy {
        //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
+        turnInfo.setHasBuilt();
         turnInfo.setTurnCanEnd();
         turnInfo.setTurnHasEnded();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board

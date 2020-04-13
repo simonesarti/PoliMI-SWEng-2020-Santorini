@@ -22,6 +22,7 @@ class BasicBuildTest {
     
     BasicBuild basicbuild;
     GameBoard gameBoard;
+    TurnInfo turnInfo;
     Player player;
     String piece;
     Player enemy1Player;
@@ -58,6 +59,8 @@ class BasicBuildTest {
 
         gameBoard = new GameBoard();
 
+        turnInfo = new TurnInfo();
+
         ///////////////////////////////////////////////GAMEBOARD SETUP//////////////////////////////////////////////////
 
         gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setPiece(new Level1Block());
@@ -88,6 +91,7 @@ class BasicBuildTest {
         gameBoard.getTowerCell(1,2).increaseTowerHeight();
         gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setPiece(new Dome());
         gameBoard.getTowerCell(1,2).increaseTowerHeight();
+        gameBoard.getTowerCell(1,2).checkCompletion();
 
 
         gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().setPiece(new Level1Block());
@@ -105,10 +109,12 @@ class BasicBuildTest {
         gameBoard.getTowerCell(4,2).increaseTowerHeight();
         gameBoard.getTowerCell(4,2).getFirstNotPieceLevel().setPiece(new Dome());
         gameBoard.getTowerCell(4,2).increaseTowerHeight();
+        gameBoard.getTowerCell(4,2).checkCompletion();
 
 
         gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Dome());
         gameBoard.getTowerCell(1,3).increaseTowerHeight();
+        gameBoard.getTowerCell(1,3).checkCompletion();
 
         gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setPiece(new Level1Block());
         gameBoard.getTowerCell(2,3).increaseTowerHeight();
@@ -138,70 +144,94 @@ class BasicBuildTest {
         return;
     }
 
+
     @Test
     void checkBuild (){
 
-        //alreadyBuilt must be false
+
+        //player must have moved
+        turnInfo.setChosenWorker(0);
+        buildingTo[0]=1;
+        buildingTo[1]=1;
+
+        assertEquals(GameMessage.hasNotMoved, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        turnInfo.turnInfoReset();
+
+        //Player has not already built (alreadyBuilt must be false)
+        turnInfo.setChosenWorker(0);
+        turnInfo.setHasMoved();
         buildingTo[0]=1;
         buildingTo[1]=1;
         piece = "Block";
-        basicbuild.setAlreadyBuilt(true);
-        assertEquals(GameMessage.alreadyBuilt, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
-        basicbuild.setAlreadyBuilt(false);
-
-        //TODO dobbiamo cambiare posizionamento attributi (li mettiamo in TurnInfo), quindi questa parte cambia
-        //player must have moved
-        buildingTo[0]=1;
-        buildingTo[1]=1;
-        basicmove.setAlreadyMoved(false);
-        assertEquals(GameMessage.hasNotMoved, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
-        basicmove.setAlreadyMoved(true);
+        turnInfo.setHasBuilt();
+        assertEquals(GameMessage.alreadyBuilt, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        turnInfo.turnInfoReset();
 
         //x and y must be inside the board
+        turnInfo.setChosenWorker(0);
+        turnInfo.setHasMoved();
         buildingTo[0]=28;
         buildingTo[1]=1;
-        assertEquals(GameMessage.notInGameboard, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notInGameboard, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+
+        //worker must be the same that has moved
+        buildingTo[0]=1;
+        buildingTo[1]=1;
+
+        turnInfo.setChosenWorker(1);
+        assertEquals(GameMessage.notSameThatMoved, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        turnInfo.setChosenWorker(0);
 
         //workerPosition must not be the building position
         buildingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         buildingTo[1]=player.getWorker(0).getCurrentPosition().getY();
-        assertEquals(GameMessage.notTheSame, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notTheSame, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //workerPosition must be adjacent to building position
         buildingTo[0]=2;
         buildingTo[1]=0;
-        assertEquals(GameMessage.notInSurroundings, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notInSurroundings, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //towerCell must not be completed by a dome
         player.getWorker(0).movedToPosition(0,3,0);
         buildingTo[0]=1;
         buildingTo[1]=3;
-        assertEquals(GameMessage.noBuildToCompleteTower, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+
+        assertEquals(GameMessage.noBuildToCompleteTower, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //the chosen piece must not be a "Block" when tower's height is 3
+        piece = "Block";
         player.getWorker(0).movedToPosition(2,2,0);
         buildingTo[0]=3;
         buildingTo[1]=2;
-        assertEquals(GameMessage.noBlocksInDome, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noBlocksInDome, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //the chosen piece must not be a "Dome" when tower's height is <3
         piece = "Dome";
         buildingTo[0]=2;
         buildingTo[1]=3;
-        assertEquals(GameMessage.noDomesInBlock, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noDomesInBlock, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //there must not be a worker in the building position
         player.getWorker(0).movedToPosition(1,4,0);
         piece = "Block";
         buildingTo[0]=2;
         buildingTo[1]=4;
-        assertEquals(GameMessage.noBuildToOccupiedTower, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noBuildToOccupiedTower, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+
+
 
         //there must be pieces left
-        //TODO controllare pezzi rimasti
+        //TODO controllare pezzi rimasti?
 
-
+        player.getWorker(0).movedToPosition(1,4,0);
+        piece = "Block";
+        buildingTo[0]=2;
+        buildingTo[1]=3;
         //move ok
-        assertEquals(GameMessage.buildOK, basicbuild.checkBuild(gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildOK, basicbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+
+
     }
+
 }

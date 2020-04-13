@@ -11,8 +11,10 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
  */
 public interface BuildStrategy {
 
-    String build(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType);
+    //TODO forse non serve passare chosenWorker anche alla build(). Alla checkBuild sicuramente sì per colpa di alcuni dei
+    String build(TurnInfo turnInfo, GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType);
 
-    String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player, int[] buildingInto, String pieceType);
+
+    String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType);
 
 }

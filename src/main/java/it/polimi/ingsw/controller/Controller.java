@@ -46,7 +46,7 @@ public class Controller implements Observer<Message>{
 
             //execute win check
             if(message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(),message.getChosenWorker())){
-                //fare qualcosa
+                endMatch();
             }
 
         }else{
@@ -77,10 +77,10 @@ public class Controller implements Observer<Message>{
             return;
         }
 
-        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model. getTurnInfo(), model.getGameBoard(), message.getPlayer(),message.getBuildingInto(), message.getPieceType());
+        checkResult=message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model. getTurnInfo(), model.getGameBoard(), message.getPlayer(),message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
 
         if(checkResult.equals(GameMessage.buildOK)) {
-            nextStep=message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getBuildingInto(), message.getPieceType());
+            nextStep=message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(),message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
         }
         else{
             //TODO impementare reportError
@@ -132,5 +132,9 @@ public class Controller implements Observer<Message>{
 
     }
 
+
+    private void startMatch(){}
+
+    private void endMatch(){}
 
 }

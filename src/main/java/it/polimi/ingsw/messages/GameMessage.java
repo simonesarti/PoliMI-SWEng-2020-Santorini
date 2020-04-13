@@ -27,7 +27,7 @@ public class GameMessage {
     public static String moveOK= "ok";
 
     //build request
-    public static String buildRequest = "Choose your build (Piece type (block/dome), worker number (1/2),x,y)";
+    public static String buildRequest = "Choose your build (Piece type (block/dome),x,y)";
 
     //generic build error messages
     public static String hasNotMoved = "You have not moved yet\n";
@@ -36,6 +36,7 @@ public class GameMessage {
     public static String noBuildToOccupiedTower = "You can't build here, this space already contains a worker, please choose another position\n";
     public static String noDomesInBlock = "You can't place a dome in a space reserved to a block. Please try something else\n";
     public static String noBlocksInDome = "You can't place a block in a space reserved to a dome. Please try something else\n";
+    public static String notSameThatMoved = "You must build with the same worker that has moved\n";
 
     //build ok
     public static String buildOK= "ok";
