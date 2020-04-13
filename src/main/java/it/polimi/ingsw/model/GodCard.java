@@ -134,8 +134,4 @@ public class GodCard{
         return loseStrategy;
     }
 
-    //TODO non così: nel costruttore asseganmento con movestartegy=new AthenaMoveStrategy(Messaggio), eliminala
- /*   public void setBuildStrategy(BuildStrategy buildStrategy) {
-        this.buildStrategy = buildStrategy;
-    }*/
 }

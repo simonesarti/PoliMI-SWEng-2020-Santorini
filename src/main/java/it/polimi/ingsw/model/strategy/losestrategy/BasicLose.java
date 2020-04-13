@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 
+//based on MOVE BEFORE BUILD
 public class BasicLose implements LoseStrategy {
 
     //chosenWorker is not the base Lose
