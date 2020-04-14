@@ -95,7 +95,7 @@ class ApolloMoveTest {
     }
 
     @Test
-    void checkMoveTesting(){
+    void everyCheck_checkMove_Testing(){
 
         //alreadyMoved must be false
         movingTo[0]=1;
@@ -159,11 +159,46 @@ class ApolloMoveTest {
     }
 
     @Test
-    void moveTesting(){
+    void differentScenarios_move_Testing(){
+
+        //Apollo using his power. From a no-block towercell to a level1block occupied by enemy2 worker0
 
         turnInfo.turnInfoReset();
+        player.getWorker(0).movedToPosition(1,4,0);
+        movingTo[0]=2;
+        movingTo[1]=4;
+        assertEquals(GameMessage.moveOK, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        apolloMove.move(turnInfo, gameBoard,player,0,movingTo);
+
+        assertTrue((new Position(2,4,1)).equals(player.getWorker(0).getCurrentPosition()));
+        assertTrue((new Position(1,4,0)).equals(enemy2Player.getWorker(0).getCurrentPosition()));
+        assertTrue((new Position(2,4,1)).equals(enemy2Player.getWorker(0).getPreviousPosition()));
+        assertTrue((new Position(1,4,0)).equals(player.getWorker(0).getPreviousPosition()));
 
 
+        //Apollo not using his power. From a level3block to a level2block
+
+        turnInfo.turnInfoReset();
+        player.getWorker(0).movedToPosition(3,2,3);
+        movingTo[0]=3;
+        movingTo[1]=3;
+        assertEquals(GameMessage.moveOK, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.buildRequest, apolloMove.move(turnInfo, gameBoard,player,0,movingTo));
+        assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
+        assertEquals(1, turnInfo.getNumberOfMoves());
+
+        //Apollo using his power. From a level2block to a levelzero towercell occupied by enemy2 worker1
+        turnInfo.turnInfoReset();
+        player.getWorker(0).movedToPosition(3,3,2);
+        movingTo[0]=3;
+        movingTo[1]=4;
+        assertEquals(GameMessage.moveOK, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.buildRequest, apolloMove.move(turnInfo, gameBoard,player,0,movingTo));
+        assertTrue((new Position(3,4,0)).equals(player.getWorker(0).getCurrentPosition()));
+        assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertTrue((new Position(3,3,2)).equals(enemy2Player.getWorker(1).getCurrentPosition()));
+        assertTrue((new Position(3,4,0)).equals(enemy2Player.getWorker(1).getPreviousPosition()));
 
 
     }
