@@ -202,7 +202,7 @@ class BasicBuildTest {
         //control that tower's height increased
         assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==2);
         //control that the piece is right
-
+        assertTrue(gameBoard.getTowerCell(2,3).getLevel(1).getPiece() instanceof Level2Block);
         //control that tower is not completed
         assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
 
@@ -219,7 +219,7 @@ class BasicBuildTest {
         //control that tower's height increased
         assertTrue(gameBoard.getTowerCell(3,2).getTowerHeight()==4);
         //control that the piece is right
-        
+        assertTrue(gameBoard.getTowerCell(3,2).getLevel(3).getPiece() instanceof Dome);
         //control that tower is not completed
         assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==true);
 
