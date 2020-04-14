@@ -20,6 +20,8 @@ public class TurnInfo {
     //da usare con move multiple
     private int numberOfMoves;
 
+    private int numberOfBuilds;
+
     //da usare per verificare che move e build siano fatte con lo stesso worker
     private int chosenWorker;
 
@@ -34,6 +36,7 @@ public class TurnInfo {
         hasAlreadyMoved=false;
         hasAlreadyBuilt=false;
         numberOfMoves=0;
+        numberOfBuilds=0;
 
         chosenWorker=-1;
         lastBuildCoordinates = new int[]{-1, -1};
@@ -47,6 +50,7 @@ public class TurnInfo {
         hasAlreadyMoved=false;
         hasAlreadyBuilt=false;
         numberOfMoves=0;
+        numberOfBuilds=0;
 
         chosenWorker=-1;
         lastBuildCoordinates[0]=-1;
@@ -72,6 +76,9 @@ public class TurnInfo {
 
     public int getNumberOfMoves(){return numberOfMoves;}
     public void addMove(){numberOfMoves++;}
+
+    public int getNumberOfBuilds(){return numberOfBuilds;}
+    public void addBuild(){numberOfMoves++;}
 
     public int getChosenWorker(){return chosenWorker;}
     public void setChosenWorker(int n){chosenWorker=n;}
