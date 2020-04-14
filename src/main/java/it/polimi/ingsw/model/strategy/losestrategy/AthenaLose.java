@@ -39,7 +39,14 @@ public class AthenaLose implements LoseStrategy {
                 }
             }
         }
-        return possibility==0;
+
+        if(possibility==0){
+            turnInfo.deactivateAthenaPower();
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 
