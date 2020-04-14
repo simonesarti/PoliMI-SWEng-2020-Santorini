@@ -1,13 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.strategy.buildstrategy.BasicBuild;
-import it.polimi.ingsw.model.strategy.buildstrategy.BuildStrategy;
+import it.polimi.ingsw.model.strategy.buildstrategy.*;
 import it.polimi.ingsw.model.strategy.losestrategy.*;
-import it.polimi.ingsw.model.strategy.movestrategy.BasicMove;
-import it.polimi.ingsw.model.strategy.movestrategy.MoveStrategy;
-import it.polimi.ingsw.model.strategy.winstrategy.BasicWin;
-import it.polimi.ingsw.model.strategy.winstrategy.PanWin;
-import it.polimi.ingsw.model.strategy.winstrategy.WinStrategy;
+import it.polimi.ingsw.model.strategy.movestrategy.*;
+import it.polimi.ingsw.model.strategy.winstrategy.*;
 
 public class GodCard{
 
@@ -67,14 +63,14 @@ public class GodCard{
                 moveStrategy = new BasicMove();
                 //buildStrategy = new DemeterBuild();
                 winStrategy = new BasicWin();
-                //loseStrategy = new LOSE();
+                loseStrategy = new BasicLose();
                 break;
 
             case "Hephaestus" :
                 moveStrategy = new BasicMove();
                 //buildStrategy = new HephaestusBuild();
                 winStrategy = new BasicWin();
-                //loseStrategy = new LOSE();
+                loseStrategy = new BasicLose();
                 break;
 
             case "Minotaur" :
@@ -95,7 +91,7 @@ public class GodCard{
                 //moveStrategy = new PrometheusMove();
                 //buildStrategy = new PrometheusBuild();
                 winStrategy = new BasicWin();
-                //loseStrategy = new LOSE();
+                loseStrategy = new PrometheusLose();
                 break;
 
         }

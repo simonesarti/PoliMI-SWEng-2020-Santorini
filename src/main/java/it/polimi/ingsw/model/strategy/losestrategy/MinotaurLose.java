@@ -13,6 +13,7 @@ public class MinotaurLose implements LoseStrategy{
 
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player,int chosenWorker) {
-        return false;
+
+        return (new BasicLose()).buildingLoss(turnInfo, gameBoard, player, chosenWorker);
     }
 }
