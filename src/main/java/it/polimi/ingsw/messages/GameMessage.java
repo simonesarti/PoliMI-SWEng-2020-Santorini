@@ -51,7 +51,8 @@ public class GameMessage {
     //APOLLO
     public static String noMovedToOccupiedTowerApollo = "This cell is occupied by your other worker, please choose another position\n";
     //ATHENA
-    public static String athenaNoMoveUp = "This move isn't allowed due to Athena's power";
-
+    public static String athenaNoMoveUp = "This move isn't allowed due to Athena's power\n";
+    //ARTEMIS
+    public static String ArtemisFirstPosition = "This is your first position, choose another one\n";
 
 }
