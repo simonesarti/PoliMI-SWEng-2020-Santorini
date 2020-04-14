@@ -81,7 +81,7 @@ public class BasicBuild implements BuildStrategy {
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
         Piece piece = null;
 
-        //create the right Piece and decrease the number
+        //create the right Piece
 
        if (z==0){
            piece = new Level1Block();
