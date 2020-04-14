@@ -98,7 +98,7 @@ public class BasicMoveTest {
     }
 
     @Test
-    void checkMoveTesting(){
+    void everyCheck_checkMove_Testing(){
 
         //alreadyMoved must be false
         movingTo[0]=1;
@@ -154,7 +154,57 @@ public class BasicMoveTest {
     }
 
     @Test
-    void moveTesting(){
+    void cornerCases_checkMove_Testing(){
+
+        //towerCell must not be completed by a dome. This time the dome is on a level1block
+        player.getWorker(0).movedToPosition(1,1,0);
+        movingTo[0]=1;
+        movingTo[1]=2;
+        assertEquals(GameMessage.noMoveToCompleteTower, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        //Can not jump from a level1 to a level3 block
+        player.getWorker(0).movedToPosition(2,3,1);
+        movingTo[0]=3;
+        movingTo[1]=2;
+        assertEquals(GameMessage.noHighJump, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        //Can not jump from level zero to a level3 block
+        player.getWorker(0).movedToPosition(2,2,0);
+        movingTo[0]=3;
+        movingTo[1]=2;
+        assertEquals(GameMessage.noHighJump, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        //You can move down from a level2 to a empty towercell
+        player.getWorker(0).movedToPosition(3,3,2);
+        movingTo[0]=2;
+        movingTo[1]=2;
+        assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        //You can not move from a level3 to a level2 that is occupied by another worker
+        player.getWorker(0).movedToPosition(4,1,3);
+        movingTo[0]=4;
+        movingTo[1]=0;
+        assertEquals(GameMessage.noMovedToOccupiedTower, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        //You can not move from a level3 to a level3 that is completed
+        player.getWorker(0).movedToPosition(4,1,3);
+        movingTo[0]=4;
+        movingTo[1]=2;
+        assertEquals(GameMessage.noMoveToCompleteTower, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        //if Athena's power is active, worker should be able to move down
+        turnInfo.activateAthenaPower();
+        player.getWorker(0).movedToPosition(3,3,2);
+        movingTo[0]=4;
+        movingTo[1]=4;
+        assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        turnInfo.deactivateAthenaPower();
+
+
+    }
+
+    @Test
+    void differentScenarios_move_Testing(){
 
         turnInfo.turnInfoReset();
 
@@ -167,12 +217,14 @@ public class BasicMoveTest {
         assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getCurrentPosition()));
         assertEquals(1, turnInfo.getNumberOfMoves());
 
+        //moving from a level1block to a level3block. Also checking previous position
         turnInfo.turnInfoReset();
         movingTo[0]=3;
         movingTo[1]=3;
         assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         assertEquals(GameMessage.buildRequest, basicmove.move(turnInfo, gameBoard,player,0,movingTo));
         assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
+        assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getPreviousPosition()));
         assertEquals(1, turnInfo.getNumberOfMoves());
 
 
