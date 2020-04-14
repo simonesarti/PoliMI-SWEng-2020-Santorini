@@ -175,6 +175,8 @@ class ApolloMoveTest {
         assertTrue((new Position(1,4,0)).equals(enemy2Player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(2,4,1)).equals(enemy2Player.getWorker(0).getPreviousPosition()));
         assertTrue((new Position(1,4,0)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals(enemy2Player.getWorker(0),gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().getWorker());
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().getWorker());
 
 
         //Apollo not using his power. From a level3block to a level2block
@@ -186,9 +188,12 @@ class ApolloMoveTest {
         assertEquals(GameMessage.moveOK, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         assertEquals(GameMessage.buildRequest, apolloMove.move(turnInfo, gameBoard,player,0,movingTo));
         assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
+        assertNull(gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().getWorker());
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
         assertEquals(1, turnInfo.getNumberOfMoves());
 
         //Apollo using his power. From a level2block to a levelzero towercell occupied by enemy2 worker1
+
         turnInfo.turnInfoReset();
         player.getWorker(0).movedToPosition(3,3,2);
         movingTo[0]=3;
@@ -199,6 +204,8 @@ class ApolloMoveTest {
         assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getPreviousPosition()));
         assertTrue((new Position(3,3,2)).equals(enemy2Player.getWorker(1).getCurrentPosition()));
         assertTrue((new Position(3,4,0)).equals(enemy2Player.getWorker(1).getPreviousPosition()));
+        assertEquals(enemy2Player.getWorker(1),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().getWorker());
 
 
     }

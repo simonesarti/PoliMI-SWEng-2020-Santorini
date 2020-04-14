@@ -215,6 +215,8 @@ public class BasicMoveTest {
         assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         assertEquals(GameMessage.buildRequest, basicmove.move(turnInfo, gameBoard,player,0,movingTo));
         assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getCurrentPosition()));
+        assertNull(gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().getWorker());
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
         assertEquals(1, turnInfo.getNumberOfMoves());
 
         //moving from a level1block to a level3block. Also checking previous position
@@ -225,7 +227,10 @@ public class BasicMoveTest {
         assertEquals(GameMessage.buildRequest, basicmove.move(turnInfo, gameBoard,player,0,movingTo));
         assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getPreviousPosition()));
-        assertEquals(1, turnInfo.getNumberOfMoves());
+        assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+
+        System.out.println("eccoloo");
 
 
     }
