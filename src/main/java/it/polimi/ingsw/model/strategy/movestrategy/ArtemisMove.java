@@ -26,8 +26,13 @@ public class ArtemisMove implements MoveStrategy {
 
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
-        //if artemis has already moved one time, the destination must not be "previous position"
+        //if artemis has already moved one time, the destination must not be "previous position" and the worker used must be the same
         if(turnInfo.getNumberOfMoves() == 1){
+
+            if(chosenWorker!=turnInfo.getChosenWorker()){
+                return GameMessage.NotSameWorker;
+            }
+
             if(player.getWorker(chosenWorker).getPreviousPosition().getX() == x && player.getWorker(chosenWorker).getPreviousPosition().getY() == y){
                 return GameMessage.ArtemisFirstPosition;
             }
