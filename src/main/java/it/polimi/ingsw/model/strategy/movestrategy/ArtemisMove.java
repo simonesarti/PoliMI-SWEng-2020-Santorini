@@ -91,7 +91,11 @@ public class ArtemisMove implements MoveStrategy {
         turnInfo.addMove();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
-        return GameMessage.buildRequest;
+        if(!turnInfo.getHasAlreadyMoved()){
+            return GameMessage.moveAgainOrBuild;
+        }else{
+            return GameMessage.buildRequest;
+        }
     }
 
 

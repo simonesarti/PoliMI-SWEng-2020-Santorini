@@ -37,7 +37,7 @@ public class GameMessage {
     public static String noBuildToOccupiedTower = "You can't build here, this space already contains a worker, please choose another position\n";
     public static String noDomesInBlock = "You can't place a dome in a space reserved to a block. Please try something else\n";
     public static String noBlocksInDome = "You can't place a block in a space reserved to a dome. Please try something else\n";
-    public static String notSameThatMoved = "You must build with the same worker that has moved\n";
+    public static String notSameThatMoved = "You must build with the same worker who moved\n";
 
     //build ok
     public static String buildOK= "ok";
@@ -55,6 +55,7 @@ public class GameMessage {
     public static String athenaNoMoveUp = "This move isn't allowed due to Athena's power\n";
     //ARTEMIS
     public static String ArtemisFirstPosition = "This is your first position, choose another one\n";
+    public static String moveAgainOrBuild = "You can now decide to move again or to build\n";
 
 
 }
