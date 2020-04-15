@@ -200,7 +200,7 @@ class AtlasBuildTest {
         assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==2);
         //control that the piece is right
         assertTrue(gameBoard.getTowerCell(2,3).getLevel(1).getPiece() instanceof Dome);
-        //control that tower is not completed
+        //control that tower is completed
         assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==true);
 
         //Dome test
@@ -217,7 +217,7 @@ class AtlasBuildTest {
         assertTrue(gameBoard.getTowerCell(3,2).getTowerHeight()==4);
         //control that the piece is right
         assertTrue(gameBoard.getTowerCell(3,2).getLevel(3).getPiece() instanceof Dome);
-        //control that tower is not completed
+        //control that tower is completed
         assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==true);
 
 

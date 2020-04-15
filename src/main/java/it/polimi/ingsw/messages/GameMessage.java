@@ -56,6 +56,7 @@ public class GameMessage {
     //ARTEMIS
     public static String ArtemisFirstPosition = "This is your first position, choose another one\n";
     public static String moveAgainOrBuild = "You can now decide to move again or to build\n";
-
-
+    //DEMETER
+    public static String DemeterFirstBuild = "This is your first building position, choose another one\n";
+    public static String buildAgainOrEnd = "You can now decide to build again or choose END to end your turn\n";
 }
