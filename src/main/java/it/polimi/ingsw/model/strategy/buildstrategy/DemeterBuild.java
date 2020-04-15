@@ -9,7 +9,7 @@ import it.polimi.ingsw.messages.PlayerBuildChoice;
 public class DemeterBuild implements BuildStrategy {
 
     /**
-     * Atlas' power: your worker may build one additional time, but not on the same space
+     * Demeter's power: your worker may build one additional time, but not on the same space
      * @param turnInfo
      * @param gameboard
      * @param player
@@ -124,7 +124,7 @@ public class DemeterBuild implements BuildStrategy {
         gameboard.getTowerCell(x,y).checkCompletion();
 
 
-        
+
 
         if(!turnInfo.getHasAlreadyBuilt()){
             turnInfo.setHasBuilt();
