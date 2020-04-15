@@ -26,6 +26,18 @@ public class GameBoard {
 
     public TowerCell getTowerCell(int x, int y){ return towerCells[x][y];}
 
+    public boolean cantBeForcedBackwards(int playerX, int playerY, int enemyX, int enemyY){
+
+        int toCheckX=(enemyX-playerX)+enemyX;
+        int toCheckY=(enemyY-playerY)+enemyY;
+
+        return (
+                toCheckX<0 || toCheckY<0 || toCheckX>4 || toCheckY>4 ||
+                this.getTowerCell(toCheckX, toCheckY).isTowerCompleted() ||
+                this.getTowerCell(toCheckX, toCheckY).hasWorkerOnTop()
+                );
+    }
+
     public void resetBoard(){
 
         for(int j=0; j<5;j++){

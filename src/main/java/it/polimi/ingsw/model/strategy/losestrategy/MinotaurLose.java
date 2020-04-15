@@ -8,7 +8,47 @@ public class MinotaurLose implements LoseStrategy{
 
     @Override
     public boolean movementLoss(TurnInfo turnInfo,GameBoard gameBoard, Player player,int chosenWorker) {
-        return false;
+
+        //lose condition checked only before first movement
+        if(turnInfo.getHasAlreadyMoved()){
+            return false;
+        }
+
+        int possibility = 16;
+        int x;
+        int y;
+        int z;
+
+        for(int w=0;w<2;w++){
+            x = player.getWorker(w).getCurrentPosition().getX();
+            y = player.getWorker(w).getCurrentPosition().getY();
+            z = player.getWorker(w).getCurrentPosition().getZ();
+
+            for(int j=y-1;j<=y+1;j++){
+                for(int i=x-1;i<=x+1;i++){
+
+                    if(!(j==y && i==x)) {
+                        if (j < 0 || j > 4 || i < 0 || i > 4 ||
+                                gameBoard.getTowerCell(i,j).isTowerCompleted() ||
+                                gameBoard.getTowerCell(i,j).getTowerHeight() > z + 1 ||
+                                (turnInfo.getAthenaPowerActive() && gameBoard.getTowerCell(i,j).getTowerHeight() > z) ||
+
+                                    (gameBoard.getTowerCell(i,j).hasWorkerOnTop() &&
+                                    gameBoard.getTowerCell(i,j).getFirstNotPieceLevel().getWorker().getColour()==player.getWorker(w).getColour()) ||
+
+                                    (gameBoard.getTowerCell(i,j).hasWorkerOnTop() &&
+                                    gameBoard.getTowerCell(i,j).getFirstNotPieceLevel().getWorker().getColour()!=player.getWorker(w).getColour() &&
+                                    gameBoard.cantBeForcedBackwards(x,y,i,j))
+
+                        ){
+                            possibility--;
+                        }
+                    }
+                }
+            }
+        }
+
+        return possibility==0;
     }
 
     @Override
