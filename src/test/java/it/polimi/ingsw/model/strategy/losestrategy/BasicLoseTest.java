@@ -135,11 +135,11 @@ class BasicLoseTest {
 
         //ENEMY W2 (0,1)
         gameBoard.getTowerCell(0,1).getFirstNotPieceLevel().setWorker(player2.getWorker(0));
-        player2.getWorker(1).movedToPosition(0,1,2);
+        player2.getWorker(0).movedToPosition(0,1,2);
 
         //W2 (3,4)
         gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().setWorker(player2.getWorker(1));
-        player2.getWorker(0).movedToPosition(3,4,2);
+        player2.getWorker(1).movedToPosition(3,4,2);
 
 
         //TEST:
