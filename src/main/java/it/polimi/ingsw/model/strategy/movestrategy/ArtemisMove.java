@@ -86,14 +86,15 @@ public class ArtemisMove implements MoveStrategy {
         //modifying worker's associated position
         worker.movedToPosition(x,y,z);
 
-        turnInfo.setHasMoved();
-        turnInfo.setChosenWorker(chosenWorker);
-        turnInfo.addMove();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
         if(!turnInfo.getHasAlreadyMoved()){
+            turnInfo.setHasMoved();
+            turnInfo.setChosenWorker(chosenWorker);
+            turnInfo.addMove();
             return GameMessage.moveAgainOrBuild;
         }else{
+            turnInfo.addMove();
             return GameMessage.buildRequest;
         }
     }
