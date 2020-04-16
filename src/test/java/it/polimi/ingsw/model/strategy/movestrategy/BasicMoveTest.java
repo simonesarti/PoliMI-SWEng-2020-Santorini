@@ -210,6 +210,7 @@ public class BasicMoveTest {
 
         //moving from a level1block to another level1block
         player.getWorker(0).movedToPosition(2,4,1);
+        gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         movingTo[0]=2;
         movingTo[1]=3;
         assertEquals(GameMessage.moveOK, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
@@ -230,7 +231,6 @@ public class BasicMoveTest {
         assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
 
-        System.out.println("eccoloo");
 
 
     }

@@ -8,12 +8,22 @@ import it.polimi.ingsw.model.Worker;
 
 public class ArtemisMove implements MoveStrategy {
 
+    /**
+     * Just like basicmove's checkmove, but it adds checks to manage multiple moves (must be the same worker)
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return one of error messages or moveOk message
+     */
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
+
         Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
         int y = movingTo[1];
-
 
         //number of move must be < 2
         if(turnInfo.getNumberOfMoves()>1){
@@ -72,6 +82,16 @@ public class ArtemisMove implements MoveStrategy {
         return GameMessage.moveOK;
     }
 
+    /**
+     * BasicMove's move()
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return buildRequest message
+     */
     @Override
     public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
         Worker worker = player.getWorker(chosenWorker);
@@ -98,6 +118,5 @@ public class ArtemisMove implements MoveStrategy {
             return GameMessage.buildRequest;
         }
     }
-
 
 }

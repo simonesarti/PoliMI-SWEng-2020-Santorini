@@ -10,12 +10,13 @@ public class AthenaMove implements MoveStrategy {
 
     /**
      * Just like basicmove's checkmove, but it skips the Athena's power check
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param movingTo
-     * @return
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return one of error messages or moveOk message
      */
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
@@ -67,12 +68,13 @@ public class AthenaMove implements MoveStrategy {
 
     /**
      * Just like BasicMove but it activates AthenaPower if it moved up
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param movingTo
-     * @return
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return buildRequest message
      */
     @Override
     public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
@@ -81,6 +83,7 @@ public class AthenaMove implements MoveStrategy {
         int x = movingTo[0];
         int y = movingTo[1];
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
+
 
         //activating/deactivating Athena's power
         if(worker.getCurrentPosition().getZ()<z){

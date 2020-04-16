@@ -9,6 +9,16 @@ import it.polimi.ingsw.model.*;
  */
 public class BasicMove implements MoveStrategy {
 
+    /**
+     * Checks if the move is feasible
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return one of error messages or moveOk message
+     */
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo){
 
@@ -66,6 +76,16 @@ public class BasicMove implements MoveStrategy {
     }
 
 
+    /**
+     * Changes position associated to the worker and sets the worker on the towercell
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return buildRequest message
+     */
     @Override
     public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
 

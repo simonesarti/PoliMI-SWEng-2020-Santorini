@@ -9,15 +9,14 @@ import it.polimi.ingsw.model.Worker;
 public class ApolloMove implements MoveStrategy {
 
     /**
-     *
      * Just like BasicMove's checkMove method, but the destination cell can be occupied by an enemy worker
      *
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param movingTo
-     * @return
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return one of error messages or moveOk message
      */
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
@@ -77,7 +76,16 @@ public class ApolloMove implements MoveStrategy {
 
     }
 
-
+    /**
+     * Just like BasicMove's checkMove method, but if the destination cell is occupied by an enemy worker it swaps workers
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return buildRequest message
+     */
     @Override
     public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
 
@@ -121,6 +129,5 @@ public class ApolloMove implements MoveStrategy {
         return GameMessage.buildRequest;
 
     }
-
 
 }

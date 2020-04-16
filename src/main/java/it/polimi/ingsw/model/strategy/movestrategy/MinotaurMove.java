@@ -10,12 +10,14 @@ public class MinotaurMove implements MoveStrategy {
 
     /**
      * Just like Apollo's checkmove(), but with one more check (CantBeForcedBackwards-check)
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param movingTo
-     * @return
+     *
+     * changes position associated to the workers and sets the workers on the towercell
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return one of error messages or moveOk message
      */
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
@@ -83,12 +85,14 @@ public class MinotaurMove implements MoveStrategy {
 
     /**
      * Just like BasicMove's move(), but it forces the other worker if the destination towercell has worker on top
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param movingTo
-     * @return
+     * changes position associated to the workers and sets the workers on the towercell
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the move
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param movingTo array containing destination towercell x,y
+     * @return buildRequest message
      */
     @Override
     public String move(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
