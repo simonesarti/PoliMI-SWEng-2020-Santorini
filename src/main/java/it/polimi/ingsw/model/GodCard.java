@@ -32,21 +32,21 @@ public class GodCard{
         switch(name) {
 
             case "Apollo" :
-                //moveStrategy = new ApolloMove();
+                moveStrategy = new ApolloMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
                 loseStrategy= new ApolloLose();
                 break;
 
             case "Artemis" :
-                //moveStrategy = new ArtemisMove();
+                moveStrategy = new ArtemisMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new BasicLose();
                 break;
 
             case "Athena" :
-                //moveStrategy = new AthenaMove();
+                moveStrategy = new AthenaMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new AthenaLose();
@@ -54,14 +54,14 @@ public class GodCard{
 
             case "Atlas" :
                 moveStrategy = new BasicMove();
-                //buildStrategy = new AtlasBuild();
+                buildStrategy = new AtlasBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new BasicLose();
                 break;
 
             case "Demeter" :
                 moveStrategy = new BasicMove();
-                //buildStrategy = new DemeterBuild();
+                buildStrategy = new DemeterBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new BasicLose();
                 break;
@@ -74,7 +74,7 @@ public class GodCard{
                 break;
 
             case "Minotaur" :
-                //moveStrategy = new MinotaurMove();
+                moveStrategy = new MinotaurMove();
                 buildStrategy = new BasicBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new MinotaurLose();

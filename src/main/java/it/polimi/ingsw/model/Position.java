@@ -38,7 +38,7 @@ public class Position {
 
     /**
      *
-     * checks if otherPosition is adjacent to this position
+     * Checks if otherPosition is adjacent to this position
      * it does not deal with z-axis
      * @return false if positions are not adjacent
      */

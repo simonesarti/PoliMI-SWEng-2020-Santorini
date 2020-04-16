@@ -42,7 +42,10 @@ public class TurnInfo {
         lastBuildCoordinates = new int[]{-1, -1};
     }
 
-    //resetta tutti i dati sul turno tranne il valore di Atena
+
+    /**
+     * Resets all attributes excluding AthenaPowerActive
+     */
     public void turnInfoReset(){
 
         turnHasEnded=false;

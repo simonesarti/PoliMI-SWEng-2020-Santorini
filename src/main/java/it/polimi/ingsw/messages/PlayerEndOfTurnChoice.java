@@ -4,8 +4,9 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
 
 /**
+ * End turn message
+ * View attribute is needed to report errors
  *
- * View is needed to report errors
  */
 public class PlayerEndOfTurnChoice extends Message{
 

@@ -26,6 +26,16 @@ public class GameBoard {
 
     public TowerCell getTowerCell(int x, int y){ return towerCells[x][y];}
 
+    /**
+     *
+     * This method checks if the worker can force backwards the enemy
+     *
+     * @param playerX worker's current-position's x
+     * @param playerY worker's current-position's y
+     * @param enemyX enemy's current-position's x
+     * @param enemyY enemy's current-position's y
+     * @return boolean
+     */
     public boolean cantBeForcedBackwards(int playerX, int playerY, int enemyX, int enemyY){
 
         int toCheckX=(enemyX-playerX)+enemyX;
@@ -38,6 +48,9 @@ public class GameBoard {
                 );
     }
 
+    /**
+     * resets the board
+     */
     public void resetBoard(){
 
         for(int j=0; j<5;j++){
@@ -47,7 +60,11 @@ public class GameBoard {
         }
     }
 
-    //ONLY FOR TESTS
+    /**
+     * generates a board. Only for testing purpose
+     *
+     * @param towers a matrix representing a board. Integer represents towerLevel
+     */
     public void generateBoard(int[][] towers){
 
         for(int j=0;j<5;j++){
@@ -81,7 +98,7 @@ public class GameBoard {
                     this.getTowerCell(j,i).increaseTowerHeight();
                     this.getTowerCell(j,i).checkCompletion();
                 } else {
-                    throw new IllegalArgumentException("HAI SBAGLIATO A METTERE I NUMERI");
+                    throw new IllegalArgumentException("HWrong numbers");
                 }
             }
         }

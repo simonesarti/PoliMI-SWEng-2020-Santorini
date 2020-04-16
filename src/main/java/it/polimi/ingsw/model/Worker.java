@@ -8,7 +8,7 @@ public class Worker {
     private Position previousPosition;
 
     /**
-     * sets the worker's colour on creation
+     * Sets the worker's colour on creation
      * @param colour player's colour
      */
     public Worker(Colour colour, int number) {
@@ -40,7 +40,7 @@ public class Worker {
     }
 
     /**
-     * sets the worker's starting position, and initializes to null the field previousPosition
+     * Sets the worker's starting position, and initializes to null the field previousPosition
      * @param x starting coordinate
      * @param y staring coordinate
      */
@@ -50,7 +50,7 @@ public class Worker {
     }
 
     /**
-     * sets the worker's current position to newPosition, and previousPosition to the position
+     * Sets the worker's current position to newPosition, and previousPosition to the position
      * it was occupying before this change
      * @param x new x coordinate
      * @param y new y coordinate

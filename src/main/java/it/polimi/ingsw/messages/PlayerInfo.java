@@ -7,7 +7,13 @@ public class PlayerInfo extends Message{
     private final String playerNickname;
     private final Calendar birthday;
 
-    //@deve essere passata data valida
+
+    /**
+     * Class Constructor
+     *
+     * @param playerNickname
+     * @param birthday must be a valid date
+     */
     public PlayerInfo(String playerNickname, Calendar birthday){
         this.playerNickname = playerNickname;
         this.birthday=birthday;

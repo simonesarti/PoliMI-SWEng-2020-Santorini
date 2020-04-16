@@ -15,7 +15,15 @@ public class PlayerBuildChoice extends Message{
     private final int[] buildingInto = new int[2];
     private final String pieceType;
 
-    //@pieceType deve già essere "Block" o "Dome"
+    /**
+     *
+     * @param view
+     * @param player
+     * @param chosenWorker
+     * @param x
+     * @param y
+     * @param pieceType must be "Block" or "Dome"
+     */
     public PlayerBuildChoice(View view, Player player,int chosenWorker, int x, int y, String pieceType) {
 
         this.view = view;

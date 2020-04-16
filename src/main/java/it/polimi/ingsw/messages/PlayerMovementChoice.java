@@ -14,7 +14,7 @@ public class PlayerMovementChoice extends Message{
     private final int chosenWorker;
     private final int[] movingTo = new int[2];
 
-    //ricorda che chosenWorker è  0 oppure 1
+    //chosenWorker must be 0 or 1
     public PlayerMovementChoice(View view, Player player, int chosenWorker, int x, int y) {
 
         this.view=view;
