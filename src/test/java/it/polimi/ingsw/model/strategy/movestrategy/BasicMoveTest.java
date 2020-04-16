@@ -154,7 +154,7 @@ public class BasicMoveTest {
     }
 
     @Test
-    void cornerCases_checkMove_Testing(){
+    void otherCases_checkMove_Testing(){
 
         //towerCell must not be completed by a dome. This time the dome is on a level1block
         player.getWorker(0).movedToPosition(1,1,0);

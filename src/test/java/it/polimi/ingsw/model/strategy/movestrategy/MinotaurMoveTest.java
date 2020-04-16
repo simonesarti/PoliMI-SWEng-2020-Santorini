@@ -160,11 +160,29 @@ class MinotaurMoveTest {
     }
 
     @Test
+    void otherCases_checkMove_Testing() {
+
+        //Can not move because there is a level1block with a dome behind the enemy worker
+        gameBoard.getTowerCell(1,1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+        enemy1Player.getWorker(0).movedToPosition(1,1,0);
+        gameBoard.getTowerCell(1,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
+        player.getWorker(0).movedToPosition(1,0,0);
+        movingTo[0]=1;
+        movingTo[1]=1;
+        assertEquals(GameMessage.CannotForceWorker, minotaurMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        turnInfo.turnInfoReset();
+
+
+
+    }
+
+    @Test
     void differentScenarios_move_Testing(){
 
         //Minotaur using his power. From a level2block to a level0block occupied by enemy2 worker0 that is forced on a level3block
 
         turnInfo.turnInfoReset();
+        gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(3,0,2);
         movingTo[0]=3;
         movingTo[1]=1;
@@ -184,6 +202,7 @@ class MinotaurMoveTest {
         //Minotaur not using his power. From a level3block to a level2block
 
         turnInfo.turnInfoReset();
+        gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(3,0,2);
         movingTo[0]=4;
         movingTo[1]=1;
@@ -197,6 +216,7 @@ class MinotaurMoveTest {
         //Minotaur using his power. From a level2block to a levelzero towercell occupied by enemy2 worker1
 
         turnInfo.turnInfoReset();
+        gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(4,3,3);
         movingTo[0]=3;
         movingTo[1]=3;
@@ -208,9 +228,25 @@ class MinotaurMoveTest {
         assertTrue((new Position(3,3,2)).equals(enemy1Player.getWorker(1).getPreviousPosition()));
         assertEquals(enemy1Player.getWorker(1),gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
-        System.out.println("Bro");
-        /*
-        */
+
+        //Minotaur using his power from a level1block forcing a worker that's on a level2 to a level3 (enemy2 worker1)
+        turnInfo.turnInfoReset();
+        gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().workerMoved();
+        gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setWorker(player.getWorker(0));
+        player.getWorker(0).movedToPosition(2,3,1);
+        gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+        enemy2Player.getWorker(1).movedToPosition(3,3,2);
+        movingTo[0]=3;
+        movingTo[1]=3;
+        assertEquals(GameMessage.moveOK, minotaurMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.buildRequest, minotaurMove.move(turnInfo, gameBoard,player,0,movingTo));
+        assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
+        assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getPreviousPosition()));
+        assertTrue((new Position(4,3,3)).equals(enemy2Player.getWorker(1).getCurrentPosition()));
+        assertTrue((new Position(3,3,2)).equals(enemy2Player.getWorker(1).getPreviousPosition()));
+        assertEquals(enemy2Player.getWorker(1),gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().getWorker());
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+
 
     }
 }
