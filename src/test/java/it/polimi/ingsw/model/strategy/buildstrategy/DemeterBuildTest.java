@@ -214,7 +214,7 @@ class DemeterBuildTest {
         //control that tower is not completed
         assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
 
-        
+
 
         //Dome and second build test
 
