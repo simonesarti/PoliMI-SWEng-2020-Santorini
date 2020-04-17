@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.strategy.buildstrategy;
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.*;
-import it.polimi.ingsw.messages.PlayerBuildChoice;
 
 /**
  * This class represents the basic build strategy
@@ -41,7 +40,7 @@ public class BasicBuild implements BuildStrategy {
 
        //workerPosition must not be the destination position
        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
-           return GameMessage.notTheSame;
+           return GameMessage.notOwnPosition;
        }
 
        //workerPosition must be adjacent to buildingPosition

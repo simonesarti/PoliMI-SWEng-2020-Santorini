@@ -3,9 +3,6 @@ import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
-import it.polimi.ingsw.model.piece.Level1Block;
-import it.polimi.ingsw.model.piece.Level2Block;
-import it.polimi.ingsw.model.piece.Level3Block;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -115,7 +112,7 @@ public class BasicMoveTest {
         //workerPosition must not be the destination position
         movingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         movingTo[1]=player.getWorker(0).getCurrentPosition().getY();
-        assertEquals(GameMessage.notTheSame, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notOwnPosition, basicmove.checkMove(turnInfo, gameBoard,player,0,movingTo));
 
         //workerPosition must be adjacent to destination position
         movingTo[0]=2;

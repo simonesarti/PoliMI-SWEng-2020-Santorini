@@ -43,7 +43,7 @@ public class GameMessage {
     public static String buildOK= "ok";
 
     //move AND build error messages
-    public static String notTheSame = "This is your current position, choose another one\n";
+    public static String notOwnPosition = "This is your current position, choose another one\n";
     public static String notInSurroundings = "This move is not allowed as it is not to one of the cell surrounding the selected worker\n";
     public static String notInGameboard = "This position in outside the gameboard, try again \n";
 
@@ -62,4 +62,6 @@ public class GameMessage {
     //DEMETER
     public static String DemeterFirstBuild = "This is your first building position, choose another one\n";
     public static String buildAgainOrEnd = "You can now decide to build again or choose END to end your turn\n";
+    //PROMETHEUS
+    public static String prometheusNoMoveUp ="this move isn't allowed due to your decision to build before moving\n";
 }

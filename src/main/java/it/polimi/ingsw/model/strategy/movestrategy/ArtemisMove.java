@@ -49,7 +49,7 @@ public class ArtemisMove implements MoveStrategy {
         }
         //workerPosition must not be the destination position
         if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
-            return GameMessage.notTheSame;
+            return GameMessage.notOwnPosition;
         }
         //workerPosition must be adjacent to destination position
         if (!worker.getCurrentPosition().adjacent(x,y)){

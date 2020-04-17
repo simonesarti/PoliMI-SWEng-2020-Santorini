@@ -3,10 +3,7 @@ import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
-import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
-import it.polimi.ingsw.model.piece.Level3Block;
-import it.polimi.ingsw.model.piece.*;
 import it.polimi.ingsw.model.strategy.movestrategy.BasicMove;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -142,7 +139,7 @@ class DemeterBuildTest {
         //workerPosition must not be the building position
         buildingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         buildingTo[1]=player.getWorker(0).getCurrentPosition().getY();
-        assertEquals(GameMessage.notTheSame, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notOwnPosition, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //workerPosition must be adjacent to building position
         buildingTo[0]=2;

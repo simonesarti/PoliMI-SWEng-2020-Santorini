@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 
 /**
@@ -41,7 +40,7 @@ public class BasicMove implements MoveStrategy {
 
         //workerPosition must not be the destination position
         if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
-            return GameMessage.notTheSame;
+            return GameMessage.notOwnPosition;
         }
         //workerPosition must be adjacent to destination position
         if (!worker.getCurrentPosition().adjacent(x,y)){

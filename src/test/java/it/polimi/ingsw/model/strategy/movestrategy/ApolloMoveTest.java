@@ -112,7 +112,7 @@ class ApolloMoveTest {
         //workerPosition must not be the destination position
         movingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         movingTo[1]=player.getWorker(0).getCurrentPosition().getY();
-        assertEquals(GameMessage.notTheSame, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notOwnPosition, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
 
         //workerPosition must be adjacent to destination position
         movingTo[0]=2;
