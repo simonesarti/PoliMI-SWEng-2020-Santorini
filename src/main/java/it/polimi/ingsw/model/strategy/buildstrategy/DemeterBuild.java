@@ -122,12 +122,10 @@ public class DemeterBuild implements BuildStrategy {
         //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
-
-
-
         if(!turnInfo.getHasAlreadyBuilt()){
             turnInfo.setHasBuilt();
             turnInfo.addBuild();
+            turnInfo.setLastBuildCoordinates(x,y);
             turnInfo.setTurnCanEnd();
             return GameMessage.buildAgainOrEnd;
         }else{
