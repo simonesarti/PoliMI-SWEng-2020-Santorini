@@ -26,7 +26,7 @@ public class ArtemisMove implements MoveStrategy {
 
         //number of move must be < 2
         if(turnInfo.getNumberOfMoves()>1){
-            return GameMessage.alreadyMoved;
+            return GameMessage.alreadyMovedTwice;
         }
 
         //x and y must be inside the board

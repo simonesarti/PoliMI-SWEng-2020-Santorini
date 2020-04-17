@@ -10,7 +10,7 @@ public class PrometheusMove implements MoveStrategy {
 
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
-        
+
         int x = movingTo[0];
         int y = movingTo[1];
 

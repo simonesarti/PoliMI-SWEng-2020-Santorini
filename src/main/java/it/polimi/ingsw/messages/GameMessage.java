@@ -52,6 +52,8 @@ public class GameMessage {
 
     //APOLLO
     public static String noMovedToOccupiedTowerApollo = "This cell is occupied by your other worker, please choose another position\n";
+    //ARTEMIS
+    public static String alreadyMovedTwice = "You have already moved twice\n";
     //ATHENA
     public static String athenaNoMoveUp = "This move isn't allowed due to Athena's power\n";
     //MINOTAUR
