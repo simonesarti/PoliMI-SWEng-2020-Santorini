@@ -70,5 +70,5 @@ public class GameMessage {
     public static String noBuildMoreThanTwice ="you already built twice, your turn should have already ended, ERROR\n";
     //HEPHAESTUS
     public static String HephaestusWrongBuild = "You must build on top of your first block";
-    public static String mustBeDome = "Your second piece must be a Dome";
+    public static String mustBeBlock = "Your second piece must be a Dome";
 }

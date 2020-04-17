@@ -46,20 +46,18 @@ public class DemeterBuild implements BuildStrategy {
         }
         Worker worker = player.getWorker(chosenWorker);
 
-        //if demeter has already built one time, the next building destination must not be "previous position" and the worker used must be the same
+        //if demeter has already built one time, the next building destination must not be "previous position"
         if(turnInfo.getNumberOfBuilds() == 1){
 
-            if(chosenWorker!=turnInfo.getChosenWorker()){
-                return GameMessage.NotSameWorker;
-            }
             if(turnInfo.getLastBuildCoordinates()[0] == x && turnInfo.getLastBuildCoordinates()[1] == y){
                 return GameMessage.DemeterFirstBuild;
             }
         }
 
-        //worker must be the same that has moved
-        if (chosenWorker != turnInfo.getChosenWorker()) {
-            return GameMessage.notSameThatMoved;
+        //worker must be the same as the one that made the previous move
+        //doesn't matter if it was a move or a build
+        if(chosenWorker != turnInfo.getChosenWorker()){
+            return GameMessage.NotSameWorker;
         }
 
         //workerPosition must not be the destination position

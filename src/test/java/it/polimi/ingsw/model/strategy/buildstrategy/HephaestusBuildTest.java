@@ -15,11 +15,11 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DemeterBuildTest {
+class HephaestusBuildTest {
 
     BasicMove basicmove;
 
-    DemeterBuild demeterbuild;
+    HephaestusBuild hephaestusbuild;
     GameBoard gameBoard;
     TurnInfo turnInfo;
     Player player;
@@ -36,7 +36,7 @@ class DemeterBuildTest {
     void init(){
         basicmove = new BasicMove();
 
-        demeterbuild = new DemeterBuild();
+        hephaestusbuild = new HephaestusBuild();
         playerInfo  =new PlayerInfo("Gianpaolo",new GregorianCalendar(1970, Calendar.JULY, 15));
         player = new Player(playerInfo);
         player.setColour(Colour.WHITE);
@@ -110,26 +110,28 @@ class DemeterBuildTest {
         buildingTo[0]=1;
         buildingTo[1]=1;
 
-        assertEquals(GameMessage.hasNotMoved, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.hasNotMoved, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
         turnInfo.turnInfoReset();
 
 
-        //if demeter has already built one time, the next building destination must not be "previous position" and the worker used must be the same
+        //if hephaestus has already built one time, the next building destination must be the "previous position"
+        //and the piece must not be a dome
         turnInfo.setChosenWorker(0);
         turnInfo.setHasMoved();
         turnInfo.addBuild();
         turnInfo.setHasBuilt();
         turnInfo.setLastBuildCoordinates(2,1);
-        turnInfo.setChosenWorker(1);
+
         buildingTo[0]=1;
         buildingTo[1]=1;
         piece = "Block";
 
-        assertEquals(GameMessage.NotSameWorker, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.HephaestusWrongBuild, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
-        turnInfo.setChosenWorker(0);
         turnInfo.setLastBuildCoordinates(1,1);
-        assertEquals(GameMessage.DemeterFirstBuild, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        piece = "Dome";
+
+        assertEquals(GameMessage.mustBeBlock, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
         turnInfo.turnInfoReset();
 
         //x and y must be inside the board
@@ -137,52 +139,52 @@ class DemeterBuildTest {
         turnInfo.setHasMoved();
         buildingTo[0]=28;
         buildingTo[1]=1;
-        assertEquals(GameMessage.notInGameboard, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notInGameboard, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //worker must be the same that has moved
         buildingTo[0]=1;
         buildingTo[1]=1;
 
         turnInfo.setChosenWorker(1);
-        assertEquals(GameMessage.NotSameWorker, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.NotSameWorker, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
         turnInfo.setChosenWorker(0);
 
         //workerPosition must not be the building position
         buildingTo[0]=player.getWorker(0).getCurrentPosition().getX();
         buildingTo[1]=player.getWorker(0).getCurrentPosition().getY();
-        assertEquals(GameMessage.notOwnPosition, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notOwnPosition, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //workerPosition must be adjacent to building position
         buildingTo[0]=2;
         buildingTo[1]=0;
-        assertEquals(GameMessage.notInSurroundings, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notInSurroundings, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //towerCell must not be completed by a dome
         player.getWorker(0).movedToPosition(0,3,0);
         buildingTo[0]=1;
         buildingTo[1]=3;
 
-        assertEquals(GameMessage.noBuildToCompleteTower, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noBuildToCompleteTower, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //the chosen piece must not be a "Block" when tower's height is 3
         piece = "Block";
         player.getWorker(0).movedToPosition(2,2,0);
         buildingTo[0]=3;
         buildingTo[1]=2;
-        assertEquals(GameMessage.noBlocksInDome, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noBlocksInDome, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //the chosen piece must not be a "Dome" when tower's height is <3
         piece = "Dome";
         buildingTo[0]=2;
         buildingTo[1]=3;
-        assertEquals(GameMessage.noDomesInBlock, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noDomesInBlock, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //there must not be a worker in the building position
         player.getWorker(0).movedToPosition(1,4,0);
         piece = "Block";
         buildingTo[0]=2;
         buildingTo[1]=4;
-        assertEquals(GameMessage.noBuildToOccupiedTower, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.noBuildToOccupiedTower, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
 
         player.getWorker(0).movedToPosition(1,4,0);
@@ -190,7 +192,7 @@ class DemeterBuildTest {
         buildingTo[0]=2;
         buildingTo[1]=3;
         //build ok
-        assertEquals(GameMessage.buildOK, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildOK, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
     }
 
@@ -205,8 +207,8 @@ class DemeterBuildTest {
         turnInfo.setHasMoved();
         buildingTo[0]=2;
         buildingTo[1]=3;
-        assertEquals(GameMessage.buildOK, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
-        assertEquals(GameMessage.buildAgainOrEnd, demeterbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildOK, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildAgainOrEnd, hephaestusbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
         //control that tower's height increased
         assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==2);
         //control that the piece is right
@@ -216,22 +218,22 @@ class DemeterBuildTest {
 
 
 
-        //Dome and second build test
+        //second build test
 
         turnInfo.setChosenWorker(0);
-        piece = "Dome";
+        piece = "Block";
         player.getWorker(0).movedToPosition(2,2,0);
         turnInfo.setHasMoved();
-        buildingTo[0]=3;
-        buildingTo[1]=2;
-        assertEquals(GameMessage.buildOK, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
-        assertEquals(GameMessage.turnCompleted, demeterbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
+        buildingTo[0]=2;
+        buildingTo[1]=3;
+        assertEquals(GameMessage.buildOK, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.turnCompleted, hephaestusbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
         //control that tower's height increased
-        assertTrue(gameBoard.getTowerCell(3,2).getTowerHeight()==4);
+        assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==3);
         //control that the piece is right
-        assertTrue(gameBoard.getTowerCell(3,2).getLevel(3).getPiece() instanceof Dome);
+        assertTrue(gameBoard.getTowerCell(2,3).getLevel(2).getPiece() instanceof Level3Block);
         //control that tower is not completed
-        assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==true);
+        assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==false);
 
 
 
@@ -239,5 +241,6 @@ class DemeterBuildTest {
 
 
     }
+
 
 }

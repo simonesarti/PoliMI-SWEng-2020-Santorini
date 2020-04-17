@@ -47,14 +47,14 @@ public class HephaestusBuild implements BuildStrategy{
         }
 
         //if hephaestus has already built one time, the next building destination must be the "previous position"
-        //and the piece must be a dome
+        //and the piece must not be a dome
         if(turnInfo.getNumberOfBuilds() == 1){
 
             if(turnInfo.getLastBuildCoordinates()[0] != x || turnInfo.getLastBuildCoordinates()[1] != y){
                 return GameMessage.HephaestusWrongBuild;
             }
-            if (!pieceType.equals("Dome")){
-                return GameMessage.mustBeDome;
+            if (!pieceType.equals("Block")){
+                return GameMessage.mustBeBlock;
             }
         }
 
@@ -101,12 +101,20 @@ public class HephaestusBuild implements BuildStrategy{
         Piece piece = null;
 
         //create the right Piece
-
         if (turnInfo.getNumberOfBuilds() == 1) {
-            piece = new Dome();
-        }
-        else {
 
+            if (z == 0) {
+                piece = new Level1Block();
+            } else if (z == 1) {
+                piece = new Level2Block();
+            } else if (z == 2) {
+                piece = new Level3Block();
+            }
+        }
+
+
+
+        else {
             if (z == 0) {
                 piece = new Level1Block();
             } else if (z == 1) {
