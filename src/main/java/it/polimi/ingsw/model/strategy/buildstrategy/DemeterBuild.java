@@ -101,18 +101,20 @@ public class DemeterBuild implements BuildStrategy {
         Piece piece = null;
 
         //create the right Piece
-        if(pieceType.equals("Block")) {
-            if (z == 0) {
-                piece = new Level1Block();
-            } else if (z == 1) {
-                piece = new Level2Block();
-            } else if (z == 2) {
-                piece = new Level3Block();
-            }
+
+        if (z==0){
+            piece = new Level1Block();
         }
-        else if (pieceType.equals("Dome")){
+        else if (z==1){
+            piece = new Level2Block();
+        }
+        else if (z==2){
+            piece = new Level3Block();
+        }
+        else if (z==3){
             piece = new Dome();
         }
+
         //set the Piece
         gameboard.getTowerCell(x,y).getFirstNotPieceLevel().setPiece(piece);
 
@@ -129,12 +131,15 @@ public class DemeterBuild implements BuildStrategy {
             turnInfo.setTurnCanEnd();
             return GameMessage.buildAgainOrEnd;
         }else{
+
             turnInfo.addBuild();
+
             turnInfo.setTurnHasEnded();
             return GameMessage.turnCompleted;
         }
 
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
+
 
 
     }

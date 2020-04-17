@@ -3,7 +3,9 @@ import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
+import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
+import it.polimi.ingsw.model.piece.Level3Block;
 import it.polimi.ingsw.model.strategy.movestrategy.BasicMove;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,14 +113,23 @@ class DemeterBuildTest {
         assertEquals(GameMessage.hasNotMoved, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
         turnInfo.turnInfoReset();
 
-        //Player has not already built (alreadyBuilt must be false)
+
+        //if demeter has already built one time, the next building destination must not be "previous position" and the worker used must be the same
         turnInfo.setChosenWorker(0);
         turnInfo.setHasMoved();
+        turnInfo.addBuild();
+        turnInfo.setHasBuilt();
+        turnInfo.setLastBuildCoordinates(1,1);
+        turnInfo.setChosenWorker(1);
         buildingTo[0]=1;
         buildingTo[1]=1;
         piece = "Block";
-        turnInfo.setHasBuilt();
-        assertEquals(GameMessage.alreadyBuilt, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+
+        assertEquals(GameMessage.NotSameWorker, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+
+        turnInfo.setChosenWorker(0);
+
+        assertEquals(GameMessage.DemeterFirstBuild, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
         turnInfo.turnInfoReset();
 
         //x and y must be inside the board
@@ -195,7 +206,7 @@ class DemeterBuildTest {
         buildingTo[0]=2;
         buildingTo[1]=3;
         assertEquals(GameMessage.buildOK, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
-        assertEquals(GameMessage.turnCompleted, demeterbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildAgainOrEnd, demeterbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
         //control that tower's height increased
         assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==2);
         //control that the piece is right
@@ -203,8 +214,10 @@ class DemeterBuildTest {
         //control that tower is not completed
         assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
 
-        //Dome test
-        turnInfo.turnInfoReset();
+        
+
+        //Dome and second build test
+
         turnInfo.setChosenWorker(0);
         piece = "Dome";
         player.getWorker(0).movedToPosition(2,2,0);
