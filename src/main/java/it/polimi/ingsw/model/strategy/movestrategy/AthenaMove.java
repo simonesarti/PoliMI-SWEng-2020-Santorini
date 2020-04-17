@@ -21,22 +21,25 @@ public class AthenaMove implements MoveStrategy {
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
 
-        Worker worker = player.getWorker(chosenWorker);
         int x = movingTo[0];
         int y = movingTo[1];
-
-
-        //x and y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
-            return GameMessage.notInGameboard;
-        }
-
-        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //alreadyMoved must be false
         if(turnInfo.getHasAlreadyMoved()){
             return GameMessage.alreadyMoved;
         }
+
+        //x and y must be inside the board
+        if (x < 0 || x > 4 || y < 0 || y > 4) {
+            return GameMessage.notInGameboard;
+        }
+        int z = gameboard.getTowerCell(x, y).getTowerHeight();
+
+        //chosenWorker must be a valid number
+        if(chosenWorker!=0 && chosenWorker!=1){
+            return GameMessage.invalidWorkerNumber;
+        }
+        Worker worker = player.getWorker(chosenWorker);
 
         //workerPosition must not be the destination position
         if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){

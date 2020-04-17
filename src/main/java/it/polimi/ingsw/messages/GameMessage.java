@@ -46,6 +46,7 @@ public class GameMessage {
     public static String notOwnPosition = "This is your current position, choose another one\n";
     public static String notInSurroundings = "This move is not allowed as it is not to one of the cell surrounding the selected worker\n";
     public static String notInGameboard = "This position in outside the gameboard, try again \n";
+    public static String invalidWorkerNumber= "This worker number is invalid, try again\n";
 
     //GOD SPECIFIC MESSAGES
 
