@@ -21,7 +21,6 @@ public class DemeterBuild implements BuildStrategy {
     @Override
     public String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
 
-        Worker worker = player.getWorker(chosenWorker);
         int x = buildingInto[0];
         int y = buildingInto[1];
 
@@ -39,8 +38,13 @@ public class DemeterBuild implements BuildStrategy {
         if (x < 0 || x > 4 || y < 0 || y > 4) {
             return GameMessage.notInGameboard;
         }
-
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
+
+        //chosenWorker must be a valid number
+        if(chosenWorker!=0 && chosenWorker!=1){
+            return GameMessage.invalidWorkerNumber;
+        }
+        Worker worker = player.getWorker(chosenWorker);
 
         //if demeter has already built one time, the next building destination must not be "previous position" and the worker used must be the same
         if(turnInfo.getNumberOfBuilds() == 1){

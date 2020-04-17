@@ -21,7 +21,6 @@ public class AtlasBuild implements BuildStrategy {
     @Override
     public String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
 
-        Worker worker = player.getWorker(chosenWorker);
         int x = buildingInto[0];
         int y = buildingInto[1];
 
@@ -39,8 +38,13 @@ public class AtlasBuild implements BuildStrategy {
         if (x < 0 || x > 4 || y < 0 || y > 4) {
             return GameMessage.notInGameboard;
         }
-
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
+
+        //chosenWorker must be a valid number
+        if(chosenWorker!=0 && chosenWorker!=1){
+            return GameMessage.invalidWorkerNumber;
+        }
+        Worker worker = player.getWorker(chosenWorker);
 
         //worker must be the same that has moved
         if (chosenWorker != turnInfo.getChosenWorker()) {
