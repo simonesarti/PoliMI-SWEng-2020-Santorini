@@ -215,7 +215,10 @@ public class BasicMoveTest {
         assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getCurrentPosition()));
         assertNull(gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
-        assertEquals(1, turnInfo.getNumberOfMoves());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
         //moving from a level1block to a level3block. Also checking previous position
         turnInfo.turnInfoReset();
@@ -227,6 +230,10 @@ public class BasicMoveTest {
         assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getPreviousPosition()));
         assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
 
 

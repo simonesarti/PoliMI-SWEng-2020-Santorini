@@ -229,7 +229,7 @@ class PrometheusMoveTest {
 
             //old tower is free
             assertNull(gameBoard.getTowerCell(1,1).getFirstNotPieceLevel().getWorker());
-            //worker object is on top ot new tower
+            //worker object is on top of new tower
             assertEquals(playerTest.getWorker(0),gameBoard.getTowerCell(movingTo[0],movingTo[1]).getFirstNotPieceLevel().getWorker());
             //worker coordinates are correct
             assertAll(

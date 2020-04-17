@@ -15,6 +15,7 @@ public class PrometheusMove implements MoveStrategy {
         int x = movingTo[0];
         int y = movingTo[1];
 
+        //alreadyMoved must be false
         if(turnInfo.getHasAlreadyMoved()){
             return GameMessage.alreadyMoved;
         }
@@ -24,6 +25,7 @@ public class PrometheusMove implements MoveStrategy {
             return GameMessage.notInGameboard;
         }
 
+        //if player had already built, worker must be the same
         if(turnInfo.getHasAlreadyBuilt() && chosenWorker!=turnInfo.getChosenWorker()){
             return GameMessage.NotSameWorker;
         }
@@ -54,6 +56,7 @@ public class PrometheusMove implements MoveStrategy {
             return GameMessage.noMovedToOccupiedTower;
         }
 
+        //you can not move up if you decided to use Prometheus power
         if(turnInfo.getHasAlreadyBuilt()){
             if(worker.getCurrentPosition().getZ()<z){
                 return GameMessage.prometheusNoMoveUp;

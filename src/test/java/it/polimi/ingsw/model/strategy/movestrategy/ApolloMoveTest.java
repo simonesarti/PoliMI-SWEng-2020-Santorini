@@ -168,8 +168,7 @@ class ApolloMoveTest {
         movingTo[0]=2;
         movingTo[1]=4;
         assertEquals(GameMessage.moveOK, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
-
-        apolloMove.move(turnInfo, gameBoard,player,0,movingTo);
+        assertEquals(GameMessage.buildRequest, apolloMove.move(turnInfo, gameBoard,player,0,movingTo));
 
         assertTrue((new Position(2,4,1)).equals(player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(1,4,0)).equals(enemy2Player.getWorker(0).getCurrentPosition()));
@@ -178,6 +177,9 @@ class ApolloMoveTest {
         assertEquals(enemy2Player.getWorker(0),gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().getWorker());
 
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
         //Apollo not using his power. From a level3block to a level2block
 
@@ -191,6 +193,10 @@ class ApolloMoveTest {
         assertNull(gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
         assertEquals(1, turnInfo.getNumberOfMoves());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
         //Apollo using his power. From a level2block to a levelzero towercell occupied by enemy2 worker1
 
@@ -206,7 +212,10 @@ class ApolloMoveTest {
         assertTrue((new Position(3,4,0)).equals(enemy2Player.getWorker(1).getPreviousPosition()));
         assertEquals(enemy2Player.getWorker(1),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().getWorker());
-
+        
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
     }
 

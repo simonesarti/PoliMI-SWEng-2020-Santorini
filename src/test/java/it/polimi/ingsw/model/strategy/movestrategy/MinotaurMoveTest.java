@@ -198,6 +198,10 @@ class MinotaurMoveTest {
         assertEquals(enemy2Player.getWorker(0),gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().getWorker());
 
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
+
 
         //Minotaur not using his power. From a level3block to a level2block
 
@@ -212,6 +216,10 @@ class MinotaurMoveTest {
         assertNull(gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(4,1).getFirstNotPieceLevel().getWorker());
         assertEquals(1, turnInfo.getNumberOfMoves());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
         //Minotaur using his power. From a level2block to a levelzero towercell occupied by enemy2 worker1
 
@@ -228,6 +236,10 @@ class MinotaurMoveTest {
         assertTrue((new Position(3,3,2)).equals(enemy1Player.getWorker(1).getPreviousPosition()));
         assertEquals(enemy1Player.getWorker(1),gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
         //Minotaur using his power from a level1block forcing a worker that's on a level2 to a level3 (enemy2 worker1)
         turnInfo.turnInfoReset();
@@ -246,6 +258,10 @@ class MinotaurMoveTest {
         assertTrue((new Position(3,3,2)).equals(enemy2Player.getWorker(1).getPreviousPosition()));
         assertEquals(enemy2Player.getWorker(1),gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
 
     }
