@@ -83,7 +83,7 @@ public class ArtemisMove implements MoveStrategy {
     }
 
     /**
-     * BasicMove's move()
+     * Just like BasicMove's move() but it also triggers turninfo.addMove()
      *
      * @param turnInfo object containing information about current turn
      * @param gameboard object representing the gameboard
