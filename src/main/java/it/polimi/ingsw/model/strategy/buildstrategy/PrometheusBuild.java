@@ -25,19 +25,19 @@ public class PrometheusBuild implements BuildStrategy{
             return GameMessage.hasNotMoved;
         }
 
-        //x e y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
-            return GameMessage.notInGameboard;
-        }
-        int z = gameboard.getTowerCell(x, y).getTowerHeight();
-
         //chosenWorker must be a valid number
         if(chosenWorker!=0 && chosenWorker!=1){
             return GameMessage.invalidWorkerNumber;
         }
         Worker worker = player.getWorker(chosenWorker);
 
-        //if worker has already moved, player must use the same worker(player can't get here with a second build without move)
+        //x e y must be inside the board
+        if (x < 0 || x > 4 || y < 0 || y > 4) {
+            return GameMessage.notInGameboard;
+        }
+        int z = gameboard.getTowerCell(x, y).getTowerHeight();
+
+        //if worker has already moved, the player must use the same worker(player can't get here with a second build without move)
         //therefore this check only concerns the second build
         if(turnInfo.getHasAlreadyMoved()){
             if(chosenWorker != turnInfo.getChosenWorker()) {

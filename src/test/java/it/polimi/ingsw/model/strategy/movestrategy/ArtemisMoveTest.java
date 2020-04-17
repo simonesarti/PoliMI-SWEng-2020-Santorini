@@ -94,8 +94,7 @@ class ArtemisMoveTest {
 
         gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
         enemy2Player.getWorker(1).movedToPosition(3,4,0);
-
-        return;
+        
     }
 
     @Test
@@ -109,7 +108,7 @@ class ArtemisMoveTest {
         movingTo[1]=1;
         turnInfo.addMove();
         turnInfo.addMove();
-        assertEquals(GameMessage.alreadyMoved, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.alreadyMovedTwice, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         turnInfo.turnInfoReset();
 
         //x and y must be inside the board

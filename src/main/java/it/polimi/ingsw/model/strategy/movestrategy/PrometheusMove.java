@@ -19,17 +19,17 @@ public class PrometheusMove implements MoveStrategy {
             return GameMessage.alreadyMoved;
         }
 
-        //x and y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
-            return GameMessage.notInGameboard;
-        }
-        int z = gameboard.getTowerCell(x, y).getTowerHeight();
-
         //chosenWorker must be a valid number
         if(chosenWorker!=0 && chosenWorker!=1){
             return GameMessage.invalidWorkerNumber;
         }
         Worker worker = player.getWorker(chosenWorker);
+
+        //x and y must be inside the board
+        if (x < 0 || x > 4 || y < 0 || y > 4) {
+            return GameMessage.notInGameboard;
+        }
+        int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //if player had already built, worker must be the same
         if(turnInfo.getHasAlreadyBuilt() && chosenWorker!=turnInfo.getChosenWorker()){

@@ -10,7 +10,8 @@ public class PrometheusLose implements LoseStrategy {
     public boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
         //if player is trying to move again this function ends and the movement check will reject it
-        if(turnInfo.getHasAlreadyMoved()){
+        //same goes for an invalid selection of chosenWorker
+        if(turnInfo.getHasAlreadyMoved() || (chosenWorker!=0 && chosenWorker!=1)){
             return false;
         }
 
@@ -50,7 +51,8 @@ public class PrometheusLose implements LoseStrategy {
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
         //lose check must be bypassed if the player tries to build more than twice or tries to build twice before moving
-        if(turnInfo.getNumberOfBuilds()>=2 || (turnInfo.getNumberOfBuilds()==1 && !turnInfo.getHasAlreadyMoved())){
+        //OR if the chosenWorker is invalid
+        if(turnInfo.getNumberOfBuilds()>=2 || (turnInfo.getNumberOfBuilds()==1 && !turnInfo.getHasAlreadyMoved()) || (chosenWorker!=0 && chosenWorker!=1)){
             return false;
         }
 

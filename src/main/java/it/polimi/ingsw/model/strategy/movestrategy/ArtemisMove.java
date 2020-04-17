@@ -46,7 +46,7 @@ public class ArtemisMove implements MoveStrategy {
             if(chosenWorker!=turnInfo.getChosenWorker()){
                 return GameMessage.NotSameWorker;
             }
-            if(player.getWorker(chosenWorker).getPreviousPosition().getX() == x && player.getWorker(chosenWorker).getPreviousPosition().getY() == y){
+            if(worker.getPreviousPosition().getX() == x && worker.getPreviousPosition().getY() == y){
                 return GameMessage.ArtemisFirstPosition;
             }
         }
