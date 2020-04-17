@@ -49,8 +49,8 @@ public class PrometheusLose implements LoseStrategy {
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
-        //lose check must be bypassed if the player tries to build more tha once
-        if(turnInfo.getHasAlreadyBuilt()){
+        //lose check must be bypassed if the player tries to build more than twice or tries to build twice before moving
+        if(turnInfo.getNumberOfBuilds()>=2 || (turnInfo.getNumberOfBuilds()==1 && !turnInfo.getHasAlreadyMoved())){
             return false;
         }
 

@@ -106,7 +106,7 @@ public class DemeterBuild implements BuildStrategy {
                 piece = new Level1Block();
             } else if (z == 1) {
                 piece = new Level2Block();
-            } else if (gameboard.getTowerCell(x, y).getTowerHeight() == 2) {
+            } else if (z == 2) {
                 piece = new Level3Block();
             }
         }

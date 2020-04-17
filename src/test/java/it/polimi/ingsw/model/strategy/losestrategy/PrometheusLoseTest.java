@@ -234,9 +234,22 @@ class PrometheusLoseTest {
         }
 
         @Test
-        void AlreadyBuilt() {
+        void AlreadyBuiltTwice() {
             //should immediately return false
             turnInfo.setHasBuilt();
+            turnInfo.addBuild();
+            turnInfo.addBuild();
+
+            assertFalse(loseStrategy.buildingLoss(turnInfo,gameBoard,playerTest,0));
+            assertFalse(loseStrategy.buildingLoss(turnInfo,gameBoard,playerTest,1));
+
+        }
+
+        @Test
+        void BuiltAndNotMoved() {
+            //should immediately return false
+            turnInfo.setHasBuilt();
+            turnInfo.addBuild();
 
             assertFalse(loseStrategy.buildingLoss(turnInfo,gameBoard,playerTest,0));
             assertFalse(loseStrategy.buildingLoss(turnInfo,gameBoard,playerTest,1));
@@ -245,9 +258,10 @@ class PrometheusLoseTest {
 
         //should not be able to build
         @Test
-        void AlreadyMoved(){
+        void AlreadyMovedNotBuilt(){
 
             turnInfo.setHasMoved();
+            turnInfo.addMove();
             turnInfo.setChosenWorker(0);
 
             //should only care about worker 0 and test him two times, losing both times, even if worker1 can build
@@ -261,7 +275,7 @@ class PrometheusLoseTest {
         }
 
         @Test
-        void NotAlredyMoved(){
+        void NotAlreadyMoved(){
 
             //should test both every times and give
             assertFalse(loseStrategy.buildingLoss(turnInfo,gameBoard,playerTest,0));

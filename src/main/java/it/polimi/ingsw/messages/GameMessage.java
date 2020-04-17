@@ -64,4 +64,5 @@ public class GameMessage {
     public static String buildAgainOrEnd = "You can now decide to build again or choose END to end your turn\n";
     //PROMETHEUS
     public static String prometheusNoMoveUp ="this move isn't allowed due to your decision to build before moving\n";
+    public static String noBuildMoreThanTwice ="you already built twice, your turn should have already ended, ERROR\n";
 }
