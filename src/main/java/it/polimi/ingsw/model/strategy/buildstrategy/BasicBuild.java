@@ -12,7 +12,7 @@ public class BasicBuild implements BuildStrategy {
    @Override
    public String checkBuild(TurnInfo turnInfo,  GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType){
 
-       Worker worker = player.getWorker(turnInfo.getChosenWorker());
+       Worker worker = player.getWorker(chosenWorker);
        int x = buildingInto[0];
        int y = buildingInto[1];
 

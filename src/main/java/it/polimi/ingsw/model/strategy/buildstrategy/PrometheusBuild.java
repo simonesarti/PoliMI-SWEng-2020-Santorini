@@ -12,7 +12,7 @@ public class PrometheusBuild implements BuildStrategy{
     @Override
     public String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
 
-        Worker worker = player.getWorker(turnInfo.getChosenWorker());
+        Worker worker = player.getWorker(chosenWorker);
         int x = buildingInto[0];
         int y = buildingInto[1];
 
@@ -32,8 +32,9 @@ public class PrometheusBuild implements BuildStrategy{
         }
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
-        //worker must be the same that has moved
-        if(turnInfo.getHasAlreadyMoved() || turnInfo.getHasAlreadyBuilt()){
+        //if worker has already moved, player must use the same worker(player can't get here with a second build without move)
+        //therefore this check only concerns the second build
+        if(turnInfo.getHasAlreadyMoved()){
             if(chosenWorker != turnInfo.getChosenWorker()) {
                 return GameMessage.NotSameWorker;
             }
