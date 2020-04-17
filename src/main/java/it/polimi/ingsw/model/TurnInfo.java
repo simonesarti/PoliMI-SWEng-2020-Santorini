@@ -81,7 +81,7 @@ public class TurnInfo {
     public void addMove(){numberOfMoves++;}
 
     public int getNumberOfBuilds(){return numberOfBuilds;}
-    public void addBuild(){numberOfMoves++;}
+    public void addBuild(){numberOfBuilds++;}
 
     public int getChosenWorker(){return chosenWorker;}
     public void setChosenWorker(int n){chosenWorker=n;}
