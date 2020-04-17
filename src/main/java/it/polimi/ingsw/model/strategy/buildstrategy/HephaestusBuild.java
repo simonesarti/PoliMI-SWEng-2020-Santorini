@@ -28,21 +28,6 @@ public class HephaestusBuild implements BuildStrategy{
             return GameMessage.hasNotMoved;
         }
 
-        //if hephaestus has already built one time, the next building destination must be the "previous position", the worker used must be the same
-        //and the piece must be a dome
-        if(turnInfo.getNumberOfBuilds() == 1){
-
-            if(chosenWorker!=turnInfo.getChosenWorker()){
-                return GameMessage.NotSameWorker;
-            }
-            if(turnInfo.getLastBuildCoordinates()[0] != x || turnInfo.getLastBuildCoordinates()[1] != y){
-                return GameMessage.HephaestusWrongBuild;
-            }
-            if (!pieceType.equals("Dome")){
-                return GameMessage.mustBeDome;
-            }
-        }
-
         //x e y must be inside the board
         if (x < 0 || x > 4 || y < 0 || y > 4) {
             return GameMessage.notInGameboard;
@@ -55,9 +40,22 @@ public class HephaestusBuild implements BuildStrategy{
         }
         Worker worker = player.getWorker(chosenWorker);
 
-        //worker must be the same that has moved
+        //worker must be the same as the one that made the previous move
+        //doesn't matter if it was a move or a build
         if(chosenWorker != turnInfo.getChosenWorker()){
-            return GameMessage.notSameThatMoved;
+            return GameMessage.NotSameWorker;
+        }
+
+        //if hephaestus has already built one time, the next building destination must be the "previous position"
+        //and the piece must be a dome
+        if(turnInfo.getNumberOfBuilds() == 1){
+
+            if(turnInfo.getLastBuildCoordinates()[0] != x || turnInfo.getLastBuildCoordinates()[1] != y){
+                return GameMessage.HephaestusWrongBuild;
+            }
+            if (!pieceType.equals("Dome")){
+                return GameMessage.mustBeDome;
+            }
         }
 
         //workerPosition must not be the destination position
@@ -128,14 +126,21 @@ public class HephaestusBuild implements BuildStrategy{
 
         //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
+        
 
-        turnInfo.setHasBuilt();
-        turnInfo.addBuild();
-        turnInfo.setTurnCanEnd();
-        turnInfo.setTurnHasEnded();
         //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
-        return GameMessage.turnCompleted;
+        if(!turnInfo.getHasAlreadyBuilt()){
+            turnInfo.setHasBuilt();
+            turnInfo.addBuild();
+            turnInfo.setLastBuildCoordinates(x,y);
+            turnInfo.setTurnCanEnd();
+            return GameMessage.buildAgainOrEnd;
+        }else{
+            turnInfo.addBuild();
+            turnInfo.setTurnHasEnded();
+            return GameMessage.turnCompleted;
+        }
     }
 
 }
