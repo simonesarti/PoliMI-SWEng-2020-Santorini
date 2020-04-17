@@ -94,7 +94,7 @@ class ArtemisMoveTest {
 
         gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
         enemy2Player.getWorker(1).movedToPosition(3,4,0);
-        
+
     }
 
     @Test
