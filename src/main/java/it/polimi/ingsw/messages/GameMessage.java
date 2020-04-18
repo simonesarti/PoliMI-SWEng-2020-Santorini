@@ -65,6 +65,7 @@ public class GameMessage {
     //DEMETER
     public static String DemeterFirstBuild = "This is your first building position, choose another one\n";
     public static String buildAgainOrEnd = "You can now decide to build again or choose END to end your turn\n";
+    public static String alreadyBuiltTwice = "You have already built twice, end yout turn\n";
     //PROMETHEUS
     public static String prometheusNoMoveUp ="this move isn't allowed due to your decision to build before moving\n";
     public static String noBuildMoreThanTwice ="you already built twice, your turn should have already ended, ERROR\n";

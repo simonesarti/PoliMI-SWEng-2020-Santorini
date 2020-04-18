@@ -31,7 +31,7 @@ public class DemeterBuild implements BuildStrategy {
 
         //number of build must be < 2
         if(turnInfo.getNumberOfBuilds()>1){
-            return GameMessage.alreadyBuilt;
+            return GameMessage.alreadyBuiltTwice;
         }
 
         //x e y must be inside the board

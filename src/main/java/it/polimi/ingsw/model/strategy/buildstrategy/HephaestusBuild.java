@@ -28,6 +28,11 @@ public class HephaestusBuild implements BuildStrategy{
             return GameMessage.hasNotMoved;
         }
 
+        //number of build must be < 2
+        if(turnInfo.getNumberOfBuilds()>1){
+            return GameMessage.alreadyBuiltTwice;
+        }
+
         //x e y must be inside the board
         if (x < 0 || x > 4 || y < 0 || y > 4) {
             return GameMessage.notInGameboard;
