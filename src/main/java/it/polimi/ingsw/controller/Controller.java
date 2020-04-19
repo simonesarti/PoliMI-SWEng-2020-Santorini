@@ -153,11 +153,11 @@ public class Controller implements Observer<PlayerMessage>{
             performMove((PlayerMovementChoice) message);
         }
 
-        if (message instanceof PlayerBuildChoice){
+        else if (message instanceof PlayerBuildChoice){
             performBuild((PlayerBuildChoice) message);
         }
 
-        if(message instanceof PlayerEndOfTurnChoice){
+        else if(message instanceof PlayerEndOfTurnChoice){
             endTurn((PlayerEndOfTurnChoice) message);
         }
 

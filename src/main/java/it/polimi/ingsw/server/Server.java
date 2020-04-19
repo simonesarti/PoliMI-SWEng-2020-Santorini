@@ -16,17 +16,14 @@ public class Server {
         this.serverSocket = new ServerSocket(PORT);
     }
 
-
-
-
     public void run(){
         while(true){
             try {
                 Socket newSocket = serverSocket.accept();
-                Connection socketConnection = new Connection(newSocket, this);
+                ServerSideConnection socketConnection = new ServerSideConnection(newSocket, this);
                 executor.submit(socketConnection);
             } catch (IOException e) {
-                System.out.println("Connection Error!");
+                System.out.println("ServerSideConnection Error!");
             }
         }
     }
