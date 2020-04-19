@@ -192,7 +192,6 @@ class ApolloMoveTest {
         assertTrue((new Position(3,3,2)).equals(player.getWorker(0).getCurrentPosition()));
         assertNull(gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
-        assertEquals(1, turnInfo.getNumberOfMoves());
 
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());

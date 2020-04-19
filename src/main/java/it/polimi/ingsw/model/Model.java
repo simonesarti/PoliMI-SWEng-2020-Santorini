@@ -103,4 +103,13 @@ public class Model extends Observable<NotifyMessages> {
         notify(new NewBoardStateMessage(gameboard.getBoardState(),player));
     }
 
+
+    /**
+     * For testing purpose only
+     * @param c turn's colour
+     */
+    public void setColour(Colour c){
+        this.turn = c;
+    }
+
 }

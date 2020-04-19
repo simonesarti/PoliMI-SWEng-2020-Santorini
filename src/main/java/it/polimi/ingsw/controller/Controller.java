@@ -73,6 +73,7 @@ public class Controller implements Observer<PlayerMessage>{
             //if check NOT ok, report error
             }else{
                 //TODO implementare reportInfo
+                System.out.println("message-error dalla check alla view");
                 //message.getView().reportInfo(checkResult);
 
             }
