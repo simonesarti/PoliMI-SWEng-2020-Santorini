@@ -19,7 +19,7 @@ public class GameBoard {
     public GameBoard(){
         for(int j = 0; j<5; j++){
             for(int i = 0; i<5; i++){
-                towerCells[j][i]=new TowerCell();
+                towerCells[i][j]=new TowerCell();
             }
         }
     }
@@ -105,7 +105,16 @@ public class GameBoard {
     }
 
     public BoardState getBoardState(){
-        return new BoardState();
+
+        BoardState boardState=new BoardState();
+
+        for(int j = 0; j<5; j++){
+            for(int i = 0; i<5; i++){
+                boardState.setTowerStates(i,j,this.getTowerCell(i,j));
+            }
+        }
+
+        return boardState;
     }
 
 }
