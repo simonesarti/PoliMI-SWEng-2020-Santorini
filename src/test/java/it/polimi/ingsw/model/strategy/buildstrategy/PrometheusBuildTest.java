@@ -7,8 +7,6 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.model.piece.Level3Block;
-import it.polimi.ingsw.model.strategy.movestrategy.MoveStrategy;
-import it.polimi.ingsw.model.strategy.movestrategy.PrometheusMove;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.messages;
+package it.polimi.ingsw.messages.PlayerToGameMessages;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
@@ -8,7 +8,7 @@ import it.polimi.ingsw.view.View;
  * View attribute is needed to report errors
  *
  */
-public class PlayerEndOfTurnChoice extends Message{
+public class PlayerEndOfTurnChoice extends PlayerMessage {
 
     private final View view;
     private final Player player;

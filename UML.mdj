@@ -7089,7 +7089,7 @@
 											"top": 3173,
 											"width": 232.2607421875,
 											"height": 13,
-											"text": "+notify(message : T)",
+											"text": "+notify(playerMessage : T)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -19044,7 +19044,7 @@
 											"_parent": {
 												"$ref": "AAAAAAFxJswSNGYn4Hg="
 											},
-											"name": "message ",
+											"name": "playerMessage ",
 											"type": "T"
 										}
 									]

@@ -1,10 +1,14 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.*;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.observe.Observer;
 
-public class Controller implements Observer<Message>{
+public class Controller implements Observer<PlayerMessage>{
 
     private final Model model;
 
@@ -140,21 +144,21 @@ public class Controller implements Observer<Message>{
     /**
      * Invokes Controller's methods on the basis of message's subclass
      *
-     * @param message Message
+     * @param message PlayerMessage
      */
     @Override
-    public void update(Message message) {
+    public void update(PlayerMessage message) {
 
         if(message instanceof PlayerMovementChoice){
-            performMove((PlayerMovementChoice)message);
+            performMove((PlayerMovementChoice) message);
         }
 
         if (message instanceof PlayerBuildChoice){
-            performBuild((PlayerBuildChoice)message);
+            performBuild((PlayerBuildChoice) message);
         }
 
         if(message instanceof PlayerEndOfTurnChoice){
-            endTurn((PlayerEndOfTurnChoice)message);
+            endTurn((PlayerEndOfTurnChoice) message);
         }
 
     }

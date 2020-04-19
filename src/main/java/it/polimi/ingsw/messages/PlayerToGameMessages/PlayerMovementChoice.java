@@ -1,4 +1,4 @@
-package it.polimi.ingsw.messages;
+package it.polimi.ingsw.messages.PlayerToGameMessages;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
@@ -7,7 +7,7 @@ import it.polimi.ingsw.view.View;
  * PlayerMovementChoice message contains information about a specific move (which Player, which worker, which Towercell).
  * View is needed to report errors
  */
-public class PlayerMovementChoice extends Message{
+public class PlayerMovementChoice extends PlayerMessage {
 
     private final View view;
     private final Player player;

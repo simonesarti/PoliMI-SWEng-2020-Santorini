@@ -1,10 +1,6 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 
-import it.polimi.ingsw.messages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.piece.Piece;
-import it.polimi.ingsw.messages.PlayerBuildChoice;
 
 /**
  * Build strategies interface

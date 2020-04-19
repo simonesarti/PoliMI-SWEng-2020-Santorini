@@ -104,4 +104,8 @@ public class GameBoard {
         }
     }
 
+    public BoardState getBoardState(){
+        return new BoardState();
+    }
+
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.messages;
 
 import java.util.Calendar;
 
-public class PlayerInfo extends Message{
+public class PlayerInfo{
 
     private final String playerNickname;
     private final Calendar birthday;
