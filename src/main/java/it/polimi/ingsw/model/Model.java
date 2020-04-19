@@ -1,9 +1,15 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.LoseMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
+import it.polimi.ingsw.messages.GameToPlayerMessages.WinMessage;
+import it.polimi.ingsw.observe.Observable;
+
 /**
  * This class contains an instance of Gameboard and schedules players' turns
  */
-public class Model {
+public class Model extends Observable<NotifyMessages> {
 
     private GameBoard gameboard;
     private TurnInfo turnInfo;
@@ -84,5 +90,17 @@ public class Model {
         return this.eliminated==colour;
     }
 
+
+    //TODO finire notify (ad esempio la win può termiare la partita/aggiungere eliminazioni e così via
+    //TODO lose deve rimuovere le pedine dal gioco dell'eliminato
+    public void notifyLoss(Player player){
+        notify(new LoseMessage(player));
+    }
+    public void notifyVictory(Player player){
+        notify(new WinMessage(player));
+    }
+    public void notifyNewBoardState(Player player){
+        notify(new NewBoardStateMessage(gameboard.getBoardState(),player));
+    }
 
 }

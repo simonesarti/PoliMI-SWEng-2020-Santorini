@@ -33,18 +33,19 @@ public class Controller implements Observer<PlayerMessage>{
 
         //TODO implementare reportError
         if(!model.isPlayerTurn(message.getPlayer())){
-            //message.getView().reportError(gameMessage.wrongTurn);
+            //message.getView().reportInfo(gameMessage.wrongTurn);
             return;
         }
 
         if(model.getTurnInfo().getTurnHasEnded()){
-            //message.getView().reportError(gameMessage.turnAlreadyEnded);
+            //message.getView().reportInfo(gameMessage.turnAlreadyEnded);
             return;
         }
 
         //CHECK LOSE
         if(message.getPlayer().getGodCard().getLoseStrategy().movementLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())) {
-            //TODO cosa fare se perde
+            model.notifyLoss(message.getPlayer());
+            //TODO altro?
             return;
 
         //if the player hasn't lost
@@ -57,16 +58,23 @@ public class Controller implements Observer<PlayerMessage>{
 
                 //EXECUTE MOVE
                 nextStep = message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+                model.notifyNewBoardState(message.getPlayer());
 
                 //EXECUTE WIN CHECK
                 if (message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(), message.getChosenWorker())) {
+                    model.notifyVictory(message.getPlayer());
+                    //TODO altro?
                     endMatch();
+                    return;
+                }else{
+                    //message.getView().reportInfo(nextStep);
                 }
+
             //if check NOT ok, report error
             }else{
-                //TODO implementare reportError
-                //message.getView().reportError(checkResult);
-                return;
+                //TODO implementare reportInfo
+                //message.getView().reportInfo(checkResult);
+
             }
         }
     }
@@ -84,18 +92,19 @@ public class Controller implements Observer<PlayerMessage>{
 
         //TODO implementare reporError
         if (!model.isPlayerTurn(message.getPlayer())) {
-            //message.getView().reportError(gameMessage.wrongTurn);
+            //message.getView().reportInfo(gameMessage.wrongTurn);
             return;
         }
 
         if (model.getTurnInfo().getTurnHasEnded()) {
-            //message.getView().reportError(gameMessage.turnAlreadyEnded);
+            //message.getView().reportInfo(gameMessage.turnAlreadyEnded);
             return;
         }
 
         //CHECK LOSE
         if(message.getPlayer().getGodCard().getLoseStrategy().buildingLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())){
-        //TODO cosa fare se perde
+            model.notifyLoss(message.getPlayer());
+            //TODO altro?
             return;
 
         //if player hasn't lost'
@@ -108,12 +117,13 @@ public class Controller implements Observer<PlayerMessage>{
 
                 //EXECUTE BUILD
                 nextStep = message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+                model.notifyNewBoardState(message.getPlayer());
+                //message.getView().reportInfo(nextStep);
 
-                //if NOT build check ok
+            //if NOT build check ok
             } else {
-                //TODO impementare reportError
-                //message.getView().reportError(checkResult);
-                return;
+                //TODO impementare reportInfo
+                //message.getView().reportInfo(checkResult);
             }
         }
     }
@@ -123,21 +133,20 @@ public class Controller implements Observer<PlayerMessage>{
      * @param message PlayerEndOfTurnChoice message
      */
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
-        //TODO implementare reporError
+        //TODO implementare reportInfo
         if(!model.isPlayerTurn(message.getPlayer())){
-            //message.getView().reportError(gameMessage.wrongTurn);
+            //message.getView().reportInfo(gameMessage.wrongTurn);
             return;
         }
 
         if(!model.getTurnInfo().getTurnCanEnd()){
-            //message.getView().reportError(gameMessage.turnNotEnded);
+            //message.getView().reportInfo(gameMessage.turnNotEnded);
             return;
         }
 
         //TODO stabilire cosa va qui
         model.updateTurn();
-
-        // TODO check sconfitta giocatore successivo con eventule rimozione dal gioco
+        //TODO altro?
 
     }
 
