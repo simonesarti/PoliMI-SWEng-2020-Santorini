@@ -93,8 +93,6 @@ public class PrometheusMove implements MoveStrategy {
         //modifying worker's associated position
         worker.movedToPosition(x,y,z);
 
-        //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
-
         turnInfo.setHasMoved();
         turnInfo.addMove();
 

@@ -112,7 +112,6 @@ public class BasicBuild implements BuildStrategy {
         turnInfo.addBuild();
         turnInfo.setTurnCanEnd();
         turnInfo.setTurnHasEnded();
-        //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
         return GameMessage.turnCompleted;
     }

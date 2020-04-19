@@ -105,7 +105,6 @@ public class AthenaMove implements MoveStrategy {
         turnInfo.setHasMoved();
         turnInfo.setChosenWorker(chosenWorker);
         turnInfo.addMove();
-        //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
 
         return GameMessage.buildRequest;
 

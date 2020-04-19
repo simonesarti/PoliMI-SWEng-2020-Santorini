@@ -126,8 +126,6 @@ public class DemeterBuild implements BuildStrategy {
         //check if tower is complete
         gameboard.getTowerCell(x,y).checkCompletion();
 
-        //TODO notify()-> spedire messaggio con copia delle informazioni utili dello stato della board
-
         if(!turnInfo.getHasAlreadyBuilt()){
             turnInfo.setHasBuilt();
             turnInfo.addBuild();
