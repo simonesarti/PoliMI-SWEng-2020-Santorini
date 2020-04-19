@@ -68,7 +68,7 @@ public class GodCard{
 
             case "Hephaestus" :
                 moveStrategy = new BasicMove();
-                //buildStrategy = new HephaestusBuild();
+                buildStrategy = new HephaestusBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new BasicLose();
                 break;
