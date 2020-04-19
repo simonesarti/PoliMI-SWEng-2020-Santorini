@@ -72,8 +72,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             //if check NOT ok, report error
             }else{
-                //TODO implementare reportInfo
-                System.out.println("message-error dalla check alla view");
+
                 //message.getView().reportInfo(checkResult);
 
             }
@@ -120,6 +119,8 @@ public class Controller implements Observer<PlayerMessage>{
                 nextStep = message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
                 model.notifyNewBoardState(message.getPlayer());
                 //message.getView().reportInfo(nextStep);
+                //TODO elimina questa println sotto
+                System.out.println("Ho eseguito una build correttamente");
 
             //if NOT build check ok
             } else {

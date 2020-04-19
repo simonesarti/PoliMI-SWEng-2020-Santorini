@@ -2,9 +2,12 @@ package it.polimi.ingsw.model.strategy.IntegrationTest;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
+import it.polimi.ingsw.model.piece.Level1Block;
+import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.model.strategy.buildstrategy.BasicBuild;
 import it.polimi.ingsw.model.strategy.movestrategy.ApolloMove;
 import it.polimi.ingsw.view.View;
@@ -118,8 +121,10 @@ public class ApolloIntegrationTest {
         gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(2,0,2);
 
-        //This is player's turn
+        //Setting the right turn manually
         model.setColour(player.getColour());
+
+        //////////////////////////////////////////MOVING FOR THE FIRST TIME/////////////////////////////
 
         //creating message that should trigger the controller object (in this case, triggering will be "manual")
         PlayerMovementChoice moveMessage = new PlayerMovementChoice(new View(),player,0,3,0);
@@ -135,11 +140,12 @@ public class ApolloIntegrationTest {
         assertEquals(1,turnInfo.getNumberOfMoves());
         assertEquals(0,turnInfo.getChosenWorker());
 
-        //now if i try to perform another move i should get "blocked" by the checkMove()
+        ////////////////////////////////////TRYING TO MOVE ANOTHER TIME/////////////////////////////////
+
         moveMessage = new PlayerMovementChoice(new View(),player,0,3,1);
         controller.update(moveMessage);
 
-        //all parameters must be the same
+        //all parameters must remain the same
         assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
@@ -148,6 +154,41 @@ public class ApolloIntegrationTest {
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());
         assertEquals(0,turnInfo.getChosenWorker());
+
+        //////////////////////////////////////BUILDING FOR THE FIRST TIME////////////////////////////////
+
+        //creating build message
+        PlayerBuildChoice buildMessage = new PlayerBuildChoice(new View(),player,0,3,1,"Block");
+        controller.update(buildMessage);
+
+        //Apollo has built a level1block with his basicBuild strategy
+
+        //checking that tower's height increased
+        assertTrue(gameBoard.getTowerCell(3,1).getTowerHeight()==1);
+        //checking that the piece is right
+        assertTrue(gameBoard.getTowerCell(3,1).getLevel(0).getPiece() instanceof Level1Block);
+        //checking that tower is not completed
+        assertTrue(gameBoard.getTowerCell(3,1).isTowerCompleted()==false);
+        //checking that hasBuilt is true
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+
+        //////////////////////////////////TRYING TO BUILD AGAIN//////////////////////////////////////////
+
+        //creating build message
+        buildMessage = new PlayerBuildChoice(new View(),player,0,2,1,"Block");
+        controller.update(buildMessage);
+
+        //Apollo has built a level1block with his basicBuild strategy
+
+        //checking that tower's height didn't increase
+        assertTrue(gameBoard.getTowerCell(2,1).getTowerHeight()==0);
+        //checking that the piece is right
+        assertTrue(gameBoard.getTowerCell(2,1).getLevel(0).getPiece() == null);
+
+        //checking that hasAlreadyBuilt is still true
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        //checking that hasAlreadyMoved is still true
+        assertTrue(turnInfo.getHasAlreadyMoved());
 
 
 
