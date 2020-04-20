@@ -142,8 +142,40 @@ public class PanIntegrationTest {
             assertFalse(turnInfo.getTurnHasEnded());
         }
 
+        @Test
+        void WrongMoveBeforeEverything(){
+            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,0,1,0);
+            controller.update(message);
+            //invalid move, denied
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        @Test
+        void WrongMoveBeforeEverything2(){
+            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,-1,1,0);
+            controller.update(message);
+            //invalid move, denied, invalid worker
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
         @Test //ok
-        void MoveBeforeEverything(){
+        void CorrectMoveBeforeEverything(){
             PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,1,2);
             controller.update(message);
 
@@ -210,15 +242,84 @@ public class PanIntegrationTest {
 
         @Test
         void EndAftertMove() {
+
+            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),testPlayer);
+            controller.update(message);
+            //method returns immediately
+
+            //turnInfo must still have all his initial values
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
         }
 
         @Test
         void MoveAfterMove() {
+
+            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,2,3);
+            controller.update(message);
+            //method returns because the player has already moved
+
+            //turnInfo must not have been modified since this class's BeforeEach
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
         }
 
         @Test
-            //ok
+        void WrongBuildAfterMove() {
+            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,0,1,2,"Dome");
+            controller.update(message);
+            //every parameter is wrong, should give error for the wrong worker
+
+            //turnInfo must not have been modified since this class's BeforeEach
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        @Test
+        void WrongBuildAfterMove2() {
+            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,0,3,"Dome");
+            controller.update(message);
+            //can't place dome here error
+
+            //turnInfo must not have been modified since this class's BeforeEach
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        @Test //ok
         void BuildAfterMove() {
+            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,0,3,"Block");
+            controller.update(message);
+            //should work
+
+            //turnInfo must have been updated
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(1,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertTrue(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertTrue(turnInfo.getTurnCanEnd());
+            assertTrue(turnInfo.getTurnHasEnded());
         }
     }
 
