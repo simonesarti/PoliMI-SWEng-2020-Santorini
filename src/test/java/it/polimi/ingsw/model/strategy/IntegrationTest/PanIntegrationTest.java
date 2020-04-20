@@ -328,23 +328,48 @@ public class PanIntegrationTest {
 
         @BeforeEach
         void init() {
-            //GAMEBOARD GENERATION
-            int[][] towers =
-                    {
-                            {0, 0, 2, 2, 2},
-                            {0, 0, 0, 0, 3},
-                            {0, 1, 0, 3, 4},
-                            {0, 0, 1, 2, 3},
-                            {0, 0, 1, 0, 0}
-                    };
 
-            gameBoard.generateBoard(towers);
-            turnInfo.setChosenWorker(0);
+            //SETS INITIAL STATE
+            turnInfo.setChosenWorker(1);
             turnInfo.setHasMoved();
             turnInfo.addMove();
             turnInfo.setHasBuilt();
             turnInfo.addBuild();
+            turnInfo.setTurnCanEnd();
+            turnInfo.setTurnHasEnded();
 
+            //GAMEBOARD GENERATION
+            int[][] towers=
+                    {
+                            {2,4,1,2,2},
+                            {3,1,2,1,4},
+                            {4,1,0,3,4},
+                            {1,2,1,4,4},
+                            {0,1,1,4,0}
+                    };
+
+            gameBoard.generateBoard(towers);
+
+            //POSITIONING TEST WORKERS
+            gameBoard.getTowerCell(1,1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+            testPlayer.getWorker(0).movedToPosition(1,1,1);
+
+            gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(1,2,1);
+
+            //POSITIONING OPPONENT WORKERS
+
+            gameBoard.getTowerCell(0,1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+            enemy1Player.getWorker(0).movedToPosition(0,1,3);
+
+            gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+            enemy1Player.getWorker(1).movedToPosition(2,2,0);
+
+            gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(4,4,0);
+
+            gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+            enemy2Player.getWorker(1).movedToPosition(2,4,1);
 
         }
 
@@ -352,14 +377,52 @@ public class PanIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
+            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,2,3);
+            controller.update(message);
+            //can't execute because turn has ended
+
+            //turnInfo Must be the initial one
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(1,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertTrue(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertTrue(turnInfo.getTurnCanEnd());
+            assertTrue(turnInfo.getTurnHasEnded());
         }
 
         @Test
         void BuildAfterFinish() {
+            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,0,3,"Block");
+            controller.update(message);
+            //can't execute because turn has ended
+
+            //turnInfo Must be the initial one
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(1,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertTrue(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+            assertTrue(turnInfo.getTurnCanEnd());
+            assertTrue(turnInfo.getTurnHasEnded());
         }
 
         @Test
         void EndAfterFinish() {
+            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),testPlayer);
+            controller.update(message);
+            //correct end of turn
+
+            //turnInfo must have been reset
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+
+            assertEquals(Colour.BLUE,model.getTurn());
         }
     }
 

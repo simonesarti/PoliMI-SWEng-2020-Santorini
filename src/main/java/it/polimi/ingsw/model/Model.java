@@ -45,44 +45,50 @@ public class Model extends Observable<NotifyMessages> {
      */
     public boolean isPlayerTurn(Player player){ return player.getColour()== turn;}
 
+    public Colour getTurn(){
+        return turn;
+    }
+
     /**
      * updates the turn based on the order of the player, and resets turnInfo
     */
     public void updateTurn() {
 
-        switch (eliminated){
-            case GREY:
-                if(turn==Colour.WHITE){
-                    turn=Colour.BLUE;
-                }else{
-                    turn=Colour.WHITE;
-                }
-                break;
-            case WHITE:
-                if(turn==Colour.BLUE){
-                    turn=Colour.GREY;
-                }else{
-                    turn=Colour.BLUE;
-                }
-                break;
-            case BLUE:
-                if(turn==Colour.WHITE){
-                    turn=Colour.GREY;
-                }else{
-                    turn=Colour.WHITE;
-                }
-                break;
-            default:
-                if(turn==Colour.WHITE){
-                    turn=Colour.BLUE;
-                }else if(turn==Colour.BLUE){
-                    turn=Colour.GREY;
-                }else {
-                    turn = Colour.WHITE;
-                }
-                break;
+        if (eliminated==null) {
+            if(turn==Colour.WHITE){
+                turn=Colour.BLUE;
+            }else if(turn==Colour.BLUE){
+                turn=Colour.GREY;
+            }else {
+                turn = Colour.WHITE;
+            }
+        }else {
+            switch (eliminated) {
+                case GREY:
+                    if (turn == Colour.WHITE) {
+                        turn = Colour.BLUE;
+                    } else {
+                        turn = Colour.WHITE;
+                    }
+                    break;
+                case WHITE:
+                    if (turn == Colour.BLUE) {
+                        turn = Colour.GREY;
+                    } else {
+                        turn = Colour.BLUE;
+                    }
+                    break;
+                case BLUE:
+                    if (turn == Colour.WHITE) {
+                        turn = Colour.GREY;
+                    } else {
+                        turn = Colour.WHITE;
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException("ERRORE NELL'AGGIRONAMENTO DEL TURNO");
+            }
         }
-
         turnInfo.turnInfoReset();
     }
 
