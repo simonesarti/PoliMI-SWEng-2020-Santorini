@@ -9,9 +9,6 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
-import it.polimi.ingsw.model.piece.Level2Block;
-import it.polimi.ingsw.model.strategy.buildstrategy.BasicBuild;
-import it.polimi.ingsw.model.strategy.movestrategy.ApolloMove;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -33,15 +30,12 @@ public class ApolloIntegrationTest {
     TurnInfo turnInfo;
     GameBoard gameBoard;
 
-
     Player player;
     Player enemy1Player;
     Player enemy2Player;
     PlayerInfo playerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
-
-
 
 
     @BeforeEach
