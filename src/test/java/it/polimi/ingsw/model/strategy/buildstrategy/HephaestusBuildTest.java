@@ -84,7 +84,7 @@ class HephaestusBuildTest {
         //POSITIONING WORKERS
 
         gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
-        enemy1Player.getWorker(1).movedToPosition(4,0,2);
+        enemy1Player.getWorker(0).movedToPosition(4,0,2);
 
 
         gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
@@ -199,6 +199,7 @@ class HephaestusBuildTest {
     @Test
     void buildTesting(){
 
+        //EVERYTHING IS RIGHT
         //Block test
         turnInfo.setChosenWorker(0);
         piece = "Block";
@@ -214,6 +215,9 @@ class HephaestusBuildTest {
         assertTrue(gameBoard.getTowerCell(2,3).getLevel(1).getPiece() instanceof Level2Block);
         //control that tower is not completed
         assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        assertTrue(turnInfo.getTurnCanEnd()==true);
 
 
 
@@ -233,6 +237,139 @@ class HephaestusBuildTest {
         assertTrue(gameBoard.getTowerCell(2,3).getLevel(2).getPiece() instanceof Level3Block);
         //control that tower is not completed
         assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==false);
+        assertEquals(2,turnInfo.getNumberOfBuilds());
+        assertTrue(turnInfo.getTurnHasEnded()==true);
+
+        //TRY TO BUILD USING A DOME
+        //Dome test
+
+        turnInfo.turnInfoReset();
+        turnInfo.setChosenWorker(0);
+        piece = "Dome";
+        player.getWorker(0).movedToPosition(2,2,0);
+        turnInfo.setHasMoved();
+        buildingTo[0]=3;
+        buildingTo[1]=2;
+        assertEquals(GameMessage.buildOK, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildAgainOrEnd, hephaestusbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
+        //control that tower's height increased
+        assertTrue(gameBoard.getTowerCell(3,2).getTowerHeight()==4);
+        //control that the piece is right
+        assertTrue(gameBoard.getTowerCell(3,2).getLevel(3).getPiece() instanceof Dome);
+        //control that tower is completed
+        assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==true);
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        assertTrue(turnInfo.getTurnCanEnd()==true);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+
+        //second build test
+        turnInfo.setChosenWorker(0);
+        piece = "Dome";
+        player.getWorker(0).movedToPosition(2,2,0);
+        turnInfo.setHasMoved();
+        buildingTo[0]=3;
+        buildingTo[1]=2;
+        assertEquals(GameMessage.mustBeBlock, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+
+        //control that nothing changed
+        assertTrue(gameBoard.getTowerCell(3,2).getTowerHeight()==4);
+
+        assertTrue(gameBoard.getTowerCell(3,2).getLevel(3).getPiece() instanceof Dome);
+
+        assertTrue(gameBoard.getTowerCell(3,2).isTowerCompleted()==true);
+        assertTrue(turnInfo.getTurnCanEnd()==true);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+
+
+        //TRY TO BUILD A BLOCK ON A LEVEL 4
+        turnInfo.turnInfoReset();
+        turnInfo.setChosenWorker(0);
+        piece = "Block";
+        player.getWorker(0).movedToPosition(2,3,1);
+        turnInfo.setHasMoved();
+        buildingTo[0]=3;
+        buildingTo[1]=3;
+        assertEquals(GameMessage.buildOK, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildAgainOrEnd, hephaestusbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
+        //control that tower's height increased
+        assertTrue(gameBoard.getTowerCell(3,3).getTowerHeight()==3);
+        //control that the piece is right
+        assertTrue(gameBoard.getTowerCell(3,3).getLevel(2).getPiece() instanceof Level3Block);
+        //control that tower is not completed
+        assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        assertTrue(turnInfo.getTurnCanEnd()==true);
+
+        //second build to a complete tower
+        turnInfo.setChosenWorker(0);
+        piece = "Block";
+        player.getWorker(0).movedToPosition(2,3,1);
+        turnInfo.setHasMoved();
+        buildingTo[0]=3;
+        buildingTo[1]=3;
+        assertEquals(GameMessage.noBlocksInDome, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        //control that nothing changed
+
+        assertTrue(gameBoard.getTowerCell(3,3).getTowerHeight()==3);
+
+        assertTrue(gameBoard.getTowerCell(3,3).getLevel(2).getPiece() instanceof Level3Block);
+
+        assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        assertTrue(turnInfo.getTurnCanEnd()==true);
+
+        //TRY TO BUILD IN A DIFFERENT POSITION
+
+        turnInfo.turnInfoReset();
+        turnInfo.setChosenWorker(0);
+        piece = "Block";
+        player.getWorker(0).movedToPosition(2,1,0);
+        turnInfo.setHasMoved();
+        buildingTo[0]=2;
+        buildingTo[1]=0;
+        assertEquals(GameMessage.buildOK, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.buildAgainOrEnd, hephaestusbuild.build(turnInfo, gameBoard,player,0,buildingTo, piece));
+        //control that tower's height increased
+        assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==3);
+        //control that the piece is right
+        assertTrue(gameBoard.getTowerCell(2,0).getLevel(2).getPiece() instanceof Level3Block);
+        //control that tower is not completed
+        assertTrue(gameBoard.getTowerCell(2,0).isTowerCompleted()==false);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        assertTrue(turnInfo.getTurnCanEnd()==true);
+
+        //second build to a different position
+
+        turnInfo.setChosenWorker(0);
+        piece = "Block";
+        turnInfo.setHasMoved();
+        buildingTo[0]=3;
+        buildingTo[1]=0;
+        assertEquals(GameMessage.HephaestusWrongBuild, hephaestusbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        //control that nothing changed
+        assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==3);
+
+        assertTrue(gameBoard.getTowerCell(2,0).getLevel(2).getPiece() instanceof Level3Block);
+
+        assertTrue(gameBoard.getTowerCell(2,0).isTowerCompleted()==false);
+        assertEquals(1,turnInfo.getNumberOfBuilds());
+        assertTrue(turnInfo.getHasAlreadyBuilt());
+        assertTrue(turnInfo.getTurnCanEnd()==true);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

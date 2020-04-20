@@ -78,7 +78,7 @@ class ApolloMoveTest {
         //POSITIONING WORKERS
 
         gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
-        enemy1Player.getWorker(1).movedToPosition(4,0,2);
+        enemy1Player.getWorker(0).movedToPosition(4,0,2);
 
 
         gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
