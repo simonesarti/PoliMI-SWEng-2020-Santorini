@@ -68,7 +68,7 @@ public class ApolloIntegrationTest {
         enemy2Player.getWorker(0).setStartingPosition(0,3);
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 
-        //Instancing player's godcard
+        //Instancing testPlayer's godcard
         String godDataString[] = {"Apollo","God Of Music", "Simple", "true", "Your worker may move into an opponent worker's..."};
         apolloCard = new GodCard(godDataString);
         player.setGodCard(apolloCard);
@@ -117,7 +117,7 @@ public class ApolloIntegrationTest {
     @Test
     void CompleteTurnTesting(){
 
-        //player's worker0 strarting position is (2,0,2)
+        //testPlayer's worker0 strarting position is (2,0,2)
         gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(2,0,2);
 
@@ -190,7 +190,15 @@ public class ApolloIntegrationTest {
         //checking that hasAlreadyMoved is still true
         assertTrue(turnInfo.getHasAlreadyMoved());
 
-
+        //TODO
+        //1)terminare turno prima di fare ogni cosa
+        //2)terminare dopo la mossa
+        //3)terminare normalmente
+        //2)costruire prima di muovere
+        //4)muovere di nuovo dopo aver costruito nonostante il turno dovrebbe essere finito
+        //5)controllare che dopo la prima build il turno sia finito
+        //6)testare che la verifica di vittoria funzioni
+        //7)testare che la vefrifica di sconfitta funzioni
 
     }
 }

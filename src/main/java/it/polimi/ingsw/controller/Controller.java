@@ -39,6 +39,8 @@ public class Controller implements Observer<PlayerMessage>{
 
         if(model.getTurnInfo().getTurnHasEnded()){
             //message.getView().reportInfo(gameMessage.turnAlreadyEnded);
+            //DEBUG
+            System.out.println("turno già completato, non puoi");
             return;
         }
 
@@ -46,6 +48,9 @@ public class Controller implements Observer<PlayerMessage>{
         if(message.getPlayer().getGodCard().getLoseStrategy().movementLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())) {
             model.notifyLoss(message.getPlayer());
             //TODO altro?
+
+            //DEBUG:
+            System.out.println("sconfitta");
             return;
 
         //if the player hasn't lost
@@ -64,16 +69,26 @@ public class Controller implements Observer<PlayerMessage>{
                 if (message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(), message.getChosenWorker())) {
                     model.notifyVictory(message.getPlayer());
                     //TODO altro?
+
+                    //DEBUG:
+                    System.out.println("vittoria");
+
                     endMatch();
                     return;
                 }else{
                     //message.getView().reportInfo(nextStep);
+
+                    //DEBUG
+                    System.out.println(nextStep);
                 }
 
             //if check NOT ok, report error
             }else{
 
                 //message.getView().reportInfo(checkResult);
+
+                //DEBUG
+                System.out.println("errore nella check move "+checkResult);
 
             }
         }
@@ -98,6 +113,9 @@ public class Controller implements Observer<PlayerMessage>{
 
         if (model.getTurnInfo().getTurnHasEnded()) {
             //message.getView().reportInfo(gameMessage.turnAlreadyEnded);
+
+            //DEBUG
+            System.out.println("turno già finito, non puoi");
             return;
         }
 
@@ -105,6 +123,10 @@ public class Controller implements Observer<PlayerMessage>{
         if(message.getPlayer().getGodCard().getLoseStrategy().buildingLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())){
             model.notifyLoss(message.getPlayer());
             //TODO altro?
+
+            //DEBUG:
+            System.out.println("sconfitta");
+
             return;
 
         //if player hasn't lost'
@@ -120,12 +142,17 @@ public class Controller implements Observer<PlayerMessage>{
                 model.notifyNewBoardState(message.getPlayer());
                 //message.getView().reportInfo(nextStep);
                 //TODO elimina questa println sotto
+
+                //DEBUG:
                 System.out.println("Ho eseguito una build correttamente");
 
             //if NOT build check ok
             } else {
                 //TODO impementare reportInfo
                 //message.getView().reportInfo(checkResult);
+
+                //DEBUG
+                System.out.println("errore nella check build "+checkResult);
             }
         }
     }
@@ -142,11 +169,17 @@ public class Controller implements Observer<PlayerMessage>{
         }
 
         if(!model.getTurnInfo().getTurnCanEnd()){
+
+            //DEBUG
+            System.out.println("turno incompleto");
+
             //message.getView().reportInfo(gameMessage.turnNotEnded);
             return;
         }
 
-        //TODO stabilire cosa va qui
+        //DEBUG
+        System.out.println("turno completato con successo");
+
         model.updateTurn();
         //TODO altro?
 

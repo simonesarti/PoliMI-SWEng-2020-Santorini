@@ -68,7 +68,7 @@ public class HephaestusIntegrationTest {
         enemy2Player.getWorker(0).setStartingPosition(0,3);
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 
-        //Instancing player's godcard
+        //Instancing testPlayer's godcard
         String godDataString[] = {"Hephaestus","God Of Blacksmiths", "Simple", "true", "your worker may build one additional block (not dome) on top of your first block"};
         hephaestusCard = new GodCard(godDataString);
         player.setGodCard(hephaestusCard);
@@ -118,7 +118,7 @@ public class HephaestusIntegrationTest {
     @Test
     void CompleteTurnTesting() {
 
-        //player's worker0 starting position is (2,0,2)
+        //testPlayer's worker0 starting position is (2,0,2)
         gameBoard.getTowerCell(2, 0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(2, 1, 0);
 
