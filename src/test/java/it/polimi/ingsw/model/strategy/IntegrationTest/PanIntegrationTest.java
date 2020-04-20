@@ -100,8 +100,8 @@ public class PanIntegrationTest {
             gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
             enemy1Player.getWorker(1).movedToPosition(2,2,0);
 
-            gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
-            enemy2Player.getWorker(0).movedToPosition(2,3,1);
+            gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(4,4,0);
 
             gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
             enemy2Player.getWorker(1).movedToPosition(2,4,1);
@@ -164,20 +164,46 @@ public class PanIntegrationTest {
 
         @BeforeEach
         void init() {
+
+            //SETS INITIAL STATE
+            turnInfo.setChosenWorker(1);
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+
             //GAMEBOARD GENERATION
-            int[][] towers =
+            int[][] towers=
                     {
-                            {0, 0, 2, 2, 2},
-                            {0, 0, 0, 0, 3},
-                            {0, 1, 0, 3, 4},
-                            {0, 0, 1, 2, 3},
-                            {0, 0, 1, 0, 0}
+                            {2,4,1,2,2},
+                            {3,1,2,1,4},
+                            {4,1,0,3,4},
+                            {0,2,1,4,4},
+                            {0,1,1,4,0}
                     };
 
             gameBoard.generateBoard(towers);
-            turnInfo.setChosenWorker(0);
-            turnInfo.setHasMoved();
-            turnInfo.addMove();
+
+
+            //POSITIONING TEST WORKERS
+            gameBoard.getTowerCell(1,1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+            testPlayer.getWorker(0).movedToPosition(1,1,1);
+
+            gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(1,2,1);
+
+            //POSITIONING OPPONENT WORKERS
+
+            gameBoard.getTowerCell(0,1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+            enemy1Player.getWorker(0).movedToPosition(0,1,3);
+
+            gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+            enemy1Player.getWorker(1).movedToPosition(2,2,0);
+
+            gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(4,4,0);
+
+            gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+            enemy2Player.getWorker(1).movedToPosition(2,4,1);
+
         }
 
         //move done, only build should be performed
