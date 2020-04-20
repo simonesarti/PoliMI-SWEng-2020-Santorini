@@ -79,7 +79,7 @@ public class PanIntegrationTest {
                             {3,1,2,1,4},
                             {4,1,0,3,4},
                             {0,2,1,4,4},
-                            {0,1,1,4,0}
+                            {3,2,1,4,0}
                     };
 
             gameBoard.generateBoard(towers);
@@ -187,6 +187,44 @@ public class PanIntegrationTest {
             assertEquals(1,turnInfo.getChosenWorker());
             assertFalse(turnInfo.getTurnCanEnd());
             assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        @Test //ok
+        void CorrectMoveAndWinBasic(){
+            //repositioning worker
+            gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().workerMoved();
+            gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(1,4,2);
+
+            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,0,4);
+            controller.update(message);
+            //should return victory message
+
+            //turnInfo must have been modified
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
+        }
+
+        @Test //ok
+        void CorrectMoveAndSpecificWin(){
+            //repositioning worker
+            gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().workerMoved();
+            gameBoard.getTowerCell(0,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(0,4,3);
+
+            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,0,3);
+            controller.update(message);
+            //should return victory message
+
+            //turnInfo must have been modified
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(1,turnInfo.getChosenWorker());
         }
 
     }
@@ -425,6 +463,9 @@ public class PanIntegrationTest {
             assertEquals(Colour.BLUE,model.getTurn());
         }
     }
+
+
+
 
 
 
