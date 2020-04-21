@@ -7,6 +7,7 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -184,30 +185,175 @@ public class MinotaurIntegrationTest {
     @Nested
     class SecondChoice{
 
-        @Test
-        void EndAfterMove(){}
+        @BeforeEach
+        void init() {
+
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+            turnInfo.setChosenWorker(0);
+
+            //GAMEBOARD GENERATION
+            int[][] towers =
+                    {
+                            {2, 4, 1, 2, 2},
+                            {3, 1, 2, 1, 4},
+                            {4, 1, 0, 3, 4},
+                            {0, 2, 2, 4, 4},
+                            {3, 2, 1, 4, 0}
+                    };
+
+            gameBoard.generateBoard(towers);
+
+
+            //POSITIONING TEST WORKERS
+            gameBoard.getTowerCell(2, 1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+            testPlayer.getWorker(0).movedToPosition(2, 1, 2);
+
+            gameBoard.getTowerCell(2, 3).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(2, 3, 2);
+
+            //POSITIONING OPPONENT WORKERS
+
+            gameBoard.getTowerCell(0, 1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+            enemy1Player.getWorker(0).movedToPosition(0, 1, 3);
+
+            gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+            enemy1Player.getWorker(1).movedToPosition(2, 2, 0);
+
+            gameBoard.getTowerCell(3, 1).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(3, 1, 1);
+
+            gameBoard.getTowerCell(2, 4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+            enemy2Player.getWorker(1).movedToPosition(2, 4, 1);
+        }
 
         @Test
-        void moveAfterMove(){}
+        void EndAfterMove(){
+
+            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            controller.update(message);
+            //method returns immediately, can't end yet
+
+            //turnInfo must still have all his initial values
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+        }
 
         @Test
-        void wrongBuildAfterMove(){}
+        void moveAfterMove(){
+            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 0, 2, 1);
+            controller.update(message);
+            //can't move again error, and is moving on his own position
+
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+        }
 
         @Test
-        void correctBuildAfterEverything(){}
+        void wrongBuildAfterMove(){
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 0, 3, 1, "Block");
+            controller.update(message);
+            //error, cell occupied by worker
+
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+        }
+
+        @Test
+        void wrongBuildAfterMove2(){
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 1, 3, 2, "Block");
+            controller.update(message);
+            //error, not same worker
+
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+            assertEquals(3,gameBoard.getTowerCell(3,2).getTowerHeight());
+        }
+
+        @Test
+        void correctBuildAfterEverything(){
+
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 0, 2, 0, "Block");
+            controller.update(message);
+            //build ok
+
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
+            assertEquals(2,gameBoard.getTowerCell(2,0).getTowerHeight());
+            assertTrue(gameBoard.getTowerCell(2,0).getLevel(1).getPiece() instanceof Level2Block);
+        }
     }
 
     //should only be able to end (after move and build)
     @Nested
     class ThirdChoice{
 
+        @BeforeEach
+        void init() {
+
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+            turnInfo.setChosenWorker(0);
+            turnInfo.setHasBuilt();
+            turnInfo.addBuild();
+            turnInfo.setTurnCanEnd();
+            turnInfo.setTurnHasEnded();
+
+            //GAMEBOARD GENERATION
+            int[][] towers =
+                    {
+                            {2, 4, 2, 2, 2},
+                            {3, 1, 2, 1, 4},
+                            {4, 1, 0, 3, 4},
+                            {0, 2, 2, 4, 4},
+                            {3, 2, 1, 4, 0}
+                    };
+
+            gameBoard.generateBoard(towers);
+
+
+            //POSITIONING TEST WORKERS
+            gameBoard.getTowerCell(2, 1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+            testPlayer.getWorker(0).movedToPosition(2, 1, 2);
+
+            gameBoard.getTowerCell(2, 3).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(2, 3, 2);
+
+            //POSITIONING OPPONENT WORKERS
+
+            gameBoard.getTowerCell(0, 1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+            enemy1Player.getWorker(0).movedToPosition(0, 1, 3);
+
+            gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+            enemy1Player.getWorker(1).movedToPosition(2, 2, 0);
+
+            gameBoard.getTowerCell(3, 1).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(3, 1, 1);
+
+            gameBoard.getTowerCell(2, 4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+            enemy2Player.getWorker(1).movedToPosition(2, 4, 1);
+        }
         @Test
-        void EndAfterFinish(){}
+        void EndAfterFinish(){
+            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            controller.update(message);
+            //ok, turn must end
+
+            //turnInfo reset
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+            assertEquals(Colour.BLUE,model.getTurn());
+
+        }
 
         @Test
-        void MoveAfterFinish(){}
+        void MoveAfterFinish(){
+            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 0, 0, 1);
+            controller.update(message);
+            //can't move again error, turn ended (and invalid position)
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
+        }
 
         @Test
-        void BuildAfterFinish(){}
+        void BuildAfterFinish(){
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 0, 0, 1, "Block");
+            controller.update(message);
+            //can't build again error, turn ended
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
+        }
     }
 }
