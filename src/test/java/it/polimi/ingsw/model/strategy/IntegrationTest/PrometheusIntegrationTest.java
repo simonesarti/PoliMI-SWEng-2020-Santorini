@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PromotheusIntegrationTest {
+public class PrometheusIntegrationTest {
 
     GodCard prometheus;
     Model model;

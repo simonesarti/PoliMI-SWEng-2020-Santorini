@@ -2,18 +2,12 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.model.piece.Dome;
-import org.junit.jupiter.api.Test;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestSupportFunctions {
 
-        @Test
         public void baseTurnInfoChecker(TurnInfo turnInfo, boolean hasMoved, int numberOfMoves, boolean hasBuilt, int numberOfBuilds, int chosenWorker, boolean turnCanEnd, boolean turnHasEnded){
-
             assertEquals(turnInfo.getHasAlreadyMoved(),hasMoved);
             assertEquals(turnInfo.getNumberOfMoves(),numberOfMoves);
             assertEquals(turnInfo.getHasAlreadyBuilt(),hasBuilt);
