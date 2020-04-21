@@ -37,6 +37,9 @@ public class ApolloIntegrationTest {
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
 
+    TestSupportFunctions testMethods = new TestSupportFunctions();
+
+
 
     @BeforeEach
     void init(){
@@ -220,13 +223,8 @@ public class ApolloIntegrationTest {
         //method returns immediately
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
     }
 
     @Test
@@ -236,13 +234,8 @@ public class ApolloIntegrationTest {
         controller.update(message);
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
     }
 
     @Test
@@ -252,13 +245,7 @@ public class ApolloIntegrationTest {
         //invalid move, denied
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
     }
 
     @Test
@@ -268,13 +255,8 @@ public class ApolloIntegrationTest {
         //invalid move, denied, invalid worker
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
     }
 
     @Test //ok
@@ -283,32 +265,23 @@ public class ApolloIntegrationTest {
         controller.update(message);
 
         //turnInfo must have been modified
-        assertEquals(1,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertTrue(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
+
     }
 
     @Test //ok
-    void CorrectMoveAndWinBasic(){
+    void CorrectMoveAndWinBasic() {
         //repositioning worker
-        gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().workerMoved();
-        gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
-        player.getWorker(0).movedToPosition(3,0,2);
+        gameBoard.getTowerCell(2, 0).getFirstNotPieceLevel().workerMoved();
+        gameBoard.getTowerCell(3, 0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
+        player.getWorker(0).movedToPosition(3, 0, 2);
 
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,0,4,1);
+        PlayerMessage message = new PlayerMovementChoice(new View(), player, 0, 4, 1);
         controller.update(message);
         //should return victory message
 
         //turnInfo must have been modified
-        assertEquals(1,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertTrue(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(0,turnInfo.getChosenWorker());
+        testMethods.baseTurnInfoChecker(turnInfo, true, 1, false, 0, 0, false, false);
     }
 
     /////////////////////////////////////////SECOND CHOICE//////////////////////////////////////////////////////////////
@@ -337,13 +310,8 @@ public class ApolloIntegrationTest {
             //method returns immediately
 
             //turnInfo must still have all his initial values
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
         }
 
         @Test
@@ -354,13 +322,8 @@ public class ApolloIntegrationTest {
             //method returns because the player has already moved
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo, true,1,false,0,0,false,false);
+
         }
 
         @Test
@@ -370,13 +333,8 @@ public class ApolloIntegrationTest {
             //every parameter is wrong, should give error for the wrong block
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
         }
 
         @Test
@@ -386,13 +344,8 @@ public class ApolloIntegrationTest {
             //wrong worker
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
         }
 
         @Test //ok
@@ -402,13 +355,8 @@ public class ApolloIntegrationTest {
             //should work
 
             //turnInfo must have been updated
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
+
         }
     }
 
@@ -441,13 +389,8 @@ public class ApolloIntegrationTest {
             //can't execute because turn has ended
 
             //turnInfo Must be the initial one
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
+
         }
 
         @Test
@@ -457,13 +400,7 @@ public class ApolloIntegrationTest {
             //can't execute because turn has ended
 
             //turnInfo Must be the initial one
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
         }
 
         @Test
@@ -473,13 +410,8 @@ public class ApolloIntegrationTest {
             //correct end of turn
 
             //turnInfo must have been reset
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
 
             assertEquals(Colour.BLUE,model.getTurn());
         }

@@ -33,6 +33,8 @@ public class PanIntegrationTest {
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
 
+    TestSupportFunctions testSupportFunctions=new TestSupportFunctions();
+
     @BeforeEach
     void init() {
 
@@ -117,13 +119,7 @@ public class PanIntegrationTest {
             //method returns immediately
 
             //turnInfo must still have all his initial values
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
         }
 
         @Test
@@ -133,13 +129,7 @@ public class PanIntegrationTest {
             controller.update(message);
 
             //turnInfo must still have all his initial values
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
         }
 
         @Test
@@ -149,13 +139,7 @@ public class PanIntegrationTest {
             //invalid move, denied
 
             //turnInfo must still have all his initial values
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
         }
 
         @Test
@@ -165,13 +149,7 @@ public class PanIntegrationTest {
             //invalid move, denied, invalid worker
 
             //turnInfo must still have all his initial values
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
         }
 
         @Test //ok
@@ -180,13 +158,7 @@ public class PanIntegrationTest {
             controller.update(message);
 
             //turnInfo must have been modified
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
         @Test //ok
@@ -201,11 +173,7 @@ public class PanIntegrationTest {
             //should return victory message
 
             //turnInfo must have been modified
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
         @Test //ok
@@ -220,11 +188,7 @@ public class PanIntegrationTest {
             //should return victory message
 
             //turnInfo must have been modified
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
     }
@@ -286,13 +250,7 @@ public class PanIntegrationTest {
             //method returns immediately
 
             //turnInfo must still have all his initial values
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
         @Test
@@ -303,13 +261,7 @@ public class PanIntegrationTest {
             //method returns because the player has already moved
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
         @Test
@@ -319,13 +271,7 @@ public class PanIntegrationTest {
             //every parameter is wrong, should give error for the wrong worker
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
         @Test
@@ -335,13 +281,7 @@ public class PanIntegrationTest {
             //can't place dome here error
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
         }
 
         @Test //ok
@@ -351,13 +291,7 @@ public class PanIntegrationTest {
             //should work
 
             //turnInfo must have been updated
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
         }
     }
 
@@ -420,13 +354,7 @@ public class PanIntegrationTest {
             //can't execute because turn has ended
 
             //turnInfo Must be the initial one
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
         }
 
         @Test
@@ -436,13 +364,7 @@ public class PanIntegrationTest {
             //can't execute because turn has ended
 
             //turnInfo Must be the initial one
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
         }
 
         @Test
@@ -459,6 +381,7 @@ public class PanIntegrationTest {
             assertEquals(-1,turnInfo.getChosenWorker());
             assertFalse(turnInfo.getTurnCanEnd());
             assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
 
             assertEquals(Colour.BLUE,model.getTurn());
         }
