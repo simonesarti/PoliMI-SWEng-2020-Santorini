@@ -34,6 +34,8 @@ public class PromotheusIntegrationTest {
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
 
+    TestSupportFunctions testSupportFunctions=new TestSupportFunctions();
+
     @BeforeEach
     void init() {
 
@@ -118,13 +120,8 @@ public class PromotheusIntegrationTest {
             //method returns immediately
 
             //turnInfo must still have all his initial values
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(0, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
         }
 
         @Test
