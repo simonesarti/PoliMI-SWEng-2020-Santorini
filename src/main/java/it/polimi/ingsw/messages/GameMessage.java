@@ -18,7 +18,7 @@ public class GameMessage {
 
     //Generic move error messages
 
-    public static String alreadyMoved = "You have already moved, please build\n";
+    public static String alreadyMoved = "You have already moved, please go on with your turn\n";
     public static String noMoveToCompleteTower = "You can't move here, this space already contains a complete tower, please choose another position\n";
     public static String noMovedToOccupiedTower = "You can't move here, this space already contains another worker, please choose another position\n";
     public static String noHighJump = "This move isn't allowed, you can't move up more than one level. Choose another position\n";
@@ -70,5 +70,5 @@ public class GameMessage {
     public static String noBuildMoreThanTwice ="you already built twice, your turn should have already ended, ERROR\n";
     //HEPHAESTUS
     public static String HephaestusWrongBuild = "You must build on top of your first block";
-    public static String mustBeBlock = "Your second piece must be a Dome";
+    public static String mustBeBlock = "Your second piece must be a Block";
 }

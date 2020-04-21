@@ -316,7 +316,7 @@ public class ArtemisIntegrationTest {
         //move done, only build should be performed
 
         @Test
-        void EndAftertMove() {
+        void EndAfterMove() {
 
             PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
             controller.update(message);
@@ -330,6 +330,7 @@ public class ArtemisIntegrationTest {
             assertEquals(0,turnInfo.getChosenWorker());
             assertFalse(turnInfo.getTurnCanEnd());
             assertFalse(turnInfo.getTurnHasEnded());
+
         }
 
         @Test
