@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.strategy.IntegrationTest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
@@ -15,6 +17,7 @@ import it.polimi.ingsw.model.strategy.movestrategy.ApolloMove;
 import it.polimi.ingsw.model.strategy.movestrategy.BasicMove;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
@@ -99,7 +102,7 @@ public class HephaestusIntegrationTest {
         //POSITIONING WORKERS
 
         gameBoard.getTowerCell(4,0).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
-        enemy1Player.getWorker(1).movedToPosition(4,0,2);
+        enemy1Player.getWorker(0).movedToPosition(4,0,2);
 
 
         gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
@@ -127,11 +130,11 @@ public class HephaestusIntegrationTest {
 
         //////////////////////////////////////////MOVING FOR THE FIRST TIME/////////////////////////////
 
-        //creating message that should trigger the controller object (in this case, triggering will be "manual")
+
         PlayerMovementChoice moveMessage = new PlayerMovementChoice(new View(), player, 0, 2, 2);
         controller.update(moveMessage);
 
-        //Apollo has moved not using his power. Did he move correctly?
+
         assertTrue((new Position(2, 2, 0)).equals(player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(2, 1, 0)).equals(player.getWorker(0).getPreviousPosition()));
         assertEquals(player.getWorker(0), gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().getWorker());
@@ -197,6 +200,135 @@ public class HephaestusIntegrationTest {
 
     }
 
+    @Nested
+    class FirstChoice{
+
+        @Test
+        void EndBeforeEverything(){
+
+            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            controller.update(message);
+            //method returns immediately
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        @Test
+        void BuildBeforeEverything(){
+
+            PlayerMessage message=new PlayerBuildChoice(new View(),player,1,1,1,"Block");
+            controller.update(message);
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        //moving to an invalid cell
+        @Test
+        void WrongMoveBeforeEverything(){
+            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,2,2);
+            controller.update(message);
+            //invalid move, denied
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        //moving with invalid worker number
+        @Test
+        void WrongMoveBeforeEverything2(){
+            PlayerMessage message=new PlayerMovementChoice(new View(),player,-1,1,0);
+            controller.update(message);
+            //invalid move, denied, invalid worker
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        //moving to an occupied space
+        @Test
+        void WrongMoveBeforeEverything3(){
+            player.getWorker(0).movedToPosition(3, 3, 2);
+            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,4,3);
+            controller.update(message);
+            //invalid move, denied, occupied space
+
+            //turnInfo must still have all his initial values
+            assertEquals(0,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertFalse(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(-1,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
+        @Test
+        void CorrectMoveBeforeEverythingAndWinBasic(){
+
+            gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
+            player.getWorker(0).movedToPosition(3,0,2);
+            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,4,1);
+            controller.update(message);
+
+            //turnInfo must have been modified
+            assertEquals(1,turnInfo.getNumberOfMoves());
+            assertEquals(0,turnInfo.getNumberOfBuilds());
+            assertTrue(turnInfo.getHasAlreadyMoved());
+            assertFalse(turnInfo.getHasAlreadyBuilt());
+            assertEquals(0,turnInfo.getChosenWorker());
+            assertFalse(turnInfo.getTurnCanEnd());
+            assertFalse(turnInfo.getTurnHasEnded());
+        }
+
 
 
     }
+
+    @Nested
+    //moved, should only build
+    class SecondChoice{
+
+        @BeforeEach
+        void init() {
+
+            //SETS INITIAL STATE
+            turnInfo.setChosenWorker(0);
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+
+            //player's worker0 is in (2,0,2)
+
+        }
+
+    }
+
+
+
+    }
+
