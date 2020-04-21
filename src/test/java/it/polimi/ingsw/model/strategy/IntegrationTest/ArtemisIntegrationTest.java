@@ -404,4 +404,60 @@ public class ArtemisIntegrationTest {
 
         }
     }
+
+    /////////////////////////////////////////FOURTH CHOICE (Artemis has moved twice)///////////////////////////////////////////////////////
+    @Nested
+    class FourthChoice {
+
+        @BeforeEach
+        void init() {
+
+            //SETS INITIAL STATE
+            turnInfo.setChosenWorker(1);
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+            turnInfo.addMove();
+            turnInfo.setHasBuilt();
+            turnInfo.addBuild();
+            turnInfo.setTurnCanEnd();
+            turnInfo.setTurnHasEnded();
+
+            //player's worker1 is in (0,2,0)
+
+        }
+
+        //turn finishes here, only end should be performed
+
+        @Test
+        void MoveAfterFinish() {
+            PlayerMessage message=new PlayerMovementChoice(new View(),player,1,0,3);
+            controller.update(message);
+            //can't execute because turn has ended
+
+            //turnInfo Must be the initial one
+            testMethods.baseTurnInfoChecker(turnInfo,true,2,true,1,1,true,true);
+        }
+
+        @Test
+        void BuildAfterFinish() {
+            PlayerMessage message=new PlayerBuildChoice(new View(),player,1,0,3,"Block");
+            controller.update(message);
+            //can't execute because turn has ended
+
+            //turnInfo Must be the initial one
+            testMethods.baseTurnInfoChecker(turnInfo,true,2,true,1,1,true,true);
+
+        }
+
+        @Test
+        void EndAfterFinish() {
+            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            controller.update(message);
+            //correct end of turn
+
+            //turnInfo must have been reset
+            testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
+        }
+    }
 }
