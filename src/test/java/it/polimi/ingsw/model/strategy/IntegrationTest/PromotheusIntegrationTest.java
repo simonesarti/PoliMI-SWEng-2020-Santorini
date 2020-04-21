@@ -7,6 +7,7 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.view.View;
@@ -509,11 +510,179 @@ public class PromotheusIntegrationTest {
 
     @Nested
     //moved, should only build
-    class withoutInitialBuild{}
+    class withoutInitialBuild{
+
+        @BeforeEach
+        void init() {
+
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+            turnInfo.setChosenWorker(1);
+
+            //GAMEBOARD GENERATION
+            int[][] towers =
+                    {
+                            {2, 4, 1, 2, 2},
+                            {3, 1, 2, 1, 4},
+                            {4, 1, 0, 3, 4},
+                            {0, 2, 2, 4, 4},
+                            {3, 2, 1, 4, 0}
+                    };
+
+            gameBoard.generateBoard(towers);
+
+
+            //POSITIONING TEST WORKERS
+            gameBoard.getTowerCell(1, 1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+            testPlayer.getWorker(0).movedToPosition(1, 1, 1);
+
+            gameBoard.getTowerCell(1, 4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(1, 4, 2);
+
+            //POSITIONING OPPONENT WORKERS
+
+            gameBoard.getTowerCell(0, 1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+            enemy1Player.getWorker(0).movedToPosition(0, 1, 3);
+
+            gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+            enemy1Player.getWorker(1).movedToPosition(2, 2, 0);
+
+            gameBoard.getTowerCell(4, 4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(4, 4, 0);
+
+            gameBoard.getTowerCell(2, 4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+            enemy2Player.getWorker(1).movedToPosition(2, 4, 1);
+        }
+
+        @Test
+        void endAfterMove(){
+            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            controller.update(message);
+            //method returns immediately because the turn cannot end
+
+            //turnInfo must keep his values
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
+        }
+
+        @Test
+        void moveAfterMove(){
+            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 1, 1, 4);
+            controller.update(message);
+            //player can't move again because he has already moved, moreover he wants to move to his own position
+
+            //turnInfo must keep his values
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
+        }
+
+        @Test
+        void WrongBuildAfterMove(){
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 1, 2, 5, "Block");
+            controller.update(message);
+            //invalid space on gameboard
+
+            //turnInfo must keep his values
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
+
+        }
+
+        @Test
+        void CorrectBuildAfterMove() {
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 1, 0, 4, "Dome");
+            controller.update(message);
+            //build ok
+
+            //turnInfo must keep his values
+            testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 1, true, true);
+
+            assertEquals(4, gameBoard.getTowerCell(0, 4).getTowerHeight());
+            assertTrue(gameBoard.getTowerCell(0, 4).getLevel(3).getPiece() instanceof Dome);
+        }
+
+
+    }
 
     @Nested
     //move and then built, should only end
-    class possibility2End{}
+    class possibility2End{
+
+        @BeforeEach
+        void init() {
+
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+            turnInfo.setChosenWorker(1);
+            turnInfo.setHasBuilt();
+            turnInfo.addBuild();
+            turnInfo.setTurnCanEnd();
+            turnInfo.setTurnHasEnded();
+
+            //GAMEBOARD GENERATION
+            int[][] towers =
+                    {
+                            {2, 4, 1, 2, 2},
+                            {3, 1, 2, 1, 4},
+                            {4, 1, 0, 3, 4},
+                            {0, 2, 2, 4, 4},
+                            {4, 2, 1, 4, 0}
+                    };
+
+            gameBoard.generateBoard(towers);
+
+
+            //POSITIONING TEST WORKERS
+            gameBoard.getTowerCell(1, 1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+            testPlayer.getWorker(0).movedToPosition(1, 1, 1);
+
+            gameBoard.getTowerCell(1, 4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+            testPlayer.getWorker(1).movedToPosition(1, 4, 2);
+
+            //POSITIONING OPPONENT WORKERS
+
+            gameBoard.getTowerCell(0, 1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+            enemy1Player.getWorker(0).movedToPosition(0, 1, 3);
+
+            gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+            enemy1Player.getWorker(1).movedToPosition(2, 2, 0);
+
+            gameBoard.getTowerCell(4, 4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(0));
+            enemy2Player.getWorker(0).movedToPosition(4, 4, 0);
+
+            gameBoard.getTowerCell(2, 4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
+            enemy2Player.getWorker(1).movedToPosition(2, 4, 1);
+        }
+
+        @Test
+        void endAfterMoveAndBuild(){
+            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            controller.update(message);
+            //ok, turn must end
+
+            //turnInfo reset
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+            assertEquals(Colour.BLUE,model.getTurn());
+
+        }
+
+        @Test
+        void moveAfterMoveAndBuild(){
+
+            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 1, 1, 4);
+            controller.update(message);
+            //player can't move again because the turn has ended, moreover he wants to move to his own position
+            testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 1, true, true);
+        }
+
+        @Test
+        void buildAfterMoveAndBuild(){
+            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 1, 0, 4, "Dome");
+            controller.update(message);
+            //can't move after turn end, and can't build on top of dome (should not arrive here)
+
+            //turnInfo must keep his values
+            testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 1, true, true);
+        }
+
+    }
 
 
 
