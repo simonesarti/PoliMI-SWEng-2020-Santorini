@@ -479,7 +479,7 @@ public class HephaestusIntegrationTest {
         //building a dome
         @Test
         void WrongBuildAfterBuild2() {
-            player.getWorker(1).movedToPosition(1, 0, 0);
+            player.getWorker(1).movedToPosition(2, 2, 0);
             turnInfo.setLastBuildCoordinates(3,2);
             PlayerMessage message = new PlayerBuildChoice(new View(), player, 1, 3, 2, "Dome");
             controller.update(message);
@@ -491,7 +491,60 @@ public class HephaestusIntegrationTest {
     }
 
     @Nested
+    //second build done, should only end
     class AfterSecondBuild{
+
+        @BeforeEach
+        void init() {
+
+            //SETS INITIAL STATE
+            turnInfo.setChosenWorker(1);
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+            turnInfo.setHasBuilt();
+            turnInfo.addBuild();
+            turnInfo.addBuild();
+            turnInfo.setTurnCanEnd();
+            turnInfo.setTurnHasEnded();
+            turnInfo.setLastBuildCoordinates(0,3);
+
+
+            //player's worker1 is in (0,2,0)
+
+        }
+
+        @Test
+        void MoveAfterSecondBuild() {
+            PlayerMessage message = new PlayerMovementChoice(new View(), player, 1, 0, 3);
+            controller.update(message);
+            //can't execute because has already built
+
+            //turnInfo Must be the initial one
+            testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 2, 1, true, true);
+
+        }
+
+        @Test
+        void BuildAfterSecondBuild() {
+            PlayerMessage message = new PlayerMovementChoice(new View(), player, 1, 0, 3);
+            controller.update(message);
+            //can't execute because has already built
+
+            //turnInfo Must be the initial one
+            testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 2, 1, true, true);
+
+        }
+
+        @Test
+        void EndAfterSecondBuild() {
+            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            controller.update(message);
+            //correct end of turn
+
+            //turnInfo must have been reset
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
+        }
 
     }
 
