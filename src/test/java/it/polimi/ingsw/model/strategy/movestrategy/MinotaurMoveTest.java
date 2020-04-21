@@ -152,13 +152,17 @@ class MinotaurMoveTest {
 
         minotaurMove.move(turnInfo, gameBoard,player,0,movingTo);
 
+        //New positions and previous positions
         assertTrue((new Position(3,1,0)).equals(player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getPreviousPosition()));
         assertTrue((new Position(3,2,3)).equals(enemy2Player.getWorker(0).getCurrentPosition()));
         assertTrue((new Position(3,1,0)).equals(enemy2Player.getWorker(0).getPreviousPosition()));
 
+        //workers are on the right towercells
         assertEquals(enemy2Player.getWorker(0),gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().getWorker());
+        //Starting Towercell now has no worker
+        assertNull(gameBoard.getTowerCell(player.getWorker(0).getPreviousPosition().getX(),player.getWorker(0).getPreviousPosition().getY()).getFirstNotPieceLevel().getWorker());
 
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());
@@ -175,9 +179,13 @@ class MinotaurMoveTest {
         assertEquals(GameMessage.moveOK, minotaurMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         assertEquals(GameMessage.buildRequest, minotaurMove.move(turnInfo, gameBoard,player,0,movingTo));
         assertTrue((new Position(4,1,3)).equals(player.getWorker(0).getCurrentPosition()));
-        assertNull(gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
+        //Starting Towercell now has no worker
+        assertNull(gameBoard.getTowerCell(player.getWorker(0).getPreviousPosition().getX(),player.getWorker(0).getPreviousPosition().getY()).getFirstNotPieceLevel().getWorker());
+
+        //worker is on the right towercell
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(4,1).getFirstNotPieceLevel().getWorker());
         assertEquals(1, turnInfo.getNumberOfMoves());
+
 
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());
@@ -196,8 +204,12 @@ class MinotaurMoveTest {
         assertTrue((new Position(4,3,3)).equals(player.getWorker(0).getPreviousPosition()));
         assertTrue((new Position(2,3,1)).equals(enemy1Player.getWorker(1).getCurrentPosition()));
         assertTrue((new Position(3,3,2)).equals(enemy1Player.getWorker(1).getPreviousPosition()));
+
+        //workers are on the right towercells
         assertEquals(enemy1Player.getWorker(1),gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
+        //Starting Towercell now has no worker
+        assertNull(gameBoard.getTowerCell(player.getWorker(0).getPreviousPosition().getX(),player.getWorker(0).getPreviousPosition().getY()).getFirstNotPieceLevel().getWorker());
 
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());
@@ -218,6 +230,10 @@ class MinotaurMoveTest {
         assertTrue((new Position(2,3,1)).equals(player.getWorker(0).getPreviousPosition()));
         assertTrue((new Position(4,3,3)).equals(enemy2Player.getWorker(1).getCurrentPosition()));
         assertTrue((new Position(3,3,2)).equals(enemy2Player.getWorker(1).getPreviousPosition()));
+        //Starting Towercell now has no worker
+        assertNull(gameBoard.getTowerCell(player.getWorker(0).getPreviousPosition().getX(),player.getWorker(0).getPreviousPosition().getY()).getFirstNotPieceLevel().getWorker());
+
+        //workers are on the right towercells
         assertEquals(enemy2Player.getWorker(1),gameBoard.getTowerCell(4,3).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().getWorker());
 
