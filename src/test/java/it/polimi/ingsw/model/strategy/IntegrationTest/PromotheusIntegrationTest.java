@@ -132,13 +132,7 @@ public class PromotheusIntegrationTest {
             //invalid chosenworker, should execute and give error back
 
             //turnInfo must still have all his initial values
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(0, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
         }
 
         @Test
@@ -149,13 +143,7 @@ public class PromotheusIntegrationTest {
             //invalid chosenworker, should execute and give error back
 
             //turnInfo must still have all his initial values
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,true,1,1,false,false);
 
             assertEquals(2,gameBoard.getTowerCell(1,2).getTowerHeight());
             assertTrue(gameBoard.getTowerCell(1,2).getLevel(1).getPiece() instanceof Level2Block);
@@ -168,13 +156,7 @@ public class PromotheusIntegrationTest {
             //invalid move, denied, occupied position
 
             //turnInfo must still have all his initial values
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(0, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
         }
 
         @Test
@@ -184,13 +166,7 @@ public class PromotheusIntegrationTest {
             //valid move, no win
 
             //turnInfo must still have all his initial values
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(0, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
 
             assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
             assertEquals(testPlayer.getWorker(1),gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().getWorker());
@@ -203,13 +179,7 @@ public class PromotheusIntegrationTest {
             //valid move, with win
 
             //turnInfo must still have all his initial values
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(0, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
 
             assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
             assertEquals(testPlayer.getWorker(1),gameBoard.getTowerCell(3,2).getFirstNotPieceLevel().getWorker());
@@ -226,13 +196,7 @@ public class PromotheusIntegrationTest {
             //valid move, no Pan win
 
             //turnInfo must still have all his initial values
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(0, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
 
             assertNull(gameBoard.getTowerCell(0,4).getFirstNotPieceLevel().getWorker());
             assertEquals(testPlayer.getWorker(1),gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().getWorker());
@@ -293,13 +257,7 @@ public class PromotheusIntegrationTest {
             //method returns immediately, turn incomplete
 
             //turnInfo must still have all the values it had after the fist build
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,true,1,1,false,false);
 
         }
 
@@ -311,13 +269,7 @@ public class PromotheusIntegrationTest {
             //can't build again before moving
 
             //turnInfo must still have all the values it had after the fist build
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,true,1,1,false,false);
 
             assertEquals(3,gameBoard.getTowerCell(3,2).getTowerHeight());
         }
@@ -329,13 +281,7 @@ public class PromotheusIntegrationTest {
             //invalid move, can't move up because of his own power
 
             //turnInfo must still have all his initial values after the original build
-            assertEquals(0, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,true,1,1,false,false);
 
             //still in his position
             assertEquals(testPlayer.getWorker(1),gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
@@ -349,13 +295,7 @@ public class PromotheusIntegrationTest {
             //valid move, no win
 
             //turnInfo must have been updatet considering the move
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,false,false);
 
             assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
             assertEquals(testPlayer.getWorker(1),gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().getWorker());
@@ -397,7 +337,6 @@ public class PromotheusIntegrationTest {
 
             gameBoard.generateBoard(towers);
 
-
             //POSITIONING TEST WORKERS
             gameBoard.getTowerCell(1, 1).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
             testPlayer.getWorker(0).movedToPosition(1, 1, 1);
@@ -428,13 +367,7 @@ public class PromotheusIntegrationTest {
             //method returns immediately, turn incomplete
 
             //turnInfo must still have all the values it had after the build and the move
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,false,false);
         }
 
         @Test
@@ -445,13 +378,7 @@ public class PromotheusIntegrationTest {
             //can't move again
 
             //turnInfo must not change from the original
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,false,false);
 
             //not moved
             assertNull(gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().getPiece());
@@ -466,13 +393,7 @@ public class PromotheusIntegrationTest {
             //can build, but tower complete and type of piece is wrong, should give error regarding the complete tower
 
             //turnInfo must not change from the original
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(1, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,false,false);
 
             assertEquals(4,gameBoard.getTowerCell(0,2).getTowerHeight());
         }
@@ -483,13 +404,7 @@ public class PromotheusIntegrationTest {
             controller.update(message);
             //should build
 
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(2, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,2,1,true,true);
 
             assertEquals(1,gameBoard.getTowerCell(0,3).getTowerHeight());
             assertTrue(gameBoard.getTowerCell(0,3).getLevel(0).getPiece() instanceof Level1Block);
@@ -558,13 +473,7 @@ public class PromotheusIntegrationTest {
             //turn has ended
 
             //turn to be reset
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
 
             assertEquals(Colour.BLUE,model.getTurn());
         }
@@ -577,13 +486,7 @@ public class PromotheusIntegrationTest {
             //can't move after turn end
 
             //turnInfo is the same as the one after the second build
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(2, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,2,1,true,true);
 
             //not moved
             assertEquals(testPlayer.getWorker(1),gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().getWorker());
@@ -597,13 +500,7 @@ public class PromotheusIntegrationTest {
             //can't build after turn end
 
             //turnInfo is the same as the one after the second build
-            assertEquals(1, turnInfo.getNumberOfMoves());
-            assertEquals(2, turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1, turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,2,1,true,true);
 
             assertEquals(1,gameBoard.getTowerCell(0,3).getTowerHeight());
             assertNull(gameBoard.getTowerCell(0,3).getFirstNotPieceLevel().getPiece());
