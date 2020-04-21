@@ -88,8 +88,8 @@ public class GodCard{
                 break;
 
             case "Prometheus" :
-                //moveStrategy = new PrometheusMove();
-                //buildStrategy = new PrometheusBuild();
+                moveStrategy = new PrometheusMove();
+                buildStrategy = new PrometheusBuild();
                 winStrategy = new BasicWin();
                 loseStrategy = new PrometheusLose();
                 break;
