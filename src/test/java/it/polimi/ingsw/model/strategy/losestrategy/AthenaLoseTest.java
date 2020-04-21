@@ -135,4 +135,34 @@ class AthenaLoseTest {
         assertFalse(loseStrategy.movementLoss(turnInfo, gameBoard, playerTest, 0));
     }
 
+    @Test
+    void lose() {
+
+        //GAMEBOARD GENERATION
+        int[][] towers =
+                {
+                        {4, 3, 0, 0, 0},
+                        {1, 3, 0, 0, 0},
+                        {4, 3, 3, 2, 2},
+                        {0, 0, 4, 0, 2},
+                        {0, 0, 4, 3, 2}
+                };
+
+        gameBoard.generateBoard(towers);
+
+        //WT (0,1)
+        gameBoard.getTowerCell(0, 1).getFirstNotPieceLevel().setWorker(playerTest.getWorker(0));
+        playerTest.getWorker(0).movedToPosition(0, 1, 1);
+
+        //WT (3,3)
+        gameBoard.getTowerCell(3, 3).getFirstNotPieceLevel().setWorker(playerTest.getWorker(1));
+        playerTest.getWorker(1).movedToPosition(3, 3, 0);
+
+        turnInfo.activateAthenaPower();
+        assertTrue(loseStrategy.movementLoss(turnInfo, gameBoard, playerTest, 0));
+        //power deactivated
+        assertFalse(turnInfo.getAthenaPowerActive());
+        assertTrue(loseStrategy.movementLoss(turnInfo, gameBoard, playerTest, 1));
+    }
+
 }
