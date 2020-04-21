@@ -157,21 +157,34 @@ class ArtemisMoveTest {
         );
     }
 
+
     @Test
     void moveTestSecondMove() {
 
         assertEquals(0,turnInfo.getNumberOfMoves());
         assertEquals(-1,turnInfo.getChosenWorker());
 
+        int strartingX = player.getWorker(0).getCurrentPosition().getX();
+        int strartingY = player.getWorker(0).getCurrentPosition().getY();
+
         movingTo[0]=0;
         movingTo[1]=1;
         assertEquals(GameMessage.moveOK, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         String result=artemisMove.move(turnInfo,gameBoard,player,0,movingTo);
         assertEquals(GameMessage.moveAgainOrBuild, result);
-        movingTo[0]=0;
-        movingTo[1]=2;
+
+        ////////////////////////////////////////////TRYING TO MOVE IN THE FIRST POSITION/////////////////////////////////
+
+        movingTo[0]= strartingX;
+        movingTo[1]= strartingY;
+        assertEquals(GameMessage.ArtemisFirstPosition, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+
+        ///////////////////////////////////////////MOVING CORRECTLY/////////////////////////////////////////////////////
+        movingTo[0]= 0;
+        movingTo[1]= 2;
         assertEquals(GameMessage.moveOK, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         result=artemisMove.move(turnInfo,gameBoard,player,0,movingTo);
+
         assertEquals(GameMessage.buildRequest, result);
 
         assertTrue(turnInfo.getHasAlreadyMoved());

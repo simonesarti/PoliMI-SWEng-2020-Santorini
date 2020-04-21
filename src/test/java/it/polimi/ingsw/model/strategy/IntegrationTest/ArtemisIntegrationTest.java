@@ -146,6 +146,21 @@ public class ArtemisIntegrationTest {
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());
         assertEquals(0,turnInfo.getChosenWorker());
+        
+        ////////////////////////////////////TRYING TO MOVE ANOTHER TIME BUT IN THE FIRST POSITION/////////////////////////////////
+
+        moveMessage = new PlayerMovementChoice(new View(),player,0,2,0);
+        controller.update(moveMessage);
+
+        //should not move
+        assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getCurrentPosition()));
+        assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
+        assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
+
+        assertTrue(turnInfo.getHasAlreadyMoved());
+        assertEquals(1,turnInfo.getNumberOfMoves());
+        assertEquals(0,turnInfo.getChosenWorker());
 
         ////////////////////////////////////TRYING TO MOVE ANOTHER TIME/////////////////////////////////
 
@@ -365,8 +380,9 @@ public class ArtemisIntegrationTest {
             turnInfo.addBuild();
             turnInfo.setTurnCanEnd();
             turnInfo.setTurnHasEnded();
+            player.getWorker(1).setStartingPosition(2,0);
+            player.getWorker(1).movedToPosition(3,0,2);
 
-            //player's worker1 is in (0,2,0)
 
         }
 
@@ -401,6 +417,39 @@ public class ArtemisIntegrationTest {
 
             //turnInfo must have been reset
             testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
+        }
+
+    }
+
+    /////////////////////////////////////////THIRD CHOICE-MOVING A SECOND TIME///////////////////////////////////////////////////////////////
+    @Nested
+    class ThirdChoice2 {
+
+        @BeforeEach
+        void init() {
+
+            //SETS INITIAL STATE
+            turnInfo.setChosenWorker(1);
+            turnInfo.setHasMoved();
+            turnInfo.addMove();
+
+            player.getWorker(1).setStartingPosition(2,0);
+            player.getWorker(1).movedToPosition(3,0,2);
+
+
+        }
+
+
+        @Test
+        void MovingSecondTime() {
+
+            PlayerMessage message=new PlayerMovementChoice(new View(),player,1,2,0);
+            controller.update(message);
+            //cannot
+
+            //turnInfo must be same
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
 
         }
     }
