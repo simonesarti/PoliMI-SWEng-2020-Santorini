@@ -113,10 +113,14 @@ public class MinotaurMove implements MoveStrategy {
             gameboard.getTowerCell(((x-worker.getCurrentPosition().getX())+x),((y-worker.getCurrentPosition().getY())+y)).getFirstNotPieceLevel().setWorker(gameboard.getTowerCell(x,y).getFirstNotPieceLevel().getWorker());
             //modifying enemy's worker's associated position
             gameboard.getTowerCell(x,y).getFirstNotPieceLevel().getWorker().movedToPosition(((x-worker.getCurrentPosition().getX())+x),((y-worker.getCurrentPosition().getY())+y),gameboard.getTowerCell(((x-worker.getCurrentPosition().getX())+x),((y-worker.getCurrentPosition().getY())+y)).getTowerHeight());
+
+            //starting towercell now has no worker
+            gameboard.getTowerCell(worker.getCurrentPosition().getX(), worker.getCurrentPosition().getY()).getFirstNotPieceLevel().workerMoved();
             //setting player in the destination towercell
             gameboard.getTowerCell(x, y).getFirstNotPieceLevel().setWorker(worker);
             //modifying worker's associated position
             worker.movedToPosition(x,y,z);
+
 
 
         }else{
