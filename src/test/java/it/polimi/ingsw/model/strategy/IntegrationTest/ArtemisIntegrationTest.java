@@ -21,12 +21,12 @@ import java.util.GregorianCalendar;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArtemisIntegrationTest {
+
     GodCard artemisCard;
     Model model;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
-
 
     Player player;
     Player enemy1Player;
@@ -34,6 +34,7 @@ public class ArtemisIntegrationTest {
     PlayerInfo playerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
+    TestSupportFunctions testMethods = new TestSupportFunctions();
 
 
 
@@ -206,13 +207,8 @@ public class ArtemisIntegrationTest {
         //method returns immediately
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
     }
 
     @Test
@@ -222,13 +218,8 @@ public class ArtemisIntegrationTest {
         controller.update(message);
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
     }
 
     @Test
@@ -238,13 +229,8 @@ public class ArtemisIntegrationTest {
         //invalid move, denied
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
+
     }
 
     @Test
@@ -254,13 +240,7 @@ public class ArtemisIntegrationTest {
         //invalid move, denied, invalid worker
 
         //turnInfo must still have all his initial values
-        assertEquals(0,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertFalse(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(-1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
     }
 
     @Test //ok
@@ -269,13 +249,8 @@ public class ArtemisIntegrationTest {
         controller.update(message);
 
         //turnInfo must have been modified
-        assertEquals(1,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertTrue(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(1,turnInfo.getChosenWorker());
-        assertFalse(turnInfo.getTurnCanEnd());
-        assertFalse(turnInfo.getTurnHasEnded());
+        testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,1,false,false);
+
     }
 
     @Test //ok
@@ -290,11 +265,8 @@ public class ArtemisIntegrationTest {
         //should return victory message
 
         //turnInfo must have been modified
-        assertEquals(1,turnInfo.getNumberOfMoves());
-        assertEquals(0,turnInfo.getNumberOfBuilds());
-        assertTrue(turnInfo.getHasAlreadyMoved());
-        assertFalse(turnInfo.getHasAlreadyBuilt());
-        assertEquals(0,turnInfo.getChosenWorker());
+        testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
     }
 
     /////////////////////////////////////////SECOND CHOICE//////////////////////////////////////////////////////////////
@@ -323,13 +295,8 @@ public class ArtemisIntegrationTest {
             //method returns immediately
 
             //turnInfo must still have all his initial values
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
         }
 
         @Test
@@ -345,13 +312,8 @@ public class ArtemisIntegrationTest {
             assertEquals(player.getWorker(0),gameBoard.getTowerCell(1,0).getFirstNotPieceLevel().getWorker());
             assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
 
-            assertEquals(2,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,2,false,0,0,false,false);
+
         }
 
         @Test
@@ -361,13 +323,8 @@ public class ArtemisIntegrationTest {
             //every parameter is wrong, should give error for the wrong block
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
         }
 
         @Test
@@ -377,13 +334,8 @@ public class ArtemisIntegrationTest {
             //wrong worker
 
             //turnInfo must not have been modified since this class's BeforeEach
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,false,0,0,false,false);
+
         }
 
         @Test //ok
@@ -393,13 +345,8 @@ public class ArtemisIntegrationTest {
             //should work
 
             //turnInfo must have been updated
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(0,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
+
         }
     }
 
@@ -432,13 +379,7 @@ public class ArtemisIntegrationTest {
             //can't execute because turn has ended
 
             //turnInfo Must be the initial one
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
         }
 
         @Test
@@ -448,13 +389,8 @@ public class ArtemisIntegrationTest {
             //can't execute because turn has ended
 
             //turnInfo Must be the initial one
-            assertEquals(1,turnInfo.getNumberOfMoves());
-            assertEquals(1,turnInfo.getNumberOfBuilds());
-            assertTrue(turnInfo.getHasAlreadyMoved());
-            assertTrue(turnInfo.getHasAlreadyBuilt());
-            assertEquals(1,turnInfo.getChosenWorker());
-            assertTrue(turnInfo.getTurnCanEnd());
-            assertTrue(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,true,1,true,1,1,true,true);
+
         }
 
         @Test
@@ -464,15 +400,8 @@ public class ArtemisIntegrationTest {
             //correct end of turn
 
             //turnInfo must have been reset
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
+            testMethods.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
 
-            assertEquals(Colour.BLUE,model.getTurn());
         }
     }
 }

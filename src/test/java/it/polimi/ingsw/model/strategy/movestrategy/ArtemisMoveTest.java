@@ -2,10 +2,7 @@ package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.TurnInfo;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,65 +14,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArtemisMoveTest {
 
-    ArtemisMove artemisMove;
-    TurnInfo turnInfo;
-    GameBoard gameBoard;
-    Player player;
-    Player enemy1Player;
-    Player enemy2Player;
-    PlayerInfo playerInfo;
-    PlayerInfo enemy1Info;
-    PlayerInfo enemy2Info;
     int[] movingTo = new int[2];
+    ArtemisMove artemisMove = new ArtemisMove();
 
+    TestSupportFunctions testMethods = new TestSupportFunctions();
+    PlayerInfo playerInfo  = new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9));
+    Player player = new Player(playerInfo);
+    PlayerInfo enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
+    Player enemy1Player = new Player(playerInfo);
+    PlayerInfo enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7));
+    Player enemy2Player = new Player(playerInfo);
+
+    GameBoard gameBoard = new GameBoard();
+    TurnInfo turnInfo = new TurnInfo();
 
 
     @BeforeEach
     void init(){
-        artemisMove = new ArtemisMove();
 
-        playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9));
-        player = new Player(playerInfo);
-        player.setColour(Colour.WHITE);
-        player.getWorker(0).setStartingPosition(0,0);
 
-        enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
-        enemy1Player = new Player(playerInfo);
-        enemy1Player.setColour(Colour.BLUE);
-        enemy1Player.getWorker(0).setStartingPosition(0,1);
-        enemy1Player.getWorker(1).setStartingPosition(0,2);
-
-        enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7));
-        enemy2Player = new Player(playerInfo);
-        enemy2Player.setColour(Colour.GREY);
-        enemy2Player.getWorker(0).setStartingPosition(0,3);
-        enemy2Player.getWorker(1).setStartingPosition(0,4);
-
-        gameBoard = new GameBoard();
-
-        turnInfo = new TurnInfo();
-
-        //GAMEBOARD GENERATION
-        int[][] towers=
-                {
-                        {0,0,2,2,2},
-                        {0,0,0,0,3},
-                        {0,1,0,3,4},
-                        {0,0,1,2,3},
-                        {0,0,1,0,0}
-                };
-
-        gameBoard.generateBoard(towers);
-
-        //POSITIONING OTHER DOMES
-
-        gameBoard.getTowerCell(1,2).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(1,2).increaseTowerHeight();
-        gameBoard.getTowerCell(1,2).checkCompletion();
-
-        gameBoard.getTowerCell(1,3).getFirstNotPieceLevel().setPiece(new Dome());
-        gameBoard.getTowerCell(1,3).increaseTowerHeight();
-        gameBoard.getTowerCell(1,3).checkCompletion();
+        testMethods.drawnGameBoardInit(playerInfo,enemy1Info,enemy2Info,player,enemy1Player,enemy2Player,gameBoard,turnInfo);
 
         //POSITIONING WORKERS
         gameBoard.getTowerCell(0,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
