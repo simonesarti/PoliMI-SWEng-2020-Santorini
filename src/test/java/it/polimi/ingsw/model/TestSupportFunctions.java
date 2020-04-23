@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
 import it.polimi.ingsw.model.piece.Dome;
 
 import static org.junit.jupiter.api.Assertions.*;

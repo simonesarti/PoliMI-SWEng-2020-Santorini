@@ -1,4 +1,6 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages;
 
-public class PlayerMessage {
+import java.io.Serializable;
+
+public class PlayerMessage implements Serializable {
 }

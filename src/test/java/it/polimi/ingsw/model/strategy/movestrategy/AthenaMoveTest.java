@@ -1,9 +1,8 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.piece.Dome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

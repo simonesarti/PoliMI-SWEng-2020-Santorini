@@ -1,8 +1,8 @@
-package it.polimi.ingsw.messages;
+package it.polimi.ingsw.messages.PlayerToGameMessages;
 
 import java.util.Calendar;
 
-public class PlayerInfo{
+public class PlayerInfo extends PlayerMessage{
 
     private final String playerNickname;
     private final Calendar birthday;
