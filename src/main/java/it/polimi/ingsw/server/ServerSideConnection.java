@@ -35,6 +35,7 @@ public class ServerSideConnection extends Observable<PlayerMessage> implements R
         }).start();
     }
 
+    //TODO VERIFICARE VADA BENE ANCHE PER OGGETTI SERIALIZABILI
     private synchronized void send(Object message) {
         try {
             outputStream.reset();

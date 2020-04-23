@@ -51,6 +51,10 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         notify(message);
     }
 
+    public void reportInfo(Object message){
+        connectionToClient.asyncSend(message);
+    }
+
     //TODO
     @Override
     public void update(NotifyMessages message) {
