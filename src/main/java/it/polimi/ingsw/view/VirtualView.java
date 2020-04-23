@@ -8,13 +8,15 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.observe.Observer;
-import it.polimi.ingsw.server.ConnectionToClient;
+import it.polimi.ingsw.server.ServerSideConnection;
 
 public class VirtualView extends Observable<PlayerMessage> implements Observer<NotifyMessages> {
 
+    //ATTRIBUTES
+
     private Player player;
 
-    private ConnectionToClient connectionToClient;
+    private ServerSideConnection connectionToClient;
 
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
     private class PlayerMessageReceiver implements Observer<PlayerMessage> {
@@ -32,17 +34,24 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     }
 
 
-    public VirtualView(Player player, ConnectionToClient c){
+    //METHODS
+
+    public VirtualView(Player player, ServerSideConnection c){
         this.player=player;
-        this.connectionToClient=c;
-        //attach PlayerMessage Observer to ConnectionToClient interface
+        this.connectionToClient =c;
+        //attach PlayerMessage Observer to ServerSideConnection object
         c.addObserver(new PlayerMessageReceiver());
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     private void notifyController(PlayerMessage message){
         notify(message);
     }
 
+    //TODO
     @Override
     public void update(NotifyMessages message) {
 

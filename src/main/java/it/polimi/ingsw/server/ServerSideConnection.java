@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class ServerSideConnection extends Observable<PlayerMessage> implements ConnectionToClient,Runnable {
+public class ServerSideConnection extends Observable<PlayerMessage> implements Runnable {
 
     private Socket socket;
     private ObjectOutputStream outputStream;
@@ -54,7 +54,7 @@ public class ServerSideConnection extends Observable<PlayerMessage> implements C
     }
 
     public synchronized void closeConnection() {
-        send("Connection closed");
+        send("Connection closed from server side");
         try {
             socket.close();
         } catch (IOException e) {
