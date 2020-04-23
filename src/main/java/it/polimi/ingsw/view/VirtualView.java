@@ -17,7 +17,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     private ConnectionToClient connectionToClient;
 
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
-    private class PlayerMessageReceiver extends Observable<PlayerMessage> implements Observer<PlayerMessage> {
+    private class PlayerMessageReceiver implements Observer<PlayerMessage> {
 
         @Override
         public void update(PlayerMessage message) {
