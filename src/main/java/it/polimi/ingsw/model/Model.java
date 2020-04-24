@@ -11,12 +11,11 @@ import it.polimi.ingsw.observe.Observable;
  */
 public class Model extends Observable<NotifyMessages> {
 
-    private GameBoard gameboard;
-    private TurnInfo turnInfo;
+    private final GameBoard gameboard;
+    private final TurnInfo turnInfo;
     private Colour turn;
-
-    private int numberOfPlayers;
-    private Colour eliminated;
+    private int playersLeft;
+    private boolean[] eliminated=new boolean[3];
 
 //----------------------------------------------------------------------------------------------------------
 
@@ -25,12 +24,11 @@ public class Model extends Observable<NotifyMessages> {
         turnInfo=new TurnInfo();
         turn=Colour.WHITE;
 
-        this.numberOfPlayers=numberOfPlayers;
+        playersLeft=numberOfPlayers;
 
-        if(this.numberOfPlayers==2){
-            eliminated=Colour.GREY;
+        if(numberOfPlayers==2){
+            eliminated[2]=true;
         }
-
 
     }
 
@@ -54,46 +52,41 @@ public class Model extends Observable<NotifyMessages> {
     */
     public void updateTurn() {
 
-        if (eliminated==null) {
-            if(turn==Colour.WHITE){
-                turn=Colour.BLUE;
-            }else if(turn==Colour.BLUE){
-                turn=Colour.GREY;
-            }else {
-                turn = Colour.WHITE;
-            }
-        }else {
-            switch (eliminated) {
-                case GREY:
-                    if (turn == Colour.WHITE) {
-                        turn = Colour.BLUE;
-                    } else {
-                        turn = Colour.WHITE;
-                    }
-                    break;
-                case WHITE:
-                    if (turn == Colour.BLUE) {
-                        turn = Colour.GREY;
-                    } else {
-                        turn = Colour.BLUE;
-                    }
-                    break;
-                case BLUE:
-                    if (turn == Colour.WHITE) {
-                        turn = Colour.GREY;
-                    } else {
-                        turn = Colour.WHITE;
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("ERRORE NELL'AGGIRONAMENTO DEL TURNO");
-            }
+        switch(turn){
+
+            case WHITE:
+                if(!eliminated[1]) turn=Colour.BLUE;
+                else if (!eliminated[2]) turn=Colour.GREY;
+                else turn=Colour.WHITE;
+                break;
+
+
+            case BLUE:
+                if(!eliminated[2]) turn=Colour.GREY;
+                else if(!eliminated[0]) turn=Colour.WHITE;
+                else turn=Colour.BLUE;
+                break;
+
+            case GREY:
+                if(!eliminated[0]) turn=Colour.WHITE;
+                else if(!eliminated[1]) turn=Colour.BLUE;
+                else turn=Colour.GREY;
+                break;
+
+            default:
+                break;
         }
+
         turnInfo.turnInfoReset();
     }
 
     public boolean isEliminated(Colour colour){
-        return this.eliminated==colour;
+        return eliminated[colour.ordinal()];
+    }
+
+    public void eliminatePlayer(Colour colour){
+        eliminated[colour.ordinal()]=true;
+        playersLeft--;
     }
 
 
