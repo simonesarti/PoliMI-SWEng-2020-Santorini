@@ -71,7 +71,7 @@ class ArtemisMoveTest {
         //x and y must be inside the board
         movingTo[0]=28;
         movingTo[1]=1;
-        assertEquals(GameMessage.notInGameboard, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notInGameBoard, artemisMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
 
         //if artemis has already moved one time, the destination must not be "previous position" and the worker used must be the same
         player.getWorker(0).movedToPosition(1,1,0);

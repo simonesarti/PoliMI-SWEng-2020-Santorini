@@ -92,14 +92,14 @@ class PrometheusMoveTest {
         void outsideGameBoard1(){
             movingTo[0]=-1;
             movingTo[1]=5;
-            assertEquals(GameMessage.notInGameboard,moveStrategy.checkMove(turnInfo,gameBoard,playerTest,0,movingTo));
+            assertEquals(GameMessage.notInGameBoard,moveStrategy.checkMove(turnInfo,gameBoard,playerTest,0,movingTo));
         }
 
         @Test
         void outsideGameBoard2(){
             movingTo[0]=5;
             movingTo[1]=-1;
-            assertEquals(GameMessage.notInGameboard,moveStrategy.checkMove(turnInfo,gameBoard,playerTest,0,movingTo));
+            assertEquals(GameMessage.notInGameBoard,moveStrategy.checkMove(turnInfo,gameBoard,playerTest,0,movingTo));
         }
 
         @Test

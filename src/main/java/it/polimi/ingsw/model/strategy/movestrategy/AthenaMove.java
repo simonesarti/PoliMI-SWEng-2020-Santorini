@@ -31,7 +31,7 @@ public class AthenaMove implements MoveStrategy {
 
         //x and y must be inside the board
         if (x < 0 || x > 4 || y < 0 || y > 4) {
-            return GameMessage.notInGameboard;
+            return GameMessage.notInGameBoard;
         }
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 

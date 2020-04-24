@@ -66,7 +66,7 @@ class ApolloMoveTest {
         //x and y must be inside the board
         movingTo[0]=28;
         movingTo[1]=1;
-        assertEquals(GameMessage.notInGameboard, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
+        assertEquals(GameMessage.notInGameBoard, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
 
         //workerPosition must not be the destination position
         movingTo[0]=player.getWorker(0).getCurrentPosition().getX();

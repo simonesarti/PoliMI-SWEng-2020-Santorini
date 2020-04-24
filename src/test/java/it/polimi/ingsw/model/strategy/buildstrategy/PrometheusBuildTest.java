@@ -121,7 +121,7 @@ class PrometheusBuildTest {
             buildingInto[0]=-1;
             buildingInto[1]=4;
             pieceType="Block";
-            assertEquals(GameMessage.notInGameboard,buildStrategy.checkBuild(turnInfo,gameBoard,playerTest,0,buildingInto,pieceType));
+            assertEquals(GameMessage.notInGameBoard,buildStrategy.checkBuild(turnInfo,gameBoard,playerTest,0,buildingInto,pieceType));
         }
 
         @Test
@@ -129,7 +129,7 @@ class PrometheusBuildTest {
             buildingInto[0]=4;
             buildingInto[1]=-1;
             pieceType="Block";
-            assertEquals(GameMessage.notInGameboard,buildStrategy.checkBuild(turnInfo,gameBoard,playerTest,0,buildingInto,pieceType));
+            assertEquals(GameMessage.notInGameBoard,buildStrategy.checkBuild(turnInfo,gameBoard,playerTest,0,buildingInto,pieceType));
         }
 
         @Test

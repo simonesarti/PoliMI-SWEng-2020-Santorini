@@ -135,7 +135,7 @@ class DemeterBuildTest {
         turnInfo.setHasMoved();
         buildingTo[0]=28;
         buildingTo[1]=1;
-        assertEquals(GameMessage.notInGameboard, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
+        assertEquals(GameMessage.notInGameBoard, demeterbuild.checkBuild(turnInfo, gameBoard,player,0,buildingTo, piece));
 
         //worker must be the same that has moved
         buildingTo[0]=1;
