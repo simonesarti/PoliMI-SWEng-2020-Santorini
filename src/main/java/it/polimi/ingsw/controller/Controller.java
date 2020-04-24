@@ -33,12 +33,12 @@ public class Controller implements Observer<PlayerMessage>{
 
         //TODO implementare reportError
         if(!model.isPlayerTurn(message.getPlayer())){
-            //message.getView().reportInfo(gameMessage.wrongTurn);
+            message.getVirtualView().reportInfo(GameMessage.wrongTurn);
             return;
         }
 
         if(model.getTurnInfo().getTurnHasEnded()){
-            //message.getView().reportInfo(gameMessage.turnAlreadyEnded);
+            message.getVirtualView().reportInfo(GameMessage.turnAlreadyEnded);
             //DEBUG
             System.out.println("turno già completato, non puoi");
             return;
@@ -76,7 +76,7 @@ public class Controller implements Observer<PlayerMessage>{
                     endMatch();
                     return;
                 }else{
-                    //message.getView().reportInfo(nextStep);
+                    message.getVirtualView().reportInfo(nextStep);
 
                     //DEBUG
                     System.out.println(nextStep);
@@ -85,7 +85,7 @@ public class Controller implements Observer<PlayerMessage>{
             //if check NOT ok, report error
             }else{
 
-                //message.getView().reportInfo(checkResult);
+                message.getVirtualView().reportInfo(checkResult);
 
                 //DEBUG
                 System.out.println("errore nella check move "+checkResult);
@@ -107,12 +107,12 @@ public class Controller implements Observer<PlayerMessage>{
 
         //TODO implementare reporError
         if (!model.isPlayerTurn(message.getPlayer())) {
-            //message.getView().reportInfo(gameMessage.wrongTurn);
+            message.getVirtualView().reportInfo(GameMessage.wrongTurn);
             return;
         }
 
         if (model.getTurnInfo().getTurnHasEnded()) {
-            //message.getView().reportInfo(gameMessage.turnAlreadyEnded);
+            message.getVirtualView().reportInfo(GameMessage.turnAlreadyEnded);
 
             //DEBUG
             System.out.println("turno già finito, non puoi");
@@ -140,7 +140,7 @@ public class Controller implements Observer<PlayerMessage>{
                 //EXECUTE BUILD
                 nextStep = message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
                 model.notifyNewBoardState(message.getPlayer());
-                //message.getView().reportInfo(nextStep);
+                message.getVirtualView().reportInfo(nextStep);
                 //TODO elimina questa println sotto
 
                 //DEBUG:
@@ -149,7 +149,7 @@ public class Controller implements Observer<PlayerMessage>{
             //if NOT build check ok
             } else {
                 //TODO impementare reportInfo
-                //message.getView().reportInfo(checkResult);
+                message.getVirtualView().reportInfo(checkResult);
 
                 //DEBUG
                 System.out.println("errore nella check build "+checkResult);
@@ -164,7 +164,7 @@ public class Controller implements Observer<PlayerMessage>{
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
         //TODO implementare reportInfo
         if(!model.isPlayerTurn(message.getPlayer())){
-            //message.getView().reportInfo(gameMessage.wrongTurn);
+            message.getVirtualView().reportInfo(GameMessage.wrongTurn);
             return;
         }
 
@@ -173,7 +173,7 @@ public class Controller implements Observer<PlayerMessage>{
             //DEBUG
             System.out.println("turno incompleto");
 
-            //message.getView().reportInfo(gameMessage.turnNotEnded);
+            message.getVirtualView().reportInfo(GameMessage.turnNotEnded);
             return;
         }
 

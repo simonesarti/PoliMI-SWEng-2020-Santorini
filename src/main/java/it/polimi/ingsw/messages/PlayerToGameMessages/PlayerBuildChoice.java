@@ -23,7 +23,7 @@ public class PlayerBuildChoice extends PlayerMessage {
         this.buildData=buildData;
     }
 
-    public VirtualView getVirtualViewView(){ return virtualView;}
+    public VirtualView getVirtualView(){ return virtualView;}
 
     public Player getPlayer() {
         return player;
