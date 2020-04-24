@@ -145,7 +145,7 @@ public class ArtemisIntegrationTest {
         assertTrue(turnInfo.getHasAlreadyMoved());
         assertEquals(1,turnInfo.getNumberOfMoves());
         assertEquals(0,turnInfo.getChosenWorker());
-        
+
         ////////////////////////////////////TRYING TO MOVE ANOTHER TIME BUT IN THE FIRST POSITION/////////////////////////////////
 
         moveMessage = new PlayerMovementChoice(new View(),player,0,2,0);
