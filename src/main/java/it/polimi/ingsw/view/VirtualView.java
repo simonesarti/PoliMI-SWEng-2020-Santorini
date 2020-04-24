@@ -4,7 +4,8 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.LoseMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
 import it.polimi.ingsw.messages.GameToPlayerMessages.WinMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.*;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.observe.Observer;
@@ -19,16 +20,11 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     private ServerSideConnection connectionToClient;
 
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
-    private class PlayerMessageReceiver implements Observer<PlayerMessage> {
+    private class PlayerMessageReceiver implements Observer<DataMessage> {
 
         @Override
-        public void update(PlayerMessage message) {
-
-            try{
-                notifyController(message);
-            }catch(IllegalArgumentException e){
-                connectionToClient.asyncSend("unable to notify controller!");
-            }
+        public void update(DataMessage message) {
+            notifyController(message);
         }
 
     }
@@ -47,8 +43,17 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         return player;
     }
 
-    private void notifyController(PlayerMessage message){
-        notify(message);
+    private void notifyController(DataMessage message){
+
+        if(message instanceof MoveData){
+            notify(new PlayerMovementChoice(this,player,(MoveData)message));
+        }else if(message instanceof BuildData){
+            notify(new PlayerBuildChoice(this,player,(BuildData)message));
+        }else if(message instanceof EndChoice){
+            notify(new PlayerEndOfTurnChoice(this,player));
+        }else if(message instanceof QuitChoice){
+            notify(new PlayerQuitChoice(this,player));
+        }
     }
 
     public void reportInfo(Object message){

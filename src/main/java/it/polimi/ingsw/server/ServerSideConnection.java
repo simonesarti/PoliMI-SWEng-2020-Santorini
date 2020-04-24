@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
+import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.observe.Observable;
 
 import java.io.IOException;
@@ -11,14 +11,15 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 
-public class ServerSideConnection extends Observable<PlayerMessage> implements Runnable {
+public class ServerSideConnection extends Observable<DataMessage> implements Runnable {
 
     private Server server;
     private Socket socket;
     private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
     private boolean active = true;
 
-    public ServerSideConnection(Socket socket, Server server) throws IOException {
+    public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
     }
@@ -36,7 +37,6 @@ public class ServerSideConnection extends Observable<PlayerMessage> implements R
         }).start();
     }
 
-    //TODO VERIFICARE VADA BENE ANCHE PER OGGETTI SERIALIZZABILI
     private synchronized void send(Object message) {
         try {
             outputStream.reset();
@@ -51,13 +51,15 @@ public class ServerSideConnection extends Observable<PlayerMessage> implements R
     private void close() {
         closeConnection();
         System.out.println("Deregistering client...");
- //     server.deregisterConnection(this);
+        server.deregisterConnection(this);
         System.out.println("client successfully deregistered!");
     }
 
     public synchronized void closeConnection() {
         send("Connection closed from server side");
         try {
+            outputStream.close();
+            inputStream.close();
             socket.close();
         } catch (IOException e) {
             System.err.println("Error while closing socket!");
@@ -65,37 +67,31 @@ public class ServerSideConnection extends Observable<PlayerMessage> implements R
         active = false;
     }
 
-
-    //TODO SERIALIZZAZIONE SIA A INVIARE CHE DESERIALIZZAZIONE IN RICEZIONE DA FARE
-
     @Override
     public void run() {
-
-        ObjectInputStream inputStream;
-
 
         try{
             inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+            //sends first message
             send(GameMessage.welcome);
 
+            //reads player info and sends them to the server
             PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();
-
             server.lobby(this, playerInfo);
 
-            //continues to read inputs
-
+            //continues to read input commands until the connections stays active, and notifies them to the virtualView
             while(isActive()){
-
-                notify(//playerMessage
-                );
+                notify((DataMessage)inputStream.readObject());
             }
 
-            //serialization adds ClessNotFoundException
+        //serialization adds ClassNotFoundException
         } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
             System.err.println("Error!" + e.getMessage());
         }finally{
             close();
+
        }
     }
 

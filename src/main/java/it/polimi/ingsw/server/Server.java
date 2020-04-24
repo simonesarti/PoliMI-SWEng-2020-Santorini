@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerInfo;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -31,6 +31,9 @@ public class Server {
     }
 
     public void lobby(ServerSideConnection serverSideConnection, PlayerInfo playerInfo) {
+    }
+
+    public void deregisterConnection(ServerSideConnection serverSideConnection) {
     }
 }
 

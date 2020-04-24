@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerInfo;
 
 import java.util.Calendar;
 
