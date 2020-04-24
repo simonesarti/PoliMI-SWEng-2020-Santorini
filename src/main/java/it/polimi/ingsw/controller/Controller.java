@@ -27,8 +27,13 @@ public class Controller implements Observer<PlayerMessage>{
 
         String checkResult;
         String nextStep;
+        
+        //eliminated player can't execute this command
+        if(model.isEliminated(message.getPlayer().getColour())){
+            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
+            return;
+        }
 
-        //TODO implementare reportError
         if(!model.isPlayerTurn(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
             return;
@@ -104,7 +109,12 @@ public class Controller implements Observer<PlayerMessage>{
         String checkResult;
         String nextStep;
 
-        //TODO implementare reporError
+        //eliminated player can't execute this command
+        if(model.isEliminated(message.getPlayer().getColour())){
+            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
+            return;
+        }
+
         if (!model.isPlayerTurn(message.getPlayer())) {
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
             return;
@@ -164,6 +174,12 @@ public class Controller implements Observer<PlayerMessage>{
      */
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
 
+        //eliminated player can't execute this command
+        if(model.isEliminated(message.getPlayer().getColour())){
+            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
+            return;
+        }
+
         if(!model.isPlayerTurn(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
             return;
@@ -187,8 +203,13 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
     //TODO
-    private synchronized void disconnectEliminatedPlayer(PlayerQuitChoice message){
+    private synchronized void quitGame(PlayerQuitChoice message){
 
+        //player can't quit if he isn't eliminated
+        if(!model.isEliminated(message.getPlayer().getColour())){
+            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.notEliminated));
+            return;
+        }
     }
 
     /**
@@ -212,7 +233,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
 
         else if(message instanceof PlayerQuitChoice){
-            disconnectEliminatedPlayer((PlayerQuitChoice)message);
+            quitGame((PlayerQuitChoice)message);
 
         }
 
