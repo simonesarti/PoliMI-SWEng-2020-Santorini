@@ -105,8 +105,8 @@ public class Model extends Observable<NotifyMessages> {
     public void notifyVictory(Player player){
         notify(new WinMessage(player));
     }
-    public void notifyNewBoardState(Player player){
-        notify(new NewBoardStateMessage(gameboard.getBoardState(),player));
+    public void notifyNewBoardState(){
+        notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
 
 

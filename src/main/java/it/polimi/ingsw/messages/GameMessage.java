@@ -5,8 +5,12 @@ package it.polimi.ingsw.messages;
  */
 public class GameMessage {
 
-    //game start
+    //game phase
     public static String welcome = "Welcome";
+    public static String win="You Win";
+    public static String lose="You Lose";
+    public static String gameOver="Game Over";
+
 
     //classic messages
     public static String turnCompleted = "You completed your turn, please enter END to confirm that you want to end it\n";

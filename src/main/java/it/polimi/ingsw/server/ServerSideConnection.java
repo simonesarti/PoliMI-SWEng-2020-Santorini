@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.messages.GameMessage;
+import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.observe.Observable;
@@ -75,7 +76,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             outputStream = new ObjectOutputStream(socket.getOutputStream());
 
             //sends first message
-            send(GameMessage.welcome);
+            send(new InfoMessage(GameMessage.welcome));
 
             //reads player info and sends them to the server
             PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();

@@ -65,10 +65,20 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     public void update(NotifyMessages message) {
 
         if(message instanceof NewBoardStateMessage){
-
+            reportInfo((NewBoardStateMessage)message);
         }else if (message instanceof LoseMessage){
 
+            if(((LoseMessage) message).getPlayer()==this.getPlayer()){
+
+            }
+
         }else if( message instanceof WinMessage){
+
+            if(((WinMessage)message).getPlayer()==this.getPlayer()){
+
+            }else{
+
+            }
 
         }
 
