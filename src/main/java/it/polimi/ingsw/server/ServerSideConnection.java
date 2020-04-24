@@ -1,23 +1,24 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.messages.GameMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.observe.Observable;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class ServerSideConnection extends Observable<PlayerMessage> implements Runnable {
 
+    private Server server;
     private Socket socket;
     private ObjectOutputStream outputStream;
-    private Server server;
     private boolean active = true;
 
-    public ServerSideConnection(Socket socket, Server server) {
+    public ServerSideConnection(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
     }
@@ -69,30 +70,33 @@ public class ServerSideConnection extends Observable<PlayerMessage> implements R
 
     @Override
     public void run() {
-/*
-        Scanner in;
+
+        ObjectInputStream inputStream;
+
+
         try{
-            in = new Scanner(socket.getInputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             send(GameMessage.welcome);
 
-            //receive serialized PlayerInfoMessage
-            //TODO guardare come si deserializza
+            PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();
 
-            server.lobby(this,//PlayerInfo);
+            server.lobby(this, playerInfo);
 
             //continues to read inputs
+
             while(isActive()){
-                //TODO lettura input e deserializzazione
-                notify(//PlayerMessage);
+
+                notify(//playerMessage
+                );
             }
 
-        } catch (IOException | NoSuchElementException e) {
+            //serialization adds ClessNotFoundException
+        } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
             System.err.println("Error!" + e.getMessage());
         }finally{
             close();
        }
-       */
     }
 
 }

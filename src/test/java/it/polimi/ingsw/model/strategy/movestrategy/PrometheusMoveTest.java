@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;

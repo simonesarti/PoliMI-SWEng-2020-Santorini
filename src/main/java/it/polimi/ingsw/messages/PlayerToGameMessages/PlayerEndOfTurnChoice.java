@@ -1,7 +1,7 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages;
 
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.VirtualView;
 
 /**
  * End turn message
@@ -10,16 +10,16 @@ import it.polimi.ingsw.view.View;
  */
 public class PlayerEndOfTurnChoice extends PlayerMessage {
 
-    private final View view;
+    private final VirtualView virtualView;
     private final Player player;
 
-    public PlayerEndOfTurnChoice(View view, Player player) {
-        this.view = view;
+    public PlayerEndOfTurnChoice(VirtualView virtualView, Player player) {
+        this.virtualView=virtualView;
         this.player = player;
     }
 
-    public View getView() {
-        return view;
+    public VirtualView getVirtualView() {
+        return virtualView;
     }
 
     public Player getPlayer() {

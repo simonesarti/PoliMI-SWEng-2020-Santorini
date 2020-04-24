@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.strategy.winstrategy;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Player;
 import java.util.Calendar;

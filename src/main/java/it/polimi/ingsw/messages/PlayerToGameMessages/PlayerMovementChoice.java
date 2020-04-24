@@ -1,7 +1,9 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages;
 
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.VirtualView;
 
 /**
  * PlayerMovementChoice message contains information about a specific move (which Player, which worker, which Towercell).
@@ -9,30 +11,29 @@ import it.polimi.ingsw.view.View;
  */
 public class PlayerMovementChoice extends PlayerMessage {
 
-    private final View view;
+    private final VirtualView virtualView;
     private final Player player;
-    private final int chosenWorker;
-    private final int[] movingTo = new int[2];
+    private final MoveData moveData;
 
     //chosenWorker must be 0 or 1
-    public PlayerMovementChoice(View view, Player player, int chosenWorker, int x, int y) {
+    public PlayerMovementChoice(VirtualView virtualView, Player player, MoveData moveData) {
 
-        this.view=view;
+        this.virtualView=virtualView;
         this.player = player;
-        this.chosenWorker = chosenWorker;
-        this.movingTo[0]=x;
-        this.movingTo[1]=y;
+        this.moveData=moveData;
     }
 
-    public View getView(){ return view;}
+    public VirtualView getVirtualView() {
+        return virtualView;
+    }
 
     public Player getPlayer() {
         return player;
     }
 
-    public int getChosenWorker() { return chosenWorker;}
+    public int getChosenWorker() { return moveData.getChosenWorker();}
 
     public int[] getMovingTo() {
-        return movingTo;
+        return moveData.getMovingTo();
     }
 }

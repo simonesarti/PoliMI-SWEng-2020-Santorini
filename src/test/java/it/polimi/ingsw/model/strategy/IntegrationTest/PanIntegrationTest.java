@@ -1,13 +1,14 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
-;
+
 
 public class PanIntegrationTest {
 

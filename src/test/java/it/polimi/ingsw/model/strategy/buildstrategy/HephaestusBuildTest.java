@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level2Block;

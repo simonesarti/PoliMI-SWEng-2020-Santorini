@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ApolloMoveTest {
 
-    ApolloMove apolloMove = new ApolloMove();;
+    ApolloMove apolloMove = new ApolloMove();
     TurnInfo turnInfo;
     GameBoard gameBoard;
     int[] movingTo = new int[2];
@@ -51,8 +51,6 @@ class ApolloMoveTest {
 
         gameBoard.getTowerCell(3,4).getFirstNotPieceLevel().setWorker(enemy2Player.getWorker(1));
         enemy2Player.getWorker(1).movedToPosition(3,4,0);
-
-        return;
     }
 
     @Test
@@ -131,10 +129,10 @@ class ApolloMoveTest {
         assertEquals(GameMessage.moveOK, apolloMove.checkMove(turnInfo, gameBoard,player,0,movingTo));
         assertEquals(GameMessage.buildRequest, apolloMove.move(turnInfo, gameBoard,player,0,movingTo));
 
-        assertTrue((new Position(2,4,1)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(1,4,0)).equals(enemy2Player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2,4,1)).equals(enemy2Player.getWorker(0).getPreviousPosition()));
-        assertTrue((new Position(1,4,0)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(2, 4, 1)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(1, 4, 0)), enemy2Player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 4, 1)), enemy2Player.getWorker(0).getPreviousPosition());
+        assertEquals((new Position(1, 4, 0)), player.getWorker(0).getPreviousPosition());
         assertEquals(enemy2Player.getWorker(0),gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().getWorker());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(2,4).getFirstNotPieceLevel().getWorker());
 
