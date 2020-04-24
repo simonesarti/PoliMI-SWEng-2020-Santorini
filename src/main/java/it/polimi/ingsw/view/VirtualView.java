@@ -1,9 +1,11 @@
 package it.polimi.ingsw.view;
 
+import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.LoseMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
 import it.polimi.ingsw.messages.GameToPlayerMessages.WinMessage;
+import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.model.Player;
@@ -69,15 +71,17 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         }else if (message instanceof LoseMessage){
 
             if(((LoseMessage) message).getPlayer()==this.getPlayer()){
-
+                reportInfo(new InfoMessage(GameMessage.lose));
+            }else{
+                reportInfo(new InfoMessage("Player "+((LoseMessage) message).getPlayer().getNickname()+ "lost\n"));
             }
 
         }else if( message instanceof WinMessage){
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){
-
+                reportInfo(new InfoMessage(GameMessage.win));
             }else{
-
+                reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
             }
 
         }

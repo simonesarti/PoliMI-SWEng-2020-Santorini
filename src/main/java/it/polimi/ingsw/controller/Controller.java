@@ -1,10 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.*;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.*;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.observe.Observer;
 
@@ -47,6 +44,7 @@ public class Controller implements Observer<PlayerMessage>{
         //CHECK LOSE
         if(message.getPlayer().getGodCard().getLoseStrategy().movementLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())) {
             model.notifyLoss(message.getPlayer());
+            model.notifyNewBoardState();
             //TODO altro?
 
             //DEBUG:
@@ -68,6 +66,7 @@ public class Controller implements Observer<PlayerMessage>{
                 //EXECUTE WIN CHECK
                 if (message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(), message.getChosenWorker())) {
                     model.notifyVictory(message.getPlayer());
+                    model.notifyNewBoardState();
                     //TODO altro?
 
                     //DEBUG:
@@ -122,6 +121,7 @@ public class Controller implements Observer<PlayerMessage>{
         //CHECK LOSE
         if(message.getPlayer().getGodCard().getLoseStrategy().buildingLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())){
             model.notifyLoss(message.getPlayer());
+            model.notifyNewBoardState();
             //TODO altro?
 
             //DEBUG:
@@ -157,6 +157,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
     }
 
+    //TODO
     /**
      * Checks if it's player's turn, checks this player win conditions and next player lose conditions. Updates turn
      * @param message PlayerEndOfTurnChoice message
@@ -185,6 +186,11 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+    //TODO
+    private synchronized void disconnectEliminatedPlayer(PlayerQuitChoice message){
+
+    }
+
     /**
      * Invokes Controller's methods on the basis of message's subclass
      *
@@ -205,8 +211,12 @@ public class Controller implements Observer<PlayerMessage>{
             endTurn((PlayerEndOfTurnChoice) message);
         }
 
-    }
+        else if(message instanceof PlayerQuitChoice){
+            disconnectEliminatedPlayer((PlayerQuitChoice)message);
 
+        }
+
+    }
 
     private void startMatch(){}
 
