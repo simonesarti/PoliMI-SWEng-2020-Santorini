@@ -37,7 +37,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     public VirtualView(){
 
     }
-    
+
     public VirtualView(Player player, ServerSideConnection c){
         this.player=player;
         this.connectionToClient =c;

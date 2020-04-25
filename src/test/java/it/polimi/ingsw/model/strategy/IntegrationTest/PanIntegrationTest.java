@@ -1,12 +1,16 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
-/*
+
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -22,6 +26,7 @@ public class PanIntegrationTest {
 
     GodCard pan;
     Model model;
+    EmptyVirtualView vv;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
@@ -39,6 +44,7 @@ public class PanIntegrationTest {
     void init() {
 
         model = new Model(3);
+        vv = new EmptyVirtualView();
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
@@ -114,7 +120,7 @@ public class PanIntegrationTest {
         @Test
         void EndBeforeEverything(){
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),testPlayer);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,testPlayer);
             controller.update(message);
             //method returns immediately
 
@@ -125,7 +131,7 @@ public class PanIntegrationTest {
         @Test
         void BuildBeforeEverything(){
 
-            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,1,2,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,1,2,"Block"));
             controller.update(message);
 
             //turnInfo must still have all his initial values
@@ -134,7 +140,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongMoveBeforeEverything(){
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,0,1,0);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(0,1,0));
             controller.update(message);
             //invalid move, denied
 
@@ -144,7 +150,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongMoveBeforeEverything2(){
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,-1,1,0);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(-1,1,0));
             controller.update(message);
             //invalid move, denied, invalid worker
 
@@ -154,7 +160,7 @@ public class PanIntegrationTest {
 
         @Test //ok
         void CorrectMoveBeforeEverything(){
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,1,2);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,1,2));
             controller.update(message);
 
             //turnInfo must have been modified
@@ -168,7 +174,7 @@ public class PanIntegrationTest {
             gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
             testPlayer.getWorker(1).movedToPosition(1,4,2);
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,0,4);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,0,4));
             controller.update(message);
             //should return victory message
 
@@ -183,7 +189,7 @@ public class PanIntegrationTest {
             gameBoard.getTowerCell(0,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
             testPlayer.getWorker(1).movedToPosition(0,4,3);
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,0,3);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,0,3));
             controller.update(message);
             //should return victory message
 
@@ -245,7 +251,7 @@ public class PanIntegrationTest {
         @Test
         void EndAftertMove() {
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),testPlayer);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,testPlayer);
             controller.update(message);
             //method returns immediately
 
@@ -256,7 +262,7 @@ public class PanIntegrationTest {
         @Test
         void MoveAfterMove() {
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,2,3);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,2,3));
             controller.update(message);
             //method returns because the player has already moved
 
@@ -266,7 +272,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongBuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,0,1,2,"Dome");
+            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(0,1,2,"Dome"));
             controller.update(message);
             //every parameter is wrong, should give error for the wrong worker
 
@@ -276,7 +282,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongBuildAfterMove2() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,0,3,"Dome");
+            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,0,3,"Dome"));
             controller.update(message);
             //can't place dome here error
 
@@ -286,7 +292,7 @@ public class PanIntegrationTest {
 
         @Test //ok
         void BuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,0,3,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //should work
 
@@ -349,7 +355,7 @@ public class PanIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
-            PlayerMessage message=new PlayerMovementChoice(new View(),testPlayer,1,2,3);
+            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,2,3));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -359,7 +365,7 @@ public class PanIntegrationTest {
 
         @Test
         void BuildAfterFinish() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),testPlayer,1,0,3,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -369,7 +375,7 @@ public class PanIntegrationTest {
 
         @Test
         void EndAfterFinish() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),testPlayer);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,testPlayer);
             controller.update(message);
             //correct end of turn
 
@@ -397,4 +403,3 @@ public class PanIntegrationTest {
 
 
 }
-*/
