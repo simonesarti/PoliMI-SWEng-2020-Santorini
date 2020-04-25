@@ -113,7 +113,7 @@ public class Server {
 
     }
 
-    public void deregisterConnection(ServerSideConnection serverSideConnection) {
+    public synchronized void deregisterConnection(ServerSideConnection serverSideConnection) {
     }
 }
 
