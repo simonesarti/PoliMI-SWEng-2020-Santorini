@@ -11,11 +11,13 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.observe.Observer;
+import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.view.VirtualView;
 
 /**
  * Integration tests need a VirtualView. This class is a "empty virtualview" for testing purposes
+ *
  */
 public class EmptyVirtualView extends VirtualView implements Observer<NotifyMessages> {
 
@@ -30,7 +32,7 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
 
         @Override
         public void update(DataMessage message) {
-            System.out.println("VirtuaView's MessageReceiver's update() triggered");
+            System.out.println("VirtualView's MessageReceiver's update() triggered");
         }
 
     }
@@ -44,7 +46,7 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
 
 
     public void reportInfo(Object message){
-        System.out.println("VirtuaView's reportInfo() triggered");
+        System.out.println("VirtualView's reportInfo() triggered");
     }
 
 
