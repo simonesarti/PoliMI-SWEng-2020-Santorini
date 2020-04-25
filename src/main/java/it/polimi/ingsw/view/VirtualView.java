@@ -1,10 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.LoseMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
-import it.polimi.ingsw.messages.GameToPlayerMessages.WinMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.*;
 import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
@@ -17,9 +14,11 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     //ATTRIBUTES
 
-    private Player player;
+    private final Player player;
 
-    private ServerSideConnection connectionToClient;
+    private final ServerSideConnection connectionToClient;
+
+    private PlayerMessageReceiver playerMessageReceiver;
 
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
     private class PlayerMessageReceiver implements Observer<DataMessage> {
@@ -37,8 +36,9 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     public VirtualView(Player player, ServerSideConnection c){
         this.player=player;
         this.connectionToClient =c;
+        playerMessageReceiver=new PlayerMessageReceiver();
         //attach PlayerMessage Observer to ServerSideConnection object
-        c.addObserver(new PlayerMessageReceiver());
+        c.addObserver(playerMessageReceiver);
     }
 
     public Player getPlayer(){
@@ -84,6 +84,13 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
             }
 
+        }else if(message instanceof QuitMessage){
+
+            if(((QuitMessage)message).getPlayer()==this.getPlayer()){
+                reportInfo(new InfoMessage(GameMessage.quit));
+                connectionToClient.removeObserver(playerMessageReceiver);
+                connectionToClient.deactivate();
+            }
         }
 
 

@@ -29,6 +29,10 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         return active;
     }
 
+    public synchronized void deactivate(){
+        active=false;
+    }
+
     public void asyncSend(final Object message){
         new Thread(new Runnable() {
             @Override

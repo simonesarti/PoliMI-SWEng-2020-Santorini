@@ -27,7 +27,7 @@ public class Controller implements Observer<PlayerMessage>{
 
         String checkResult;
         String nextStep;
-        
+
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer().getColour())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
@@ -210,6 +210,8 @@ public class Controller implements Observer<PlayerMessage>{
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.notEliminated));
             return;
         }
+
+        model.notifyQuit(message.getPlayer());
     }
 
     /**

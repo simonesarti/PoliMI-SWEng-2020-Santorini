@@ -9,6 +9,7 @@ public class GameMessage {
     public static String welcome = "Welcome";
     public static String win="You Win";
     public static String lose="You Lose";
+    public static String quit="You are now going to be disconnected";
     public static String gameOver="Game Over";
 
 

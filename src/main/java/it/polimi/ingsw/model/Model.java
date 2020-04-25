@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.LoseMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
-import it.polimi.ingsw.messages.GameToPlayerMessages.WinMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.*;
 import it.polimi.ingsw.observe.Observable;
 
 /**
@@ -97,6 +94,9 @@ public class Model extends Observable<NotifyMessages> {
     }
     public void notifyVictory(Player player){
         notify(new WinMessage(player));
+    }
+    public void notifyQuit(Player player){
+        notify(new QuitMessage((player)));
     }
     public void notifyNewBoardState(){
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
