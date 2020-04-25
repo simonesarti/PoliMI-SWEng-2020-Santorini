@@ -18,11 +18,12 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
-    private boolean active = true;
+    private boolean active;
 
     public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
+        active=true;
     }
 
     private synchronized boolean isActive(){
