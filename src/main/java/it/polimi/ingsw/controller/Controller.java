@@ -48,8 +48,9 @@ public class Controller implements Observer<PlayerMessage>{
 
         //CHECK LOSE
         if(message.getPlayer().getGodCard().getLoseStrategy().movementLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())) {
-            model.notifyLoss(message.getPlayer());
             model.notifyNewBoardState();
+            model.notifyLoss(message.getPlayer());
+            
             //TODO altro?
 
             //DEBUG:
@@ -70,8 +71,8 @@ public class Controller implements Observer<PlayerMessage>{
 
                 //EXECUTE WIN CHECK
                 if (message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(), message.getChosenWorker())) {
-                    model.notifyVictory(message.getPlayer());
                     model.notifyNewBoardState();
+                    model.notifyVictory(message.getPlayer());
                     //TODO altro?
 
                     //DEBUG:
@@ -130,8 +131,8 @@ public class Controller implements Observer<PlayerMessage>{
 
         //CHECK LOSE
         if(message.getPlayer().getGodCard().getLoseStrategy().buildingLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())){
-            model.notifyLoss(message.getPlayer());
             model.notifyNewBoardState();
+            model.notifyLoss(message.getPlayer());
             //TODO altro?
 
             //DEBUG:

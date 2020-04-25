@@ -34,7 +34,6 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     }
 
     public void asyncSend(final Object message){
-        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -42,7 +41,6 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             }
         }).start();
 
-         */
     }
 
     private synchronized void send(Object message) {
@@ -87,7 +85,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
             //reads player info and sends them to the server
             PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();
-            server.lobby(this, playerInfo);
+            server.lobby(new PlayerConnection(playerInfo,this));
 
             //continues to read input commands until the connections stays active, and notifies them to the virtualView
             while(isActive()){

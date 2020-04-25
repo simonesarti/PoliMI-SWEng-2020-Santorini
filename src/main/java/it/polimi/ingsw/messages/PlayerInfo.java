@@ -7,6 +7,7 @@ public class PlayerInfo implements Serializable {
 
     private final String playerNickname;
     private final Calendar birthday;
+    private final int numberOfPlayers;
 
 
     /**
@@ -15,9 +16,10 @@ public class PlayerInfo implements Serializable {
      * @param playerNickname
      * @param birthday must be a valid date
      */
-    public PlayerInfo(String playerNickname, Calendar birthday){
+    public PlayerInfo(String playerNickname, Calendar birthday, int numberOfPlayers){
         this.playerNickname = playerNickname;
         this.birthday=birthday;
+        this.numberOfPlayers=numberOfPlayers;
     }
 
     public String getPlayerNickname() {
@@ -26,5 +28,9 @@ public class PlayerInfo implements Serializable {
 
     public Calendar getBirthday() {
         return birthday;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 }

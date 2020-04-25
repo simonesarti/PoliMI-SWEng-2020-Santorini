@@ -33,7 +33,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     //CONSTRUCTORS
 
     //EMPTY CONSTRUCTOR FOR TESTING PURPOSES ONLY!
-
     public VirtualView(){
 
     }
@@ -45,7 +44,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         //attach PlayerMessage Observer to ServerSideConnection object
         c.addObserver(playerMessageReceiver);
     }
-
 
 
     public Player getPlayer(){
@@ -91,6 +89,10 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             }else{
                 reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
             }
+
+            reportInfo(new InfoMessage(GameMessage.quit));
+            connectionToClient.removeObserver(playerMessageReceiver);
+            connectionToClient.deactivate();
 
         }else if(message instanceof QuitMessage){
 
