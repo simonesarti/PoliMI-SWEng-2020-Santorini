@@ -34,12 +34,15 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     }
 
     public void asyncSend(final Object message){
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
                 send(message);
             }
         }).start();
+
+         */
     }
 
     private synchronized void send(Object message) {

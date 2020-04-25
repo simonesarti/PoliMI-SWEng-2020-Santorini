@@ -1,5 +1,5 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
-
+/*
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
@@ -327,3 +327,4 @@ public class AthenaIntegrationTest {
         }
     }
 }
+*/

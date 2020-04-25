@@ -11,7 +11,8 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
-import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.supportClasses.TestSupportFunctions;
+import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,16 +29,20 @@ public class ApolloIntegrationTest {
 
     GodCard apolloCard;
     Model model;
+    EmptyVirtualView vv;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
 
+
     Player player;
     Player enemy1Player;
     Player enemy2Player;
-    PlayerInfo playerInfo;
+
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
+    PlayerInfo playerInfo;
+
 
     TestSupportFunctions testMethods = new TestSupportFunctions();
 
@@ -47,6 +52,7 @@ public class ApolloIntegrationTest {
     void init(){
 
         model = new Model(3);
+        vv = new EmptyVirtualView();
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
@@ -127,8 +133,9 @@ public class ApolloIntegrationTest {
     }
 
     ////////////////////////////////////////////COMPLETE TURNS//////////////////////////////////////////////////////////
+
     @Test
-    void CompleteTurnTesting(){
+    void CompleteTurnTesting() {
 
         //testPlayer's worker0 strarting position is (2,0,2)
         gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
@@ -140,7 +147,7 @@ public class ApolloIntegrationTest {
         //////////////////////////////////////////MOVING FOR THE FIRST TIME/////////////////////////////
 
         //creating message that should trigger the controller object (in this case, triggering will be "manual")
-        PlayerMovementChoice moveMessage = new PlayerMovementChoice(new View(),player,new MoveData(0,3,0));
+        PlayerMovementChoice moveMessage = new PlayerMovementChoice(vv,player,new MoveData(0,3,0));
         controller.update(moveMessage);
 
         //Apollo has moved not using his power. Did he move correctly?
@@ -155,7 +162,7 @@ public class ApolloIntegrationTest {
 
         ////////////////////////////////////TRYING TO MOVE ANOTHER TIME/////////////////////////////////
 
-        moveMessage = new PlayerMovementChoice(new View(),player,new MoveData(0,3,1));
+        moveMessage = new PlayerMovementChoice(vv,player,new MoveData(0,3,1));
         controller.update(moveMessage);
 
         //all parameters must remain the same
@@ -171,7 +178,7 @@ public class ApolloIntegrationTest {
         //////////////////////////////////////BUILDING FOR THE FIRST TIME////////////////////////////////
 
         //creating build message
-        PlayerBuildChoice buildMessage = new PlayerBuildChoice(new View(),player,new BuildData(0,3,1,"Block"));
+        PlayerBuildChoice buildMessage = new PlayerBuildChoice(vv,player,new BuildData(0,3,1,"Block"));
         controller.update(buildMessage);
 
         //Apollo has built a level1block with his basicBuild strategy
@@ -188,7 +195,7 @@ public class ApolloIntegrationTest {
         //////////////////////////////////TRYING TO BUILD AGAIN//////////////////////////////////////////
 
         //creating build message
-        buildMessage = new PlayerBuildChoice(new View(),player,new BuildData(0,2,1,"Block"));
+        buildMessage = new PlayerBuildChoice(vv,player,new BuildData(0,2,1,"Block"));
         controller.update(buildMessage);
 
         //Apollo has built a level1block with his basicBuild strategy
@@ -218,9 +225,9 @@ public class ApolloIntegrationTest {
 
     //////////////////////////////////////////FIRST CHOICE//////////////////////////////////////////////////////////////
     @Test
-    void EndBeforeEverything(){
+    void EndBeforeEverything() {
 
-        PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+        PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
         controller.update(message);
         //method returns immediately
 
@@ -230,9 +237,9 @@ public class ApolloIntegrationTest {
     }
 
     @Test
-    void BuildBeforeEverything(){
+    void BuildBeforeEverything() {
 
-        PlayerMessage message=new PlayerBuildChoice(new View(),player,new BuildData(1,1,1,"Block"));
+        PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,1,1,"Block"));
         controller.update(message);
 
         //turnInfo must still have all his initial values
@@ -242,7 +249,7 @@ public class ApolloIntegrationTest {
 
     @Test
     void WrongMoveBeforeEverything(){
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,new MoveData(0,2,2));
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,2,2));
         controller.update(message);
         //invalid move, denied
 
@@ -252,7 +259,7 @@ public class ApolloIntegrationTest {
 
     @Test
     void WrongMoveBeforeEverything2(){
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,new MoveData(-1,1,0));
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(-1,1,0));
         controller.update(message);
         //invalid move, denied, invalid worker
 
@@ -262,8 +269,8 @@ public class ApolloIntegrationTest {
     }
 
     @Test //ok
-    void CorrectMoveBeforeEverything(){
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,new MoveData(1,0,3));
+    void CorrectMoveBeforeEverything() {
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,0,3));
         controller.update(message);
 
         //turnInfo must have been modified
@@ -272,13 +279,13 @@ public class ApolloIntegrationTest {
     }
 
     @Test //ok
-    void CorrectMoveAndWinBasic() {
+    void CorrectMoveAndWinBasic(){
         //repositioning worker
         gameBoard.getTowerCell(2, 0).getFirstNotPieceLevel().workerMoved();
         gameBoard.getTowerCell(3, 0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(3, 0, 2);
 
-        PlayerMessage message = new PlayerMovementChoice(new View(), player, new MoveData(0, 4, 1));
+        PlayerMessage message = new PlayerMovementChoice(vv, player, new MoveData(0, 4, 1));
         controller.update(message);
         //should return victory message
 
@@ -307,7 +314,7 @@ public class ApolloIntegrationTest {
         @Test
         void EndAftertMove() {
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //method returns immediately
 
@@ -319,7 +326,7 @@ public class ApolloIntegrationTest {
         @Test
         void MoveAfterMove() {
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,new MoveData(0,3,0));
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,3,0));
             controller.update(message);
             //method returns because the player has already moved
 
@@ -330,7 +337,7 @@ public class ApolloIntegrationTest {
 
         @Test
         void WrongBuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,new BuildData(0,3,0,"Dome"));
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Dome"));
             controller.update(message);
             //every parameter is wrong, should give error for the wrong block
 
@@ -341,7 +348,7 @@ public class ApolloIntegrationTest {
 
         @Test
         void WrongBuildAfterMove2() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player, new BuildData(1,3,0,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(vv,player, new BuildData(1,3,0,"Block"));
             controller.update(message);
             //wrong worker
 
@@ -351,8 +358,8 @@ public class ApolloIntegrationTest {
         }
 
         @Test //ok
-        void BuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,new BuildData(0,3,0,"Block"));
+        void BuildAfterMove(){
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Block"));
             controller.update(message);
             //should work
 
@@ -386,7 +393,7 @@ public class ApolloIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,new MoveData(1,0,3));
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,0,3));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -397,7 +404,7 @@ public class ApolloIntegrationTest {
 
         @Test
         void BuildAfterFinish() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,new BuildData(1,0,3,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -407,7 +414,7 @@ public class ApolloIntegrationTest {
 
         @Test
         void EndAfterFinish() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //correct end of turn
 
