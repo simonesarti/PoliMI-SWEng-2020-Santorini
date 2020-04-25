@@ -1,13 +1,17 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
-/*
+
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Level2Block;
+import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -22,6 +26,7 @@ public class MinotaurIntegrationTest {
 
     GodCard minotaur;
     Model model;
+    EmptyVirtualView vv;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
@@ -39,6 +44,7 @@ public class MinotaurIntegrationTest {
     void init() {
 
         model = new Model(3);
+        vv = new EmptyVirtualView();
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
@@ -112,7 +118,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void EndBeforeEverything(){
-            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(vv, testPlayer);
             controller.update(message);
             //method returns immediately, can't end yet
 
@@ -122,7 +128,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void buildBeforeEverything(){
-            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, -2, 0, 0, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(-2, 0, 0, "Block"));
             controller.update(message);
             //wrong worker, but should give error for missing move
 
@@ -132,7 +138,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void NoPushableMoveBeforeEverything(){
-            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 0, 2, 2);
+            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer, new MoveData(0, 2, 2));
             controller.update(message);
             //opponent can't be pushed, invalid move
 
@@ -146,7 +152,7 @@ public class MinotaurIntegrationTest {
         @Test
         void PushableMoveBeforeEverythingAndWin(){
 
-            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 0, 2, 1);
+            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer, new MoveData(0, 2, 1));
             controller.update(message);
             //opponent can pushed, valid move
 
@@ -230,7 +236,7 @@ public class MinotaurIntegrationTest {
         @Test
         void EndAfterMove(){
 
-            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(vv, testPlayer);
             controller.update(message);
             //method returns immediately, can't end yet
 
@@ -240,7 +246,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void moveAfterMove(){
-            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 0, 2, 1);
+            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer, new MoveData(0, 2, 1));
             controller.update(message);
             //can't move again error, and is moving on his own position
 
@@ -249,7 +255,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void wrongBuildAfterMove(){
-            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 0, 3, 1, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(0, 3, 1, "Block"));
             controller.update(message);
             //error, cell occupied by worker
 
@@ -258,7 +264,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void wrongBuildAfterMove2(){
-            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 1, 3, 2, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(1, 3, 2, "Block"));
             controller.update(message);
             //error, not same worker
 
@@ -269,7 +275,7 @@ public class MinotaurIntegrationTest {
         @Test
         void correctBuildAfterEverything(){
 
-            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 0, 2, 0, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(0, 2, 0, "Block"));
             controller.update(message);
             //build ok
 
@@ -330,7 +336,7 @@ public class MinotaurIntegrationTest {
         }
         @Test
         void EndAfterFinish(){
-            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(vv, testPlayer);
             controller.update(message);
             //ok, turn must end
 
@@ -342,7 +348,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void MoveAfterFinish(){
-            PlayerMessage message = new PlayerMovementChoice(new View(), testPlayer, 0, 0, 1);
+            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer,new MoveData( 0, 0, 1));
             controller.update(message);
             //can't move again error, turn ended (and invalid position)
             testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
@@ -350,11 +356,10 @@ public class MinotaurIntegrationTest {
 
         @Test
         void BuildAfterFinish(){
-            PlayerMessage message = new PlayerBuildChoice(new View(), testPlayer, 0, 0, 1, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(0, 0, 1, "Block"));
             controller.update(message);
             //can't build again error, turn ended
             testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
         }
     }
 }
-*/

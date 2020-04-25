@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
-/*
+
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
@@ -11,6 +13,8 @@ import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
 import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.model.piece.Level3Block;
+import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -26,6 +30,7 @@ public class HephaestusIntegrationTest {
 
     GodCard hephaestusCard;
     Model model;
+    EmptyVirtualView vv;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
@@ -44,6 +49,7 @@ public class HephaestusIntegrationTest {
     void init(){
 
         model = new Model(3);
+        vv = new EmptyVirtualView();
         controller = new Controller(model);
         gameBoard = model.getGameBoard();
         turnInfo = model.getTurnInfo();
@@ -140,7 +146,7 @@ public class HephaestusIntegrationTest {
         //////////////////////////////////////////MOVING FOR THE FIRST TIME/////////////////////////////
 
 
-        PlayerMovementChoice moveMessage = new PlayerMovementChoice(new View(), player, 0, 2, 2);
+        PlayerMovementChoice moveMessage = new PlayerMovementChoice(vv, player, new MoveData(0, 2, 2));
         controller.update(moveMessage);
 
 
@@ -154,7 +160,7 @@ public class HephaestusIntegrationTest {
 
         ////////////////////////////////////TRYING TO MOVE ANOTHER TIME/////////////////////////////////
 
-        moveMessage = new PlayerMovementChoice(new View(),player,0,2,3);
+        moveMessage = new PlayerMovementChoice(vv,player,new MoveData(0,2,3));
         controller.update(moveMessage);
 
         //all parameters must remain the same
@@ -170,7 +176,7 @@ public class HephaestusIntegrationTest {
         //////////////////////////////////////BUILDING FOR THE FIRST TIME////////////////////////////////
 
         //creating build message
-        PlayerBuildChoice buildMessage = new PlayerBuildChoice(new View(),player,0,2,3,"Block");
+        PlayerBuildChoice buildMessage = new PlayerBuildChoice(vv,player,new BuildData(0,2,3,"Block"));
         controller.update(buildMessage);
 
         //Hephaestus has built a level2block with his HephaestusBuild strategy
@@ -189,7 +195,7 @@ public class HephaestusIntegrationTest {
         //////////////////////////////////////BUILDING AGAIN//////////////////////////////////////////
 
         //creating build message
-        buildMessage = new PlayerBuildChoice(new View(),player,0,2,3,"Block");
+        buildMessage = new PlayerBuildChoice(vv,player,new BuildData(0,2,3,"Block"));
         controller.update(buildMessage);
 
         //Hephaestus has built a level3block with his HephaestusBuild strategy
@@ -214,7 +220,7 @@ public class HephaestusIntegrationTest {
         @Test
         void EndBeforeEverything(){
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //method returns immediately
 
@@ -226,7 +232,7 @@ public class HephaestusIntegrationTest {
         @Test
         void BuildBeforeEverything(){
 
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,1,1,1,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,1,1,"Block"));
             controller.update(message);
             //turnInfo must still have all his initial values
             testSupportFunctions.baseTurnInfoChecker(turnInfo, false, 0, false, 0, -1, false, false );
@@ -237,7 +243,7 @@ public class HephaestusIntegrationTest {
         @Test
         void WrongMoveBeforeEverything(){
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,2,2);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,2,2));
             controller.update(message);
             //invalid move, denied
 
@@ -249,7 +255,7 @@ public class HephaestusIntegrationTest {
         //moving with invalid worker number
         @Test
         void WrongMoveBeforeEverything2(){
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,-1,1,0);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(-1,1,0));
             controller.update(message);
             //invalid move, denied, invalid worker
 
@@ -262,7 +268,7 @@ public class HephaestusIntegrationTest {
         @Test
         void WrongMoveBeforeEverything3(){
             player.getWorker(0).movedToPosition(3, 3, 2);
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,4,3);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,4,3));
             controller.update(message);
             //invalid move, denied, occupied space
 
@@ -276,7 +282,7 @@ public class HephaestusIntegrationTest {
 
             gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
             player.getWorker(0).movedToPosition(3,0,2);
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,4,1);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,4,1));
             controller.update(message);
 
             //turnInfo must have been modified
@@ -309,7 +315,7 @@ public class HephaestusIntegrationTest {
         @Test
         void EndAfterMove() {
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //method returns immediately
 
@@ -321,7 +327,7 @@ public class HephaestusIntegrationTest {
         @Test
         void MoveAfterMove() {
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,3,0);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,3,0));
             controller.update(message);
             //method returns because the player has already moved
 
@@ -334,7 +340,7 @@ public class HephaestusIntegrationTest {
         //building a dome to a space reserved to a block
         @Test
         void WrongBuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,0,3,0,"Dome");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Dome"));
             controller.update(message);
 
 
@@ -344,7 +350,7 @@ public class HephaestusIntegrationTest {
         //wrong worker
         @Test
         void WrongBuildAfterMove2() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,1,3,0,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,3,0,"Block"));
             controller.update(message);
             //wrong worker
 
@@ -356,7 +362,7 @@ public class HephaestusIntegrationTest {
         @Test
         void WrongBuildAfterMove3() {
 
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,0,2,2,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,2,2,"Block"));
             controller.update(message);
             //wrong worker
 
@@ -368,7 +374,7 @@ public class HephaestusIntegrationTest {
         @Test
         void WrongBuildAfterMove4() {
             player.getWorker(0).movedToPosition(2, 2, 0);
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,0,3,2,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,2,"Block"));
             controller.update(message);
 
 
@@ -379,7 +385,7 @@ public class HephaestusIntegrationTest {
         @Test //ok
         void BuildAfterMove() {
 
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,0,3,0,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Block"));
             controller.update(message);
             //should work
 
@@ -421,7 +427,7 @@ public class HephaestusIntegrationTest {
 
         @Test
         void MoveAfterFirstBuild() {
-            PlayerMessage message = new PlayerMovementChoice(new View(), player, 1, 0, 3);
+            PlayerMessage message = new PlayerMovementChoice(vv, player, new MoveData(1, 0, 3));
             controller.update(message);
             //can't execute because has already built
 
@@ -432,7 +438,7 @@ public class HephaestusIntegrationTest {
 
         @Test
         void EndAfterFirstBuild() {
-            PlayerMessage message = new PlayerEndOfTurnChoice(new View(), player);
+            PlayerMessage message = new PlayerEndOfTurnChoice(vv, player);
             controller.update(message);
             //correct end of turn
 
@@ -444,7 +450,7 @@ public class HephaestusIntegrationTest {
 
         @Test
         void BuildAfterBuild() {
-            PlayerMessage message = new PlayerBuildChoice(new View(), player, 1, 0, 3, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, player, new BuildData(1, 0, 3, "Block"));
             controller.update(message);
 
             //turnInfo must have been updated
@@ -464,7 +470,7 @@ public class HephaestusIntegrationTest {
         //building to a different cell than the first one
         @Test
         void WrongBuildAfterBuild() {
-            PlayerMessage message = new PlayerBuildChoice(new View(), player, 1, 1, 1, "Block");
+            PlayerMessage message = new PlayerBuildChoice(vv, player, new BuildData(1, 1, 1, "Block"));
             controller.update(message);
 
             //turnInfo must have been updated
@@ -477,7 +483,7 @@ public class HephaestusIntegrationTest {
         void WrongBuildAfterBuild2() {
             player.getWorker(1).movedToPosition(2, 2, 0);
             turnInfo.setLastBuildCoordinates(3,2);
-            PlayerMessage message = new PlayerBuildChoice(new View(), player, 1, 3, 2, "Dome");
+            PlayerMessage message = new PlayerBuildChoice(vv, player, new BuildData(1, 3, 2, "Dome"));
             controller.update(message);
 
             //turnInfo must have been updated
@@ -511,7 +517,7 @@ public class HephaestusIntegrationTest {
 
         @Test
         void MoveAfterSecondBuild() {
-            PlayerMessage message = new PlayerMovementChoice(new View(), player, 1, 0, 3);
+            PlayerMessage message = new PlayerMovementChoice(vv, player, new MoveData(1, 0, 3));
             controller.update(message);
             //can't execute because has already built
 
@@ -522,7 +528,7 @@ public class HephaestusIntegrationTest {
 
         @Test
         void BuildAfterSecondBuild() {
-            PlayerMessage message = new PlayerMovementChoice(new View(), player, 1, 0, 3);
+            PlayerMessage message = new PlayerMovementChoice(vv, player, new MoveData(1, 0, 3));
             controller.update(message);
             //can't execute because has already built
 
@@ -533,7 +539,7 @@ public class HephaestusIntegrationTest {
 
         @Test
         void EndAfterSecondBuild() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //correct end of turn
 
@@ -549,4 +555,3 @@ public class HephaestusIntegrationTest {
 
     }
 
-*/

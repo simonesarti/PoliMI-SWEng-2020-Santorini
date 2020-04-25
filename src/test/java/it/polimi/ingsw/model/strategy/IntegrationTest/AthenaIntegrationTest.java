@@ -1,17 +1,22 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
-/*
+
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
+import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -22,6 +27,7 @@ public class AthenaIntegrationTest {
 
     GodCard athenaCard;
     Model model;
+    EmptyVirtualView vv;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
@@ -39,6 +45,7 @@ public class AthenaIntegrationTest {
     void init(){
 
         model = new Model(3);
+        vv = new EmptyVirtualView();
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
@@ -125,7 +132,7 @@ public class AthenaIntegrationTest {
     @Test
     void EndBeforeEverything(){
 
-        PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+        PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
         controller.update(message);
         //method returns immediately
 
@@ -137,7 +144,7 @@ public class AthenaIntegrationTest {
     @Test
     void BuildBeforeEverything(){
 
-        PlayerMessage message=new PlayerBuildChoice(new View(),player,1,1,1,"Block");
+        PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,1,1,"Block"));
         controller.update(message);
 
         //turnInfo must still have all his initial values
@@ -147,7 +154,7 @@ public class AthenaIntegrationTest {
 
     @Test
     void WrongMoveBeforeEverything(){
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,0,2,2);
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,2,2));
         controller.update(message);
         //invalid move, denied
 
@@ -158,7 +165,7 @@ public class AthenaIntegrationTest {
 
     @Test
     void WrongMoveBeforeEverything2(){
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,-1,1,0);
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(-1,1,0));
         controller.update(message);
         //invalid move, denied, invalid worker
 
@@ -172,7 +179,7 @@ public class AthenaIntegrationTest {
 
         gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(2,3,1);
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,0,3,3);
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,3,3));
         controller.update(message);
 
         //turnInfo must have been modified
@@ -186,7 +193,7 @@ public class AthenaIntegrationTest {
 
         gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(3,0,2);
-        PlayerMessage message=new PlayerMovementChoice(new View(),player,0,4,1);
+        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,4,1));
         controller.update(message);
 
         //turnInfo must have been modified
@@ -215,7 +222,7 @@ public class AthenaIntegrationTest {
         @Test
         void EndAftertMove() {
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //method returns immediately
 
@@ -227,7 +234,7 @@ public class AthenaIntegrationTest {
         @Test
         void MoveAfterMove() {
 
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,0,3,0);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,3,0));
             controller.update(message);
             //method returns because the player has already moved
 
@@ -238,7 +245,7 @@ public class AthenaIntegrationTest {
 
         @Test
         void WrongBuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,0,3,0,"Dome");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Dome"));
             controller.update(message);
             //every parameter is wrong, should give error for the wrong block
 
@@ -249,7 +256,7 @@ public class AthenaIntegrationTest {
 
         @Test
         void WrongBuildAfterMove2() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,1,3,0,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,3,0,"Block"));
             controller.update(message);
             //wrong worker
 
@@ -260,7 +267,7 @@ public class AthenaIntegrationTest {
 
         @Test //ok
         void BuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,0,3,0,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Block"));
             controller.update(message);
             //should work
 
@@ -294,7 +301,7 @@ public class AthenaIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
-            PlayerMessage message=new PlayerMovementChoice(new View(),player,1,0,3);
+            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,0,3));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -305,7 +312,7 @@ public class AthenaIntegrationTest {
 
         @Test
         void BuildAfterFinish() {
-            PlayerMessage message=new PlayerBuildChoice(new View(),player,1,0,3,"Block");
+            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -316,7 +323,7 @@ public class AthenaIntegrationTest {
 
         @Test
         void EndAfterFinish() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(new View(),player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
             controller.update(message);
             //correct end of turn
 
@@ -327,4 +334,3 @@ public class AthenaIntegrationTest {
         }
     }
 }
-*/
