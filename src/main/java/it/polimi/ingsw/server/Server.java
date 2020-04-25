@@ -41,7 +41,7 @@ public class Server {
         }
     }
 
-    public void lobby(PlayerConnection playerConnection) {
+    public synchronized void lobby(PlayerConnection playerConnection) {
 
         if(playerConnection.getPlayerInfo().getNumberOfPlayers()==2){
 
