@@ -2,7 +2,6 @@ package it.polimi.ingsw.messages.PlayerToGameMessages;
 
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.VirtualView;
 
 /**
