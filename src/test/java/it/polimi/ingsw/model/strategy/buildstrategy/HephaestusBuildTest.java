@@ -36,20 +36,20 @@ class HephaestusBuildTest {
         basicmove = new BasicMove();
 
         hephaestusbuild = new HephaestusBuild();
-        playerInfo  =new PlayerInfo("Gianpaolo",new GregorianCalendar(1970, Calendar.JULY, 15));
+        playerInfo  =new PlayerInfo("Gianpaolo",new GregorianCalendar(1970, Calendar.JULY, 15),3);
         player = new Player(playerInfo);
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(0,0);
 
 
 
-        enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
+        enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
         enemy1Player = new Player(playerInfo);
         enemy1Player.setColour(Colour.BLUE);
         enemy1Player.getWorker(0).setStartingPosition(0,1);
         enemy1Player.getWorker(1).setStartingPosition(0,2);
 
-        enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7));
+        enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
         enemy2Player = new Player(playerInfo);
         enemy2Player.setColour(Colour.GREY);
         enemy2Player.getWorker(0).setStartingPosition(0,3);

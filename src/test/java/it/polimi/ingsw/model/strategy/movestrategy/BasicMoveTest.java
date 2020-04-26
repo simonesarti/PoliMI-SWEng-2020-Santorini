@@ -17,11 +17,11 @@ public class BasicMoveTest {
 
     BasicMove basicmove = new BasicMove();
     int[] movingTo = new int[2];
-    PlayerInfo playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9));
+    PlayerInfo playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
     Player player = new Player(playerInfo);
-    PlayerInfo enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
+    PlayerInfo enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
     Player enemy1Player = new Player(playerInfo);
-    PlayerInfo enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7));
+    PlayerInfo enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
     Player enemy2Player = new Player(playerInfo);
 
     GameBoard gameBoard = new GameBoard();

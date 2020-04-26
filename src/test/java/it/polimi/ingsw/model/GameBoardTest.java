@@ -82,7 +82,7 @@ class GameBoardTest {
         //completed tower behind
         assertTrue(gameBoard.cantBeForcedBackwards(1,1,2,1));
 
-        PlayerInfo playerInfo=new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
+        PlayerInfo playerInfo=new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
         Player enemy=new Player(playerInfo);
         enemy.setColour(Colour.GREY);
         enemy.getWorker(0).setStartingPosition(0,0);
@@ -123,9 +123,9 @@ class GameBoardTest {
         Player player2;
         Player player3;
 
-        playerTestInfo = new PlayerInfo("simone", new GregorianCalendar(1998, Calendar.SEPTEMBER, 16));
-        player2Info = new PlayerInfo("opponent2", new GregorianCalendar(1990, Calendar.JANUARY, 1));
-        player3Info= new PlayerInfo("opponent3",new GregorianCalendar(1990,Calendar.JANUARY,1));
+        playerTestInfo = new PlayerInfo("simone", new GregorianCalendar(1998, Calendar.SEPTEMBER, 16),3);
+        player2Info = new PlayerInfo("opponent2", new GregorianCalendar(1990, Calendar.JANUARY, 1),3);
+        player3Info= new PlayerInfo("opponent3",new GregorianCalendar(1990,Calendar.JANUARY,1),3);
 
         playerTest = new Player(playerTestInfo);
         player2 = new Player(player2Info);

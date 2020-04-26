@@ -50,19 +50,19 @@ public class MinotaurIntegrationTest {
         gameBoard = model.getGameBoard();
         turnInfo = model.getTurnInfo();
 
-        playerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9));
+        playerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
         testPlayer = new Player(playerInfo);
         testPlayer.setColour(Colour.WHITE);
         testPlayer.getWorker(0).setStartingPosition(0, 0);
         testPlayer.getWorker(1).setStartingPosition(1, 0);
 
-        enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
+        enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
         enemy1Player = new Player(playerInfo);
         enemy1Player.setColour(Colour.BLUE);
         enemy1Player.getWorker(0).setStartingPosition(0, 1);
         enemy1Player.getWorker(1).setStartingPosition(0, 2);
 
-        enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1999, Calendar.DECEMBER, 7));
+        enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
         enemy2Player = new Player(playerInfo);
         enemy2Player.setColour(Colour.GREY);
         enemy2Player.getWorker(0).setStartingPosition(0, 3);

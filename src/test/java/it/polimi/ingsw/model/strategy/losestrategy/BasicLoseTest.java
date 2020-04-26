@@ -32,8 +32,8 @@ class BasicLoseTest {
         gameBoard=new GameBoard();
         turnInfo=new TurnInfo();
 
-        playerTestInfo=new PlayerInfo("simone",new GregorianCalendar(1998, Calendar.SEPTEMBER, 16));
-        player2Info=new PlayerInfo("opponent2",new GregorianCalendar(1990, Calendar.JANUARY, 1));
+        playerTestInfo=new PlayerInfo("simone",new GregorianCalendar(1998, Calendar.SEPTEMBER, 16),3);
+        player2Info=new PlayerInfo("opponent2",new GregorianCalendar(1990, Calendar.JANUARY, 1),3);
 
         playerTest=new Player(playerTestInfo);
         player2=new Player(player2Info);
