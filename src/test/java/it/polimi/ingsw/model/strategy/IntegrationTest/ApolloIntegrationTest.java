@@ -11,12 +11,16 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
+import it.polimi.ingsw.server.Server;
+import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -29,19 +33,33 @@ public class ApolloIntegrationTest {
 
     GodCard apolloCard;
     Model model;
-    EmptyVirtualView vv;
+
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
 
 
-    Player player;
+
     Player enemy1Player;
     Player enemy2Player;
-
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
-    PlayerInfo playerInfo;
+
+    PlayerInfo playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
+    Player player = new Player(playerInfo);
+    ServerSideConnection c;
+
+    {
+        try {
+            c = new ServerSideConnection(new Socket(),new Server());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    EmptyVirtualView vv = new EmptyVirtualView(player,c);
+
+
 
 
     TestSupportFunctions testMethods = new TestSupportFunctions();
@@ -49,20 +67,19 @@ public class ApolloIntegrationTest {
 
 
     @BeforeEach
-    void init(){
+    void init() {
 
         model = new Model(3);
-        vv = new EmptyVirtualView();
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
         turnInfo = model.getTurnInfo();
 
-        playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
-        player = new Player(playerInfo);
+
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(3,0);
         player.getWorker(1).setStartingPosition(0,1);
+
 
         enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
         enemy1Player = new Player(playerInfo);

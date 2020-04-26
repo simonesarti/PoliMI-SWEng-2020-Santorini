@@ -1,4 +1,4 @@
-
+/*
 package it.polimi.ingsw.model.strategy.IntegrationTest;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
@@ -515,3 +515,4 @@ public class ArtemisIntegrationTest {
         }
     }
 }
+*/

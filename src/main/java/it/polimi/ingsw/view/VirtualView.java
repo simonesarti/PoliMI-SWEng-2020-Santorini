@@ -14,9 +14,9 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     //ATTRIBUTES
 
-    private Player player;
+    private final Player player;
 
-    private ServerSideConnection connectionToClient;
+    private final ServerSideConnection connectionToClient;
 
     private PlayerMessageReceiver playerMessageReceiver;
 
@@ -32,10 +32,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     //CONSTRUCTORS
 
-    //EMPTY CONSTRUCTOR FOR TESTING PURPOSES ONLY!
-    public VirtualView(){
-
-    }
 
     public VirtualView(Player player, ServerSideConnection c){
         this.player=player;

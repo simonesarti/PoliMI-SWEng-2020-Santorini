@@ -27,6 +27,10 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
 
     private ServerSideConnection connectionToClient;
 
+    public EmptyVirtualView(Player player, ServerSideConnection c) {
+        super(player, c);
+    }
+
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
     private class PlayerMessageReceiver implements Observer<DataMessage> {
 
