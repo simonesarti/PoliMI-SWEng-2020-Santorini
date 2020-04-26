@@ -115,5 +115,10 @@ public class Server {
 
     public synchronized void deregisterConnection(ServerSideConnection serverSideConnection) {
     }
+
+    public void closeServerSocket() throws IOException {
+        this.serverSocket.close();
+    }
+
 }
 

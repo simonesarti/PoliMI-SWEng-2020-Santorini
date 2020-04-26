@@ -1,5 +1,5 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
-/*
+
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
@@ -10,14 +10,19 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
+import it.polimi.ingsw.server.Server;
+import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.View;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -40,12 +45,23 @@ public class AthenaIntegrationTest {
     PlayerInfo enemy2Info;
     TestSupportFunctions testMethods = new TestSupportFunctions();
 
+    ServerSideConnection c;
+    Server s;
+
+    {
+        try {
+            s = new Server();
+            c = new ServerSideConnection(new Socket("127.0.0.1",12345),s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @BeforeEach
     void init(){
 
         model = new Model(3);
-        vv = new EmptyVirtualView();
+
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
@@ -53,6 +69,8 @@ public class AthenaIntegrationTest {
 
         playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
         player = new Player(playerInfo);
+        vv = new EmptyVirtualView(player,c);
+
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(3,0);
         player.getWorker(1).setStartingPosition(0,1);
@@ -123,6 +141,16 @@ public class AthenaIntegrationTest {
         turnInfo.turnInfoReset();
 
         return;
+    }
+
+    @AfterEach
+    void end(){
+        //closing serverSocket
+        try {
+            s.closeServerSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     ////////////////////////////////////////////COMPLETE TURNS//////////////////////////////////////////////////////////
@@ -334,4 +362,3 @@ public class AthenaIntegrationTest {
         }
     }
 }
-*/

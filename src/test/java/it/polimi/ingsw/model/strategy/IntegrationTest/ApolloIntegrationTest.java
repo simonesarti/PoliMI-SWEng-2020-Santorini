@@ -15,9 +15,7 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -33,36 +31,30 @@ public class ApolloIntegrationTest {
 
     GodCard apolloCard;
     Model model;
-
+    EmptyVirtualView vv;
     Controller controller;
     TurnInfo turnInfo;
     GameBoard gameBoard;
+    TestSupportFunctions testMethods;
 
-
-
+    Player player;
     Player enemy1Player;
     Player enemy2Player;
+    PlayerInfo playerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
 
-    PlayerInfo playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
-    Player player = new Player(playerInfo);
     ServerSideConnection c;
+    Server s;
 
     {
         try {
-            c = new ServerSideConnection(new Socket(),new Server());
+            s = new Server();
+            c = new ServerSideConnection(new Socket("127.0.0.1",12345),s);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    EmptyVirtualView vv = new EmptyVirtualView(player,c);
-
-
-
-
-    TestSupportFunctions testMethods = new TestSupportFunctions();
 
 
 
@@ -70,11 +62,17 @@ public class ApolloIntegrationTest {
     void init() {
 
         model = new Model(3);
+
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
         turnInfo = model.getTurnInfo();
 
+        testMethods = new TestSupportFunctions();
+
+        playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
+        player = new Player(playerInfo);
+        vv = new EmptyVirtualView(player,c);
 
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(3,0);
@@ -147,6 +145,16 @@ public class ApolloIntegrationTest {
         turnInfo.turnInfoReset();
 
         return;
+    }
+
+    @AfterEach
+    void end(){
+        //closing serverSocket
+        try {
+            s.closeServerSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     ////////////////////////////////////////////COMPLETE TURNS//////////////////////////////////////////////////////////

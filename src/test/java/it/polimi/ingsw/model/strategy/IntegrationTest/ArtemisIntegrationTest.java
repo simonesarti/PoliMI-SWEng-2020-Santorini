@@ -1,5 +1,5 @@
-/*
 package it.polimi.ingsw.model.strategy.IntegrationTest;
+
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
@@ -11,12 +11,17 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level3Block;
+import it.polimi.ingsw.server.Server;
+import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -40,6 +45,17 @@ public class ArtemisIntegrationTest {
     PlayerInfo enemy2Info;
     TestSupportFunctions testMethods = new TestSupportFunctions();
 
+    ServerSideConnection c;
+    Server s;
+
+    {
+        try {
+            s = new Server();
+            c = new ServerSideConnection(new Socket("127.0.0.1",12345),s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -47,7 +63,7 @@ public class ArtemisIntegrationTest {
     void init(){
 
         model = new Model(3);
-        vv = new EmptyVirtualView();
+
         controller = new Controller(model);
 
         gameBoard = model.getGameBoard();
@@ -58,6 +74,7 @@ public class ArtemisIntegrationTest {
         player.setColour(Colour.WHITE);
         player.getWorker(0).setStartingPosition(3,0);
         player.getWorker(1).setStartingPosition(0,1);
+        vv = new EmptyVirtualView(player,c);
 
         enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
         enemy1Player = new Player(playerInfo);
@@ -125,6 +142,16 @@ public class ArtemisIntegrationTest {
         turnInfo.turnInfoReset();
 
         return;
+    }
+
+    @AfterEach
+    void end(){
+        //closing serverSocket
+        try {
+            s.closeServerSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     ////////////////////////////////////////////COMPLETE TURNS//////////////////////////////////////////////////////////
@@ -515,4 +542,3 @@ public class ArtemisIntegrationTest {
         }
     }
 }
-*/
