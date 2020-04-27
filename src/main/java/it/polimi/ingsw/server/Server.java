@@ -116,6 +116,11 @@ public class Server {
     public synchronized void deregisterConnection(ServerSideConnection serverSideConnection) {
     }
 
+
+
+
+
+    //TESTING METHOD
     public void closeServerSocket() throws IOException {
         this.serverSocket.close();
     }

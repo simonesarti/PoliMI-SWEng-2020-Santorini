@@ -82,20 +82,26 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){
                 reportInfo(new InfoMessage(GameMessage.win));
+                reportInfo(new InfoMessage(GameMessage.quit));
+                connectionToClient.removeObserver(playerMessageReceiver);
+                connectionToClient.deactivate();
             }else{
                 reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
+                reportInfo(new InfoMessage(GameMessage.quit));
+                connectionToClient.removeObserver(playerMessageReceiver);
+                connectionToClient.notInUse();
             }
 
-            reportInfo(new InfoMessage(GameMessage.quit));
-            connectionToClient.removeObserver(playerMessageReceiver);
-            connectionToClient.deactivate();
 
         }else if(message instanceof QuitMessage){
 
             if(((QuitMessage)message).getPlayer()==this.getPlayer()){
                 reportInfo(new InfoMessage(GameMessage.quit));
+                //only this player's virtualView will stop listening to new inputs
                 connectionToClient.removeObserver(playerMessageReceiver);
-                connectionToClient.deactivate();
+
+                //connection stops running and listening, but socket isn't closed
+                connectionToClient.notInUse();
             }
         }
 

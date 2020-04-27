@@ -19,20 +19,26 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean active;
+    private boolean inUse;
 
     public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
         active=true;
+        inUse=true;
     }
 
     private synchronized boolean isActive(){
         return active;
     }
 
-    public synchronized void deactivate(){
+    public void deactivate(){
         active=false;
     }
+
+    private synchronized boolean isInUse(){return inUse;}
+
+    public void notInUse(){inUse=false;}
 
     public void asyncSend(final Object message){
         new Thread(new Runnable() {
@@ -65,6 +71,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     public synchronized void closeConnection() {
         send("Connection closed from server side");
         try {
+            //closes streams and then the socket
             outputStream.close();
             inputStream.close();
             socket.close();
@@ -72,6 +79,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             System.err.println("Error while closing socket!");
         }
         active = false;
+        inUse=false;
     }
 
     @Override
@@ -89,16 +97,22 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             server.lobby(new PlayerConnection(playerInfo,this));
 
             //continues to read input commands until the connections stays active, and notifies them to the virtualView
-            while(isActive()){
+            while(isActive() && isInUse()){
                 notify((DataMessage)inputStream.readObject());
             }
 
         //serialization adds ClassNotFoundException
         } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
             System.err.println("Error!" + e.getMessage());
-        }finally{
-            close();
 
+        //when isActive becomes false or exception is thrown (such as someone disconnects)
+        }finally{
+
+            //this way the only one which can use close() is the winner, deregistering all the players and
+            //closing their socket and streams
+            if(isInUse()){
+                close();
+            }
        }
     }
 
