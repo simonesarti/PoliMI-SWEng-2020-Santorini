@@ -71,15 +71,21 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     public synchronized void closeConnection() {
         send("Connection closed from server side");
         try {
-            //closes streams and then the socket
             outputStream.close();
             inputStream.close();
+        }catch (IOException e){
+            System.err.println("Error while closing the streams!");
+        }
+
+        try{
             socket.close();
         } catch (IOException e) {
             System.err.println("Error while closing socket!");
         }
         active = false;
-        inUse=false;
+        inUse = false;
+        //only the winner will be able to call the deregister because it will put inUse to false, so the others
+        //won't call deregister again but only closeConnection
     }
 
     @Override
@@ -105,14 +111,22 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
             System.err.println("Error!" + e.getMessage());
 
-        //when isActive becomes false or exception is thrown (such as someone disconnects)
+
         }finally{
 
-            //this way the only one which can use close() is the winner, deregistering all the players and
-            //closing their socket and streams
-            if(isInUse()){
+            //if the player quits the connection gets closed. The game will be deregisted when }finally{
+            //is activated with isInUse, that means when isActive is made false by the winner or when
+            // a client disconnects mid-game
+
+            if(!isInUse()){
+                closeConnection();
+            }else{
                 close();
+                //closes its stream and socket, then closes everyone's streams and socket by calling deregister(...).
+                //deregister also causes inUse to became false for the other connection, therefore the willy only
+                //use the if in this }finally{, never calling deregister again
             }
+
        }
     }
 
