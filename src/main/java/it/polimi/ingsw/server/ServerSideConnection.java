@@ -63,9 +63,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     private void close() {
         closeConnection();
-        System.out.println("Deregistering client...");
         server.deregisterConnection(this);
-        System.out.println("client successfully deregistered!");
     }
 
     public synchronized void closeConnection() {
@@ -82,10 +80,6 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         } catch (IOException e) {
             System.err.println("Error while closing socket!");
         }
-        active = false;
-        inUse = false;
-        //only the winner will be able to call the deregister because it will put inUse to false, so the others
-        //won't call deregister again but only closeConnection
     }
 
     @Override
@@ -114,17 +108,11 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
         }finally{
 
-            //if the player quits the connection gets closed. The game will be deregisted when }finally{
-            //is activated with isInUse, that means when isActive is made false by the winner or when
-            // a client disconnects mid-game
-
             if(!isInUse()){
                 closeConnection();
             }else{
+                //when someone wins (active=false) or with and exception
                 close();
-                //closes its stream and socket, then closes everyone's streams and socket by calling deregister(...).
-                //deregister also causes inUse to became false for the other connection, therefore the willy only
-                //use the if in this }finally{, never calling deregister again
             }
 
        }

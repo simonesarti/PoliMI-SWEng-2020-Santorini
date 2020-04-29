@@ -89,7 +89,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
                 reportInfo(new InfoMessage(GameMessage.quit));
                 connectionToClient.removeObserver(playerMessageReceiver);
-                connectionToClient.notInUse();
+                //the winner also terminates the opponents' connections calling notInUse in deregister
             }
 
 
@@ -99,8 +99,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 reportInfo(new InfoMessage(GameMessage.quit));
                 //only this player's virtualView will stop listening to new inputs
                 connectionToClient.removeObserver(playerMessageReceiver);
-
-                //connection stops running and listening, but socket isn't closed
+                //connection thread terminates
                 connectionToClient.notInUse();
             }
         }
