@@ -9,6 +9,8 @@ public class ClientApp {
 
         Client client=new Client("127.0.0.1",12345);
 
+        //Chiedere se si vuole Cli o Gui
+        //Aggiungere dopo un if per istanziare quella giusta
         try {
             client.run();
         } catch (IOException e) {
