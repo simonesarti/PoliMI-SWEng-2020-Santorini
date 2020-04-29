@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
 import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
@@ -34,7 +35,7 @@ public class Client implements Observer<DataMessage>{
     }
 
     /**
-     * Reads NotifyMessages from Socket and calls View's method(s?)
+     * Reads Messages from Socket and calls View's method(s?)
      * @param socketIn
      * @return
      */
@@ -45,8 +46,8 @@ public class Client implements Observer<DataMessage>{
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        if(inputObject instanceof NotifyMessages){
-                            System.out.println("Notify message arrived to client!");
+                        if(inputObject instanceof NewBoardStateMessage){
+                            System.out.println("NewBoardStateMessage message arrived to client!");
                         } else if (inputObject instanceof InfoMessage){
                             System.out.println("InfoMessage arrived to client!");
                         } else {

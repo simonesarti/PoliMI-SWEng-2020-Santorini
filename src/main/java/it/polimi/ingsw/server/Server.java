@@ -120,7 +120,7 @@ public class Server {
     public synchronized void unregisterConnection(ServerSideConnection connection) {
 
         int index = getConnectionGroupIndex2(connection);
-        
+
         if(index!=-1){
 
             for(int i=0;i<2;i++){
@@ -136,6 +136,8 @@ public class Server {
             }
             threePlayerGames.remove(index);
         }
+
+        //TODO perchè parravicini messo l'iterator?
     }
 
     private int getConnectionGroupIndex2(ServerSideConnection serverSideConnection) {
@@ -162,7 +164,6 @@ public class Server {
         }
         return index;
     }
-
 
 
     //TESTING METHOD
