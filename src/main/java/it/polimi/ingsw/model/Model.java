@@ -33,6 +33,59 @@ public class Model extends Observable<NotifyMessages> {
 
     public TurnInfo getTurnInfo(){return turnInfo;}
 
+    public void assignColour2(Player player1, Player player2){
+
+        if(player1.getBirthday().compareTo(player2.getBirthday())<=0){
+            player1.setColour(Colour.WHITE);
+            player2.setColour(Colour.BLUE);
+        }else{
+            player2.setColour(Colour.WHITE);
+            player1.setColour(Colour.BLUE);
+        }
+    }
+
+    public void assignColour3(Player player1, Player player2,Player player3){
+
+        if(player1.getBirthday().compareTo(player2.getBirthday()) <=0 &&
+           player1.getBirthday().compareTo(player3.getBirthday()) <=0){
+
+            player1.setColour(Colour.WHITE);
+
+            if(player2.getBirthday().compareTo(player3.getBirthday())<=0) {
+                player2.setColour(Colour.BLUE);
+                player3.setColour(Colour.GREY);
+            }else{
+                player3.setColour(Colour.BLUE);
+                player2.setColour(Colour.GREY);
+            }
+
+        }else if(player2.getBirthday().compareTo(player1.getBirthday())<=0 &&
+                 player2.getBirthday().compareTo(player3.getBirthday())<=0){
+
+            player2.setColour(Colour.WHITE);
+
+            if(player1.getBirthday().compareTo(player3.getBirthday())<=0){
+                player1.setColour(Colour.BLUE);
+                player3.setColour(Colour.GREY);
+            }else{
+                player3.setColour(Colour.BLUE);
+                player1.setColour(Colour.GREY);
+            }
+        }else{
+
+            player3.setColour(Colour.WHITE);
+
+            if(player1.getBirthday().compareTo(player2.getBirthday())<=0){
+                player1.setColour(Colour.BLUE);
+                player2.setColour((Colour.GREY));
+            }else{
+                player2.setColour(Colour.BLUE);
+                player1.setColour(Colour.GREY);
+            }
+        }
+
+    }
+
     /**
      * Checks that current player's colour is equals to current turn's colour
      * @param player

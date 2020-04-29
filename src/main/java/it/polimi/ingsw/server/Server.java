@@ -67,6 +67,8 @@ public class Server {
                 player21VirtualView.addObserver(controller);
                 player22VirtualView.addObserver(controller);
 
+                model.assignColour2(player21,player22);
+
                 twoPlayerGames.add(new TwoPlayerGameConnection(c21,c22));
 
                 twoPlayerWaitingList.clear();
@@ -101,6 +103,8 @@ public class Server {
                 player31VirtualView.addObserver(controller);
                 player32VirtualView.addObserver(controller);
                 player33VirtualView.addObserver(controller);
+
+                model.assignColour3(player31,player32,player33);
 
                 threePlayerGames.add(new ThreePlayerGameConnection(c31,c32,c33));
 
