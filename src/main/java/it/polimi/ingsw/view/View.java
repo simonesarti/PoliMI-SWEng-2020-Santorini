@@ -3,29 +3,21 @@ package it.polimi.ingsw.view;
 import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.InfoMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.observe.Observer;
 
-public class View{
+//TODO da qualche parte ovviamente si dovrà chiamare View.addObserver(Client)
 
-    private Client client;
+public abstract class View extends Observable<DataMessage> {
 
-    private GameMessageReceiver gameMessageReceiver;
+    private final Player player;
 
-    private class GameMessageReceiver implements Observer<Object>{
+    public View(Player player){
 
-        @Override
-        public void update(Object message) {
-
-            if(message instanceof InfoMessage){
-
-            }else if(message instanceof NewBoardStateMessage){
-
-            }
-        }
+        this.player = player;
     }
 
-    public View(Client client){
-        this.client=client;
-    }
 
 }

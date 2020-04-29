@@ -71,7 +71,7 @@ public class PrometheusIntegrationTest {
         playerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
         testPlayer = new Player(playerInfo);
         vv = new EmptyVirtualView(testPlayer,c);
-        
+
         testPlayer.setColour(Colour.WHITE);
         testPlayer.getWorker(0).setStartingPosition(0, 0);
         testPlayer.getWorker(1).setStartingPosition(1, 0);
