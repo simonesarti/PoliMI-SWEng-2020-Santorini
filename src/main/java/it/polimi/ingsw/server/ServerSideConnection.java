@@ -63,7 +63,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     private void close() {
         closeConnection();
-        server.deregisterConnection(this);
+        server.unregisterConnection(this);
     }
 
     public synchronized void closeConnection() {

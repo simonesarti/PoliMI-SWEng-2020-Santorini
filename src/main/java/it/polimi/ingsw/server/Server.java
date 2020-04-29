@@ -117,10 +117,51 @@ public class Server {
 
     }
 
-    public synchronized void deregisterConnection(ServerSideConnection serverSideConnection) {
+    public synchronized void unregisterConnection(ServerSideConnection connection) {
+
+        int index = getConnectionGroupIndex2(connection);
+        
+        if(index!=-1){
+
+            for(int i=0;i<2;i++){
+                twoPlayerGames.get(index).getConnection(i).notInUse();
+            }
+            twoPlayerGames.remove(index);
+
+        }else{
+
+            index=getConnectionGroupIndex3(connection);
+            for(int i=0;i<3;i++){
+                threePlayerGames.get(index).getConnection(i).notInUse();
+            }
+            threePlayerGames.remove(index);
+        }
     }
 
+    private int getConnectionGroupIndex2(ServerSideConnection serverSideConnection) {
 
+        int index = -1;
+        for (int i = 0; i < twoPlayerGames.size(); i++) {
+            if (twoPlayerGames.get(i).getConnection(0).equals(serverSideConnection) ||
+                twoPlayerGames.get(i).getConnection(1).equals(serverSideConnection)) {
+                index=i;
+            }
+        }
+        return index;
+    }
+
+    private int getConnectionGroupIndex3(ServerSideConnection serverSideConnection) {
+
+        int index = -1;
+        for(int i=0;i<threePlayerGames.size();i++){
+            if(threePlayerGames.get(i).getConnection(0).equals(serverSideConnection) ||
+               threePlayerGames.get(i).getConnection(1).equals(serverSideConnection) ||
+               threePlayerGames.get(i).getConnection(2).equals(serverSideConnection)) {
+                index=i;
+            }
+        }
+        return index;
+    }
 
 
 
