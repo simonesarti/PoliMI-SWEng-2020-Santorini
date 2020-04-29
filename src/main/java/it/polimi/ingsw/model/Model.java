@@ -130,15 +130,28 @@ public class Model extends Observable<NotifyMessages> {
         turnInfo.turnInfoReset();
     }
 
-    public boolean isEliminated(Colour colour){
-        return eliminated[colour.ordinal()];
+    public boolean isEliminated(Player player){
+        return eliminated[player.getColour().ordinal()];
     }
 
-    public void eliminatePlayer(Colour colour){
-        eliminated[colour.ordinal()]=true;
+    public void removeFromGame(Player player){
+        int x1,y1,x2,y2;
+        x1=player.getWorker(0).getCurrentPosition().getX();
+        y1=player.getWorker(0).getCurrentPosition().getY();
+        x2=player.getWorker(1).getCurrentPosition().getX();
+        y2=player.getWorker(1).getCurrentPosition().getY();
+        //removes workers from the towers they were standing on
+        gameboard.getTowerCell(x1,y1).getFirstNotPieceLevel().workerMoved();
+        gameboard.getTowerCell(x2,y2).getFirstNotPieceLevel().workerMoved();
+        //BUT DOESN'T CHANGE THEIR INTERNAL COORDINATE BECAUSE THEY CAN'T MOVE AGAIN
+
+        eliminated[player.getColour().ordinal()]=true;
         playersLeft--;
     }
 
+    public int getPlayersLeft() {
+        return playersLeft;
+    }
 
     //TODO finire notify (ad esempio la win può termiare la partita/aggiungere eliminazioni e così via
     //TODO lose deve rimuovere le pedine dal gioco dell'eliminato

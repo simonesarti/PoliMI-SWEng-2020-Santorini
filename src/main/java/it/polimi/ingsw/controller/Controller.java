@@ -4,6 +4,7 @@ import it.polimi.ingsw.messages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.*;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.observe.Observer;
+import it.polimi.ingsw.view.VirtualView;
 
 public class Controller implements Observer<PlayerMessage>{
 
@@ -29,7 +30,7 @@ public class Controller implements Observer<PlayerMessage>{
         String nextStep;
 
         //eliminated player can't execute this command
-        if(model.isEliminated(message.getPlayer().getColour())){
+        if(model.isEliminated(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
             return;
         }
@@ -50,11 +51,21 @@ public class Controller implements Observer<PlayerMessage>{
         if(message.getPlayer().getGodCard().getLoseStrategy().movementLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())) {
             model.notifyNewBoardState();
             model.notifyLoss(message.getPlayer());
-            
+            model.removeFromGame(message.getPlayer());
+            //...
             //TODO altro?
 
             //DEBUG:
             System.out.println("sconfitta");
+
+            //TODO vittoria per sconfitta altrui
+            if(model.getPlayersLeft()==1){
+                //....
+            }else {
+                model.updateTurn();
+                //...
+            }
+
             return;
 
         //if the player hasn't lost
@@ -78,7 +89,6 @@ public class Controller implements Observer<PlayerMessage>{
                     //DEBUG:
                     System.out.println("vittoria");
 
-                    endMatch();
                     return;
                 }else{
                     message.getVirtualView().reportInfo(new InfoMessage(nextStep));
@@ -111,7 +121,7 @@ public class Controller implements Observer<PlayerMessage>{
         String nextStep;
 
         //eliminated player can't execute this command
-        if(model.isEliminated(message.getPlayer().getColour())){
+        if(model.isEliminated(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
             return;
         }
@@ -133,10 +143,20 @@ public class Controller implements Observer<PlayerMessage>{
         if(message.getPlayer().getGodCard().getLoseStrategy().buildingLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())){
             model.notifyNewBoardState();
             model.notifyLoss(message.getPlayer());
+            model.removeFromGame(message.getPlayer());
+            //...
             //TODO altro?
 
             //DEBUG:
             System.out.println("sconfitta");
+
+            //TODO vittoria per sconfitta altrui
+            if(model.getPlayersLeft()==1){
+                //....
+            }else {
+                model.updateTurn();
+                //...
+            }
 
             return;
 
@@ -176,7 +196,7 @@ public class Controller implements Observer<PlayerMessage>{
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
 
         //eliminated player can't execute this command
-        if(model.isEliminated(message.getPlayer().getColour())){
+        if(model.isEliminated(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
             return;
         }
@@ -207,7 +227,7 @@ public class Controller implements Observer<PlayerMessage>{
     private synchronized void quitGame(PlayerQuitChoice message){
 
         //player can't quit if he isn't eliminated
-        if(!model.isEliminated(message.getPlayer().getColour())){
+        if(!model.isEliminated(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.notEliminated));
             return;
         }
@@ -242,8 +262,5 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
-    private void startMatch(){}
-
-    private void endMatch(){}
 
 }
