@@ -2,13 +2,16 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.InfoMessage;
+import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.observe.Observable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Calendar;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 //TODO Il messaggio PlayerInfo lo inviamo nella fase di creazione del Client. Sempre in questa fase facciamo scegliere Cli o Gui e quindi istanziamo in base alla scelta
 
 /**
@@ -93,8 +96,26 @@ public class ClientSideConnection extends Observable<Object> {
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             //ServerSideConnection sent welcome message
 
-            //this clientSideConnection sends player info
-            //TODO...
+            ////////////////////////////////this clientSideConnection sends player info/////////////////////////////////
+
+            Scanner stdin = new Scanner(System.in);
+
+            System.out.println("What's your nickname?");
+            String nickname = stdin.nextLine();
+
+            System.out.println("Insert birthday:");
+            String birthdayString = stdin.nextLine();
+
+            //need to create a new Calendar object with birthdayString data
+            System.out.println("Insert number of players:");
+            int numberOfPlayers = Integer.parseInt(stdin.nextLine());
+
+            //sending PlayerInfo msg to serverSideConnection
+            //asyncSend(new PlayerInfo(nickname,birthday,numberOfPlayers));
+
+            stdin.close();
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             //now it keeps receiving messages while the connections stay active
             while (isActive()) {
@@ -102,10 +123,12 @@ public class ClientSideConnection extends Observable<Object> {
                 notify((Object)inputStream.readObject());
             }
         } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
+
             //TODO funziona settare a false nella catch? Copiato da esempio TrisDistr..
-            setActive(false);
+
             //System.err.println("Error!" + e.getMessage());
             System.out.println("Connection closed from the client side");
+            setActive(false);
 
         }finally{
 
