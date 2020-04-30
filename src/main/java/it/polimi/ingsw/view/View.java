@@ -1,9 +1,8 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.InfoMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
 import it.polimi.ingsw.observe.Observer;
 
 //TODO Cli e Gui nei loro metodi, quando viene fatta una mossa, creano il dataMessage e chiamano client.writeToSocket(dataMessage)
@@ -11,11 +10,11 @@ import it.polimi.ingsw.observe.Observer;
 public abstract class View implements Observer<Object> {
 
 
-    private Client client;
+    private ClientSideConnection clientSideConnection;
 
-    public View(Client client){
+    public View(ClientSideConnection clientSideConnection){
 
-        this.client = client;
+        this.clientSideConnection = clientSideConnection;
     }
 
     abstract public void showNewBoard(NewBoardStateMessage message);
@@ -25,14 +24,11 @@ public abstract class View implements Observer<Object> {
     @Override
     public void update(Object message) {
 
-        if(message instanceof InfoMessage){
-            //do something
-        }
-
-        else if (message instanceof NewBoardStateMessage){
-            showNewBoard((NewBoardStateMessage)message);
-        }
-        else{
+        if(message instanceof NewBoardStateMessage){
+            System.out.println("NewBoardStateMessage message arrived to client!");
+        } else if (message instanceof InfoMessage){
+            System.out.println("InfoMessage arrived to client!");
+        } else {
             throw new IllegalArgumentException();
         }
 
