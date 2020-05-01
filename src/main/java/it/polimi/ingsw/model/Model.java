@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class Model extends Observable<NotifyMessages> {
 
     private final GameBoard gameboard;
+    private ArrayList<GodCard> gameDeck=new ArrayList<>();
     private final TurnInfo turnInfo;
     private Colour turn;
     private int playersLeft;
-    private boolean[] eliminated=new boolean[3];
+    private final boolean[] eliminated=new boolean[3];
 
 //----------------------------------------------------------------------------------------------------------
 
@@ -34,6 +35,10 @@ public class Model extends Observable<NotifyMessages> {
     public GameBoard getGameBoard(){return gameboard;}
 
     public TurnInfo getTurnInfo(){return turnInfo;}
+
+    public ArrayList<GodCard> getGameDeck() {
+        return gameDeck;
+    }
 
     public void assignColour(ArrayList<Player> players){
 

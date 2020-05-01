@@ -3,6 +3,7 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.messages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.model.GodCard;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observer;
@@ -316,7 +317,19 @@ public class Controller implements Observer<PlayerMessage>{
 
     private void startGame(){
 
+    }
 
+    private void declaration(){
+
+        StringBuilder s = new StringBuilder();
+        s.append("THE CHOSEN CARDS FOR THIS MATCH ARE:\n\n");
+        for(GodCard godCard : model.getGameDeck()){
+            s.append(godCard.cardDeclaration());
+        }
+
+        for(VirtualView virtualView : virtualViews){
+            virtualView.reportInfo(new InfoMessage(s.toString()));
+        }
     }
 
     //TODO cosa succede se ho già rimosso una VV da observer di model nella quit, remove(niente) = errore?

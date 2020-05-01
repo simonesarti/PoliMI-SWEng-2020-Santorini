@@ -104,7 +104,7 @@ public class GodCard{
     public boolean canBeUsedIn3(){ return usableFor3Players;}
 
     public String cardDeclaration(){
-        return "GOD: " + name + " (" + title + ")\n" + "POWER: " + powerDescription;
+        return "GOD: " + name + " (" + title + ")\n" + "POWER: " + powerDescription+"\n\n";
     }
 
     private boolean toBoolean(String valid){
