@@ -102,7 +102,7 @@ public class Model extends Observable<NotifyMessages> {
      * @param player
      * @return boolean
      */
-    public boolean isPlayerTurn(Player player){ return player.getColour()== turn;}
+    public boolean isNotPlayerTurn(Player player){ return player.getColour() != turn;}
 
     public Colour getTurn(){
         return turn;
@@ -164,8 +164,14 @@ public class Model extends Observable<NotifyMessages> {
         return playersLeft;
     }
 
-    //TODO finire notify (ad esempio la win può termiare la partita/aggiungere eliminazioni e così via
-    //TODO lose deve rimuovere le pedine dal gioco dell'eliminato
+    public Colour getWinnerColour(){
+
+        if(!eliminated[0]) return Colour.WHITE;
+        else if(!eliminated[1]) return Colour.GREY;
+        else return Colour.GREY;
+    }
+
+    public void notifyNewTurn(Player player){notify(new NewTurnMessage(player));}
     public void notifyLoss(Player player){
         notify(new LoseMessage(player));
     }

@@ -98,6 +98,8 @@ public class ClientSideConnection extends Observable<Object> {
 
             ////////////////////////////////this clientSideConnection sends player info/////////////////////////////////
 
+            //TODO mancano tutti gli errori se sbaglia a inserire un dato
+
             Scanner stdin = new Scanner(System.in);
 
             System.out.println("What's your nickname?");

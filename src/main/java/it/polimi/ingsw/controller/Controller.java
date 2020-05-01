@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.*;
+import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observer;
@@ -36,6 +37,8 @@ public class Controller implements Observer<PlayerMessage>{
         //assign colours to players
         model.assignColour(players);
 
+        startGame();
+
     }
 
     /**
@@ -54,7 +57,7 @@ public class Controller implements Observer<PlayerMessage>{
             return;
         }
 
-        if(!model.isPlayerTurn(message.getPlayer())){
+        if(model.isNotPlayerTurn(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
             return;
         }
@@ -71,18 +74,19 @@ public class Controller implements Observer<PlayerMessage>{
             model.notifyNewBoardState();
             model.notifyLoss(message.getPlayer());
             model.removeFromGame(message.getPlayer());
-            //...
-            //TODO altro?
 
             //DEBUG:
             System.out.println("sconfitta");
 
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
-                //....
+
+                model.notifyVictory(getPlayerFromColour(model.getWinnerColour()));
+                endGame();
+
             }else {
                 model.updateTurn();
-                //...
+                model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
             }
 
             return;
@@ -104,6 +108,7 @@ public class Controller implements Observer<PlayerMessage>{
                     model.notifyNewBoardState();
                     model.notifyVictory(message.getPlayer());
                     //TODO altro?
+                    endGame();
 
                     //DEBUG:
                     System.out.println("vittoria");
@@ -145,7 +150,7 @@ public class Controller implements Observer<PlayerMessage>{
             return;
         }
 
-        if (!model.isPlayerTurn(message.getPlayer())) {
+        if (model.isNotPlayerTurn(message.getPlayer())) {
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
             return;
         }
@@ -172,8 +177,12 @@ public class Controller implements Observer<PlayerMessage>{
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
                 //....
+                model.notifyVictory(getPlayerFromColour(model.getWinnerColour()));
+                endGame();
+
             }else {
                 model.updateTurn();
+                model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
                 //...
             }
 
@@ -220,7 +229,7 @@ public class Controller implements Observer<PlayerMessage>{
             return;
         }
 
-        if(!model.isPlayerTurn(message.getPlayer())){
+        if(model.isNotPlayerTurn(message.getPlayer())){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
             return;
         }
@@ -238,6 +247,7 @@ public class Controller implements Observer<PlayerMessage>{
         System.out.println("turno completato con successo");
 
         model.updateTurn();
+        model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
         //TODO altro?
 
     }
@@ -277,6 +287,37 @@ public class Controller implements Observer<PlayerMessage>{
         else if(message instanceof PlayerQuitChoice){
             quitGame((PlayerQuitChoice)message);
 
+        }
+
+    }
+
+    private VirtualView getVirtualViewFromPlayer(Player player){
+
+        for(VirtualView virtualView : virtualViews){
+            if(virtualView.getPlayer().equals(player)){
+                return virtualView;
+            }
+        }
+        throw new IllegalArgumentException("INEXISTING Virtualview given the player "+player.getNickname());
+
+    }
+    private Player getPlayerFromColour(Colour colour){
+
+        for(VirtualView virtualView : virtualViews){
+            if(virtualView.getPlayer().getColour()==colour){
+                return virtualView.getPlayer();
+            }
+        }
+        throw new IllegalArgumentException("INEXISTING player given the colour "+colour);
+    }
+
+    private void startGame(){}
+    private void endGame(){
+
+        //remove every observers in MVC
+        for(VirtualView virtualView: virtualViews){
+            virtualView.removeObserver(this);
+            model.removeObserver(virtualView);
         }
 
     }

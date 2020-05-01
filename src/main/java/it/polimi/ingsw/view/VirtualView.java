@@ -66,19 +66,36 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     //TODO
     @Override
-    public void update(NotifyMessages message) {
+    public void update(NotifyMessages message){
 
         if(message instanceof NewBoardStateMessage){
             reportInfo((NewBoardStateMessage)message);
-        }else if (message instanceof LoseMessage){
 
-            if(((LoseMessage) message).getPlayer()==this.getPlayer()){
+        }
+
+        else if(message instanceof LoseMessage){
+
+            if(((LoseMessage) message).getPlayer() == this.getPlayer()) {
                 reportInfo(new InfoMessage(GameMessage.lose));
             }else{
-                reportInfo(new InfoMessage("Player "+((LoseMessage) message).getPlayer().getNickname()+ "lost\n"));
+                reportInfo(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + "lost\n"));
             }
 
-        }else if( message instanceof WinMessage){
+        }
+
+        else if(message instanceof NewTurnMessage){
+
+            String s="The previous turn ended.";
+
+            if(((NewTurnMessage)message).getPlayer()==this.getPlayer()){
+                reportInfo(new InfoMessage(s+" It's your turn now"));
+            }else{
+                reportInfo(new InfoMessage(s+" It's "+((NewTurnMessage) message).getPlayer().getNickname()+ "  turn now"));
+            }
+
+        }
+
+        else if( message instanceof WinMessage){
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){
                 reportInfo(new InfoMessage(GameMessage.win));
@@ -93,7 +110,9 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             }
 
 
-        }else if(message instanceof QuitMessage){
+        }
+
+        else if(message instanceof QuitMessage){
 
             if(((QuitMessage)message).getPlayer()==this.getPlayer()){
                 reportInfo(new InfoMessage(GameMessage.quit));
@@ -104,6 +123,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             }
         }
 
+        //TODO cosa succede se mi arriva una notify perchè sto ancora ascoltando model ma ho già chiuso la connessione
+        // perchè tizio ha fatto la quit???
 
     }
 }

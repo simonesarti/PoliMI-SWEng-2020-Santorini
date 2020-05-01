@@ -10,15 +10,14 @@ public class GameMessage {
     public static String win="You Win";
     public static String lose="You Lose";
     public static String quit="You are now going to be disconnected";
-    public static String gameOver="Game Over";
 
 
     //classic messages
     public static String turnCompleted = "You completed your turn, please enter END to confirm that you want to end it\n";
     public static String wrongTurn = "This isn't your turn, please wait\n";
-    public static String turnNotEnded = "You haven't completed your turn yet, please proceed to complete it with a move/build\n";
+    public static String turnNotEnded = "You haven't completed your turn yet, please complete it\n";
     public static String turnAlreadyEnded = "You have already completed your turn, please confirm that you want to end it\n";
-    public static String NotSameWorker = "You have to use the same worker as before\n";
+
 
     public static String eliminated = "You've already been eliminated\n";
     public static String notEliminated="You haven't been eliminated yet, you are not allowed to quit\n";
@@ -27,7 +26,7 @@ public class GameMessage {
     public static String moveRequest = "Make your move (worker number (1/2),x,y)";
 
     //Generic move error messages
-
+    public static String NotSameWorker = "You have to use the same worker as before\n";
     public static String alreadyMoved = "You have already moved, please go on with your turn\n";
     public static String noMoveToCompleteTower = "You can't move here, this space already contains a complete tower, please choose another position\n";
     public static String noMovedToOccupiedTower = "You can't move here, this space already contains another worker, please choose another position\n";
