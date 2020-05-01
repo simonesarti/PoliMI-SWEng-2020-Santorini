@@ -87,7 +87,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             }else {
                 model.updateTurn();
-                model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
+                //model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
             }
 
             return;
@@ -183,7 +183,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             }else {
                 model.updateTurn();
-                model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
+                //model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
                 //...
             }
 
@@ -248,7 +248,7 @@ public class Controller implements Observer<PlayerMessage>{
         System.out.println("turno completato con successo");
 
         model.updateTurn();
-        model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
+        //model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
         //TODO altro?
 
     }
@@ -334,13 +334,13 @@ public class Controller implements Observer<PlayerMessage>{
 
     //TODO cosa succede se ho già rimosso una VV da observer di model nella quit, remove(niente) = errore?
     private void endGame(){
-
+/*
         //remove every observers in MVC
         for(VirtualView virtualView: virtualViews){
             virtualView.removeObserver(this);
             //model.removeObserver(virtualView);
         }
-
+*/
     }
 
 
