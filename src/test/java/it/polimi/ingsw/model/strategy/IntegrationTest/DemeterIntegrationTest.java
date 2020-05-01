@@ -2,10 +2,10 @@ package it.polimi.ingsw.model.strategy.IntegrationTest;
 /*
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;

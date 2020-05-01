@@ -4,10 +4,10 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level3Block;
@@ -141,7 +141,6 @@ public class ArtemisIntegrationTest {
         //TURN RESET
         turnInfo.turnInfoReset();
 
-        return;
     }
 
     @AfterEach
@@ -170,8 +169,8 @@ public class ArtemisIntegrationTest {
         controller.update(moveMessage);
 
         //Artemis has moved not using his power. Did he move correctly?
-        assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(3, 0, 2)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 0, 2)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
 
@@ -185,8 +184,8 @@ public class ArtemisIntegrationTest {
         controller.update(moveMessage);
 
         //should not move
-        assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(3, 0, 2)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 0, 2)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
 
@@ -200,8 +199,8 @@ public class ArtemisIntegrationTest {
         controller.update(moveMessage);
 
         //should move
-        assertTrue((new Position(3,1,0)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(3, 1, 0)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(3, 0, 2)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
 
@@ -218,11 +217,11 @@ public class ArtemisIntegrationTest {
         //Artemis has built a level1block with his basicBuild strategy
 
         //checking that tower's height increased
-        assertTrue(gameBoard.getTowerCell(3,0).getTowerHeight()==3);
+        assertEquals(3, gameBoard.getTowerCell(3, 0).getTowerHeight());
         //checking that the piece is right
         assertTrue(gameBoard.getTowerCell(3,0).getLevel(2).getPiece() instanceof Level3Block);
         //checking that tower is not completed
-        assertTrue(gameBoard.getTowerCell(3,0).isTowerCompleted()==false);
+        assertFalse(gameBoard.getTowerCell(3, 0).isTowerCompleted());
         //checking that hasBuilt is true
         assertTrue(turnInfo.getHasAlreadyBuilt());
 
@@ -234,7 +233,7 @@ public class ArtemisIntegrationTest {
 
 
         //checking that tower's height didn't increase
-        assertTrue(gameBoard.getTowerCell(3,0).getTowerHeight()==3);
+        assertEquals(3, gameBoard.getTowerCell(3, 0).getTowerHeight());
         //checking that the piece is right
         assertTrue(gameBoard.getTowerCell(3,0).getLevel(2).getPiece() instanceof Level3Block);
 
@@ -354,8 +353,8 @@ public class ArtemisIntegrationTest {
             //method returns because the player has already moved
 
             //should have moved
-            assertTrue((new Position(1,0,0)).equals(player.getWorker(0).getCurrentPosition()));
-            assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+            assertEquals((new Position(1, 0, 0)), player.getWorker(0).getCurrentPosition());
+            assertEquals((new Position(2, 0, 2)), player.getWorker(0).getPreviousPosition());
             assertEquals(player.getWorker(0),gameBoard.getTowerCell(1,0).getFirstNotPieceLevel().getWorker());
             assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
 

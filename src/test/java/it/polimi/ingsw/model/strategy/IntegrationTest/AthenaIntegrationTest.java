@@ -4,17 +4,16 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
-import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -140,7 +139,6 @@ public class AthenaIntegrationTest {
         //TURN RESET
         turnInfo.turnInfoReset();
 
-        return;
     }
 
     @AfterEach

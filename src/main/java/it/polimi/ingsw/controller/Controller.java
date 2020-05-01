@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.*;
-import it.polimi.ingsw.messages.PlayerToGameMessages.*;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;

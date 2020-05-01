@@ -4,10 +4,10 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
@@ -17,7 +17,6 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
-import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -149,7 +148,6 @@ public class HephaestusIntegrationTest {
         //TURN RESET
         turnInfo.turnInfoReset();
 
-        return;
     }
 
     @AfterEach
@@ -179,8 +177,8 @@ public class HephaestusIntegrationTest {
         controller.update(moveMessage);
 
 
-        assertTrue((new Position(2, 2, 0)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2, 1, 0)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(2, 2, 0)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 1, 0)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0), gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(2, 1).getFirstNotPieceLevel().getWorker());
 
@@ -193,8 +191,8 @@ public class HephaestusIntegrationTest {
         controller.update(moveMessage);
 
         //all parameters must remain the same
-        assertTrue((new Position(2, 2, 0)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2, 1, 0)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(2, 2, 0)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 1, 0)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0), gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(2, 1).getFirstNotPieceLevel().getWorker());
 
@@ -213,11 +211,11 @@ public class HephaestusIntegrationTest {
         testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 0, true, false );
 
         //checking that tower's height increased
-        assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==2);
+        assertEquals(2, gameBoard.getTowerCell(2, 3).getTowerHeight());
         //checking that the piece is right
         assertTrue(gameBoard.getTowerCell(2,3).getLevel(1).getPiece() instanceof Level2Block);
         //checking that tower is not completed
-        assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
+        assertFalse(gameBoard.getTowerCell(2, 3).isTowerCompleted());
         //checking last build coordinates
         assertTrue(turnInfo.getLastBuildCoordinates()[0]==2 && turnInfo.getLastBuildCoordinates()[1]==3);
 
@@ -232,11 +230,11 @@ public class HephaestusIntegrationTest {
         testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 2, 0, true, true );
 
         //checking that tower's height increased
-        assertTrue(gameBoard.getTowerCell(2,3).getTowerHeight()==3);
+        assertEquals(3, gameBoard.getTowerCell(2, 3).getTowerHeight());
         //checking that the piece is right
         assertTrue(gameBoard.getTowerCell(2,3).getLevel(2).getPiece() instanceof Level3Block);
         //checking that tower is not completed
-        assertTrue(gameBoard.getTowerCell(2,3).isTowerCompleted()==false);
+        assertFalse(gameBoard.getTowerCell(2, 3).isTowerCompleted());
         //checking last build coordinates
         assertTrue(turnInfo.getLastBuildCoordinates()[0]==2 && turnInfo.getLastBuildCoordinates()[1]==3);
 
@@ -422,11 +420,11 @@ public class HephaestusIntegrationTest {
             testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 0, true, false );
 
             //checking that tower's height increased
-            assertTrue(gameBoard.getTowerCell(3,0).getTowerHeight()==3);
+            assertEquals(3, gameBoard.getTowerCell(3, 0).getTowerHeight());
             //checking that the piece is right
             assertTrue(gameBoard.getTowerCell(3,0).getLevel(2).getPiece() instanceof Level3Block);
             //checking that tower is not completed
-            assertTrue(gameBoard.getTowerCell(3,0).isTowerCompleted()==false);
+            assertFalse(gameBoard.getTowerCell(3, 0).isTowerCompleted());
             //checking last build coordinates
             assertTrue(turnInfo.getLastBuildCoordinates()[0]==3 && turnInfo.getLastBuildCoordinates()[1]==0);
 
@@ -486,11 +484,11 @@ public class HephaestusIntegrationTest {
             testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 2, 1, true, true);
 
             //checking that tower's height increased
-            assertTrue(gameBoard.getTowerCell(0,3).getTowerHeight()==1);
+            assertEquals(1, gameBoard.getTowerCell(0, 3).getTowerHeight());
             //checking that the piece is right
             assertTrue(gameBoard.getTowerCell(0,3).getLevel(0).getPiece() instanceof Level1Block);
             //checking that tower is not completed
-            assertTrue(gameBoard.getTowerCell(0,3).isTowerCompleted()==false);
+            assertFalse(gameBoard.getTowerCell(0, 3).isTowerCompleted());
             //checking last build coordinates
             assertTrue(turnInfo.getLastBuildCoordinates()[0]==0 && turnInfo.getLastBuildCoordinates()[1]==3);
         }

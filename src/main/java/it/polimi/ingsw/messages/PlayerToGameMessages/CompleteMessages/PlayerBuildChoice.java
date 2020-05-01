@@ -1,4 +1,4 @@
-package it.polimi.ingsw.messages.PlayerToGameMessages;
+package it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages;
 
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.model.Player;

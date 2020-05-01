@@ -4,10 +4,10 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level3Block;
@@ -15,7 +15,6 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
-import it.polimi.ingsw.view.View;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -145,7 +144,6 @@ public class AtlasIntegrationTest {
         //TURN RESET
         turnInfo.turnInfoReset();
 
-        return;
     }
 
     @AfterEach
@@ -291,11 +289,11 @@ public class AtlasIntegrationTest {
             //turnInfo must not have been modified since this class's BeforeEach
             testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 0, true, true );
             //checking that tower's height increased
-            assertTrue(gameBoard.getTowerCell(3,0).getTowerHeight()==3);
+            assertEquals(3, gameBoard.getTowerCell(3, 0).getTowerHeight());
             //checking that the piece is right
             assertTrue(gameBoard.getTowerCell(3,0).getLevel(2).getPiece() instanceof Dome);
             //checking that tower is not completed
-            assertTrue(gameBoard.getTowerCell(3,0).isTowerCompleted()==true);
+            assertTrue(gameBoard.getTowerCell(3, 0).isTowerCompleted());
 
         }
         //wrong worker
@@ -344,11 +342,11 @@ public class AtlasIntegrationTest {
             testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 0, true, true );
 
             //checking that tower's height increased
-            assertTrue(gameBoard.getTowerCell(3,0).getTowerHeight()==3);
+            assertEquals(3, gameBoard.getTowerCell(3, 0).getTowerHeight());
             //checking that the piece is right
             assertTrue(gameBoard.getTowerCell(3,0).getLevel(2).getPiece() instanceof Level3Block);
             //checking that tower is not completed
-            assertTrue(gameBoard.getTowerCell(3,0).isTowerCompleted()==false);
+            assertFalse(gameBoard.getTowerCell(3, 0).isTowerCompleted());
 
 
 

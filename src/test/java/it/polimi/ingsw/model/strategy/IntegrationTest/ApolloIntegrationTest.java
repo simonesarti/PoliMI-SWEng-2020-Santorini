@@ -4,10 +4,10 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerBuildChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerEndOfTurnChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level1Block;
@@ -144,7 +144,6 @@ public class ApolloIntegrationTest {
         //TURN RESET
         turnInfo.turnInfoReset();
 
-        return;
     }
 
     @AfterEach
@@ -176,8 +175,8 @@ public class ApolloIntegrationTest {
         controller.update(moveMessage);
 
         //Apollo has moved not using his power. Did he move correctly?
-        assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(3, 0, 2)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 0, 2)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
 
@@ -191,8 +190,8 @@ public class ApolloIntegrationTest {
         controller.update(moveMessage);
 
         //all parameters must remain the same
-        assertTrue((new Position(3,0,2)).equals(player.getWorker(0).getCurrentPosition()));
-        assertTrue((new Position(2,0,2)).equals(player.getWorker(0).getPreviousPosition()));
+        assertEquals((new Position(3, 0, 2)), player.getWorker(0).getCurrentPosition());
+        assertEquals((new Position(2, 0, 2)), player.getWorker(0).getPreviousPosition());
         assertEquals(player.getWorker(0),gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().getWorker());
         assertNull(gameBoard.getTowerCell(2,0).getFirstNotPieceLevel().getWorker());
 
@@ -213,7 +212,7 @@ public class ApolloIntegrationTest {
         //checking that the piece is right
         assertTrue(gameBoard.getTowerCell(3,1).getLevel(0).getPiece() instanceof Level1Block);
         //checking that tower is not completed
-        assertEquals(false, gameBoard.getTowerCell(3, 1).isTowerCompleted());
+        assertFalse(gameBoard.getTowerCell(3, 1).isTowerCompleted());
         //checking that hasBuilt is true
         assertTrue(turnInfo.getHasAlreadyBuilt());
 
@@ -226,9 +225,9 @@ public class ApolloIntegrationTest {
         //Apollo has built a level1block with his basicBuild strategy
 
         //checking that tower's height didn't increase
-        assertTrue(gameBoard.getTowerCell(2,1).getTowerHeight()==0);
+        assertEquals(0, gameBoard.getTowerCell(2, 1).getTowerHeight());
         //checking that the piece is right
-        assertTrue(gameBoard.getTowerCell(2,1).getLevel(0).getPiece() == null);
+        assertNull(gameBoard.getTowerCell(2, 1).getLevel(0).getPiece());
 
         //checking that hasAlreadyBuilt is still true
         assertTrue(turnInfo.getHasAlreadyBuilt());

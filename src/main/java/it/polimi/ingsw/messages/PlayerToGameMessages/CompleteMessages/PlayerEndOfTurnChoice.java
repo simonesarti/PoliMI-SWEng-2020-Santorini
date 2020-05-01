@@ -1,14 +1,19 @@
-package it.polimi.ingsw.messages.PlayerToGameMessages;
+package it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.VirtualView;
 
-public class PlayerQuitChoice extends PlayerMessage{
+/**
+ * End turn message
+ * View attribute is needed to report errors
+ *
+ */
+public class PlayerEndOfTurnChoice extends PlayerMessage {
 
     private final VirtualView virtualView;
     private final Player player;
 
-    public PlayerQuitChoice(VirtualView virtualView, Player player) {
+    public PlayerEndOfTurnChoice(VirtualView virtualView, Player player) {
         this.virtualView=virtualView;
         this.player = player;
     }
@@ -20,4 +25,5 @@ public class PlayerQuitChoice extends PlayerMessage{
     public Player getPlayer() {
         return player;
     }
+
 }

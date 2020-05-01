@@ -1,5 +1,6 @@
-package it.polimi.ingsw.messages.PlayerToGameMessages;
+package it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages;
 
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.VirtualView;
