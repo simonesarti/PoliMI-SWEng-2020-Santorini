@@ -123,8 +123,5 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             }
         }
 
-        //TODO cosa succede se mi arriva una notify perchè sto ancora ascoltando model ma ho già chiuso la connessione
-        // perchè tizio ha fatto la quit???
-
     }
 }

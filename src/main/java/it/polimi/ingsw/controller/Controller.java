@@ -262,6 +262,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
 
         model.notifyQuit(message.getPlayer());
+        model.removeObserver(message.getVirtualView());
     }
 
     /**
@@ -311,16 +312,26 @@ public class Controller implements Observer<PlayerMessage>{
         throw new IllegalArgumentException("INEXISTING player given the colour "+colour);
     }
 
-    private void startGame(){}
+
+
+    private void startGame(){
+
+
+    }
+
+    //TODO cosa succede se ho già rimosso una VV da observer di model nella quit, remove(niente) = errore?
     private void endGame(){
 
         //remove every observers in MVC
         for(VirtualView virtualView: virtualViews){
             virtualView.removeObserver(this);
-            model.removeObserver(virtualView);
+            //model.removeObserver(virtualView);
         }
 
     }
+
+
+
 
     //TODO rimuovere
     //TEST
