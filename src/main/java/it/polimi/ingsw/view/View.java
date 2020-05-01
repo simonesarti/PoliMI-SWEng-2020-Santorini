@@ -1,23 +1,36 @@
 package it.polimi.ingsw.view;
 
-import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.InfoMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.observe.Observer;
 
-//TODO da qualche parte ovviamente si dovrà chiamare View.addObserver(Client)
+//TODO Cli e Gui nei loro metodi, quando viene fatta una mossa, creano il dataMessage e chiamano client.writeToSocket(dataMessage)
+//TODO La View non deve avere un attributo Player vero? Sarebbe un problema perché voglio inizializzare la view separatamente senza avere bisogno di oggetto Player
+public abstract class View implements Observer<Object> {
 
-public abstract class View extends Observable<DataMessage> {
 
-    private final Player player;
+    private ClientSideConnection clientSideConnection;
 
-    public View(Player player){
+    public View(ClientSideConnection clientSideConnection){
 
-        this.player = player;
+        this.clientSideConnection = clientSideConnection;
     }
 
+    abstract public void showNewBoard(NewBoardStateMessage message);
 
+
+
+    @Override
+    public void update(Object message) {
+
+        if(message instanceof NewBoardStateMessage){
+            System.out.println("NewBoardStateMessage message arrived to client!");
+        } else if (message instanceof InfoMessage){
+            System.out.println("InfoMessage arrived to client!");
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+    }
 }

@@ -16699,7 +16699,7 @@
 											"top": 1926,
 											"width": 383,
 											"height": 13,
-											"text": "GameToPlayerrMessages"
+											"text": "GameToPlayerMessages"
 										},
 										{
 											"_type": "LabelView",
@@ -17293,7 +17293,7 @@
 											"top": -584,
 											"width": 187.8271484375,
 											"height": 13,
-											"text": "(from GameToPlayerrMessages)"
+											"text": "(from GameToPlayerMessages)"
 										},
 										{
 											"_type": "LabelView",
@@ -17472,7 +17472,7 @@
 											"top": -640,
 											"width": 187.8271484375,
 											"height": 13,
-											"text": "(from GameToPlayerrMessages)"
+											"text": "(from GameToPlayerMessages)"
 										},
 										{
 											"_type": "LabelView",
@@ -20951,7 +20951,7 @@
 											"top": -840,
 											"width": 187.8271484375,
 											"height": 13,
-											"text": "(from GameToPlayerrMessages)"
+											"text": "(from GameToPlayerMessages)"
 										},
 										{
 											"_type": "LabelView",
@@ -21130,7 +21130,7 @@
 											"top": -848,
 											"width": 187.8271484375,
 											"height": 13,
-											"text": "(from GameToPlayerrMessages)"
+											"text": "(from GameToPlayerMessages)"
 										},
 										{
 											"_type": "LabelView",
@@ -27929,7 +27929,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFxnQrCW9kYkHo="
 							},
-							"name": "GameToPlayerrMessages",
+							"name": "GameToPlayerMessages",
 							"ownedElements": [
 								{
 									"_type": "UMLClass",
