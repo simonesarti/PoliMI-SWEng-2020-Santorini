@@ -43,35 +43,32 @@ public class Server {
 
     public synchronized void lobby(PlayerConnection playerConnection) {
 
+
+
         if(playerConnection.getPlayerInfo().getNumberOfPlayers()==2){
 
             twoPlayerWaitingList.add(playerConnection);
 
             if(twoPlayerWaitingList.size()==2){
 
+
+                ArrayList<ServerSideConnection> connections = new ArrayList<>();
                 ServerSideConnection c21 = twoPlayerWaitingList.get(0).getServerSideConnection();
                 ServerSideConnection c22 = twoPlayerWaitingList.get(1).getServerSideConnection();
+                connections.add(c21);
+                connections.add(c22);
 
-                Player player21=new Player(twoPlayerWaitingList.get(0).getPlayerInfo());
-                Player player22=new Player(twoPlayerWaitingList.get(1).getPlayerInfo());
-
-                VirtualView player21VirtualView=new VirtualView(player21,c21);
-                VirtualView player22VirtualView=new VirtualView(player22,c22);
-
-                Model model = new Model(2);
-                Controller controller = new Controller(model);
-
-                model.addObserver(player21VirtualView);
-                model.addObserver(player22VirtualView);
-
-                player21VirtualView.addObserver(controller);
-                player22VirtualView.addObserver(controller);
-
-                model.assignColour2(player21,player22);
+                ArrayList<Player> players= new ArrayList<>();
+                Player player21 = new Player(twoPlayerWaitingList.get(0).getPlayerInfo());
+                Player player22 = new Player(twoPlayerWaitingList.get(1).getPlayerInfo());
+                players.add(player21);
+                players.add(player22);
 
                 twoPlayerGames.add(new TwoPlayerGameConnection(c21,c22));
-
                 twoPlayerWaitingList.clear();
+
+                //creates controller object, which starts the game
+                new Controller(players,connections);
 
             }
 
@@ -81,39 +78,29 @@ public class Server {
 
             if(threePlayerWaitingList.size()==3){
 
+                ArrayList<ServerSideConnection> connections = new ArrayList<>();
                 ServerSideConnection c31 = threePlayerWaitingList.get(0).getServerSideConnection();
                 ServerSideConnection c32 = threePlayerWaitingList.get(1).getServerSideConnection();
                 ServerSideConnection c33 = threePlayerWaitingList.get(2).getServerSideConnection();
+                connections.add(c31);
+                connections.add(c32);
+                connections.add(c33);
 
-                Player player31 = new Player(threePlayerWaitingList.get(0).getPlayerInfo());
-                Player player32 = new Player(threePlayerWaitingList.get(1).getPlayerInfo());
-                Player player33 = new Player(threePlayerWaitingList.get(2).getPlayerInfo());
-
-                VirtualView player31VirtualView = new VirtualView(player31,c31);
-                VirtualView player32VirtualView = new VirtualView(player32,c32);
-                VirtualView player33VirtualView = new VirtualView(player33,c33);
-
-                Model model = new Model(3);
-                Controller controller = new Controller(model);
-
-                model.addObserver(player31VirtualView);
-                model.addObserver(player32VirtualView);
-                model.addObserver(player33VirtualView);
-
-                player31VirtualView.addObserver(controller);
-                player32VirtualView.addObserver(controller);
-                player33VirtualView.addObserver(controller);
-
-                model.assignColour3(player31,player32,player33);
+                ArrayList<Player> players= new ArrayList<>();
+                Player player31=new Player(threePlayerWaitingList.get(0).getPlayerInfo());
+                Player player32=new Player(threePlayerWaitingList.get(1).getPlayerInfo());
+                Player player33=new Player(threePlayerWaitingList.get(2).getPlayerInfo());
+                players.add(player31);
+                players.add(player32);
+                players.add(player33);
 
                 threePlayerGames.add(new ThreePlayerGameConnection(c31,c32,c33));
-
                 threePlayerWaitingList.clear();
+
+                new Controller(players,connections);
+
             }
         }
-
-
-
 
     }
 
@@ -164,7 +151,6 @@ public class Server {
         }
         return index;
     }
-
 
     //TESTING METHOD
     public void closeServerSocket() throws IOException {

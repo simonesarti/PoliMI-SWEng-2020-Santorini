@@ -3,20 +3,39 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.messages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.*;
 import it.polimi.ingsw.model.Model;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observer;
+import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.view.VirtualView;
+
+import java.util.ArrayList;
 
 public class Controller implements Observer<PlayerMessage>{
 
     private final Model model;
+    private final ArrayList<VirtualView> virtualViews=new ArrayList<>();
 
-    /**
-     * Costruttore della classe Controller
-     * @param model
-     */
-    public Controller(Model model){
-        super();
-        this.model = model;
+    public Controller(ArrayList<Player> players, ArrayList<ServerSideConnection> connections){
+
+        int numberOfPlayers=players.size();
+
+        //creates model passing the number of players
+        model=new Model(numberOfPlayers);
+        
+        //creates one virtualView for each player
+        for(int i=0;i<numberOfPlayers;i++){
+            virtualViews.add(new VirtualView(players.get(i),connections.get(i)));
+        }
+        
+        //every virtualView is added as model's observer, and controller is added as observer for every virtualView
+        for (VirtualView virtualView : virtualViews) {
+            model.addObserver(virtualView);
+            virtualView.addObserver(this);
+        }
+
+        //assign colours to players
+        model.assignColour(players);
+
     }
 
     /**
@@ -259,6 +278,14 @@ public class Controller implements Observer<PlayerMessage>{
             quitGame((PlayerQuitChoice)message);
 
         }
+
+    }
+
+    //TODO rimuovere
+    //TEST
+    public Controller(Model model){
+        super();
+        this.model=model;
 
     }
 

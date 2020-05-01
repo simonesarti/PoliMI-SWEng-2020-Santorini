@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.messages.GameToPlayerMessages.*;
 import it.polimi.ingsw.observe.Observable;
 
+import java.util.ArrayList;
+
 /**
  * This class contains an instance of Gameboard and schedules players' turns
  */
@@ -33,7 +35,16 @@ public class Model extends Observable<NotifyMessages> {
 
     public TurnInfo getTurnInfo(){return turnInfo;}
 
-    public void assignColour2(Player player1, Player player2){
+    public void assignColour(ArrayList<Player> players){
+
+        if(players.size()==2){
+            assignColour2(players.get(0),players.get(1));
+        }else{
+            assignColour3(players.get(0),players.get(1),players.get(2));
+        }
+    }
+    
+    private void assignColour2(Player player1, Player player2){
 
         if(player1.getBirthday().compareTo(player2.getBirthday())<=0){
             player1.setColour(Colour.WHITE);
@@ -44,7 +55,7 @@ public class Model extends Observable<NotifyMessages> {
         }
     }
 
-    public void assignColour3(Player player1, Player player2,Player player3){
+    private void assignColour3(Player player1, Player player2,Player player3){
 
         if(player1.getBirthday().compareTo(player2.getBirthday()) <=0 &&
            player1.getBirthday().compareTo(player3.getBirthday()) <=0){
