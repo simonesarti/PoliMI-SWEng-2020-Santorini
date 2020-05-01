@@ -10,20 +10,7 @@ import it.polimi.ingsw.view.VirtualView;
  */
 public class PlayerEndOfTurnChoice extends PlayerMessage {
 
-    private final VirtualView virtualView;
-    private final Player player;
-
     public PlayerEndOfTurnChoice(VirtualView virtualView, Player player) {
-        this.virtualView=virtualView;
-        this.player = player;
+        super(virtualView, player);
     }
-
-    public VirtualView getVirtualView() {
-        return virtualView;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
 }

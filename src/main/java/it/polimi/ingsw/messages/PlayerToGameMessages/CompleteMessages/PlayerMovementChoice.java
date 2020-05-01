@@ -1,6 +1,5 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.VirtualView;
@@ -11,24 +10,12 @@ import it.polimi.ingsw.view.VirtualView;
  */
 public class PlayerMovementChoice extends PlayerMessage {
 
-    private final VirtualView virtualView;
-    private final Player player;
     private final MoveData moveData;
 
     //chosenWorker must be 0 or 1
     public PlayerMovementChoice(VirtualView virtualView, Player player, MoveData moveData) {
-
-        this.virtualView=virtualView;
-        this.player = player;
+        super(virtualView,player);
         this.moveData=moveData;
-    }
-
-    public VirtualView getVirtualView() {
-        return virtualView;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
     public int getChosenWorker() { return moveData.getChosenWorker();}

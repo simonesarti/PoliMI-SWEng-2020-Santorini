@@ -10,22 +10,12 @@ import it.polimi.ingsw.view.VirtualView;
  */
 public class PlayerBuildChoice extends PlayerMessage {
 
-    private final VirtualView virtualView;
-    private final Player player;
     private final BuildData buildData;
 
 
     public PlayerBuildChoice(VirtualView virtualView, Player player, BuildData buildData) {
-
-        this.virtualView=virtualView;
-        this.player = player;
+        super(virtualView,player);
         this.buildData=buildData;
-    }
-
-    public VirtualView getVirtualView(){ return virtualView;}
-
-    public Player getPlayer() {
-        return player;
     }
 
     public int[] getBuildingInto() {
