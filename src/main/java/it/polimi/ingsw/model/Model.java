@@ -233,12 +233,8 @@ public class Model extends Observable<NotifyMessages> {
 
 
     public void notifyNewTurn(Player player){notify(new NewTurnMessage(player));}
-
     public void notifyVictory(Player player){
         notify(new WinMessage(player));
-    }
-    public void notifyQuit(Player player){
-        notify(new QuitMessage((player)));
     }
 
     private void notifyLoss(Player player){

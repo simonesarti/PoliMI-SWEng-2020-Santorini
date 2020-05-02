@@ -250,7 +250,8 @@ public class Controller implements Observer<PlayerMessage>{
             return;
         }
 
-        model.notifyQuit(message.getPlayer());
+        message.getVirtualView().reportInfo(new InfoMessage(GameMessage.quit));
+        message.getVirtualView().leave();
         model.removeObserver(message.getVirtualView());
     }
 
@@ -291,6 +292,7 @@ public class Controller implements Observer<PlayerMessage>{
         throw new IllegalArgumentException("INEXISTING Virtualview given the player "+player.getNickname());
 
     }
+
     private Player getPlayerFromColour(Colour colour){
 
         for(VirtualView virtualView : virtualViews){

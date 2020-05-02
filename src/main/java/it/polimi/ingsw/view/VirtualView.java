@@ -46,7 +46,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         return player;
     }
 
-
     private void notifyController(DataMessage message){
 
         if(message instanceof MoveData){
@@ -62,6 +61,13 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     public void reportInfo(Object message){
         connectionToClient.asyncSend(message);
+    }
+
+    public void leave(){
+        //this virtualView stops listening to new inputs
+        connectionToClient.removeObserver(playerMessageReceiver);
+        //connection thread terminates
+        connectionToClient.notInUse();
     }
 
     //TODO
@@ -112,16 +118,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
         }
 
-        else if(message instanceof QuitMessage){
-
-            if(((QuitMessage)message).getPlayer()==this.getPlayer()){
-                reportInfo(new InfoMessage(GameMessage.quit));
-                //only this player's virtualView will stop listening to new inputs
-                connectionToClient.removeObserver(playerMessageReceiver);
-                //connection thread terminates
-                connectionToClient.notInUse();
-            }
-        }
-
     }
+
+
 }
