@@ -145,17 +145,17 @@ public class Model extends Observable<NotifyMessages> {
 
         turnInfo.turnInfoReset();
 
-        notifyNewTurn(getPlayerFromColour(players));
+        notifyNewTurn(getPlayerFromColour(players,turn));
     }
 
-    private Player getPlayerFromColour(ArrayList<Player> players) {
+    private Player getPlayerFromColour(ArrayList<Player> players, Colour colour) {
 
         for(Player player : players){
-            if(player.getColour()==turn){
+            if(player.getColour()==colour){
                 return player;
             }
         }
-        throw new IllegalStateException("INEXISTING PLAYER WITH NEW TURN COLOUR ASSOCIATED");
+        throw new IllegalStateException("INEXISTING PLAYER WITH SUCH ASSOCIATED"+ colour);
     }
 
 
@@ -187,6 +187,10 @@ public class Model extends Observable<NotifyMessages> {
         if(!eliminated[0]) return Colour.WHITE;
         else if(!eliminated[1]) return Colour.GREY;
         else return Colour.GREY;
+    }
+
+    public void declareWinner(ArrayList<Player> players){
+        notifyVictory(getPlayerFromColour(players,getWinnerColour()));
     }
 
 
@@ -244,12 +248,9 @@ public class Model extends Observable<NotifyMessages> {
     }
 
 
-
-
-    public void notifyVictory(Player player){
+    private void notifyVictory(Player player){
         notify(new WinMessage(player));
     }
-
     private void notifyNewTurn(Player player){ notify(new NewTurnMessage(player)); }
     private void notifyLoss(Player player){
         notify(new LoseMessage(player));

@@ -14,7 +14,7 @@ public class ClientApp {
         //client.run (verranno chieste info giocatore)
         //Chiedere gui o cli a utente
         //istanziare View (quindi o gui o cli) passandole il client nel costruttore
-
+/*
         try {
             clientSideConnection.run();
         } catch (IOException e) {
@@ -22,7 +22,7 @@ public class ClientApp {
             e.printStackTrace();
         }
 
-
+*/
 
 
     }

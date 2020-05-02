@@ -79,7 +79,8 @@ public class Controller implements Observer<PlayerMessage>{
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
 
-                model.notifyVictory(getPlayerFromColour(model.getWinnerColour()));
+                //TODO abilitare comando
+                //model.declareWinner(getPlayers());
                 endGame();
 
             }else {
@@ -168,8 +169,9 @@ public class Controller implements Observer<PlayerMessage>{
 
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
-                //....
-                model.notifyVictory(getPlayerFromColour(model.getWinnerColour()));
+
+                //TODO abilitare comando
+                //model.declareWinner(getPlayers());
                 endGame();
 
             }else {
@@ -289,16 +291,6 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
 
-    private Player getPlayerFromColour(Colour colour){
-
-        for(VirtualView virtualView : virtualViews){
-            if(virtualView.getPlayer().getColour()==colour){
-                return virtualView.getPlayer();
-            }
-        }
-        throw new IllegalArgumentException("INEXISTING player given the colour "+colour);
-    }
-
     private ArrayList<Player> getPlayers(){
 
         ArrayList<Player> players=new ArrayList<>();
@@ -306,12 +298,6 @@ public class Controller implements Observer<PlayerMessage>{
             players.add(virtualView.getPlayer());
         }
         return players;
-    }
-
-
-
-    private void startGame(){
-
     }
 
     private void declaration(){
@@ -325,6 +311,10 @@ public class Controller implements Observer<PlayerMessage>{
         for(VirtualView virtualView : virtualViews){
             virtualView.reportInfo(new InfoMessage(s.toString()));
         }
+    }
+
+    private void startGame(){
+
     }
 
     //TODO cosa succede se ho già rimosso una VV da observer di model nella quit, remove(niente) = errore?
