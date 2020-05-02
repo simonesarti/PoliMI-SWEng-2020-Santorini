@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Player player;
         Player enemy1Player;
         Player enemy2Player;
-        PlayerInfo playerInfo;
+        PlayerInfo testPlayerInfo;
         PlayerInfo enemy1Info;
         PlayerInfo enemy2Info;
 
@@ -48,21 +48,21 @@ import static org.junit.jupiter.api.Assertions.*;
             turnInfo = model.getTurnInfo();
             testSupportFunctions = new TestSupportFunctions();
 
-            playerInfo = new PlayerInfo("Gianpaolo", new GregorianCalendar(1970, Calendar.JULY, 15));
-            player = new Player(playerInfo);
+            testPlayerInfo = new PlayerInfo("Gianpaolo", new GregorianCalendar(1970, Calendar.JULY, 15));
+            player = new Player(testPlayerInfo);
             player.setColour(Colour.WHITE);
             player.getWorker(0).setStartingPosition(3, 0);
             player.getWorker(1).setStartingPosition(0, 1);
 
 
             enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(2000, Calendar.NOVEMBER, 30));
-            enemy1Player = new Player(playerInfo);
+            enemy1Player = new Player(testPlayerInfo);
             enemy1Player.setColour(Colour.BLUE);
             enemy1Player.getWorker(0).setStartingPosition(0, 1);
             enemy1Player.getWorker(1).setStartingPosition(0, 2);
 
             enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1999, Calendar.DECEMBER, 7));
-            enemy2Player = new Player(playerInfo);
+            enemy2Player = new Player(testPlayerInfo);
             enemy2Player.setColour(Colour.GREY);
             enemy2Player.getWorker(0).setStartingPosition(0, 3);
             enemy2Player.getWorker(1).setStartingPosition(0, 4);

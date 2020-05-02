@@ -326,6 +326,10 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
 
+    //TEST FUCTIONS
+    public Model getModel(){return model;}
+    public ArrayList<VirtualView> getVirtualViews(){return virtualViews;}
+
 
 
     //TODO rimuovere
