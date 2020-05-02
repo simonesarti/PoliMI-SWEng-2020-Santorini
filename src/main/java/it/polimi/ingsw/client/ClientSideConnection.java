@@ -17,7 +17,7 @@ import java.util.Scanner;
 /**
  * Is linked to a ServerSideConnection via socket. Receives messages and has async/sync send method
  */
-public class ClientSideConnection extends Observable<Object> {
+public class ClientSideConnection extends Observable<Object> implements Runnable{
 
     private String ip;
     private int port;
@@ -64,6 +64,23 @@ public class ClientSideConnection extends Observable<Object> {
     }
  */
 
+    public synchronized void closeConnection(){
+
+        try {
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            socket.close();
+        } catch (IOException e) {
+            System.err.println("Error while closing socket!");
+        }
+
+
+    }
     public void asyncSend(final Object message){
         new Thread(new Runnable() {
             @Override
@@ -86,7 +103,7 @@ public class ClientSideConnection extends Observable<Object> {
     }
 
 
-    public void run() throws IOException {
+    public void run() {
 
         try {
 
@@ -134,9 +151,7 @@ public class ClientSideConnection extends Observable<Object> {
 
         }finally{
 
-            inputStream.close();
-            outputStream.close();
-            socket.close();
+            closeConnection();
 
         }
     }
