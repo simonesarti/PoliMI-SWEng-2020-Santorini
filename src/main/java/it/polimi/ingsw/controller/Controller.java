@@ -312,6 +312,7 @@ public class Controller implements Observer<PlayerMessage>{
 
     public void startGame(){
 
+        declaration();
     }
 
     //TODO cosa succede se ho già rimosso una VV da observer di model nella quit, remove(niente) = errore?

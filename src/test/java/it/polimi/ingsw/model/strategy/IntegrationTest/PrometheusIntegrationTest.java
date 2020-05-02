@@ -51,6 +51,11 @@ public class PrometheusIntegrationTest {
     GameBoard gameBoard;
     TurnInfo turnInfo;
 
+    //TODO TOGLIERE
+    EmptyVirtualView emptyVirtualView1;
+    EmptyVirtualView emptyVirtualView2;
+    EmptyVirtualView emptyVirtualView3;
+
     TestSupportFunctions testSupportFunctions=new TestSupportFunctions();
 
     @BeforeEach
@@ -87,12 +92,17 @@ public class PrometheusIntegrationTest {
         connections.add(c1);
         connections.add(c2);
         connections.add(c3);
-
+        
         controller=new Controller(players,connections);
         virtualViews=controller.getVirtualViews();
         model=controller.getModel();
         turnInfo=model.getTurnInfo();
         gameBoard=model.getGameBoard();
+        
+        //nel frattempo 
+        emptyVirtualView1=new EmptyVirtualView(testPlayer,c1);
+        emptyVirtualView2=new EmptyVirtualView(enemy1Player,c2);
+        emptyVirtualView3=new EmptyVirtualView(enemy2Player,c3);
 
         testPlayer.getWorker(0).setStartingPosition(0, 0);
         testPlayer.getWorker(1).setStartingPosition(1, 0);
@@ -160,10 +170,10 @@ public class PrometheusIntegrationTest {
         @Test
         void EndBeforeEverything() {
 
-            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(emptyVirtualView1, testPlayer);
             controller.update(message);
             //method returns immediately
-
+            
             //turnInfo must still have all his initial values
             testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
 
@@ -172,7 +182,7 @@ public class PrometheusIntegrationTest {
         @Test
         void WrongBuildBeforeEverything() {
 
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(-2, 1, 2, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(-2, 1, 2, "Block"));
             controller.update(message);
             //invalid chosenworker, should execute and give error back
 
@@ -183,7 +193,7 @@ public class PrometheusIntegrationTest {
         @Test
         void CorrectBuildBeforeEverything() {
 
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 1, 2, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 1, 2, "Block"));
             controller.update(message);
             //invalid chosenworker, should execute and give error back
 
@@ -196,7 +206,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void WrongMoveBeforeEverything() {
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 2, 4));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 2, 4));
             controller.update(message);
             //invalid move, denied, occupied position
 
@@ -206,7 +216,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void MoveBeforeEverythingNoWin() {
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 1, 4));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 1, 4));
             controller.update(message);
             //valid move, no win
 
@@ -219,7 +229,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void MoveBeforeEverythingAndWin() {
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 3, 2));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 3, 2));
             controller.update(message);
             //valid move, with win
 
@@ -236,7 +246,7 @@ public class PrometheusIntegrationTest {
             gameBoard.getTowerCell(0,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
             testPlayer.getWorker(1).movedToPosition(0,4,3);
 
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 0, 3));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 0, 3));
             controller.update(message);
             //valid move, no Pan win
 
@@ -297,7 +307,7 @@ public class PrometheusIntegrationTest {
         @Test
         void EndAfterFirstBuild(){
 
-            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(emptyVirtualView1, testPlayer);
             controller.update(message);
             //method returns immediately, turn incomplete
 
@@ -309,7 +319,7 @@ public class PrometheusIntegrationTest {
         @Test
         void BuildAfterFirstBuild(){
 
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 3, 2, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 3, 2, "Block"));
             controller.update(message);
             //can't build again before moving
 
@@ -321,7 +331,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void ImpossibleMoveAfterFistBuildBecauseOfOwnPower(){
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 3, 2));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 3, 2));
             controller.update(message);
             //invalid move, can't move up because of his own power
 
@@ -335,7 +345,7 @@ public class PrometheusIntegrationTest {
         @Test
         void MoveAfterFistBuild(){
 
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 1, 2));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 1, 2));
             controller.update(message);
             //valid move, no win
 
@@ -407,7 +417,7 @@ public class PrometheusIntegrationTest {
         @Test
         void EndAfterBuildAndMove(){
 
-            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(emptyVirtualView1, testPlayer);
             controller.update(message);
             //method returns immediately, turn incomplete
 
@@ -418,7 +428,7 @@ public class PrometheusIntegrationTest {
         @Test
         void MoveAfterBuildAndMove(){
 
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 0, 3));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 0, 3));
             controller.update(message);
             //can't move again
 
@@ -433,7 +443,7 @@ public class PrometheusIntegrationTest {
         @Test
         void WrongSecondBuild(){
 
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 0, 2, "Dome"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 0, 2, "Dome"));
             controller.update(message);
             //can build, but tower complete and type of piece is wrong, should give error regarding the complete tower
 
@@ -445,7 +455,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void CorrectSecondBuild(){
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 0, 3, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 0, 3, "Block"));
             controller.update(message);
             //should build
 
@@ -513,7 +523,7 @@ public class PrometheusIntegrationTest {
         @Test
         void EndLongTurn(){
 
-            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(emptyVirtualView1, testPlayer);
             controller.update(message);
             //turn has ended
 
@@ -526,7 +536,7 @@ public class PrometheusIntegrationTest {
         @Test
         void noMoreMoves(){
 
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 0, 3));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 0, 3));
             controller.update(message);
             //can't move after turn end
 
@@ -540,7 +550,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void noMoreBuilds(){
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 0, 3, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 0, 3, "Block"));
             controller.update(message);
             //can't build after turn end
 
@@ -600,7 +610,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void endAfterMove(){
-            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(emptyVirtualView1, testPlayer);
             controller.update(message);
             //method returns immediately because the turn cannot end
 
@@ -610,7 +620,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void moveAfterMove(){
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 1, 4));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 1, 4));
             controller.update(message);
             //player can't move again because he has already moved, moreover he wants to move to his own position
 
@@ -620,7 +630,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void WrongBuildAfterMove(){
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 2, 5, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 2, 5, "Block"));
             controller.update(message);
             //invalid space on gameboard
 
@@ -631,7 +641,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void CorrectBuildAfterMove() {
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 0, 4, "Dome"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 0, 4, "Dome"));
             controller.update(message);
             //build ok
 
@@ -697,7 +707,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void endAfterMoveAndBuild(){
-            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(emptyVirtualView1, testPlayer);
             controller.update(message);
             //ok, turn must end
 
@@ -710,7 +720,7 @@ public class PrometheusIntegrationTest {
         @Test
         void moveAfterMoveAndBuild(){
 
-            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(1, 1, 4));
+            PlayerMessage message = new PlayerMovementChoice(emptyVirtualView1, testPlayer, new MoveData(1, 1, 4));
             controller.update(message);
             //player can't move again because the turn has ended, moreover he wants to move to his own position
             testSupportFunctions.baseTurnInfoChecker(turnInfo, true, 1, true, 1, 1, true, true);
@@ -718,7 +728,7 @@ public class PrometheusIntegrationTest {
 
         @Test
         void buildAfterMoveAndBuild(){
-            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 0, 4, "Dome"));
+            PlayerMessage message = new PlayerBuildChoice(emptyVirtualView1, testPlayer, new BuildData(1, 0, 4, "Dome"));
             controller.update(message);
             //can't move after turn end, and can't build on top of dome (should not arrive here)
 

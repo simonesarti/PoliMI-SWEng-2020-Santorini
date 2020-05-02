@@ -153,7 +153,7 @@ public class Server {
         return index;
     }
 
-    //TODO remove
+
     //TESTING METHOD
     public void closeServerSocket() throws IOException {
         this.serverSocket.close();

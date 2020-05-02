@@ -125,8 +125,8 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
             //now it keeps receiving messages while the connections stay active
             while (isActive()) {
-                //probabilmente è inutile castare a Object ma per ora lo tengo per sicurezza
-                notify((Object)inputStream.readObject());
+
+                notify(inputStream.readObject());
             }
         } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
 

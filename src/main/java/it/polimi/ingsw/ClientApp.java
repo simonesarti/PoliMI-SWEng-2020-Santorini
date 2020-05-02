@@ -15,9 +15,10 @@ public class ClientApp {
         Thread t0 = new Thread(clientSideConnection);
         //ORDINE:
         //Istanzio Client
-        //client.run (verranno chieste info giocatore)
         //Chiedere gui o cli a utente
         //istanziare View (quindi o gui o cli) passandole il client nel costruttore
+        //client.run (verranno chieste info giocatore)
+
 
         //running clientSideConnection
         t0.start();
