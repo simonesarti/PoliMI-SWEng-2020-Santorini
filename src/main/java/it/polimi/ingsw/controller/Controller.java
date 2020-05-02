@@ -37,9 +37,6 @@ public class Controller implements Observer<PlayerMessage>{
 
         //assign colours to players
         model.assignColour(players);
-
-        startGame();
-
     }
 
     /**
@@ -313,7 +310,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
     }
 
-    private void startGame(){
+    public void startGame(){
 
     }
 

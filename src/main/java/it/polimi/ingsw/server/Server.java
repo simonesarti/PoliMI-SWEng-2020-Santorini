@@ -67,8 +67,8 @@ public class Server {
                 twoPlayerGames.add(new TwoPlayerGameConnection(c21,c22));
                 twoPlayerWaitingList.clear();
 
-                //creates controller object, which starts the game
-                new Controller(players,connections);
+                Controller controller=new Controller(players,connections);
+                controller.startGame();
 
             }
 
@@ -97,7 +97,8 @@ public class Server {
                 threePlayerGames.add(new ThreePlayerGameConnection(c31,c32,c33));
                 threePlayerWaitingList.clear();
 
-                new Controller(players,connections);
+                Controller controller=new Controller(players,connections);
+                controller.startGame();
 
             }
         }
