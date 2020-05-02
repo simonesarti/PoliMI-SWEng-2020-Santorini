@@ -83,8 +83,10 @@ public class Controller implements Observer<PlayerMessage>{
                 endGame();
 
             }else {
+
+                //TODO passare alla nuova versione
                 model.updateTurn();
-                //model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
+                //model.updateTurn(getPlayers());
             }
 
             return;
@@ -171,9 +173,11 @@ public class Controller implements Observer<PlayerMessage>{
                 endGame();
 
             }else {
+
+                //TODO passare alla nuova versione
                 model.updateTurn();
-                //model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
-                //...
+                //model.updateTurn(getPlayers());
+
             }
 
             return;
@@ -235,8 +239,10 @@ public class Controller implements Observer<PlayerMessage>{
         //DEBUG
         System.out.println("turno completato con successo");
 
+        //TODO passare alla nuova versione
         model.updateTurn();
-        //model.notifyNewTurn(getPlayerFromColour(model.getTurn()));
+        //model.updateTurn(getPlayers());
+
         //TODO altro?
 
     }
@@ -282,16 +288,6 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
-    private VirtualView getVirtualViewFromPlayer(Player player){
-
-        for(VirtualView virtualView : virtualViews){
-            if(virtualView.getPlayer().equals(player)){
-                return virtualView;
-            }
-        }
-        throw new IllegalArgumentException("INEXISTING Virtualview given the player "+player.getNickname());
-
-    }
 
     private Player getPlayerFromColour(Colour colour){
 

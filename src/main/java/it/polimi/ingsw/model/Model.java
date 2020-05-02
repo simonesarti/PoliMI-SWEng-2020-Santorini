@@ -116,7 +116,7 @@ public class Model extends Observable<NotifyMessages> {
     /**
      * updates the turn based on the order of the player, and resets turnInfo
     */
-    public void updateTurn() {
+    public void updateTurn(ArrayList<Player> players) {
 
         switch(turn){
 
@@ -144,7 +144,20 @@ public class Model extends Observable<NotifyMessages> {
         }
 
         turnInfo.turnInfoReset();
+
+        notifyNewTurn(getPlayerFromColour(players));
     }
+
+    private Player getPlayerFromColour(ArrayList<Player> players) {
+
+        for(Player player : players){
+            if(player.getColour()==turn){
+                return player;
+            }
+        }
+        throw new IllegalStateException("INEXISTING PLAYER WITH NEW TURN COLOUR ASSOCIATED");
+    }
+
 
     public boolean isEliminated(Player player){
         return eliminated[player.getColour().ordinal()];
@@ -232,11 +245,12 @@ public class Model extends Observable<NotifyMessages> {
 
 
 
-    public void notifyNewTurn(Player player){notify(new NewTurnMessage(player));}
+
     public void notifyVictory(Player player){
         notify(new WinMessage(player));
     }
 
+    private void notifyNewTurn(Player player){ notify(new NewTurnMessage(player)); }
     private void notifyLoss(Player player){
         notify(new LoseMessage(player));
     }
@@ -244,6 +258,38 @@ public class Model extends Observable<NotifyMessages> {
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
 
+
+
+    //TESTING METHODS TO REMOVE
+    public void updateTurn(){
+
+        switch(turn){
+
+            case WHITE:
+                if(!eliminated[1]) turn=Colour.BLUE;
+                else if (!eliminated[2]) turn=Colour.GREY;
+                else turn=Colour.WHITE;
+                break;
+
+
+            case BLUE:
+                if(!eliminated[2]) turn=Colour.GREY;
+                else if(!eliminated[0]) turn=Colour.WHITE;
+                else turn=Colour.BLUE;
+                break;
+
+            case GREY:
+                if(!eliminated[0]) turn=Colour.WHITE;
+                else if(!eliminated[1]) turn=Colour.BLUE;
+                else turn=Colour.GREY;
+                break;
+
+            default:
+                break;
+        }
+
+        turnInfo.turnInfoReset();
+    }
 
     /**
      * For testing purpose only
