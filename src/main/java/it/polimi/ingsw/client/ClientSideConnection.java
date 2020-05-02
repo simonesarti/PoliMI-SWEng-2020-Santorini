@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 //TODO Il messaggio PlayerInfo lo inviamo nella fase di creazione del Client. Sempre in questa fase facciamo scegliere Cli o Gui e quindi istanziamo in base alla scelta
@@ -115,24 +119,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
             ////////////////////////////////this clientSideConnection sends player info/////////////////////////////////
 
-            //TODO mancano tutti gli errori se sbaglia a inserire un dato
-
-            Scanner stdin = new Scanner(System.in);
-
-            System.out.println("What's your nickname?");
-            String nickname = stdin.nextLine();
-
-            System.out.println("Insert birthday:");
-            String birthdayString = stdin.nextLine();
-
-            //need to create a new Calendar object with birthdayString data
-            System.out.println("Insert number of players:");
-            int numberOfPlayers = Integer.parseInt(stdin.nextLine());
-
-            //sending PlayerInfo msg to serverSideConnection
-            //asyncSend(new PlayerInfo(nickname,birthday,numberOfPlayers));
-
-            stdin.close();
+            readAndSendPlayerInfo();
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -158,7 +145,76 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
 
 
+    public boolean isDateValid(String date){
 
+        String DATE_FORMAT = "dd-MM-yyyy";
+
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public void readAndSendPlayerInfo(){
+
+
+
+        Scanner stdin = new Scanner(System.in);
+
+        System.out.println("What's your nickname?");
+        String nickname = stdin.nextLine();
+
+
+        int month = 0;
+        int day = 0;
+        int year = 0;
+
+        while (true) {
+            try {
+                System.out.println("Insert birthday day:");
+                day = Integer.parseInt(stdin.nextLine());
+                System.out.println("Insert birthday month:");
+                month = Integer.parseInt(stdin.nextLine());
+                System.out.println("Insert birthday year:");
+                year = Integer.parseInt(stdin.nextLine());
+
+                String dateString = day +"-"+month+"-"+year;
+                if(isDateValid(dateString)){
+                    break; // if no exceptions breaks out of loop
+                }
+                System.out.print("Not valid, try again");
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.out.print("Not a number, try again");
+            }
+        }
+        //need to create a new Calendar object with birthdayString data
+        int numberOfPlayers = 0;
+        while (true) {
+            try {
+                System.out.println("Insert number of players:");
+                numberOfPlayers = Integer.parseInt(stdin.nextLine());
+                if(numberOfPlayers!=2 && numberOfPlayers!=3){
+                    break;
+                }
+                System.out.print("Not valid, try again");
+            } catch (NumberFormatException e) {
+                System.out.print("Not a number, try again");
+                e.printStackTrace();
+            }
+        }
+
+        //sending PlayerInfo msg to serverSideConnection
+        asyncSend(new PlayerInfo(nickname,new GregorianCalendar(month,day,year),numberOfPlayers));
+        stdin.close();
+    }
 
     public synchronized boolean isActive(){
         return active;
