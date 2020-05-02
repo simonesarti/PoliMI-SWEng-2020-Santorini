@@ -71,10 +71,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
 
         //CHECK LOSE
-        if(message.getPlayer().getGodCard().getLoseStrategy().movementLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())) {
-            model.notifyNewBoardState();
-            model.notifyLoss(message.getPlayer());
-            model.removeFromGame(message.getPlayer());
+        if(model.performLoseCheck(message.getPlayer(),message.getChosenWorker(),"move")){
 
             //DEBUG:
             System.out.println("sconfitta");
@@ -95,20 +92,17 @@ public class Controller implements Observer<PlayerMessage>{
         //if the player hasn't lost
         }else {
             //EXECUTE MOVE CHECK
-            checkResult = message.getPlayer().getGodCard().getMoveStrategy().checkMove(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
+            checkResult=model.performMoveCheck(message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
             //if check ok, execute move and win
             if (checkResult.equals(GameMessage.moveOK)){
 
                 //EXECUTE MOVE
-                nextStep = message.getPlayer().getGodCard().getMoveStrategy().move(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
-                model.notifyNewBoardState();
+                nextStep = model.performMove(message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
                 //EXECUTE WIN CHECK
-                if (message.getPlayer().getGodCard().getWinStrategy().checkWin(message.getPlayer(), message.getChosenWorker())) {
-                    model.notifyNewBoardState();
-                    model.notifyVictory(message.getPlayer());
-                    //TODO altro?
+                if(model.performWinCheck(message.getPlayer(),message.getChosenWorker())){
+
                     endGame();
 
                     //DEBUG:
@@ -165,12 +159,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
 
         //CHECK LOSE
-        if(message.getPlayer().getGodCard().getLoseStrategy().buildingLoss(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker())){
-            model.notifyNewBoardState();
-            model.notifyLoss(message.getPlayer());
-            model.removeFromGame(message.getPlayer());
-            //...
-            //TODO altro?
+        if(model.performLoseCheck(message.getPlayer(),message.getChosenWorker(),"build")){
 
             //DEBUG:
             System.out.println("sconfitta");
@@ -192,16 +181,15 @@ public class Controller implements Observer<PlayerMessage>{
         //if player hasn't lost'
         }else{
             //EXECUTE BUILD CHECK
-            checkResult = message.getPlayer().getGodCard().getBuildStrategy().checkBuild(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
+            checkResult=model.performBuildCheck(message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
 
             //if build check ok
             if (checkResult.equals(GameMessage.buildOK)) {
 
                 //EXECUTE BUILD
-                nextStep = message.getPlayer().getGodCard().getBuildStrategy().build(model.getTurnInfo(), model.getGameBoard(), message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
-                model.notifyNewBoardState();
+                nextStep=model.performBuild(message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
                 message.getVirtualView().reportInfo(new InfoMessage(nextStep));
-                //TODO elimina questa println sotto
+
 
                 //DEBUG:
                 System.out.println("Ho eseguito una build correttamente");
@@ -311,6 +299,15 @@ public class Controller implements Observer<PlayerMessage>{
             }
         }
         throw new IllegalArgumentException("INEXISTING player given the colour "+colour);
+    }
+
+    private ArrayList<Player> getPlayers(){
+
+        ArrayList<Player> players=new ArrayList<>();
+        for(VirtualView virtualView : virtualViews){
+            players.add(virtualView.getPlayer());
+        }
+        return players;
     }
 
 

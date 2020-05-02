@@ -176,17 +176,75 @@ public class Model extends Observable<NotifyMessages> {
         else return Colour.GREY;
     }
 
-    public void notifyNewTurn(Player player){notify(new NewTurnMessage(player));}
-    public void notifyLoss(Player player){
-        notify(new LoseMessage(player));
+
+    public boolean performLoseCheck(Player player, int chosenWorker, String phase){
+
+        boolean lost;
+
+        if(phase.equals("move")){
+            lost=player.getGodCard().getLoseStrategy().movementLoss(turnInfo, gameboard, player, chosenWorker);
+        }else{
+            lost=player.getGodCard().getLoseStrategy().buildingLoss(turnInfo, gameboard, player, chosenWorker);
+        }
+
+        if(lost){
+            notifyLoss(player);
+            removeFromGame(player);
+            notifyNewBoardState();
+        }
+
+        return lost;
+
     }
+    public boolean performWinCheck(Player player, int chosenWorker){
+
+        if(player.getGodCard().getWinStrategy().checkWin(player,chosenWorker)){
+            notifyVictory(player);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public String performMoveCheck(Player player, int chosenWorker, int[] movingTo){
+
+        return player.getGodCard().getMoveStrategy().checkMove(turnInfo,gameboard,player,chosenWorker,movingTo);
+    }
+    public String performMove(Player player, int chosenWorker, int[] movingTo){
+
+        String result;
+        result=player.getGodCard().getMoveStrategy().move(turnInfo,gameboard,player,chosenWorker,movingTo);
+        notifyNewBoardState();
+        return result;
+    }
+    public String performBuildCheck(Player player, int chosenWorker, int[] buildingInto, String pieceType){
+
+        return player.getGodCard().getBuildStrategy().checkBuild(turnInfo,gameboard,player,chosenWorker,buildingInto,pieceType);
+    }
+    public String performBuild(Player player, int chosenWorker, int[] buildingInto, String pieceType){
+
+        String result;
+        result=player.getGodCard().getBuildStrategy().build(turnInfo,gameboard,player,chosenWorker,buildingInto,pieceType);
+        notifyNewBoardState();
+        return result;
+
+    }
+
+
+
+    public void notifyNewTurn(Player player){notify(new NewTurnMessage(player));}
+
     public void notifyVictory(Player player){
         notify(new WinMessage(player));
     }
     public void notifyQuit(Player player){
         notify(new QuitMessage((player)));
     }
-    public void notifyNewBoardState(){
+
+    private void notifyLoss(Player player){
+        notify(new LoseMessage(player));
+    }
+    private void notifyNewBoardState(){
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
 
