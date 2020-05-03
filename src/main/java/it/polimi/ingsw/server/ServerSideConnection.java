@@ -87,11 +87,14 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     public void run() {
 
         try{
-            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+
+            inputStream = new ObjectInputStream(socket.getInputStream());
+
 
             //sends first message
             send(new InfoMessage(GameMessage.welcome));
+
 
             //reads player info and sends them to the server
             PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();

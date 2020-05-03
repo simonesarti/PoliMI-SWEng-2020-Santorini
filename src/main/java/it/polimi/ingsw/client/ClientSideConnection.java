@@ -21,7 +21,7 @@ import java.util.Scanner;
 /**
  * Is linked to a ServerSideConnection via socket. Receives messages and has async/sync send method
  */
-public class ClientSideConnection extends Observable<Object> implements Runnable{
+public class ClientSideConnection extends Observable<Object>{
 
     private String ip;
     private int port;
@@ -40,7 +40,6 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
     }
 
 
-    /* HO INSERITO LA RICEZIONE DEI MESSAGGI NEL METODO RUN (UGUALE A ServerSideConnection). Questo lo tengo per sicurezza
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn, ClientSideConnection thisClientSideConnection){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -50,13 +49,6 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
                         Object inputObject = socketIn.readObject();
                         thisClientSideConnection.notify(inputObject);
 
-                        if(inputObject instanceof NewBoardStateMessage){
-                            System.out.println("NewBoardStateMessage message arrived to client!");
-                        } else if (inputObject instanceof InfoMessage){
-                            System.out.println("InfoMessage arrived to client!");
-                        } else {
-                            throw new IllegalArgumentException();
-                        }
                     }
                 } catch (Exception e){
                     setActive(false);
@@ -66,7 +58,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
         t.start();
         return t;
     }
- */
+
 
     public synchronized void closeConnection(){
 
@@ -107,34 +99,34 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
     }
 
 
-    public void run() {
+    public void run() throws IOException{
 
         try {
 
             socket = new Socket(ip, port);
             System.out.println("Connection to established");
-            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
+
             //ServerSideConnection sent welcome message
 
-            ////////////////////////////////this clientSideConnection sends player info/////////////////////////////////
-
+            //reads welcome message
+            notify(inputStream.readObject());
+            //sends player info
             readAndSendPlayerInfo();
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
             //now it keeps receiving messages while the connections stay active
-            while (isActive()) {
 
-                notify(inputStream.readObject());
-            }
-        } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
+            Thread t0 = asyncReadFromSocket(inputStream,this);
+            t0.join();
+
+
+        } catch (NoSuchElementException | ClassNotFoundException | InterruptedException e) {
 
             //TODO funziona settare a false nella catch? Copiato da esempio TrisDistr..
 
             //System.err.println("Error!" + e.getMessage());
             System.out.println("Connection closed from the client side");
-            setActive(false);
 
         }finally{
 
@@ -162,8 +154,6 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
     }
 
     public void readAndSendPlayerInfo(){
-
-
 
         Scanner stdin = new Scanner(System.in);
 
@@ -212,7 +202,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
         }
 
         //sending PlayerInfo msg to serverSideConnection
-        asyncSend(new PlayerInfo(nickname,new GregorianCalendar(month,day,year),numberOfPlayers));
+        asyncSend(new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
         stdin.close();
     }
 

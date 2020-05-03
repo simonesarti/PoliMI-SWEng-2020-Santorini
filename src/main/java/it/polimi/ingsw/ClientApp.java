@@ -11,19 +11,27 @@ public class ClientApp {
     public static void main(String[] args){
 
         View view;
-        ClientSideConnection clientSideConnection =new ClientSideConnection("127.0.0.1",12345);
-        Thread t0 = new Thread(clientSideConnection);
+        ClientSideConnection clientSideConnection = new ClientSideConnection("127.0.0.1",12345);
+
+        /////////per adesso istanzio direttamente CLI
+        view = new Cli(clientSideConnection);
+        clientSideConnection.addObserver(view);
+
+        try {
+            clientSideConnection.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //ORDINE:
         //Istanzio Client
         //Chiedere gui o cli a utente
         //istanziare View (quindi o gui o cli) passandole il client nel costruttore
+        //addObserver
         //client.run (verranno chieste info giocatore)
 
 
-        //running clientSideConnection
-        t0.start();
-        //per adesso istanzio direttamente CLI
-        view = new Cli(clientSideConnection);
+
 
 
 

@@ -28,7 +28,9 @@ public abstract class View implements Observer<Object> {
             System.out.println("NewBoardStateMessage message arrived to client!");
             showNewBoard((NewBoardStateMessage) message);
         } else if (message instanceof InfoMessage){
-            System.out.println("InfoMessage arrived to client!");
+
+            System.out.println("Infomessage arrived to view, here it is: "+((InfoMessage) message).getInfo());
+
         } else {
             throw new IllegalArgumentException();
         }
