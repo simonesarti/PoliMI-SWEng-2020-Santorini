@@ -57,7 +57,7 @@ class ModelTest {
 
             @Test
             void WB_differentDay() {
-                ArrayList<Player> players = setPlayersBirthDay2(1, 2);
+                ArrayList<Player> players = setPlayersBirthDay2(2,1);
                 model.assignColour(players);
                 checkColour2(players, Colour.WHITE, Colour.BLUE);
             }
@@ -71,7 +71,7 @@ class ModelTest {
 
             @Test
             void BW_differentDay() {
-                ArrayList<Player> players = setPlayersBirthDay2(2, 1);
+                ArrayList<Player> players = setPlayersBirthDay2(1,2);
                 model.assignColour(players);
                 checkColour2(players, Colour.BLUE, Colour.WHITE);
             }
@@ -95,53 +95,62 @@ class ModelTest {
 
             @Test
             void WBG_sameDay12(){
-                ArrayList<Player> players = setPlayersBirthDay3(1,1,2);
+                ArrayList<Player> players = setPlayersBirthDay3(2,2,1);
                 model.assignColour(players);
                 checkColour3(players,Colour.WHITE,Colour.BLUE,Colour.GREY);
             }
 
             @Test
             void WGB_sameDay13(){
-                ArrayList<Player> players = setPlayersBirthDay3(1,2,1);
+                ArrayList<Player> players = setPlayersBirthDay3(2,1,2);
                 model.assignColour(players);
                 checkColour3(players,Colour.WHITE,Colour.GREY,Colour.BLUE);
             }
 
             @Test
             void WBG_sameDay23(){
-                ArrayList<Player> players = setPlayersBirthDay3(1,2,2);
+                ArrayList<Player> players = setPlayersBirthDay3(2,1,1);
                 model.assignColour(players);
                 checkColour3(players,Colour.WHITE,Colour.BLUE,Colour.GREY);
             }
 
             @Test
             void GWB_sameDay23(){
-                ArrayList<Player> players = setPlayersBirthDay3(2,1,1);
+                ArrayList<Player> players = setPlayersBirthDay3(1,2,2);
                 model.assignColour(players);
                 checkColour3(players,Colour.GREY,Colour.WHITE,Colour.BLUE);
             }
 
             @Test
             void reverse(){
-                ArrayList<Player> players = setPlayersBirthDay3(3,2,1);
+                ArrayList<Player> players = setPlayersBirthDay3(1,2,3);
                 model.assignColour(players);
                 checkColour3(players,Colour.GREY,Colour.BLUE,Colour.WHITE);
             }
 
             @Test
             void BWG_sameDay13(){
-                ArrayList<Player> players = setPlayersBirthDay3(2,1,2);
+                ArrayList<Player> players = setPlayersBirthDay3(1,2,1);
                 model.assignColour(players);
                 checkColour3(players,Colour.BLUE,Colour.WHITE,Colour.GREY);
             }
 
             @Test
             void BGW(){
-                ArrayList<Player> players = setPlayersBirthDay3(2,3,1);
+                ArrayList<Player> players = setPlayersBirthDay3(2,1,3);
                 model.assignColour(players);
                 checkColour3(players,Colour.BLUE,Colour.GREY,Colour.WHITE);
             }
 
+            @Test
+            void WGB(){
+                ArrayList<Player> players = setPlayersBirthDay3(3,1,2);
+                model.assignColour(players);
+                checkColour3(players,Colour.WHITE,Colour.GREY,Colour.BLUE);
+            }
+
+
         }
     }
+
 }

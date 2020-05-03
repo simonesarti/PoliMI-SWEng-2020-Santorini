@@ -14,8 +14,8 @@ import java.util.NoSuchElementException;
 
 public class ServerSideConnection extends Observable<DataMessage> implements Runnable {
 
-    private Server server;
-    private Socket socket;
+    private final Server server;
+    private final Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private boolean active;
@@ -57,6 +57,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             outputStream.flush();
         } catch(IOException e){
             System.err.println(e.getMessage());
+            e.printStackTrace();
         }
 
     }

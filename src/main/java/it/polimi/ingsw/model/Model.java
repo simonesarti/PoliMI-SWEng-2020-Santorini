@@ -51,7 +51,7 @@ public class Model extends Observable<NotifyMessages> {
     
     private void assignColour2(Player player1, Player player2){
 
-        if(player1.getBirthday().compareTo(player2.getBirthday())<=0){
+        if(player1.getBirthday().compareTo(player2.getBirthday())>=0){
             player1.setColour(Colour.WHITE);
             player2.setColour(Colour.BLUE);
         }else{
@@ -62,12 +62,12 @@ public class Model extends Observable<NotifyMessages> {
 
     private void assignColour3(Player player1, Player player2,Player player3){
 
-        if(player1.getBirthday().compareTo(player2.getBirthday()) <=0 &&
-           player1.getBirthday().compareTo(player3.getBirthday()) <=0){
+        if(player1.getBirthday().compareTo(player2.getBirthday()) >=0 &&
+           player1.getBirthday().compareTo(player3.getBirthday()) >=0){
 
             player1.setColour(Colour.WHITE);
 
-            if(player2.getBirthday().compareTo(player3.getBirthday())<=0) {
+            if(player2.getBirthday().compareTo(player3.getBirthday())>=0) {
                 player2.setColour(Colour.BLUE);
                 player3.setColour(Colour.GREY);
             }else{
@@ -75,12 +75,12 @@ public class Model extends Observable<NotifyMessages> {
                 player2.setColour(Colour.GREY);
             }
 
-        }else if(player2.getBirthday().compareTo(player1.getBirthday())<=0 &&
-                 player2.getBirthday().compareTo(player3.getBirthday())<=0){
+        }else if(player2.getBirthday().compareTo(player1.getBirthday())>=0 &&
+                 player2.getBirthday().compareTo(player3.getBirthday())>=0){
 
             player2.setColour(Colour.WHITE);
 
-            if(player1.getBirthday().compareTo(player3.getBirthday())<=0){
+            if(player1.getBirthday().compareTo(player3.getBirthday())>=0){
                 player1.setColour(Colour.BLUE);
                 player3.setColour(Colour.GREY);
             }else{
@@ -91,7 +91,7 @@ public class Model extends Observable<NotifyMessages> {
 
             player3.setColour(Colour.WHITE);
 
-            if(player1.getBirthday().compareTo(player2.getBirthday())<=0){
+            if(player1.getBirthday().compareTo(player2.getBirthday())>=0){
                 player1.setColour(Colour.BLUE);
                 player2.setColour((Colour.GREY));
             }else{
