@@ -288,14 +288,6 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
 
-    private ArrayList<Player> getPlayers(){
-
-        ArrayList<Player> players=new ArrayList<>();
-        for(VirtualView virtualView : virtualViews){
-            players.add(virtualView.getPlayer());
-        }
-        return players;
-    }
 
     private void declaration(){
 
@@ -315,22 +307,22 @@ public class Controller implements Observer<PlayerMessage>{
         declaration();
     }
 
-    //TODO cosa succede se ho già rimosso una VV da observer di model nella quit, remove(niente) = errore?
     private void endGame(){
-/*
-        //remove every observers in MVC
+
+        //removes every observer in MVC
         for(VirtualView virtualView: virtualViews){
             virtualView.removeObserver(this);
-            //model.removeObserver(virtualView);
+            if(virtualView.isObservingModel()) {
+                model.removeObserver(virtualView);
+            }
         }
-*/
+
     }
 
 
-    //TEST FUCTIONS
+    //TEST FUNCTIONS
     public Model getModel(){return model;}
     public ArrayList<VirtualView> getVirtualViews(){return virtualViews;}
-
 
 
     //TODO rimuovere

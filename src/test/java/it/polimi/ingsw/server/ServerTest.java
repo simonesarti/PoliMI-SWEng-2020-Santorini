@@ -13,6 +13,8 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+//TODO ERRORE CHIUSURA CONNESSIONE ISTANTANEA FA ELIMINARE LA PARTITA INDICE -1, NULLPOINTEREXCEPTION SE ESEGUITI TUTTI INSIEME
 class ServerTest {
 
     Server server;

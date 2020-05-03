@@ -113,17 +113,16 @@ public class Server {
 
         if(index!=-1){
 
-            for(int i=0;i<2;i++){
-                twoPlayerGames.get(index).getConnection(i).notInUse();
-            }
+            twoPlayerGames.get(index).getConnection(0).notInUse();
+            twoPlayerGames.get(index).getConnection(1).notInUse();
             twoPlayerGames.remove(index);
 
         }else{
 
             index=getConnectionGroupIndex3(connection);
-            for(int i=0;i<3;i++){
-                threePlayerGames.get(index).getConnection(i).notInUse();
-            }
+            threePlayerGames.get(index).getConnection(0).notInUse();
+            threePlayerGames.get(index).getConnection(1).notInUse();
+            threePlayerGames.get(index).getConnection(2).notInUse();
             threePlayerGames.remove(index);
         }
 

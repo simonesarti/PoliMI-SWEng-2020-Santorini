@@ -18,6 +18,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     private final ServerSideConnection connectionToClient;
 
+    private boolean observingModel;
+
     private final PlayerMessageReceiver playerMessageReceiver = new PlayerMessageReceiver();
 
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
@@ -34,12 +36,17 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     public VirtualView(Player player, ServerSideConnection c){
         this.player=player;
         this.connectionToClient =c;
+        observingModel=true;
         //attach DataMessage Observer to ServerSideConnection object
         c.addObserver(playerMessageReceiver);
     }
 
     public Player getPlayer(){
         return player;
+    }
+
+    public boolean isObservingModel() {
+        return observingModel;
     }
 
     private void notifyController(DataMessage message){
@@ -60,6 +67,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     }
 
     public void leave(){
+
+        observingModel=false;
         //this virtualView stops listening to new inputs
         connectionToClient.removeObserver(playerMessageReceiver);
         //connection thread terminates
