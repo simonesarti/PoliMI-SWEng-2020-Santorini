@@ -18,7 +18,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     private final ServerSideConnection connectionToClient;
 
-    private PlayerMessageReceiver playerMessageReceiver;
+    private final PlayerMessageReceiver playerMessageReceiver = new PlayerMessageReceiver();
 
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
     private class PlayerMessageReceiver implements Observer<DataMessage> {
@@ -30,17 +30,13 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     }
 
-    //CONSTRUCTORS
-
 
     public VirtualView(Player player, ServerSideConnection c){
         this.player=player;
         this.connectionToClient =c;
-        playerMessageReceiver=new PlayerMessageReceiver();
-        //attach PlayerMessage Observer to ServerSideConnection object
+        //attach DataMessage Observer to ServerSideConnection object
         c.addObserver(playerMessageReceiver);
     }
-
 
     public Player getPlayer(){
         return player;
@@ -84,19 +80,19 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             if(((LoseMessage) message).getPlayer() == this.getPlayer()) {
                 reportInfo(new InfoMessage(GameMessage.lose));
             }else{
-                reportInfo(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + "lost\n"));
+                reportInfo(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + " lost\n"));
             }
 
         }
 
         else if(message instanceof NewTurnMessage){
 
-            String s="The previous turn ended.";
+            String s="The previous turn ended. ";
 
             if(((NewTurnMessage)message).getPlayer()==this.getPlayer()){
-                reportInfo(new InfoMessage(s+" It's your turn now"));
+                reportInfo(new InfoMessage(s+"It's your turn now"));
             }else{
-                reportInfo(new InfoMessage(s+" It's "+((NewTurnMessage) message).getPlayer().getNickname()+ "  turn now"));
+                reportInfo(new InfoMessage(s+"It's "+((NewTurnMessage) message).getPlayer().getNickname()+ "'s turn now"));
             }
 
         }
@@ -109,10 +105,10 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 connectionToClient.removeObserver(playerMessageReceiver);
                 connectionToClient.deactivate();
             }else{
-                reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
+                reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ " won\n"));
                 reportInfo(new InfoMessage(GameMessage.quit));
                 connectionToClient.removeObserver(playerMessageReceiver);
-                //the winner also terminates the opponents' connections calling notInUse in deregister
+                //the winner also terminates the opponents' connections calling notInUse in unregister, triggered by close
             }
 
 

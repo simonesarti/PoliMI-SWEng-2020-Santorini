@@ -107,7 +107,9 @@ public class Server {
 
     public synchronized void unregisterConnection(ServerSideConnection connection) {
 
-        int index = getConnectionGroupIndex2(connection);
+        int index;
+
+        index=getConnectionGroupIndex2(connection);
 
         if(index!=-1){
 
@@ -130,28 +132,28 @@ public class Server {
 
     private int getConnectionGroupIndex2(ServerSideConnection serverSideConnection) {
 
-        int index = -1;
         for (int i = 0; i < twoPlayerGames.size(); i++) {
             if (twoPlayerGames.get(i).getConnection(0).equals(serverSideConnection) ||
                 twoPlayerGames.get(i).getConnection(1).equals(serverSideConnection)) {
-                index=i;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 
     private int getConnectionGroupIndex3(ServerSideConnection serverSideConnection) {
 
-        int index = -1;
         for(int i=0;i<threePlayerGames.size();i++){
             if(threePlayerGames.get(i).getConnection(0).equals(serverSideConnection) ||
                threePlayerGames.get(i).getConnection(1).equals(serverSideConnection) ||
                threePlayerGames.get(i).getConnection(2).equals(serverSideConnection)) {
-                index=i;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
+
+
 
 
     //TESTING METHOD
@@ -159,5 +161,20 @@ public class Server {
         this.serverSocket.close();
     }
 
+    public List<PlayerConnection> getTwoPlayerWaitingList() {
+        return twoPlayerWaitingList;
+    }
+
+    public List<PlayerConnection> getThreePlayerWaitingList() {
+        return threePlayerWaitingList;
+    }
+
+    public List<TwoPlayerGameConnection> getTwoPlayerGames() {
+        return twoPlayerGames;
+    }
+
+    public List<ThreePlayerGameConnection> getThreePlayerGames() {
+        return threePlayerGames;
+    }
 }
 

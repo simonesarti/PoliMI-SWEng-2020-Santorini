@@ -63,6 +63,9 @@ public class PrometheusIntegrationTest {
             c1 = new ServerSideConnection(new Socket("127.0.0.1",12345),server);
             c2 = new ServerSideConnection(new Socket("127.0.0.1",12345),server);
             c3 = new ServerSideConnection(new Socket("127.0.0.1",12345),server);
+//            new Thread (c1).start();
+//            new Thread (c2).start();
+//            new Thread (c3).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
