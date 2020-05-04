@@ -76,15 +76,12 @@ public class Controller implements Observer<PlayerMessage>{
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
 
-                //TODO abilitare comando
-                //model.declareWinner(getPlayers());
+                model.declareWinner(getPlayers());
                 endGame();
 
             }else {
 
-                //TODO passare alla nuova versione
-                model.updateTurn();
-                //model.updateTurn(getPlayers());
+                model.updateTurn(getPlayers());
             }
 
             return;
@@ -167,16 +164,12 @@ public class Controller implements Observer<PlayerMessage>{
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
 
-                //TODO abilitare comando
-                //model.declareWinner(getPlayers());
+                model.declareWinner(getPlayers());
                 endGame();
 
             }else {
 
-                //TODO passare alla nuova versione
-                model.updateTurn();
-                //model.updateTurn(getPlayers());
-
+                model.updateTurn(getPlayers());
             }
 
             return;
@@ -238,11 +231,7 @@ public class Controller implements Observer<PlayerMessage>{
         //DEBUG
         System.out.println("turno completato con successo");
 
-        //TODO passare alla nuova versione
-        model.updateTurn();
-        //model.updateTurn(getPlayers());
-
-        //TODO altro?
+        model.updateTurn(getPlayers());
 
     }
 
@@ -288,6 +277,15 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
 
+    private ArrayList<Player> getPlayers(){
+
+        ArrayList<Player> players=new ArrayList<>();
+
+        for(VirtualView virtualView:virtualViews){
+            players.add(virtualView.getPlayer());
+        }
+        return players;
+    }
 
     private void declaration(){
 

@@ -118,6 +118,15 @@ public class Model extends Observable<NotifyMessages> {
     */
     public void updateTurn(ArrayList<Player> players) {
 
+        updateTurnColour();
+
+        turnInfo.turnInfoReset();
+
+        notifyNewTurn(getPlayerFromColour(players,turn));
+    }
+
+    private void updateTurnColour(){
+
         switch(turn){
 
             case WHITE:
@@ -142,10 +151,6 @@ public class Model extends Observable<NotifyMessages> {
             default:
                 break;
         }
-
-        turnInfo.turnInfoReset();
-
-        notifyNewTurn(getPlayerFromColour(players,turn));
     }
 
     private Player getPlayerFromColour(ArrayList<Player> players, Colour colour) {
@@ -155,9 +160,8 @@ public class Model extends Observable<NotifyMessages> {
                 return player;
             }
         }
-        throw new IllegalStateException("INEXISTING PLAYER WITH SUCH ASSOCIATED"+ colour);
+        throw new IllegalStateException("INEXISTING PLAYER WITH SUCH COLOUR ASSOCIATED"+ colour);
     }
-
 
     public boolean isEliminated(Player player){
         return eliminated[player.getColour().ordinal()];
@@ -185,14 +189,13 @@ public class Model extends Observable<NotifyMessages> {
     public Colour getWinnerColour(){
 
         if(!eliminated[0]) return Colour.WHITE;
-        else if(!eliminated[1]) return Colour.GREY;
+        else if(!eliminated[1]) return Colour.BLUE;
         else return Colour.GREY;
     }
 
     public void declareWinner(ArrayList<Player> players){
         notifyVictory(getPlayerFromColour(players,getWinnerColour()));
     }
-
 
     public boolean performLoseCheck(Player player, int chosenWorker, String phase){
 
@@ -261,36 +264,6 @@ public class Model extends Observable<NotifyMessages> {
 
 
 
-    //TESTING METHODS TO REMOVE
-    public void updateTurn(){
-
-        switch(turn){
-
-            case WHITE:
-                if(!eliminated[1]) turn=Colour.BLUE;
-                else if (!eliminated[2]) turn=Colour.GREY;
-                else turn=Colour.WHITE;
-                break;
-
-
-            case BLUE:
-                if(!eliminated[2]) turn=Colour.GREY;
-                else if(!eliminated[0]) turn=Colour.WHITE;
-                else turn=Colour.BLUE;
-                break;
-
-            case GREY:
-                if(!eliminated[0]) turn=Colour.WHITE;
-                else if(!eliminated[1]) turn=Colour.BLUE;
-                else turn=Colour.GREY;
-                break;
-
-            default:
-                break;
-        }
-
-        turnInfo.turnInfoReset();
-    }
 
     /**
      * For testing purpose only
@@ -299,5 +272,6 @@ public class Model extends Observable<NotifyMessages> {
     public void setColour(Colour c){
         this.turn = c;
     }
+    public void setEliminated(int i){eliminated[i]=true;}
 
 }

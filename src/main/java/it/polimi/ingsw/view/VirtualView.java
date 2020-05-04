@@ -68,7 +68,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     }
 
     public void leave(){
-
+        //the controller removes this virtualView from being model's observer
         observingModel=false;
         //this virtualView stops listening to new inputs
         connectionToClient.removeObserver(playerMessageReceiver);

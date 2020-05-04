@@ -13,6 +13,69 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
 
+    //updateTurnColour Test but is private
+    /*
+    @Test
+    void updateTurnColour() {
+        Model model=new Model(3);
+        GameBoard gameboard=model.getGameBoard();
+
+
+        assertEquals(Colour.WHITE,model.getTurn());
+        model.updateTurnColour();
+        assertEquals(Colour.BLUE,model.getTurn());
+        model.updateTurnColour();
+        assertEquals(Colour.GREY,model.getTurn());
+        model.setEliminated(0);
+        model.updateTurnColour();
+        assertEquals(Colour.BLUE,model.getTurn());
+        model.setEliminated(1);
+        model.updateTurnColour();
+        assertEquals(Colour.GREY,model.getTurn());
+        model.updateTurnColour();
+        assertEquals(Colour.GREY,model.getTurn());
+    }
+*/
+
+    @Test
+    void playerEliminationAndOpponentVictory() {
+        Model model=new Model(2);
+        GameBoard gameBoard=model.getGameBoard();
+        Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1998,Calendar.SEPTEMBER,16),2));
+        player1.setColour(Colour.WHITE);
+        player1.getWorker(0).setStartingPosition(0,0);
+        player1.getWorker(1).setStartingPosition(1,0);
+        int[][] towers =
+                {
+                        {2, 4, 1, 2, 2},
+                        {3, 1, 2, 1, 4},
+                        {4, 1, 0, 3, 4},
+                        {0, 2, 2, 4, 4},
+                        {3, 2, 1, 4, 0}
+                };
+        gameBoard.generateBoard(towers);
+        gameBoard.getTowerCell(0, 0).getFirstNotPieceLevel().setWorker(player1.getWorker(0));
+        player1.getWorker(0).movedToPosition(0, 0, 2);
+
+        gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().setWorker(player1.getWorker(1));
+        player1.getWorker(1).movedToPosition(2, 2, 0);
+
+        //tests RemoveFromGame
+        model.removeFromGame(player1);
+        assertNull(gameBoard.getTowerCell(0, 0).getFirstNotPieceLevel().getWorker());
+        assertNull(gameBoard.getTowerCell(2, 2).getFirstNotPieceLevel().getWorker());
+
+        //tests GetPlayersLeft
+        assertEquals(1,model.getPlayersLeft());
+
+        //tests IsEliminated
+        assertTrue(model.isEliminated(player1));
+
+        //tests GetWinnerColour
+        assertEquals(Colour.BLUE,model.getWinnerColour());
+
+    }
+
     @Nested
     class assignColour {
 
