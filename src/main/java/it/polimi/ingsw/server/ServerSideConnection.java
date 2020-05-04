@@ -107,7 +107,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
         //serialization adds ClassNotFoundException
         } catch (IOException | NoSuchElementException | ClassNotFoundException e) {
-            System.err.println("Error!" + e.getMessage());
+            System.err.println("Error, entered run Catch in ServerSideConnection:  " + e.getMessage());
 
 
         }finally{

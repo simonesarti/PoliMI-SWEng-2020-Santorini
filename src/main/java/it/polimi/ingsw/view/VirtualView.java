@@ -20,8 +20,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     private boolean observingModel;
 
-    private final PlayerMessageReceiver playerMessageReceiver = new PlayerMessageReceiver();
-
     //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
     private class PlayerMessageReceiver implements Observer<DataMessage> {
 
@@ -31,6 +29,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         }
 
     }
+
+    private final PlayerMessageReceiver playerMessageReceiver = new PlayerMessageReceiver();
 
 
     public VirtualView(Player player, ServerSideConnection c){
@@ -49,7 +49,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         return observingModel;
     }
 
-    private void notifyController(DataMessage message){
+    //public or private?
+    public void notifyController(DataMessage message){
 
         if(message instanceof MoveData){
             notify(new PlayerMovementChoice(this,player,(MoveData)message));
