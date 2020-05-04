@@ -216,4 +216,27 @@ class ModelTest {
         }
     }
 
+    @Test
+    void getPlayerFromColour(){
+
+        Model model=new Model(3);
+        Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1998,Calendar.SEPTEMBER,16),3));
+        Player player2=new Player(new PlayerInfo("olimpia",new GregorianCalendar(1998,Calendar.SEPTEMBER,9),3));
+        Player player3=new Player(new PlayerInfo("alessandro",new GregorianCalendar(1998,Calendar.SEPTEMBER,2),3));
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        model.assignColour(players);
+
+        assertEquals(Colour.WHITE,player1.getColour());
+        assertEquals(Colour.BLUE,player2.getColour());
+        assertEquals(Colour.GREY,player3.getColour());
+
+        assertEquals(player1,model.getPlayerFromColour(players,Colour.WHITE));
+        assertEquals(player2,model.getPlayerFromColour(players,Colour.BLUE));
+        assertEquals(player3,model.getPlayerFromColour(players,Colour.GREY));
+
+    }
+
 }

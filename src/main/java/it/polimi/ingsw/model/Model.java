@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Model extends Observable<NotifyMessages> {
 
     private final GameBoard gameboard;
+    private final Deck deck;
     private ArrayList<GodCard> gameDeck=new ArrayList<>();
     private final TurnInfo turnInfo;
     private Colour turn;
@@ -29,6 +30,8 @@ public class Model extends Observable<NotifyMessages> {
         if(numberOfPlayers==2){
             eliminated[2]=true;
         }
+
+        deck=new Deck();
 
     }
 
@@ -153,7 +156,7 @@ public class Model extends Observable<NotifyMessages> {
         }
     }
 
-    private Player getPlayerFromColour(ArrayList<Player> players, Colour colour) {
+    public Player getPlayerFromColour(ArrayList<Player> players, Colour colour) {
 
         for(Player player : players){
             if(player.getColour()==colour){
@@ -250,7 +253,6 @@ public class Model extends Observable<NotifyMessages> {
 
     }
 
-
     private void notifyVictory(Player player){
         notify(new WinMessage(player));
     }
@@ -262,6 +264,13 @@ public class Model extends Observable<NotifyMessages> {
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
 
+
+    //TODO work in progress
+    public void selectGameCard(String name){
+        gameDeck.add(deck.chooseCardFromDeck(name));
+    }
+
+    public void chooseCard(Player player, String name){}
 
 
 
