@@ -276,7 +276,6 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
-
     private ArrayList<Player> getPlayers(){
 
         ArrayList<Player> players=new ArrayList<>();
@@ -300,11 +299,6 @@ public class Controller implements Observer<PlayerMessage>{
         }
     }
 
-    public void startGame(){
-
-        declaration();
-    }
-
     private void endGame(){
 
         //removes every observer in MVC
@@ -317,11 +311,62 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+    //TODO WORK IN PROGRESS
+    public void startGame(){
+/*
+        int numberOfPlayer=virtualViews.size();
+
+        //mancano controlli di validità della scelta iniziale e della selezione di carte già selezionate dopo
+
+        virtualViews.get(0).reportInfo("card selection1");
+        while (model.getGameDeck().size()==0){
+            //waiting for first card to be selected
+        }
+
+        virtualViews.get(0).reportInfo("card selection2");
+        while (model.getGameDeck().size()==1){
+            //waiting for second card to be selected
+        }
+
+        if(numberOfPlayer==3){
+            virtualViews.get(0).reportInfo("card selection3");
+            while (model.getGameDeck().size()==2){
+                //waiting for third card to be selected
+            }
+        }
+
+        virtualViews.get(1).reportInfo("chose your godCard");
+        //while di controllo selezione
+
+        if(numberOfPlayer==3){
+            virtualViews.get(2).reportInfo("chose your godCard");
+            //while di controllo selezione
+        }
+
+        //assegnazione carta rimasta
+
+
+*/
+        declaration();
+    }
+
+    private VirtualView getVVFromPlayer(Player player){
+
+        for(VirtualView virtualView:virtualViews){
+            if(virtualView.getPlayer().equals(player)){
+                return virtualView;
+            }
+        }
+        throw new IllegalStateException("INEXISTING VV given player");
+    }
+
+
+
+
 
     //TEST FUNCTIONS
     public Model getModel(){return model;}
     public ArrayList<VirtualView> getVirtualViews(){return virtualViews;}
-
 
     //TODO rimuovere
     //TEST
