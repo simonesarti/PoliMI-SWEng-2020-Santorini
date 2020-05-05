@@ -88,9 +88,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
         try{
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-
             inputStream = new ObjectInputStream(socket.getInputStream());
-
 
             //sends first message
             send(new InfoMessage(GameMessage.welcome));
@@ -102,7 +100,8 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
             //continues to read input commands until the connections stay active, and notifies them to the virtualView
             while(isActive() && isInUse()){
-                notify((DataMessage)inputStream.readObject());
+                DataMessage dataMessage=(DataMessage)inputStream.readObject();
+                notify(dataMessage);
             }
 
         //serialization adds ClassNotFoundException

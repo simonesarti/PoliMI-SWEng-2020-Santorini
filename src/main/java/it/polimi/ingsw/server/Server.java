@@ -43,8 +43,6 @@ public class Server {
 
     public synchronized void lobby(PlayerConnection playerConnection) {
 
-
-
         if(playerConnection.getPlayerInfo().getNumberOfPlayers()==2){
 
             twoPlayerWaitingList.add(playerConnection);

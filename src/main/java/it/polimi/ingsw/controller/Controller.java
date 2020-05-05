@@ -37,6 +37,7 @@ public class Controller implements Observer<PlayerMessage>{
 
         //assign colours to players
         model.assignColour(players);
+
     }
 
     /**
@@ -347,7 +348,7 @@ public class Controller implements Observer<PlayerMessage>{
 
 
 */
-        declaration();
+        //declaration();
     }
 
     private VirtualView getVVFromPlayer(Player player){

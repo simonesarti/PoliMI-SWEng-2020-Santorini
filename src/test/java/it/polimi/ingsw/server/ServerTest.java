@@ -51,15 +51,13 @@ class ServerTest {
         }
     }
 
+    //TODO send exception cause by de send i Declaration() because without run the streams are not initialized
+
     @Test
     void lobby2PlayerGame(){
 
         player1Info=new PlayerInfo("simone",new GregorianCalendar(1998, Calendar.SEPTEMBER,16),2);
         player2Info=new PlayerInfo("olimpia",new GregorianCalendar(1998, Calendar.SEPTEMBER,9),2);
-
-        new Thread (c1).start();
-        new Thread (c2).start();
-
 
         PlayerConnection playerConnection1=new PlayerConnection(player1Info,c1);
         PlayerConnection playerConnection2=new PlayerConnection(player2Info,c2);
@@ -90,12 +88,6 @@ class ServerTest {
         player2Info=new PlayerInfo("olimpia",new GregorianCalendar(1998, Calendar.SEPTEMBER,9),3);
         player3Info=new PlayerInfo("alessandro",new GregorianCalendar(1998, Calendar.SEPTEMBER,2),3);
         player4Info=new PlayerInfo("tizio",new GregorianCalendar(1998, Calendar.SEPTEMBER,2),3);
-
-        new Thread (c1).start();
-        new Thread (c2).start();
-        new Thread (c3).start();
-        new Thread (c4).start();
-
 
         PlayerConnection playerConnection1=new PlayerConnection(player1Info,c1);
         PlayerConnection playerConnection2=new PlayerConnection(player2Info,c2);
