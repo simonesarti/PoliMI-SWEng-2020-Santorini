@@ -36,9 +36,14 @@ public class ClientSideConnection extends Observable<Object>{
         this.ip = ip;
         this. port = port;
         active=true;
-
     }
 
+    public synchronized boolean isActive(){
+        return active;
+    }
+    public synchronized void setActive(boolean active){
+        this.active = active;
+    }
 
     public Thread asyncReadFromSocket(final ObjectInputStream socketIn, ClientSideConnection thisClientSideConnection){
         Thread t = new Thread(new Runnable() {
@@ -59,24 +64,6 @@ public class ClientSideConnection extends Observable<Object>{
         return t;
     }
 
-
-    public synchronized void closeConnection(){
-
-        try {
-            inputStream.close();
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try{
-            socket.close();
-        } catch (IOException e) {
-            System.err.println("Error while closing socket!");
-        }
-
-
-    }
     public void asyncSend(final Object message){
         new Thread(new Runnable() {
             @Override
@@ -98,6 +85,25 @@ public class ClientSideConnection extends Observable<Object>{
 
     }
 
+    public synchronized void closeConnection(){
+
+        try {
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error while closing the streams!");
+        }
+
+        try{
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error while closing socket!");
+        }
+
+
+    }
 
     public void run() throws IOException{
 
@@ -111,9 +117,13 @@ public class ClientSideConnection extends Observable<Object>{
             //ServerSideConnection sent welcome message
 
             //reads welcome message
-            notify(inputStream.readObject());
+            Object welcomeMessage=inputStream.readObject();
+            notify(welcomeMessage);
+
+            //TODO visto che dipende da CLI o GUI. possiamo averla come invocazione a seguito della notify(welcomeMessage)
             //sends player info
-            readAndSendPlayerInfo();
+            asyncSend(createPlayerInfo());
+
 
             //now it keeps receiving messages while the connections stay active
 
@@ -124,8 +134,8 @@ public class ClientSideConnection extends Observable<Object>{
         } catch (NoSuchElementException | ClassNotFoundException | InterruptedException e) {
 
             //TODO funziona settare a false nella catch? Copiato da esempio TrisDistr..
-
-            //System.err.println("Error!" + e.getMessage());
+            e.printStackTrace();
+            System.err.println("Error!" + e.getMessage());
             System.out.println("Connection closed from the client side");
 
         }finally{
@@ -136,7 +146,8 @@ public class ClientSideConnection extends Observable<Object>{
     }
 
 
-
+    //TODO va bene in generale (se testata e funziona), forse metterla in una classe d'appoggio per
+    //TODO poterla condividere tra CLI e GUI?
     public boolean isDateValid(String date){
 
         String DATE_FORMAT = "dd-MM-yyyy";
@@ -153,19 +164,19 @@ public class ClientSideConnection extends Observable<Object>{
 
     }
 
-    public void readAndSendPlayerInfo(){
+    //TODO va bene per la CLI
+    public PlayerInfo createPlayerInfo(){
 
         Scanner stdin = new Scanner(System.in);
 
         System.out.println("What's your nickname?");
         String nickname = stdin.nextLine();
 
-
-        int month = 0;
-        int day = 0;
-        int year = 0;
-
-        while (true) {
+        int day=0;
+        int month=0;
+        int year=0;
+        boolean validDate=false;
+        do{
             try {
                 System.out.println("Insert birthday day:");
                 day = Integer.parseInt(stdin.nextLine());
@@ -175,41 +186,39 @@ public class ClientSideConnection extends Observable<Object>{
                 year = Integer.parseInt(stdin.nextLine());
 
                 String dateString = day +"-"+month+"-"+year;
-                if(isDateValid(dateString)){
-                    break; // if no exceptions breaks out of loop
-                }
-                System.out.print("Not valid, try again");
+                validDate=isDateValid(dateString);
+                if(!validDate){System.out.print("Not valid, try again");}
 
             } catch (NumberFormatException e) {
+                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
                 e.printStackTrace();
                 System.out.print("Not a number, try again");
             }
-        }
+        }while(!validDate);
+
         //need to create a new Calendar object with birthdayString data
         int numberOfPlayers = 0;
-        while (true) {
+        boolean validNumberOfPlayers=false;
+        do{
             try {
                 System.out.println("Insert number of players:");
                 numberOfPlayers = Integer.parseInt(stdin.nextLine());
                 if(numberOfPlayers!=2 && numberOfPlayers!=3){
-                    break;
+                    System.out.print("Not valid, try again");
+                }else{
+                    validNumberOfPlayers=true;
                 }
-                System.out.print("Not valid, try again");
+
             } catch (NumberFormatException e) {
+                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
                 System.out.print("Not a number, try again");
                 e.printStackTrace();
             }
-        }
+        }while(!validNumberOfPlayers);
 
-        //sending PlayerInfo msg to serverSideConnection
-        asyncSend(new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
         stdin.close();
+        return (new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
     }
 
-    public synchronized boolean isActive(){
-        return active;
-    }
-    public synchronized void setActive(boolean active){
-        this.active = active;
-    }
+
 }

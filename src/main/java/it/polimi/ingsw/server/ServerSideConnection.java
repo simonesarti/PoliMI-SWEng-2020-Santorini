@@ -73,12 +73,14 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             outputStream.close();
             inputStream.close();
         }catch (IOException e){
+            e.printStackTrace();
             System.err.println("Error while closing the streams!");
         }
 
         try{
             socket.close();
         } catch (IOException e) {
+            e.printStackTrace();
             System.err.println("Error while closing socket!");
         }
     }

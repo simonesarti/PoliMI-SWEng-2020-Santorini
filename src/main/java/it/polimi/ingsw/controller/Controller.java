@@ -283,7 +283,7 @@ public class Controller implements Observer<PlayerMessage>{
 
     //TODO WORK IN PROGRESS
     public void startGame(){
-/*
+
         int numberOfPlayer=virtualViews.size();
 
         //mancano controlli di validità della scelta iniziale e della selezione di carte già selezionate dopo
@@ -316,7 +316,7 @@ public class Controller implements Observer<PlayerMessage>{
         //assegnazione carta rimasta
 
 
-*/
+
         //declaration();
     }
 
@@ -337,14 +337,5 @@ public class Controller implements Observer<PlayerMessage>{
     //TEST FUNCTIONS
     public Model getModel(){return model;}
     public ArrayList<VirtualView> getVirtualViews(){return virtualViews;}
-
-    //TODO rimuovere
-    //TEST
-    public Controller(Model model){
-        super();
-        this.model=model;
-
-    }
-
 
 }
