@@ -115,7 +115,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 connectionToClient.removeObserver(playerMessageReceiver);
                 connectionToClient.deactivate();
             }else{
-                reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ " won\n"));
+                reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ " won"));
                 reportInfo(new InfoMessage(GameMessage.quit));
                 connectionToClient.removeObserver(playerMessageReceiver);
                 //the winner also terminates the opponents' connections calling notInUse in unregister, triggered by close

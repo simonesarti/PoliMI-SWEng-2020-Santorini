@@ -63,16 +63,11 @@ public class Controller implements Observer<PlayerMessage>{
 
         if(model.getTurnInfo().getTurnHasEnded()){
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.turnAlreadyEnded));
-            //DEBUG
-            System.out.println("turno già completato, non puoi");
             return;
         }
 
         //CHECK LOSE
         if(model.performLoseCheck(message.getPlayer(),message.getChosenWorker(),"move")){
-
-            //DEBUG:
-            System.out.println("sconfitta");
 
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
@@ -88,7 +83,7 @@ public class Controller implements Observer<PlayerMessage>{
             return;
 
         //if the player hasn't lost
-        }else {
+        }else{
             //EXECUTE MOVE CHECK
             checkResult=model.performMoveCheck(message.getPlayer(), message.getChosenWorker(), message.getMovingTo());
 
@@ -103,24 +98,16 @@ public class Controller implements Observer<PlayerMessage>{
 
                     endGame();
 
-                    //DEBUG:
-                    System.out.println("vittoria");
-
                     return;
                 }else{
                     message.getVirtualView().reportInfo(new InfoMessage(nextStep));
 
-                    //DEBUG
-                    System.out.println(nextStep);
                 }
 
             //if check NOT ok, report error
             }else{
 
                 message.getVirtualView().reportInfo(new InfoMessage(checkResult));
-
-                //DEBUG
-                System.out.println("errore nella check move "+checkResult);
 
             }
         }
@@ -150,17 +137,12 @@ public class Controller implements Observer<PlayerMessage>{
 
         if (model.getTurnInfo().getTurnHasEnded()) {
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.turnAlreadyEnded));
-
-            //DEBUG
-            System.out.println("turno già finito, non puoi");
             return;
+
         }
 
         //CHECK LOSE
         if(model.performLoseCheck(message.getPlayer(),message.getChosenWorker(),"build")){
-
-            //DEBUG:
-            System.out.println("sconfitta");
 
             //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
@@ -187,17 +169,11 @@ public class Controller implements Observer<PlayerMessage>{
                 nextStep=model.performBuild(message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
                 message.getVirtualView().reportInfo(new InfoMessage(nextStep));
 
-
-                //DEBUG:
-                System.out.println("Ho eseguito una build correttamente");
-
             //if NOT build check ok
             } else {
 
                 message.getVirtualView().reportInfo(new InfoMessage(checkResult));
 
-                //DEBUG
-                System.out.println("errore nella check build "+checkResult);
             }
         }
     }
@@ -222,16 +198,9 @@ public class Controller implements Observer<PlayerMessage>{
 
         if(!model.getTurnInfo().getTurnCanEnd()){
 
-            //DEBUG
-            System.out.println("turno incompleto");
-
             message.getVirtualView().reportInfo(new InfoMessage(GameMessage.turnNotEnded));
             return;
         }
-
-        //DEBUG
-        System.out.println("turno completato con successo");
-
         model.updateTurn(getPlayers());
 
     }

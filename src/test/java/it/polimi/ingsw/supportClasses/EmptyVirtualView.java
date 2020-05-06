@@ -41,12 +41,9 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
 
     }
 
-
-
     public Player getPlayer(){
         return player;
     }
-
 
 
     public void reportInfo(Object message){
@@ -70,7 +67,6 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
                 System.out.println("VirtualView ha ricevuto messaggio lose di uno degli enemy del player giocante");
                 //reportInfo(new InfoMessage("Player "+((LoseMessage) message).getPlayer().getNickname()+ "lost\n"));
             }
-
         }else if( message instanceof WinMessage){
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){

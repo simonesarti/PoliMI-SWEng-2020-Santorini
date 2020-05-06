@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.AfterEach;
@@ -60,9 +61,9 @@ public class PrometheusIntegrationTest {
 
         try {
             server = new Server();
-            c1 = new ServerSideConnection(new Socket("127.0.0.1",12345),server);
-            c2 = new ServerSideConnection(new Socket("127.0.0.1",12345),server);
-            c3 = new ServerSideConnection(new Socket("127.0.0.1",12345),server);
+            c1 = new FakeConnection(new Socket(),server,"c1");
+            c2 = new FakeConnection(new Socket(),server,"c2");
+            c3 = new FakeConnection(new Socket(),server,"c3");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -341,7 +342,7 @@ public class PrometheusIntegrationTest {
             controller.update(message);
             //valid move, no win
 
-            //turnInfo must have been updatet considering the move
+            //turnInfo must have been updated considering the move
             testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,1,false,false);
 
             assertNull(gameBoard.getTowerCell(2,3).getFirstNotPieceLevel().getWorker());
