@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.Model;
+import it.polimi.ingsw.messages.GameMessage;
+import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.view.VirtualView;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -19,10 +19,10 @@ public class Server {
     private ServerSocket serverSocket;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
 
-    private List<PlayerConnection> twoPlayerWaitingList =new ArrayList<>();
-    private List<PlayerConnection> threePlayerWaitingList =new ArrayList<>();
-    private List<TwoPlayerGameConnection> twoPlayerGames = new ArrayList<>();
-    private List<ThreePlayerGameConnection> threePlayerGames = new ArrayList<>();
+    private ArrayList<PlayerConnection> twoPlayerWaitingList =new ArrayList<>();
+    private ArrayList<PlayerConnection> threePlayerWaitingList =new ArrayList<>();
+    private ArrayList<TwoPlayerGameConnection> twoPlayerGames = new ArrayList<>();
+    private ArrayList<ThreePlayerGameConnection> threePlayerGames = new ArrayList<>();
 
 
     public Server() throws IOException {
@@ -45,59 +45,76 @@ public class Server {
 
         if(playerConnection.getPlayerInfo().getNumberOfPlayers()==2){
 
-            twoPlayerWaitingList.add(playerConnection);
+            if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),twoPlayerWaitingList)){
 
-            if(twoPlayerWaitingList.size()==2){
+                //if nickname already present, closes user connection
+                playerConnection.getServerSideConnection().asyncSend(new InfoMessage(GameMessage.nicknameTaken));
+                playerConnection.getServerSideConnection().notInUse();
 
+            }else{
 
-                ArrayList<ServerSideConnection> connections = new ArrayList<>();
-                ServerSideConnection c21 = twoPlayerWaitingList.get(0).getServerSideConnection();
-                ServerSideConnection c22 = twoPlayerWaitingList.get(1).getServerSideConnection();
-                connections.add(c21);
-                connections.add(c22);
+                twoPlayerWaitingList.add(playerConnection);
 
-                ArrayList<Player> players= new ArrayList<>();
-                Player player21 = new Player(twoPlayerWaitingList.get(0).getPlayerInfo());
-                Player player22 = new Player(twoPlayerWaitingList.get(1).getPlayerInfo());
-                players.add(player21);
-                players.add(player22);
+                if(twoPlayerWaitingList.size()==2){
 
-                twoPlayerGames.add(new TwoPlayerGameConnection(c21,c22));
-                twoPlayerWaitingList.clear();
+                    ArrayList<ServerSideConnection> connections = new ArrayList<>();
+                    ServerSideConnection c21 = twoPlayerWaitingList.get(0).getServerSideConnection();
+                    ServerSideConnection c22 = twoPlayerWaitingList.get(1).getServerSideConnection();
+                    connections.add(c21);
+                    connections.add(c22);
 
-                Controller controller=new Controller(players,connections);
-                controller.startGame();
+                    ArrayList<Player> players= new ArrayList<>();
+                    Player player21 = new Player(twoPlayerWaitingList.get(0).getPlayerInfo());
+                    Player player22 = new Player(twoPlayerWaitingList.get(1).getPlayerInfo());
+                    players.add(player21);
+                    players.add(player22);
+
+                    twoPlayerGames.add(new TwoPlayerGameConnection(c21,c22));
+                    twoPlayerWaitingList.clear();
+
+                    Controller controller=new Controller(players,connections);
+                    controller.startGame();
+
+                }
 
             }
 
         }else{
 
-            threePlayerWaitingList.add(playerConnection);
+            if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),threePlayerWaitingList)){
 
-            if(threePlayerWaitingList.size()==3){
+                //if nickname already present, closes user connection
+                playerConnection.getServerSideConnection().asyncSend(new InfoMessage(GameMessage.nicknameTaken));
+                playerConnection.getServerSideConnection().notInUse();
 
-                ArrayList<ServerSideConnection> connections = new ArrayList<>();
-                ServerSideConnection c31 = threePlayerWaitingList.get(0).getServerSideConnection();
-                ServerSideConnection c32 = threePlayerWaitingList.get(1).getServerSideConnection();
-                ServerSideConnection c33 = threePlayerWaitingList.get(2).getServerSideConnection();
-                connections.add(c31);
-                connections.add(c32);
-                connections.add(c33);
+            }else{
 
-                ArrayList<Player> players= new ArrayList<>();
-                Player player31=new Player(threePlayerWaitingList.get(0).getPlayerInfo());
-                Player player32=new Player(threePlayerWaitingList.get(1).getPlayerInfo());
-                Player player33=new Player(threePlayerWaitingList.get(2).getPlayerInfo());
-                players.add(player31);
-                players.add(player32);
-                players.add(player33);
+                threePlayerWaitingList.add(playerConnection);
 
-                threePlayerGames.add(new ThreePlayerGameConnection(c31,c32,c33));
-                threePlayerWaitingList.clear();
+                if(threePlayerWaitingList.size()==3) {
 
-                Controller controller=new Controller(players,connections);
-                controller.startGame();
+                    ArrayList<ServerSideConnection> connections = new ArrayList<>();
+                    ServerSideConnection c31 = threePlayerWaitingList.get(0).getServerSideConnection();
+                    ServerSideConnection c32 = threePlayerWaitingList.get(1).getServerSideConnection();
+                    ServerSideConnection c33 = threePlayerWaitingList.get(2).getServerSideConnection();
+                    connections.add(c31);
+                    connections.add(c32);
+                    connections.add(c33);
 
+                    ArrayList<Player> players = new ArrayList<>();
+                    Player player31 = new Player(threePlayerWaitingList.get(0).getPlayerInfo());
+                    Player player32 = new Player(threePlayerWaitingList.get(1).getPlayerInfo());
+                    Player player33 = new Player(threePlayerWaitingList.get(2).getPlayerInfo());
+                    players.add(player31);
+                    players.add(player32);
+                    players.add(player33);
+
+                    threePlayerGames.add(new ThreePlayerGameConnection(c31, c32, c33));
+                    threePlayerWaitingList.clear();
+
+                    Controller controller = new Controller(players, connections);
+                    controller.startGame();
+                }
             }
         }
 
@@ -107,50 +124,98 @@ public class Server {
 
         int index;
 
-        index=getConnectionGroupIndex2(connection);
-
+        index=getWaitingGroupIndex2(connection);
         if(index!=-1){
+            connection.notInUse();
+            twoPlayerWaitingList.remove(index);
+            return;
+        }
 
+        index=getWaitingGroupIndex3(connection);
+        if(index!=-1){
+            connection.notInUse();
+            threePlayerWaitingList.remove(index);
+            return;
+        }
+
+
+        index=getMatchGroupIndex2(connection);
+        if(index!=-1){
             twoPlayerGames.get(index).getConnection(0).notInUse();
             twoPlayerGames.get(index).getConnection(1).notInUse();
             twoPlayerGames.remove(index);
+            return;
+        }
 
-        }else{
-
-            index=getConnectionGroupIndex3(connection);
+        index=getMatchGroupIndex3(connection);
+        if(index!=-1){
+            index= getMatchGroupIndex3(connection);
             threePlayerGames.get(index).getConnection(0).notInUse();
             threePlayerGames.get(index).getConnection(1).notInUse();
             threePlayerGames.get(index).getConnection(2).notInUse();
             threePlayerGames.remove(index);
+            return;
         }
 
-        //TODO perchè parravicini messo l'iterator?
+        throw new IllegalArgumentException("Connection not found in any waiting list or match list");
+
     }
 
-    private int getConnectionGroupIndex2(ServerSideConnection serverSideConnection) {
+
+    private int getWaitingGroupIndex2(ServerSideConnection connection){
+
+        for(int i=0;i<twoPlayerWaitingList.size();i++){
+            if(twoPlayerWaitingList.get(i).getServerSideConnection().equals(connection)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int getWaitingGroupIndex3(ServerSideConnection connection){
+
+        for(int i=0;i<threePlayerWaitingList.size();i++){
+            if(threePlayerWaitingList.get(i).getServerSideConnection().equals(connection)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int getMatchGroupIndex2(ServerSideConnection connection) {
 
         for (int i = 0; i < twoPlayerGames.size(); i++) {
-            if (twoPlayerGames.get(i).getConnection(0).equals(serverSideConnection) ||
-                twoPlayerGames.get(i).getConnection(1).equals(serverSideConnection)) {
+            if (twoPlayerGames.get(i).getConnection(0).equals(connection) ||
+                    twoPlayerGames.get(i).getConnection(1).equals(connection)) {
                 return i;
             }
         }
         return -1;
     }
-
-    private int getConnectionGroupIndex3(ServerSideConnection serverSideConnection) {
+    private int getMatchGroupIndex3(ServerSideConnection connection) {
 
         for(int i=0;i<threePlayerGames.size();i++){
-            if(threePlayerGames.get(i).getConnection(0).equals(serverSideConnection) ||
-               threePlayerGames.get(i).getConnection(1).equals(serverSideConnection) ||
-               threePlayerGames.get(i).getConnection(2).equals(serverSideConnection)) {
+            if(threePlayerGames.get(i).getConnection(0).equals(connection) ||
+               threePlayerGames.get(i).getConnection(1).equals(connection) ||
+               threePlayerGames.get(i).getConnection(2).equals(connection)) {
                 return i;
             }
         }
         return -1;
     }
 
+    private boolean nicknameAlreadyInUse(String nickname, ArrayList<PlayerConnection> waitingList){
 
+        if(waitingList.isEmpty()){
+            return false;
+        }else{
+
+            for(PlayerConnection opponent : waitingList){
+                if(nickname.equals(opponent.getPlayerInfo().getPlayerNickname())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
     //TESTING METHOD
