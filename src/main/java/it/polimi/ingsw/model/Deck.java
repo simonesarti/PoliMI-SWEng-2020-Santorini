@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,12 +10,12 @@ import java.util.Scanner;
  */
 public class Deck{
 
-    private List<GodCard> deck = new ArrayList<>();
+    private ArrayList<GodCard> deck = new ArrayList<>();
 
     /**
      * Constructor. It scans Godcards' descriptions from a file
      */
-    public Deck(){
+    public void fill(){
 
         try{
             File godsDescriptionsFile=new File("C:\\Users\\simon\\Desktop\\gods.txt");
@@ -46,7 +45,27 @@ public class Deck{
                 return godCard;
             }
         }
-        throw new IllegalArgumentException("MESSAGE: No divinity with such a name was found in the deck");
+        throw new IllegalArgumentException("GodCard not found in deck");
+    }
+
+    public void removeCard(GodCard godCard){
+        deck.remove(godCard);
+    }
+
+    public int size(){
+        return deck.size();
+    }
+
+    public GodCard get(int index){
+        return deck.get(index);
+    }
+
+    public void remove(int index){
+        deck.remove(index);
+    }
+
+    public void add(GodCard godCard){
+        deck.add(godCard);
     }
 
 }

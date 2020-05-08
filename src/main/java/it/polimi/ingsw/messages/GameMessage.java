@@ -58,6 +58,16 @@ public class GameMessage {
     public static String notInGameBoard = "This position in outside the gameboard, try again \n";
     public static String invalidWorkerNumber= "This worker number is invalid, try again\n";
 
+    //card selection messages
+    public static String noSuchCardInSelectionDeck ="There are no card with that name in the selection deck";
+    public static String noSuchCardInGameDeck="The card you chose wasn't selected for this match or someone else has already taken it";
+
+
+
+
+
+
+
     //GOD SPECIFIC MESSAGES
 
     //APOLLO
