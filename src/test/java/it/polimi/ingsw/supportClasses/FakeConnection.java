@@ -23,6 +23,9 @@ public class FakeConnection extends ServerSideConnection {
             System.out.println(name+" received new board state");
         }else if(message instanceof InfoMessage){
             System.out.println("message to "+name+": "+((InfoMessage)message).getInfo());
+        }else{
+            System.out.println("this message is neither a board nor a InfoMessage");
+            System.out.println(message.toString());
         }
     }
 }

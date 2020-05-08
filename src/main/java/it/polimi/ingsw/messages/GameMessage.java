@@ -11,6 +11,7 @@ public class GameMessage {
     public static String lose="You Lose";
     public static String quit="You are now going to be disconnected";
     public static String nicknameTaken="This nickname has already been taken";
+    public static String abandonedLobby="You have abandoned the lobby";
 
 
     //classic messages

@@ -29,7 +29,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/*
 public class HephaestusIntegrationTest {
 
     GodCard hephaestusCard;
@@ -581,4 +581,4 @@ public class HephaestusIntegrationTest {
 
 
     }
-
+*/

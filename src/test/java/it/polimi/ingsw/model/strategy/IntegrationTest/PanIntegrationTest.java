@@ -25,7 +25,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/*
 public class PanIntegrationTest {
 
     GodCard pan;
@@ -431,3 +431,4 @@ public class PanIntegrationTest {
 
 
 }
+*/

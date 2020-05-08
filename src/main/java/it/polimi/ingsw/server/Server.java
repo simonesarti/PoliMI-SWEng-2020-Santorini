@@ -16,13 +16,13 @@ import java.util.concurrent.Executors;
 public class Server {
 
     private static final int PORT = 12345;
-    private ServerSocket serverSocket;
-    private ExecutorService executor = Executors.newFixedThreadPool(128);
+    private final ServerSocket serverSocket;
+    private final ExecutorService executor = Executors.newFixedThreadPool(128);
 
-    private ArrayList<PlayerConnection> twoPlayerWaitingList =new ArrayList<>();
-    private ArrayList<PlayerConnection> threePlayerWaitingList =new ArrayList<>();
-    private ArrayList<TwoPlayerGameConnection> twoPlayerGames = new ArrayList<>();
-    private ArrayList<ThreePlayerGameConnection> threePlayerGames = new ArrayList<>();
+    private final ArrayList<PlayerConnection> twoPlayerWaitingList =new ArrayList<>();
+    private final ArrayList<PlayerConnection> threePlayerWaitingList =new ArrayList<>();
+    private final ArrayList<TwoPlayerGameConnection> twoPlayerGames = new ArrayList<>();
+    private final ArrayList<ThreePlayerGameConnection> threePlayerGames = new ArrayList<>();
 
 
     public Server() throws IOException {
@@ -72,6 +72,7 @@ public class Server {
                     twoPlayerGames.add(new TwoPlayerGameConnection(c21,c22));
                     twoPlayerWaitingList.clear();
 
+
                     Controller controller=new Controller(players,connections);
                     controller.startGame();
 
@@ -114,6 +115,7 @@ public class Server {
 
                     Controller controller = new Controller(players, connections);
                     controller.startGame();
+
                 }
             }
         }
@@ -126,6 +128,7 @@ public class Server {
 
         index=getWaitingGroupIndex2(connection);
         if(index!=-1){
+            connection.asyncSend(new InfoMessage(GameMessage.abandonedLobby));
             connection.notInUse();
             twoPlayerWaitingList.remove(index);
             return;
@@ -133,6 +136,7 @@ public class Server {
 
         index=getWaitingGroupIndex3(connection);
         if(index!=-1){
+            connection.asyncSend(new InfoMessage(GameMessage.abandonedLobby));
             connection.notInUse();
             threePlayerWaitingList.remove(index);
             return;

@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 public class AthenaIntegrationTest {
 
     GodCard athenaCard;
@@ -360,3 +360,4 @@ public class AthenaIntegrationTest {
         }
     }
 }
+*/

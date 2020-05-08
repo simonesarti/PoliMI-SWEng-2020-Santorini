@@ -283,7 +283,7 @@ public class Controller implements Observer<PlayerMessage>{
 
     //TODO WORK IN PROGRESS
     public void startGame(){
-
+/*
         int numberOfPlayer=virtualViews.size();
 
         //mancano controlli di validità della scelta iniziale e della selezione di carte già selezionate dopo
@@ -318,6 +318,8 @@ public class Controller implements Observer<PlayerMessage>{
 
 
         //declaration();
+
+ */
     }
 
     private VirtualView getVVFromPlayer(Player player){
