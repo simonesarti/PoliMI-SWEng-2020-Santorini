@@ -1,7 +1,9 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
+import it.polimi.ingsw.messages.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
+import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.view.View;
 
@@ -15,12 +17,26 @@ public class Cli extends View {
         super(clientSideConnection);
     }
 
+
+    @Override
+    public void showInfo(InfoMessage message) {
+        System.out.println("INFO: "+message.getInfo());
+    }
+
+    @Override
+    public void showError(ErrorMessage message) {
+        System.out.println("ERROR: "+message.getError());
+    }
+
+    @Override
     public void showGameBoard(NewBoardStateMessage message){
 
         System.out.println("Mostro la board sulla Command Line");
 
 
     }
+
+
 
     //almeno non escono righe lunghe 45KM nei controlli, e non ripetiamo codice
 
@@ -85,6 +101,8 @@ public class Cli extends View {
     private void printTextStripe(){}
     //uniforme che riporta su il cursore
     private void printLastStripe(){}
+
+
 
 
 }

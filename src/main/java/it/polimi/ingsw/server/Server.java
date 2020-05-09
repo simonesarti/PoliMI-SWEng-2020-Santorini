@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.messages.ErrorMessage;
 import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.InfoMessage;
 import it.polimi.ingsw.model.Player;
@@ -48,7 +49,7 @@ public class Server {
             if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),twoPlayerWaitingList)){
 
                 //if nickname already present, closes user connection
-                playerConnection.getServerSideConnection().asyncSend(new InfoMessage(GameMessage.nicknameTaken));
+                playerConnection.getServerSideConnection().asyncSend(new ErrorMessage(GameMessage.nicknameTaken));
                 playerConnection.getServerSideConnection().notInUse();
 
             }else{
@@ -74,7 +75,6 @@ public class Server {
 
 
                     Controller controller=new Controller(players,connections);
-                    controller.startGame();
 
                 }
 
@@ -85,7 +85,7 @@ public class Server {
             if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),threePlayerWaitingList)){
 
                 //if nickname already present, closes user connection
-                playerConnection.getServerSideConnection().asyncSend(new InfoMessage(GameMessage.nicknameTaken));
+                playerConnection.getServerSideConnection().asyncSend(new ErrorMessage(GameMessage.nicknameTaken));
                 playerConnection.getServerSideConnection().notInUse();
 
             }else{
@@ -114,7 +114,6 @@ public class Server {
                     threePlayerWaitingList.clear();
 
                     Controller controller = new Controller(players, connections);
-                    controller.startGame();
 
                 }
             }

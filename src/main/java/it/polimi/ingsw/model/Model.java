@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Model extends Observable<NotifyMessages> {
 
     private final GameBoard gameboard;
-    private final Deck deck;
-    private ArrayList<GodCard> gameDeck=new ArrayList<>();
+    private final Deck selectionDeck;
+    private final Deck gameDeck;
     private final TurnInfo turnInfo;
     private Colour turn;
     private int playersLeft;
@@ -31,7 +31,9 @@ public class Model extends Observable<NotifyMessages> {
             eliminated[2]=true;
         }
 
-        deck=new Deck();
+        selectionDeck=new Deck();
+        selectionDeck.fill();
+        gameDeck=new Deck();
 
     }
 
@@ -39,7 +41,10 @@ public class Model extends Observable<NotifyMessages> {
 
     public TurnInfo getTurnInfo(){return turnInfo;}
 
-    public ArrayList<GodCard> getGameDeck() {
+    public Deck getSelectionDeck() {
+        return selectionDeck;
+    }
+    public Deck getGameDeck() {
         return gameDeck;
     }
 
@@ -265,12 +270,41 @@ public class Model extends Observable<NotifyMessages> {
     }
 
 
+
+
+
+
+
     //TODO work in progress
-    public void selectGameCard(String name){
-        gameDeck.add(deck.chooseCardFromDeck(name));
+
+    //check on name validity is done client-side
+    public void selectGameCards(String[] names){
+
+        for(String name : names){
+            GodCard godCard=selectionDeck.chooseCard(name);
+            gameDeck.getDeck().add(godCard);
+            selectionDeck.getDeck().remove(godCard);
+        }
     }
 
-    public void chooseCard(Player player, String name){}
+    //check on name validity is done client-side
+    public void chooseOwnCard(Player player, String name){
+
+        GodCard godCard= gameDeck.chooseCard(name);
+        player.setGodCard(godCard);
+        gameDeck.getDeck().remove(godCard);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

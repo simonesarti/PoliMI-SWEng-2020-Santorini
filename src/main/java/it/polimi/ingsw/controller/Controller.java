@@ -2,7 +2,6 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
-import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GodCard;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
@@ -38,6 +37,8 @@ public class Controller implements Observer<PlayerMessage>{
         //assign colours to players
         model.assignColour(players);
 
+        sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards"));
+        virtualViews.get(0).reportInfo(new PossibleCardsMessage(model.getSelectionDeck().getPresentGods(),numberOfPlayers));
     }
 
     /**
@@ -52,17 +53,17 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.eliminated));
             return;
         }
 
         if(model.isNotPlayerTurn(message.getPlayer())){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.wrongTurn));
             return;
         }
 
         if(model.getTurnInfo().getTurnHasEnded()){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.turnAlreadyEnded));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.turnAlreadyEnded));
             return;
         }
 
@@ -107,7 +108,7 @@ public class Controller implements Observer<PlayerMessage>{
             //if check NOT ok, report error
             }else{
 
-                message.getVirtualView().reportInfo(new InfoMessage(checkResult));
+                message.getVirtualView().reportInfo(new ErrorMessage(checkResult));
 
             }
         }
@@ -126,17 +127,17 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.eliminated));
             return;
         }
 
         if (model.isNotPlayerTurn(message.getPlayer())) {
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.wrongTurn));
             return;
         }
 
         if (model.getTurnInfo().getTurnHasEnded()) {
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.turnAlreadyEnded));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.turnAlreadyEnded));
             return;
 
         }
@@ -172,7 +173,7 @@ public class Controller implements Observer<PlayerMessage>{
             //if NOT build check ok
             } else {
 
-                message.getVirtualView().reportInfo(new InfoMessage(checkResult));
+                message.getVirtualView().reportInfo(new ErrorMessage(checkResult));
 
             }
         }
@@ -187,18 +188,18 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.eliminated));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.eliminated));
             return;
         }
 
         if(model.isNotPlayerTurn(message.getPlayer())){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.wrongTurn));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.wrongTurn));
             return;
         }
 
         if(!model.getTurnInfo().getTurnCanEnd()){
 
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.turnNotEnded));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.turnNotEnded));
             return;
         }
         model.updateTurn(getPlayers());
@@ -210,7 +211,7 @@ public class Controller implements Observer<PlayerMessage>{
 
         //player can't quit if he isn't eliminated
         if(!model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new InfoMessage(GameMessage.notEliminated));
+            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.notEliminated));
             return;
         }
 
@@ -218,6 +219,7 @@ public class Controller implements Observer<PlayerMessage>{
         message.getVirtualView().leave();
         model.removeObserver(message.getVirtualView());
     }
+
 
     /**
      * Invokes Controller's methods on the basis of message's subclass
@@ -244,7 +246,12 @@ public class Controller implements Observer<PlayerMessage>{
 
         }
 
+        else if(message instanceof PlayerCardChoice){
+            //cardSelection((PlayerCardChoice)message);
+        }
+
     }
+
 
     private ArrayList<Player> getPlayers(){
 
@@ -256,16 +263,9 @@ public class Controller implements Observer<PlayerMessage>{
         return players;
     }
 
-    private void declaration(){
-
-        StringBuilder s = new StringBuilder();
-        s.append("THE CHOSEN CARDS FOR THIS MATCH ARE:\n\n");
-        for(GodCard godCard : model.getGameDeck()){
-            s.append(godCard.cardDeclaration());
-        }
-
+    private void sendMessageToEveryone(Object message){
         for(VirtualView virtualView : virtualViews){
-            virtualView.reportInfo(new InfoMessage(s.toString()));
+            virtualView.reportInfo(message);
         }
     }
 
@@ -281,56 +281,114 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+
+
+
+
+
+
+
     //TODO WORK IN PROGRESS
-    public void startGame(){
 /*
+    public void startGame(){
+
         int numberOfPlayer=virtualViews.size();
 
-        //mancano controlli di validità della scelta iniziale e della selezione di carte già selezionate dopo
+        sendMessageToEveryone(virtualViews.get(0).getPlayer().getNickname()+" will choose the cards used in this match");
 
-        virtualViews.get(0).reportInfo("card selection1");
+        virtualViews.get(0).reportInfo("select first card");
         while (model.getGameDeck().size()==0){
             //waiting for first card to be selected
         }
 
-        virtualViews.get(0).reportInfo("card selection2");
+        virtualViews.get(0).reportInfo("select second card");
         while (model.getGameDeck().size()==1){
             //waiting for second card to be selected
         }
 
         if(numberOfPlayer==3){
-            virtualViews.get(0).reportInfo("card selection3");
+            virtualViews.get(0).reportInfo("select third card");
             while (model.getGameDeck().size()==2){
                 //waiting for third card to be selected
             }
         }
 
-        virtualViews.get(1).reportInfo("chose your godCard");
-        //while di controllo selezione
+        virtualViews.get(1).reportInfo("chose your card");
+        while (model.getGameDeck().size()==numberOfPlayer){
+            //waiting for first card to be chosen
+        }
 
         if(numberOfPlayer==3){
-            virtualViews.get(2).reportInfo("chose your godCard");
-            //while di controllo selezione
-        }
-
-        //assegnazione carta rimasta
-
-
-
-        //declaration();
-
- */
-    }
-
-    private VirtualView getVVFromPlayer(Player player){
-
-        for(VirtualView virtualView:virtualViews){
-            if(virtualView.getPlayer().equals(player)){
-                return virtualView;
+            virtualViews.get(2).reportInfo("chose your card");
+            while (model.getGameDeck().size()==numberOfPlayer-1){
+                //waiting for second card to be chosen
             }
         }
-        throw new IllegalStateException("INEXISTING VV given player");
+
+        //the only card left in gameDeck is assigned to player1
+        virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().get(0));
+        sendMessageToEveryone("Therefore "+model.getGameDeck().get(0).getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname());
+        //and then removed from the list as all the others
+        model.getGameDeck().remove(0);
+
+        declaration();
+
+
     }
+
+    private void declaration(){
+
+        StringBuilder s = new StringBuilder();
+        s.append("THE CHOSEN CARDS FOR THIS MATCH ARE:\n\n");
+
+        for(VirtualView virtualView : virtualViews){
+            s.append("PLAYER: ").append(virtualView.getPlayer().getNickname()).append("\n");
+            s.append(virtualView.getPlayer().getGodCard().cardDeclaration());
+        }
+        sendMessageToEveryone(s.toString());
+
+    }
+
+    private synchronized void cardSelection(PlayerCardChoice message){
+
+        //someone tries to chose a card while the cards are still being selected
+        if(model.getGameDeck().size()<virtualViews.size() && !message.getVirtualView().equals(virtualViews.get(0))) {
+            message.getVirtualView().reportInfo(new InfoMessage(virtualViews.get(0).getPlayer().getNickname() + " is still choosing the cards"));
+            return;
+        }
+
+        if(model.getGameDeck().size()<virtualViews.size() && message.getVirtualView().equals(virtualViews.get(0))){
+            boolean selectionResultOk;
+            selectionResultOk = model.selectGameCard(message.getCardNames());
+            if (!selectionResultOk) {
+                message.getVirtualView().reportInfo(new InfoMessage(GameMessage.noSuchCardInSelectionDeck));
+            }
+            return;
+        }
+
+        if(model.getGameDeck().size()==virtualViews.size() && !message.getVirtualView().equals(virtualViews.get(1))){
+            message.getVirtualView().reportInfo(new InfoMessage(virtualViews.get(0).getPlayer().getNickname() + " is still selecting his card"));
+            return;
+        }
+
+        if(model.getGameDeck().size()==virtualViews.size() && message.getVirtualView().equals(virtualViews.get(1))) {
+            boolean selectionResultOk;
+            selectionResultOk = model.chooseCard(message.getPlayer(), message.getCardNames());
+            if (!selectionResultOk) {
+                message.getVirtualView().reportInfo(new InfoMessage(GameMessage.noSuchCardInGameDeck));
+            } else {
+                sendMessageToEveryone(message.getVirtualView().getPlayer().getNickname()+ "chose "+message.getVirtualView().getPlayer().getGodCard().getGodName());
+            }
+            return;
+        }
+    }
+*/
+
+
+
+
+
+
 
 
 

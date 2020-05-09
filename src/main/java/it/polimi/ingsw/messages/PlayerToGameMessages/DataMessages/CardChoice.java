@@ -2,13 +2,13 @@ package it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages;
 
 public class CardChoice extends DataMessage{
 
-    private final String cardName;
+    private final String[] cardNames;
 
-    public CardChoice(String cardName) {
-        this.cardName = cardName;
+    public CardChoice(String[] cardNames) {
+        this.cardNames = cardNames;
     }
 
-    public String getCardName() {
-        return cardName;
+    public String[] getCardNames() {
+        return cardNames;
     }
 }
