@@ -41,6 +41,9 @@ public class Model extends Observable<NotifyMessages> {
 
     public TurnInfo getTurnInfo(){return turnInfo;}
 
+    public Deck getSelectionDeck() {
+        return selectionDeck;
+    }
     public Deck getGameDeck() {
         return gameDeck;
     }
@@ -265,10 +268,6 @@ public class Model extends Observable<NotifyMessages> {
     private void notifyNewBoardState(){
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
-
-
-
-
 
 
 

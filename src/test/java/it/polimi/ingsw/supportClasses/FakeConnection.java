@@ -3,6 +3,7 @@ package it.polimi.ingsw.supportClasses;
 import it.polimi.ingsw.messages.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.InfoMessage;
+import it.polimi.ingsw.messages.PossibleCardsMessage;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 
@@ -24,10 +25,12 @@ public class FakeConnection extends ServerSideConnection {
             System.out.println(name+" received new board state");
         }else if(message instanceof InfoMessage){
             System.out.println("message to "+name+": "+((InfoMessage)message).getInfo());
-        }else if(message instanceof ErrorMessage){
-            System.out.println("error to "+name+": "+((ErrorMessage)message).getError());
+        }else if(message instanceof ErrorMessage) {
+            System.out.println("error to " + name + ": " + ((ErrorMessage) message).getError());
+        }else if(message instanceof PossibleCardsMessage){
+            System.out.println("god list sent");
         }else{
-            System.out.println("this message is neither a board, a InfoMessage or a ErrorMessage");
+            System.out.println("this message is neither a board, a InfoMessage, a ErrorMessage or PossibleCardsMessage");
             System.out.println(message.toString());
         }
     }
