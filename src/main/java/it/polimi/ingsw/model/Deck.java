@@ -10,7 +10,7 @@ public class Deck{
         return deck;
     }
 
-    public void Fill(){
+    public void fill(){
 
         GodDescriptions godDescriptions=new GodDescriptions();
         ArrayList<String[]> descriptions=godDescriptions.getDescriptions();
