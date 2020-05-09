@@ -170,10 +170,10 @@ class GameBoardTest {
         for(int j=0;j<5;j++){
             for(int i=0;i<5;i++){
                 System.out.println("("+i+","+j+")");
-                System.out.println("Height "+boardState.getTowerStates(i,j).getTowerHeight());
-                System.out.println("complete "+boardState.getTowerStates(i,j).isCompleted());
-                System.out.println("w number "+boardState.getTowerStates(i,j).getWorkerNumber());
-                System.out.println("w colour"+boardState.getTowerStates(i,j).getWorkerColour()+"\n");
+                System.out.println("Height "+boardState.getTowerState(i,j).getTowerHeight());
+                System.out.println("complete "+boardState.getTowerState(i,j).isCompleted());
+                System.out.println("w number "+boardState.getTowerState(i,j).getWorkerNumber());
+                System.out.println("w colour"+boardState.getTowerState(i,j).getWorkerColour()+"\n");
             }
         }
     }
