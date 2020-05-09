@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
+import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.view.View;
 
 public class Cli extends View {
@@ -12,13 +13,65 @@ public class Cli extends View {
         super(clientSideConnection);
     }
 
-    public void showNewBoard(NewBoardStateMessage message){
+    public void showGameBoard(NewBoardStateMessage message){
 
         System.out.println("Mostro la board sulla Command Line");
 
+
+    }
+
+    //almeno non escono righe lunghe 45KM nei controlli, e non ripetiamo codice
+
+    private int getTowerHeight(NewBoardStateMessage message, int i, int j){
+        return message.getBoardState().getTowerState(i,j).getTowerHeight();
+    }
+
+    private boolean isCompleted(NewBoardStateMessage message,int i,int j){
+        return message.getBoardState().getTowerState(i,j).isCompleted();
+    }
+
+    private int getWorkerNumber(NewBoardStateMessage message,int i,int j){
+        return message.getBoardState().getTowerState(i,j).getWorkerNumber();
+    }
+
+    private Colour getWorkerColour(NewBoardStateMessage message,int i,int j){
+        return message.getBoardState().getTowerState(i,j).getWorkerColour();
     }
 
 
 
 
+    //TODO da implementare e aggiungere tutti i parametri necessari, le metto tutte void e senza parametri
+
+    //private qualcosa getANSIColour();
+
+
+    //quadrato verde senza ninete dentro, 4 linee uniforme e 1 uniforme che riporta sopra
+    private void printEmptyCell(){}
+
+    //cupola: uniforme + 3strisce con cupola + uniforme che torna su
+    private void printCellWithDome(){}
+
+    //solo torre, no worker: 2 strisce uniformi + 1 striscia con testo del livello + 1 uniforme +1 uniforme che torna su
+    private void printCellWithOnlyTower(){}
+
+    //torre + worker : uniforme+testo+uniforme+testo+unforme che risale
+    private void printCellWithWorker(){}
+
+
+
+    //strisce
+
+    //solo colore uniforme (va a capo stessa cella)
+    private void printUniformStipe(){}
+    //con cupola (va a capo stessa cella)
+    private void printDomeStripe(){}
+    //uniforme con testo in mezzo (va a capo stessa cella)
+    private void printTextStripe(){}
+    //uniforme che riporta su il cursore
+    private void printLastStripe(){}
+
+
 }
+
+

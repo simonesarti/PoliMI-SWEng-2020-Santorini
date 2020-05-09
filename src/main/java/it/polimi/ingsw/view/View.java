@@ -17,7 +17,7 @@ public abstract class View implements Observer<Object> {
         this.clientSideConnection = clientSideConnection;
     }
 
-    abstract public void showNewBoard(NewBoardStateMessage message);
+    abstract public void showGameBoard(NewBoardStateMessage message);
 
 
 
@@ -26,7 +26,7 @@ public abstract class View implements Observer<Object> {
 
         if(message instanceof NewBoardStateMessage){
             System.out.println("NewBoardStateMessage message arrived to client!");
-            showNewBoard((NewBoardStateMessage) message);
+            showGameBoard((NewBoardStateMessage) message);
         } else if (message instanceof InfoMessage){
 
             System.out.println("Infomessage arrived to view, here it is: "+((InfoMessage) message).getInfo());
