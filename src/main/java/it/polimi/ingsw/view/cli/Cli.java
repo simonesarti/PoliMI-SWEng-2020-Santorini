@@ -7,6 +7,8 @@ import it.polimi.ingsw.view.View;
 
 public class Cli extends View {
 
+
+
     private ClientSideConnection clientSideConnection;
 
     public Cli(ClientSideConnection clientSideConnection) {
@@ -47,7 +49,18 @@ public class Cli extends View {
 
 
     //quadrato verde senza ninete dentro, 4 linee uniforme e 1 uniforme che riporta sopra
-    private void printEmptyCell(){}
+    private void printEmptyCell(){
+
+        System.out.print(AnsiCode.BACKGROUND_GREEN);
+        System.out.println("     " + AnsiCode.RESET);
+        System.out.print(AnsiCode.BACKGROUND_GREEN);
+        System.out.println("     " + AnsiCode.RESET);
+        System.out.print(AnsiCode.BACKGROUND_GREEN);
+        System.out.println("     " + AnsiCode.RESET);
+        System.out.print(AnsiCode.BACKGROUND_GREEN);
+        System.out.println("     " + AnsiCode.RESET);
+
+    }
 
     //cupola: uniforme + 3strisce con cupola + uniforme che torna su
     private void printCellWithDome(){}
@@ -63,7 +76,9 @@ public class Cli extends View {
     //strisce
 
     //solo colore uniforme (va a capo stessa cella)
-    private void printUniformStipe(){}
+    private void printUniformStripe(String colour){
+
+    }
     //con cupola (va a capo stessa cella)
     private void printDomeStripe(){}
     //uniforme con testo in mezzo (va a capo stessa cella)
