@@ -37,7 +37,7 @@ public class Controller implements Observer<PlayerMessage>{
         //assign colours to players
         model.assignColour(players);
 
-        sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ "will choose this match cards"));
+        sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards"));
         virtualViews.get(0).reportInfo(new PossibleCardsMessage(model.getSelectionDeck().getPresentGods(),numberOfPlayers));
     }
 
