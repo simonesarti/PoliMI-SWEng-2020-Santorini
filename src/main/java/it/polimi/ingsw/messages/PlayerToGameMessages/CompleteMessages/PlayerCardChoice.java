@@ -13,8 +13,7 @@ public class PlayerCardChoice extends PlayerMessage {
         this.cardChoice = cardChoice;
     }
 
-
-    public String getCardName(){
-        return cardChoice.getCardName();
+    public String[] getCardNames(){
+        return cardChoice.getCardNames();
     }
 }
