@@ -202,7 +202,9 @@ public class Model extends Observable<NotifyMessages> {
     }
 
     public void declareWinner(ArrayList<Player> players){
-        notifyVictory(getPlayerFromColour(players,getWinnerColour()));
+        Player winner=getPlayerFromColour(players,getWinnerColour());
+        notifyVictory(winner);
+        notifyGameEnd(winner);
     }
 
     public boolean performLoseCheck(Player player, int chosenWorker, String phase){
@@ -228,6 +230,7 @@ public class Model extends Observable<NotifyMessages> {
 
         if(player.getGodCard().getWinStrategy().checkWin(player,chosenWorker)){
             notifyVictory(player);
+            notifyGameEnd(player);
             return true;
         }else{
             return false;
@@ -258,6 +261,7 @@ public class Model extends Observable<NotifyMessages> {
 
     }
 
+    private void notifyGameEnd(Player player){notify(new EndOfGameMessage(player));}
     private void notifyVictory(Player player){
         notify(new WinMessage(player));
     }

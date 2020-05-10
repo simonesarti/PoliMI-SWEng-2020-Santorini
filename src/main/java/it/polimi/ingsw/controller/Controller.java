@@ -265,7 +265,9 @@ public class Controller implements Observer<PlayerMessage>{
 
     private void sendMessageToEveryone(Object message){
         for(VirtualView virtualView : virtualViews){
-            virtualView.reportInfo(message);
+            if(virtualView.isObservingModel()){
+                virtualView.reportInfo(message);
+            }
         }
     }
 

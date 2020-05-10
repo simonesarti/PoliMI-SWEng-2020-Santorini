@@ -107,20 +107,26 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
         }
 
-        else if( message instanceof WinMessage){
+        else if(message instanceof WinMessage){
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){
                 reportInfo(new InfoMessage(GameMessage.win));
-                connectionToClient.removeObserver(playerMessageReceiver);
-                connectionToClient.deactivate();
+
             }else{
                 reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ " won"));
-                connectionToClient.removeObserver(playerMessageReceiver);
-                //the winner also terminates the opponents' connections calling notInUse in unregister, triggered by close
             }
+            connectionToClient.removeObserver(playerMessageReceiver);
 
 
+        }else if(message instanceof EndOfGameMessage) {
+
+            if(((EndOfGameMessage)message).getPlayer()==this.getPlayer()){
+                connectionToClient.deactivate();
+                //deactivates winner connection, as a result every in-game player's connection is terminated
+                //and the match ends
+            }
         }
+
 
     }
 
