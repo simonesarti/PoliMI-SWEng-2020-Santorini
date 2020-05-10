@@ -10,10 +10,12 @@ import java.util.Scanner;
 public class Cli extends View {
 
 
+    private Scanner stdin;
     private ClientSideConnection clientSideConnection;
 
     public Cli(ClientSideConnection clientSideConnection) {
         super(clientSideConnection);
+        stdin = new Scanner(System.in);
     }
 
     public void showNewBoard(NewBoardStateMessage message){
@@ -23,8 +25,6 @@ public class Cli extends View {
     }
 
     public PlayerInfo createPlayerInfo(){
-
-        Scanner stdin = new Scanner(System.in);
 
         System.out.println("What's your nickname?");
         String nickname = stdin.nextLine();
@@ -73,11 +73,33 @@ public class Cli extends View {
             }
         }while(!validNumberOfPlayers);
 
-        stdin.close();
         return (new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
     }
 
 
+    @Override
+    public void run() {
+
+        try {
+
+            while(clientSideConnection.isActive()) {
+
+                String inputLine = stdin.nextLine();
+                //trasforma la stringa in un oggetto messaggio in base a cosa c'è scritto e poi chiama clientSideConn.asyncsend(messaggio)
+                System.out.println("thread lettore cli ha letto una stringa");
+            }
+
+        } catch (Exception e) {
+
+            clientSideConnection.setActive(false);
+            e.printStackTrace();
+
+        } finally {
+
+            stdin.close();
+
+        }
 
 
+    }
 }

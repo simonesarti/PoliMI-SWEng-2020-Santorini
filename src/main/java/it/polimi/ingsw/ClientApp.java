@@ -8,27 +8,36 @@ import java.io.IOException;
 
 public class ClientApp {
 
+    //TODO IMPORTANTE: alla fine della fase di preparazione pre-partita si deve settare view.canStart a true
     public static void main(String[] args){
 
-        Cli cli;
+        View view;
         ClientSideConnection clientSideConnection = new ClientSideConnection("127.0.0.1",12345);
         Thread t0;
         Thread t1;
 
         /////////per adesso istanzio direttamente CLI
-        cli = new Cli(clientSideConnection);
-        clientSideConnection.addObserver(cli);
+        view = new Cli(clientSideConnection);
+        clientSideConnection.addObserver(view);
 
-        /*
+
         t0 = new Thread(clientSideConnection);
         t0.start();
-        while(cli.canStart()==false){
+        while(view.getCanStart()==false){
             //do nothing
         }
-        cli.run();
+        System.out.println("Ho superato while getCanstart false");
+        t1 = new Thread(view);
+        t1.start();
+        System.out.println("Ho superato start t1");
 
+        try {
+            t0.join();
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-         */
 
         //ORDINE:
         //Istanzio Client

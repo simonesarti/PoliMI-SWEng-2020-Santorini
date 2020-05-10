@@ -15,18 +15,21 @@ import java.util.Scanner;
 
 //TODO Cli e Gui nei loro metodi, quando viene fatta una mossa, creano il dataMessage e chiamano client.writeToSocket(dataMessage)
 //TODO La View non deve avere un attributo Player vero? Sarebbe un problema perché voglio inizializzare la view separatamente senza avere bisogno di oggetto Player
-public abstract class View implements Observer<Object> {
+public abstract class View implements Observer<Object>,Runnable {
 
 
     private ClientSideConnection clientSideConnection;
+    private boolean canStart;
 
     public View(ClientSideConnection clientSideConnection){
 
+        this.setCanStart(false);
         this.clientSideConnection = clientSideConnection;
     }
 
     abstract public void showNewBoard(NewBoardStateMessage message);
     abstract public PlayerInfo createPlayerInfo();
+
 
 
     @Override
@@ -40,6 +43,11 @@ public abstract class View implements Observer<Object> {
             System.out.println("Infomessage arrived to view, here it is: "+((InfoMessage) message).getInfo());
             if(((InfoMessage) message).getInfo().equals(GameMessage.welcome)){
                 clientSideConnection.asyncSend(createPlayerInfo());
+                //TODO PER ADESSO LO METTO QUI SOTTO, MA VA MESSO A FINE FASE PREPARAZIONE
+                setCanStart(true);
+                System.out.println("Dovrebbe aver settato canStart a true");
+
+
             }
 
         } else {
@@ -47,6 +55,7 @@ public abstract class View implements Observer<Object> {
         }
 
     }
+
 
 
     public boolean isDateValid(String date){
@@ -65,4 +74,11 @@ public abstract class View implements Observer<Object> {
 
     }
 
+    public boolean getCanStart() {
+        return canStart;
+    }
+
+    public void setCanStart(boolean canStart) {
+        this.canStart = canStart;
+    }
 }
