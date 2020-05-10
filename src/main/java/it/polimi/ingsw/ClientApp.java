@@ -21,10 +21,13 @@ public class ClientApp {
         clientSideConnection.addObserver(view);
 
 
+        System.out.println("Sono nella clientApp prima di tutto, view.getCanStart: "+ view.getCanStart());
+
         t0 = new Thread(clientSideConnection);
         t0.start();
         while(view.getCanStart()==false){
             //do nothing
+
         }
         System.out.println("Ho superato while getCanstart false");
         t1 = new Thread(view);

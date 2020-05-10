@@ -18,7 +18,9 @@ import java.util.Scanner;
 public abstract class View implements Observer<Object>,Runnable {
 
 
-    private ClientSideConnection clientSideConnection;
+
+
+    private final ClientSideConnection clientSideConnection;
     private boolean canStart;
 
     public View(ClientSideConnection clientSideConnection){
@@ -45,7 +47,7 @@ public abstract class View implements Observer<Object>,Runnable {
                 clientSideConnection.asyncSend(createPlayerInfo());
                 //TODO PER ADESSO LO METTO QUI SOTTO, MA VA MESSO A FINE FASE PREPARAZIONE
                 setCanStart(true);
-                System.out.println("Dovrebbe aver settato canStart a true");
+                System.out.println("Ora canStart: "+getCanStart());
 
 
             }
@@ -74,11 +76,17 @@ public abstract class View implements Observer<Object>,Runnable {
 
     }
 
-    public boolean getCanStart() {
+    public synchronized boolean getCanStart() {
         return canStart;
     }
 
-    public void setCanStart(boolean canStart) {
+    public synchronized void setCanStart(boolean canStart) {
         this.canStart = canStart;
     }
+
+    public ClientSideConnection getClientSideConnection() {
+        return clientSideConnection;
+    }
+
+
 }

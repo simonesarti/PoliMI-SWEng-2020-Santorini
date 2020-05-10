@@ -11,11 +11,14 @@ public class Cli extends View {
 
 
     private Scanner stdin;
-    private ClientSideConnection clientSideConnection;
+
 
     public Cli(ClientSideConnection clientSideConnection) {
+
         super(clientSideConnection);
         stdin = new Scanner(System.in);
+
+
     }
 
     public void showNewBoard(NewBoardStateMessage message){
@@ -82,7 +85,7 @@ public class Cli extends View {
 
         try {
 
-            while(clientSideConnection.isActive()) {
+            while(getClientSideConnection().isActive()) {
 
                 String inputLine = stdin.nextLine();
                 //trasforma la stringa in un oggetto messaggio in base a cosa c'è scritto e poi chiama clientSideConn.asyncsend(messaggio)
@@ -91,7 +94,7 @@ public class Cli extends View {
 
         } catch (Exception e) {
 
-            clientSideConnection.setActive(false);
+            getClientSideConnection().setActive(false);
             e.printStackTrace();
 
         } finally {
