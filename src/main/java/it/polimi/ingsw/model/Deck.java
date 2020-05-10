@@ -35,15 +35,19 @@ public class Deck{
         throw new IllegalArgumentException("GodCard not found in deck");
     }
 
-    public ArrayList<String> getPresentGods(){
+    public ArrayList<String> getPresentGods(int numberOfPlayers){
 
-        ArrayList<String> left=new ArrayList<>();
+        ArrayList<String> names=new ArrayList<>();
 
         for(GodCard godCard : deck){
-            String name=godCard.getGodName();
-            left.add(name);
+
+            if(!(numberOfPlayers==3 && !godCard.canBeUsedIn3())){
+                String name=godCard.getGodName();
+                names.add(name);
+            }
+
         }
-        return left;
+        return names;
     }
 
 
