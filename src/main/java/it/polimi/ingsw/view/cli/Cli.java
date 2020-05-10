@@ -1,14 +1,13 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-import it.polimi.ingsw.messages.InfoMessage;
-import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.view.View;
+import java.util.GregorianCalendar;
+import java.util.Scanner;
 
 public class Cli extends View {
-
 
 
     private ClientSideConnection clientSideConnection;
@@ -17,94 +16,68 @@ public class Cli extends View {
         super(clientSideConnection);
     }
 
-
-    @Override
-    public void showInfo(InfoMessage message) {
-        System.out.println("INFO: "+message.getInfo());
-    }
-
-    @Override
-    public void showError(ErrorMessage message) {
-        System.out.println("ERROR: "+message.getError());
-    }
-
-    @Override
-    public void showGameBoard(NewBoardStateMessage message){
+    public void showNewBoard(NewBoardStateMessage message){
 
         System.out.println("Mostro la board sulla Command Line");
 
-
     }
 
+    public PlayerInfo createPlayerInfo(){
 
+        Scanner stdin = new Scanner(System.in);
 
-    //almeno non escono righe lunghe 45KM nei controlli, e non ripetiamo codice
+        System.out.println("What's your nickname?");
+        String nickname = stdin.nextLine();
 
-    private int getTowerHeight(NewBoardStateMessage message, int i, int j){
-        return message.getBoardState().getTowerState(i,j).getTowerHeight();
+        int day=0;
+        int month=0;
+        int year=0;
+        boolean validDate=false;
+        do{
+            try {
+                System.out.println("Insert birthday day:");
+                day = Integer.parseInt(stdin.nextLine());
+                System.out.println("Insert birthday month:");
+                month = Integer.parseInt(stdin.nextLine());
+                System.out.println("Insert birthday year:");
+                year = Integer.parseInt(stdin.nextLine());
+
+                String dateString = day +"-"+month+"-"+year;
+                validDate=isDateValid(dateString);
+                if(!validDate){System.out.print("Not valid, try again");}
+
+            } catch (NumberFormatException e) {
+                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
+                e.printStackTrace();
+                System.out.print("Not a number, try again");
+            }
+        }while(!validDate);
+
+        //need to create a new Calendar object with birthdayString data
+        int numberOfPlayers = 0;
+        boolean validNumberOfPlayers=false;
+        do{
+            try {
+                System.out.println("Insert number of players:");
+                numberOfPlayers = Integer.parseInt(stdin.nextLine());
+                if(numberOfPlayers!=2 && numberOfPlayers!=3){
+                    System.out.print("Not valid, try again");
+                }else{
+                    validNumberOfPlayers=true;
+                }
+
+            } catch (NumberFormatException e) {
+                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
+                System.out.print("Not a number, try again");
+                e.printStackTrace();
+            }
+        }while(!validNumberOfPlayers);
+
+        stdin.close();
+        return (new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
     }
-
-    private boolean isCompleted(NewBoardStateMessage message,int i,int j){
-        return message.getBoardState().getTowerState(i,j).isCompleted();
-    }
-
-    private int getWorkerNumber(NewBoardStateMessage message,int i,int j){
-        return message.getBoardState().getTowerState(i,j).getWorkerNumber();
-    }
-
-    private Colour getWorkerColour(NewBoardStateMessage message,int i,int j){
-        return message.getBoardState().getTowerState(i,j).getWorkerColour();
-    }
-
-
-
-
-    //TODO da implementare e aggiungere tutti i parametri necessari, le metto tutte void e senza parametri
-
-    //private qualcosa getANSIColour();
-
-
-    //quadrato verde senza ninete dentro, 4 linee uniforme e 1 uniforme che riporta sopra
-    private void printEmptyCell(){
-
-        System.out.print(AnsiCode.BACKGROUND_GREEN);
-        System.out.println("     " + AnsiCode.RESET);
-        System.out.print(AnsiCode.BACKGROUND_GREEN);
-        System.out.println("     " + AnsiCode.RESET);
-        System.out.print(AnsiCode.BACKGROUND_GREEN);
-        System.out.println("     " + AnsiCode.RESET);
-        System.out.print(AnsiCode.BACKGROUND_GREEN);
-        System.out.println("     " + AnsiCode.RESET);
-
-    }
-
-    //cupola: uniforme + 3strisce con cupola + uniforme che torna su
-    private void printCellWithDome(){}
-
-    //solo torre, no worker: 2 strisce uniformi + 1 striscia con testo del livello + 1 uniforme +1 uniforme che torna su
-    private void printCellWithOnlyTower(){}
-
-    //torre + worker : uniforme+testo+uniforme+testo+unforme che risale
-    private void printCellWithWorker(){}
-
-
-
-    //strisce
-
-    //solo colore uniforme (va a capo stessa cella)
-    private void printUniformStripe(String colour){
-
-    }
-    //con cupola (va a capo stessa cella)
-    private void printDomeStripe(){}
-    //uniforme con testo in mezzo (va a capo stessa cella)
-    private void printTextStripe(){}
-    //uniforme che riporta su il cursore
-    private void printLastStripe(){}
 
 
 
 
 }
-
-

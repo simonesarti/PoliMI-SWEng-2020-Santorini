@@ -1,11 +1,17 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.ErrorMessage;
+import it.polimi.ingsw.messages.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
 import it.polimi.ingsw.messages.InfoMessage;
-import it.polimi.ingsw.messages.PossibleCardsMessage;
+import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.observe.Observer;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.Scanner;
 
 //TODO Cli e Gui nei loro metodi, quando viene fatta una mossa, creano il dataMessage e chiamano client.writeToSocket(dataMessage)
 //TODO La View non deve avere un attributo Player vero? Sarebbe un problema perché voglio inizializzare la view separatamente senza avere bisogno di oggetto Player
@@ -19,12 +25,8 @@ public abstract class View implements Observer<Object> {
         this.clientSideConnection = clientSideConnection;
     }
 
-    abstract public void showGameBoard(NewBoardStateMessage message);
-
-    abstract public void showInfo(InfoMessage message);
-
-    abstract public void showError(ErrorMessage message);
-
+    abstract public void showNewBoard(NewBoardStateMessage message);
+    abstract public PlayerInfo createPlayerInfo();
 
 
     @Override
@@ -32,16 +34,35 @@ public abstract class View implements Observer<Object> {
 
         if(message instanceof NewBoardStateMessage){
             System.out.println("NewBoardStateMessage message arrived to client!");
-            showGameBoard((NewBoardStateMessage) message);
-        } else if (message instanceof InfoMessage) {
-            System.out.println("Infomessage arrived to view, here it is: " + ((InfoMessage) message).getInfo());
-        }else if(message instanceof ErrorMessage) {
-            System.out.println("errorMessage arrived to view, here it is: " + ((ErrorMessage) message).getError());
-        }else if(message instanceof PossibleCardsMessage){
-            System.out.println("PossibleCardsMessage received");
-        }else {
+            showNewBoard((NewBoardStateMessage) message);
+        } else if (message instanceof InfoMessage){
+
+            System.out.println("Infomessage arrived to view, here it is: "+((InfoMessage) message).getInfo());
+            if(((InfoMessage) message).getInfo().equals(GameMessage.welcome)){
+                clientSideConnection.asyncSend(createPlayerInfo());
+            }
+
+        } else {
             throw new IllegalArgumentException();
         }
 
     }
+
+
+    public boolean isDateValid(String date){
+
+        String DATE_FORMAT = "dd-MM-yyyy";
+
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

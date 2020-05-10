@@ -7,6 +7,7 @@ public class GameMessage {
 
     //game phase
     public static String welcome = "Welcome";
+    public static String waitingOtherPlayers = "Waiting other players...";
     public static String win="You Win";
     public static String lose="You Lose";
     public static String quit="You are now going to be disconnected";
