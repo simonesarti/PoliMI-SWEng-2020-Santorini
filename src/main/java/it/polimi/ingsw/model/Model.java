@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.*;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.*;
 import it.polimi.ingsw.observe.Observable;
 
 import java.util.ArrayList;

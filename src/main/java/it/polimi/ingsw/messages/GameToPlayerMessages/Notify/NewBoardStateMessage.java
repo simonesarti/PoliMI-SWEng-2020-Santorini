@@ -1,7 +1,7 @@
-package it.polimi.ingsw.messages.GameToPlayerMessages;
+package it.polimi.ingsw.messages.GameToPlayerMessages.Notify;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NotifyMessages;
 import it.polimi.ingsw.model.BoardState;
-import it.polimi.ingsw.model.Player;
 
 import java.io.Serializable;
 

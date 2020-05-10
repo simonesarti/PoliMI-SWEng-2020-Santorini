@@ -1,17 +1,12 @@
 package it.polimi.ingsw.supportClasses;
 
-import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.LoseMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NotifyMessages;
-import it.polimi.ingsw.messages.GameToPlayerMessages.WinMessage;
-import it.polimi.ingsw.messages.InfoMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.*;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.LoseMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NotifyMessages;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.WinMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.observe.Observer;
-import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.view.VirtualView;
 

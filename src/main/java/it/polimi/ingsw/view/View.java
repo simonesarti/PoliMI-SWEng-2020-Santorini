@@ -1,17 +1,15 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-import it.polimi.ingsw.messages.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.observe.Observer;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 //TODO Cli e Gui nei loro metodi, quando viene fatta una mossa, creano il dataMessage e chiamano client.writeToSocket(dataMessage)
 //TODO La View non deve avere un attributo Player vero? Sarebbe un problema perché voglio inizializzare la view separatamente senza avere bisogno di oggetto Player

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
-import it.polimi.ingsw.messages.GameMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.model.*;
 
 /**

@@ -1,8 +1,9 @@
-package it.polimi.ingsw.messages.GameToPlayerMessages;
+package it.polimi.ingsw.messages.GameToPlayerMessages.Notify;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NotifyMessages;
 import it.polimi.ingsw.model.Player;
 
-public class LoseMessage extends NotifyMessages{
+public class LoseMessage extends NotifyMessages {
 
     private final Player player;
 

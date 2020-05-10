@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.view.View;
 import java.util.GregorianCalendar;

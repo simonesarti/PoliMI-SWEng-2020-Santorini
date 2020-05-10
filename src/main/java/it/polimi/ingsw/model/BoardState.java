@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-
 public class BoardState {
 
     private TowerState[][] towerStates = new TowerState[5][5];

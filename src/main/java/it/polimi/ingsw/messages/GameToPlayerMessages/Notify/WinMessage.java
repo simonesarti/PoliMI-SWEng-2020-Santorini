@@ -1,8 +1,9 @@
-package it.polimi.ingsw.messages.GameToPlayerMessages;
+package it.polimi.ingsw.messages.GameToPlayerMessages.Notify;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NotifyMessages;
 import it.polimi.ingsw.model.Player;
 
-public class WinMessage extends NotifyMessages{
+public class WinMessage extends NotifyMessages {
 
     private final Player player;
 

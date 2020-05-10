@@ -1,4 +1,4 @@
-package it.polimi.ingsw.messages;
+package it.polimi.ingsw.messages.GameToPlayerMessages.Others;
 
 /**
  * This class contains messages that will appear on screen

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.messages;
+package it.polimi.ingsw.messages.GameToPlayerMessages.Others;
 
 import java.io.Serializable;
 

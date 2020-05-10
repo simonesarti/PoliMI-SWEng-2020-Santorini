@@ -1,5 +1,5 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
-import it.polimi.ingsw.messages.GameMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Dome;

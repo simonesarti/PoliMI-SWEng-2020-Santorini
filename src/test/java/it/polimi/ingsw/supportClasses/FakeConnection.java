@@ -1,9 +1,9 @@
 package it.polimi.ingsw.supportClasses;
 
-import it.polimi.ingsw.messages.ErrorMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.NewBoardStateMessage;
-import it.polimi.ingsw.messages.InfoMessage;
-import it.polimi.ingsw.messages.PossibleCardsMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 
