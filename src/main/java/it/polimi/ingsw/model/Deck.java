@@ -25,7 +25,7 @@ public class Deck{
      * @param divinityName God's name
      * @return returns GodCard object
      */
-    public GodCard chooseCard(String divinityName){
+    public GodCard findCard(String divinityName){
 
         for (GodCard godCard : deck) {
             if (divinityName.equals(godCard.getGodName())) {
@@ -50,5 +50,14 @@ public class Deck{
         return names;
     }
 
+    public ArrayList<String> getGameGods(){
 
+        ArrayList<String> names=new ArrayList<>();
+
+        for(GodCard godCard : deck){
+            String name=godCard.getGodName();
+            names.add(name);
+        }
+        return names;
+    }
 }

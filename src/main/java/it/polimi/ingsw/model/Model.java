@@ -285,7 +285,7 @@ public class Model extends Observable<NotifyMessages> {
     public void selectGameCards(String[] names){
 
         for(String name : names){
-            GodCard godCard=selectionDeck.chooseCard(name);
+            GodCard godCard=selectionDeck.findCard(name);
             gameDeck.getDeck().add(godCard);
             selectionDeck.getDeck().remove(godCard);
         }
@@ -294,7 +294,7 @@ public class Model extends Observable<NotifyMessages> {
     //check on name validity is done client-side
     public void chooseOwnCard(Player player, String name){
 
-        GodCard godCard= gameDeck.chooseCard(name);
+        GodCard godCard= gameDeck.findCard(name);
         player.setGodCard(godCard);
         gameDeck.getDeck().remove(godCard);
     }

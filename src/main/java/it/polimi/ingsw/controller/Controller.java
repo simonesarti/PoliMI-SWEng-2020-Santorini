@@ -247,7 +247,7 @@ public class Controller implements Observer<PlayerMessage>{
         }
 
         else if(message instanceof PlayerCardChoice){
-            //cardSelection((PlayerCardChoice)message);
+            cardSelection((PlayerCardChoice)message);
         }
 
     }
@@ -265,6 +265,7 @@ public class Controller implements Observer<PlayerMessage>{
 
     private void sendMessageToEveryone(Object message){
         for(VirtualView virtualView : virtualViews){
+            //sends only to people who are still in-game
             if(virtualView.isObservingModel()){
                 virtualView.reportInfo(message);
             }
@@ -289,102 +290,66 @@ public class Controller implements Observer<PlayerMessage>{
 
 
 
-
     //TODO WORK IN PROGRESS
-/*
-    public void startGame(){
 
-        int numberOfPlayer=virtualViews.size();
 
-        sendMessageToEveryone(virtualViews.get(0).getPlayer().getNickname()+" will choose the cards used in this match");
+    private synchronized void cardSelection(PlayerCardChoice message) {
 
-        virtualViews.get(0).reportInfo("select first card");
-        while (model.getGameDeck().size()==0){
-            //waiting for first card to be selected
+        if(message.getVirtualView().equals(virtualViews.get(0))){
+
+            model.selectGameCards(message.getCardNames());
+            sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(1).getPlayer().getNickname()+" will now choose his card"));
+            virtualViews.get(1).reportInfo(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+            return;
         }
 
-        virtualViews.get(0).reportInfo("select second card");
-        while (model.getGameDeck().size()==1){
-            //waiting for second card to be selected
-        }
+        if(message.getVirtualView().equals(virtualViews.get(1))){
 
-        if(numberOfPlayer==3){
-            virtualViews.get(0).reportInfo("select third card");
-            while (model.getGameDeck().size()==2){
-                //waiting for third card to be selected
+            //player 2 chooses his card
+            model.chooseOwnCard(message.getPlayer(),message.getCardNames()[0]);
+            sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(1).getPlayer().getNickname()+" chose "+virtualViews.get(1).getPlayer().getGodCard().getGodName()));
+
+            if(virtualViews.size()==3){
+                //selection reported and card list sent to player 3
+                sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(2).getPlayer().getNickname()+" will now choose his card"));
+                virtualViews.get(2).reportInfo(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+            }else{
+
+                assignLastCard();
             }
+            return;
         }
 
-        virtualViews.get(1).reportInfo("chose your card");
-        while (model.getGameDeck().size()==numberOfPlayer){
-            //waiting for first card to be chosen
+        if(message.getVirtualView().equals(virtualViews.get(2))){
+            //player 3 chooses his card
+            model.chooseOwnCard(message.getPlayer(),message.getCardNames()[0]);
+            sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(2).getPlayer().getNickname()+" chose "+virtualViews.get(2).getPlayer().getGodCard().getGodName()));
+            assignLastCard();
+            return;
         }
-
-        if(numberOfPlayer==3){
-            virtualViews.get(2).reportInfo("chose your card");
-            while (model.getGameDeck().size()==numberOfPlayer-1){
-                //waiting for second card to be chosen
-            }
-        }
-
-        //the only card left in gameDeck is assigned to player1
-        virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().get(0));
-        sendMessageToEveryone("Therefore "+model.getGameDeck().get(0).getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname());
-        //and then removed from the list as all the others
-        model.getGameDeck().remove(0);
-
-        declaration();
 
 
     }
 
-    private void declaration(){
+    private void assignLastCard(){
+        virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().getDeck().get(0));
+        sendMessageToEveryone(new InfoMessage("Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname()));
+        declaration();
+    }
+
+    private void declaration() {
 
         StringBuilder s = new StringBuilder();
         s.append("THE CHOSEN CARDS FOR THIS MATCH ARE:\n\n");
 
-        for(VirtualView virtualView : virtualViews){
+        for (VirtualView virtualView : virtualViews) {
             s.append("PLAYER: ").append(virtualView.getPlayer().getNickname()).append("\n");
             s.append(virtualView.getPlayer().getGodCard().cardDeclaration());
         }
-        sendMessageToEveryone(s.toString());
-
+        sendMessageToEveryone(new InfoMessage(s.toString()));
     }
 
-    private synchronized void cardSelection(PlayerCardChoice message){
 
-        //someone tries to chose a card while the cards are still being selected
-        if(model.getGameDeck().size()<virtualViews.size() && !message.getVirtualView().equals(virtualViews.get(0))) {
-            message.getVirtualView().reportInfo(new InfoMessage(virtualViews.get(0).getPlayer().getNickname() + " is still choosing the cards"));
-            return;
-        }
-
-        if(model.getGameDeck().size()<virtualViews.size() && message.getVirtualView().equals(virtualViews.get(0))){
-            boolean selectionResultOk;
-            selectionResultOk = model.selectGameCard(message.getCardNames());
-            if (!selectionResultOk) {
-                message.getVirtualView().reportInfo(new InfoMessage(GameMessage.noSuchCardInSelectionDeck));
-            }
-            return;
-        }
-
-        if(model.getGameDeck().size()==virtualViews.size() && !message.getVirtualView().equals(virtualViews.get(1))){
-            message.getVirtualView().reportInfo(new InfoMessage(virtualViews.get(0).getPlayer().getNickname() + " is still selecting his card"));
-            return;
-        }
-
-        if(model.getGameDeck().size()==virtualViews.size() && message.getVirtualView().equals(virtualViews.get(1))) {
-            boolean selectionResultOk;
-            selectionResultOk = model.chooseCard(message.getPlayer(), message.getCardNames());
-            if (!selectionResultOk) {
-                message.getVirtualView().reportInfo(new InfoMessage(GameMessage.noSuchCardInGameDeck));
-            } else {
-                sendMessageToEveryone(message.getVirtualView().getPlayer().getNickname()+ "chose "+message.getVirtualView().getPlayer().getGodCard().getGodName());
-            }
-            return;
-        }
-    }
-*/
 
 
 
