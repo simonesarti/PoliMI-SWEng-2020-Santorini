@@ -128,7 +128,6 @@ public class Server {
         index=getWaitingGroupIndex2(connection);
         if(index!=-1){
             connection.asyncSend(new InfoMessage(GameMessage.abandonedLobby));
-            connection.notInUse();
             twoPlayerWaitingList.remove(index);
             return;
         }
@@ -136,7 +135,6 @@ public class Server {
         index=getWaitingGroupIndex3(connection);
         if(index!=-1){
             connection.asyncSend(new InfoMessage(GameMessage.abandonedLobby));
-            connection.notInUse();
             threePlayerWaitingList.remove(index);
             return;
         }
