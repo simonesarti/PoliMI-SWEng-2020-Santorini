@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.observe.Observable;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -117,11 +118,11 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
 
 
-        } catch (NoSuchElementException | ClassNotFoundException | IOException e) {
+        } catch ( Exception e) {
 
-            //TODO funziona settare a false nella catch? Copiato da esempio TrisDistr..
-            e.printStackTrace();
+            //TODO nell'esempio del TrisMvc toglie le print di errore e dello stacktrace.
             System.err.println("Error!" + e.getMessage());
+            e.printStackTrace();
             System.out.println("Connection closed from the client side");
             setActive(false);
 

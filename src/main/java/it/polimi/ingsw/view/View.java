@@ -35,7 +35,7 @@ public abstract class View implements Observer<Object>,Runnable {
 
 
     @Override
-    public void update(Object message) {
+    public void update(Object message){
 
         if(message instanceof NewBoardStateMessage){
             System.out.println("NewBoardStateMessage message arrived to client!");
@@ -52,9 +52,10 @@ public abstract class View implements Observer<Object>,Runnable {
 
             }
 
-        } else {
+        } /*else {
             throw new IllegalArgumentException();
         }
+        */
 
     }
 
