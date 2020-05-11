@@ -1,11 +1,8 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
@@ -64,7 +61,11 @@ public abstract class View implements Observer<Object>,Runnable {
 
             clientSideConnection.asyncSend(createCardChoice((PossibleCardsMessage) message));
 
-            //TODO VA MESSO A FINE FASE PREPARAZIONE, PER ORA LO METTO QUI
+
+        }
+        else if(message instanceof GameStartMessage) {
+
+            //TODO VA MESSO A FINE FASE PREPARAZIONE, PER ORA LO METTO QUI, forse è giusto
             setCanStart(true);
             System.out.println("Ora ho messo canStart a true, sono nella update della View");
         }
