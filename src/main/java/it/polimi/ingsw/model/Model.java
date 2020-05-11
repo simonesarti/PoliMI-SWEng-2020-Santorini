@@ -310,27 +310,27 @@ public class Model extends Observable<NotifyMessages> {
 
         throw new IllegalArgumentException("NO PLAYER WITH SUCH COLOUR FOUND TO GIVE INDEX "+colour);
     }
-    
+
     public String checkStartingPlacement(int x1,int y1,int x2,int y2){
 
         CheckSupportFunctions support=new CheckSupportFunctions();
-
+        
         if(support.notInGameBoard(x1,y1) || support.notInGameBoard(x2,y2)){
             return GameMessage.startNotInGameboard;
         }
         if(support.notSameCoordinates(x1,y1,x2,y2)){
             return GameMessage.notOnEachOther;
         }
-
+        
         if(support.occupiedTower(gameboard,x1,y1) || support.occupiedTower(gameboard,x2,y2)){
             return GameMessage.notOnOccupiedCell;
         }
-
+        
         return GameMessage.placementOk;
     }
-
+    
     public void placeOnBoard(Player player, int x1, int y1, int x2, int y2){
-
+        
         player.getWorker(0).setStartingPosition(x1,y1);
         player.getWorker(1).setStartingPosition(x2,y2);
         gameboard.getTowerCell(x1,y1).getFirstNotPieceLevel().setWorker(player.getWorker(0));
