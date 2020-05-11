@@ -41,8 +41,8 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
     }
 
 
-    public void reportInfo(Object message){
-        System.out.println("VirtualView's reportInfo() triggered");
+    public void reportToClient(Object message){
+        System.out.println("VirtualView's reportToClient() triggered");
     }
 
 
@@ -52,24 +52,24 @@ public class EmptyVirtualView extends VirtualView implements Observer<NotifyMess
 
         if(message instanceof NewBoardStateMessage){
             System.out.println("VirtualView ha ricevuto NewBoardStateMessage");
-            //reportInfo((NewBoardStateMessage)message);
+            //reportToClient((NewBoardStateMessage)message);
         }else if (message instanceof LoseMessage){
 
             if(((LoseMessage) message).getPlayer()==this.getPlayer()){
                 System.out.println("VirtualView ha ricevuto messaggio lose del player giocante");
-                //reportInfo(new InfoMessage(GameMessage.lose));
+                //reportToClient(new InfoMessage(GameMessage.lose));
             }else{
                 System.out.println("VirtualView ha ricevuto messaggio lose di uno degli enemy del player giocante");
-                //reportInfo(new InfoMessage("Player "+((LoseMessage) message).getPlayer().getNickname()+ "lost\n"));
+                //reportToClient(new InfoMessage("Player "+((LoseMessage) message).getPlayer().getNickname()+ "lost\n"));
             }
         }else if( message instanceof WinMessage){
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){
                 System.out.println("VirtualView ha ricevuto messaggio win del player giocante");
-                //reportInfo(new InfoMessage(GameMessage.win));
+                //reportToClient(new InfoMessage(GameMessage.win));
             }else{
                 System.out.println("VirtualView ha ricevuto messaggio win di un enemy del player giocante");
-                //reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
+                //reportToClient(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ "won\n"));
             }
 
         }

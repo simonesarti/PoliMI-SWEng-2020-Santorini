@@ -40,7 +40,7 @@ public class Controller implements Observer<PlayerMessage>{
         model.assignColour(players);
 
         sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards"));
-        virtualViews.get(0).reportInfo(new PossibleCardsMessage(model.getSelectionDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
+        virtualViews.get(0).reportToClient(new PossibleCardsMessage(model.getSelectionDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
     }
 
     /**
@@ -55,24 +55,23 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.eliminated));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.eliminated));
             return;
         }
 
         if(model.isNotPlayerTurn(message.getPlayer())){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.wrongTurn));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.wrongTurn));
             return;
         }
 
         if(model.getTurnInfo().getTurnHasEnded()){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.turnAlreadyEnded));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnAlreadyEnded));
             return;
         }
 
         //CHECK LOSE
         if(model.performLoseCheck(message.getPlayer(),message.getChosenWorker(),"move")){
 
-            //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
 
                 model.declareWinner(getPlayers());
@@ -103,14 +102,14 @@ public class Controller implements Observer<PlayerMessage>{
 
                     return;
                 }else{
-                    message.getVirtualView().reportInfo(new InfoMessage(nextStep));
+                    message.getVirtualView().reportToClient(new InfoMessage(nextStep));
 
                 }
 
             //if check NOT ok, report error
             }else{
 
-                message.getVirtualView().reportInfo(new ErrorMessage(checkResult));
+                message.getVirtualView().reportToClient(new ErrorMessage(checkResult));
 
             }
         }
@@ -129,17 +128,17 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.eliminated));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.eliminated));
             return;
         }
 
         if (model.isNotPlayerTurn(message.getPlayer())) {
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.wrongTurn));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.wrongTurn));
             return;
         }
 
         if (model.getTurnInfo().getTurnHasEnded()) {
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.turnAlreadyEnded));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnAlreadyEnded));
             return;
 
         }
@@ -170,12 +169,12 @@ public class Controller implements Observer<PlayerMessage>{
 
                 //EXECUTE BUILD
                 nextStep=model.performBuild(message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
-                message.getVirtualView().reportInfo(new InfoMessage(nextStep));
+                message.getVirtualView().reportToClient(new InfoMessage(nextStep));
 
             //if NOT build check ok
             } else {
 
-                message.getVirtualView().reportInfo(new ErrorMessage(checkResult));
+                message.getVirtualView().reportToClient(new ErrorMessage(checkResult));
 
             }
         }
@@ -190,18 +189,18 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.eliminated));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.eliminated));
             return;
         }
 
         if(model.isNotPlayerTurn(message.getPlayer())){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.wrongTurn));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.wrongTurn));
             return;
         }
 
         if(!model.getTurnInfo().getTurnCanEnd()){
 
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.turnNotEnded));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnNotEnded));
             return;
         }
         model.updateTurn(getPlayers());
@@ -213,13 +212,14 @@ public class Controller implements Observer<PlayerMessage>{
 
         //player can't quit if he isn't eliminated
         if(!model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportInfo(new ErrorMessage(GameMessage.notEliminated));
+            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.notEliminated));
             return;
         }
 
-        message.getVirtualView().reportInfo(new InfoMessage(GameMessage.quit));
-        message.getVirtualView().leave();
+        message.getVirtualView().reportToClient(new InfoMessage(GameMessage.quit));
         model.removeObserver(message.getVirtualView());
+        message.getVirtualView().leave();
+
     }
 
 
@@ -269,7 +269,7 @@ public class Controller implements Observer<PlayerMessage>{
         for(VirtualView virtualView : virtualViews){
             //sends only to people who are still in-game
             if(virtualView.isObservingModel()){
-                virtualView.reportInfo(message);
+                virtualView.reportToClient(message);
             }
         }
     }
@@ -301,7 +301,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             model.selectGameCards(message.getCardNames());
             sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(1).getPlayer().getNickname()+" will now choose his card"));
-            virtualViews.get(1).reportInfo(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+            virtualViews.get(1).reportToClient(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
             return;
         }
 
@@ -314,7 +314,7 @@ public class Controller implements Observer<PlayerMessage>{
             if(virtualViews.size()==3){
                 //selection reported and card list sent to player 3
                 sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(2).getPlayer().getNickname()+" will now choose his card"));
-                virtualViews.get(2).reportInfo(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+                virtualViews.get(2).reportToClient(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
             }else{
 
                 assignLastCard();
@@ -335,6 +335,7 @@ public class Controller implements Observer<PlayerMessage>{
 
     private void assignLastCard(){
         virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().getDeck().get(0));
+        model.getGameDeck().getDeck().remove(0);
         sendMessageToEveryone(new InfoMessage("Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname()));
         declaration();
     }

@@ -49,8 +49,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         return observingModel;
     }
 
-    //public or private?
-    public void notifyController(DataMessage message){
+    //TODO
+    private void notifyController(DataMessage message){
 
         if(message instanceof MoveData){
             notify(new PlayerMovementChoice(this,player,(MoveData)message));
@@ -60,10 +60,12 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             notify(new PlayerEndOfTurnChoice(this,player));
         }else if(message instanceof QuitChoice){
             notify(new PlayerQuitChoice(this,player));
+        }else if(message instanceof CardChoice){
+            notify(new PlayerCardChoice(this,player,(CardChoice)message));
         }
     }
 
-    public void reportInfo(Object message){
+    public void reportToClient(Object message){
         connectionToClient.asyncSend(message);
     }
 
@@ -81,16 +83,16 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     public void update(NotifyMessages message){
 
         if(message instanceof NewBoardStateMessage){
-            reportInfo((NewBoardStateMessage)message);
+            reportToClient((NewBoardStateMessage)message);
 
         }
 
         else if(message instanceof LoseMessage){
 
             if(((LoseMessage) message).getPlayer() == this.getPlayer()) {
-                reportInfo(new InfoMessage(GameMessage.lose));
+                reportToClient(new InfoMessage(GameMessage.lose));
             }else{
-                reportInfo(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + " lost\n"));
+                reportToClient(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + " lost\n"));
             }
 
         }
@@ -100,9 +102,9 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             String s="The previous turn ended. ";
 
             if(((NewTurnMessage)message).getPlayer()==this.getPlayer()){
-                reportInfo(new InfoMessage(s+"It's your turn now"));
+                reportToClient(new InfoMessage(s+"It's your turn now"));
             }else{
-                reportInfo(new InfoMessage(s+"It's "+((NewTurnMessage) message).getPlayer().getNickname()+ "'s turn now"));
+                reportToClient(new InfoMessage(s+"It's "+((NewTurnMessage) message).getPlayer().getNickname()+ "'s turn now"));
             }
 
         }
@@ -110,10 +112,10 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         else if(message instanceof WinMessage){
 
             if(((WinMessage)message).getPlayer()==this.getPlayer()){
-                reportInfo(new InfoMessage(GameMessage.win));
+                reportToClient(new InfoMessage(GameMessage.win));
 
             }else{
-                reportInfo(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ " won"));
+                reportToClient(new InfoMessage("Player "+((WinMessage) message).getPlayer().getNickname()+ " won"));
             }
             connectionToClient.removeObserver(playerMessageReceiver);
 
