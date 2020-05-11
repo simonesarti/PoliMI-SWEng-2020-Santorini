@@ -274,13 +274,6 @@ public class Model extends Observable<NotifyMessages> {
     }
 
 
-
-
-
-
-
-    //TODO work in progress
-
     //check on name validity is done client-side
     public void selectGameCards(String[] names){
 

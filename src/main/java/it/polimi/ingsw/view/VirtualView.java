@@ -62,6 +62,8 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             notify(new PlayerQuitChoice(this,player));
         }else if(message instanceof CardChoice){
             notify(new PlayerCardChoice(this,player,(CardChoice)message));
+        }else if(message instanceof StartingPositionChoice){
+            notify(new PlayerStartingPositionChoice(this,player,(StartingPositionChoice)message));
         }
     }
 
@@ -78,7 +80,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         connectionToClient.notInUse();
     }
 
-    //TODO
     @Override
     public void update(NotifyMessages message){
 

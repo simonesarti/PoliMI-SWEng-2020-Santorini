@@ -4,6 +4,7 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 
@@ -27,10 +28,12 @@ public class FakeConnection extends ServerSideConnection {
             System.out.println("message to "+name+": "+((InfoMessage)message).getInfo());
         }else if(message instanceof ErrorMessage) {
             System.out.println("error to " + name + ": " + ((ErrorMessage) message).getError());
-        }else if(message instanceof PossibleCardsMessage){
-            System.out.println("god list sent");
+        }else if(message instanceof PossibleCardsMessage) {
+            System.out.println("god list sent to"+name);
+        }else if(message instanceof StartingPositionRequestMessage){
+            System.out.println("starting posotions required to "+name);
         }else{
-            System.out.println("this message is neither a board, a InfoMessage, a ErrorMessage or PossibleCardsMessage");
+            System.out.println("this message is neither a board, a InfoMessage, a ErrorMessage, PossibleCardsMessage or StartingPostion message");
             System.out.println(message.toString());
         }
     }
