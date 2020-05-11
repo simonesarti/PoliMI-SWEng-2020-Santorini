@@ -12,8 +12,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-//TODO Cli e Gui nei loro metodi, quando viene fatta una mossa, creano il dataMessage e chiamano client.writeToSocket(dataMessage)
-//TODO La View non deve avere un attributo Player vero? Sarebbe un problema perché voglio inizializzare la view separatamente senza avere bisogno di oggetto Player
 public abstract class View implements Observer<Object>,Runnable {
 
 
@@ -78,20 +76,34 @@ public abstract class View implements Observer<Object>,Runnable {
 
     }
 
-
+    /**
+     * checks if position is inside of the borders
+     * @param pos
+     * @return
+     */
     public boolean isPositionValid(String pos){
 
         String delims = ",";
         String[] tokens = pos.split(delims);
-        if(Integer.parseInt(tokens[0])<0 || Integer.parseInt(tokens[0])>4 || Integer.parseInt(tokens[1])<0 || Integer.parseInt(tokens[1])>4){
 
-            return false;
+        for(String s : tokens){
+            try{
+                Integer.parseInt(s);
+            }catch(NumberFormatException e) {
+                return false;
+            }
         }
-        return true;
 
+
+        return (Integer.parseInt(tokens[0]) >= 0) && (Integer.parseInt(tokens[0]) <= 4) && (Integer.parseInt(tokens[1]) >= 0) && (Integer.parseInt(tokens[1]) <= 4);
 
     }
 
+    /**
+     * checks if parameter is a valid date
+     * @param date
+     * @return
+     */
     public boolean isDateValid(String date){
 
         String DATE_FORMAT = "dd-MM-yyyy";
@@ -108,13 +120,11 @@ public abstract class View implements Observer<Object>,Runnable {
 
     }
 
-    //TODO DA TESTARE BENE PERCHE' E' PROBABILE CHE SBUCHINO ERRORI
-
     /**
      * all chosen gods must be different and every god must be in the message's gods-arraylist
      * @param chosenGods Godcards chosen by the user
      * @param numberOfChoices number of godcards
-     * @return
+     * @return boolean
      */
     public boolean isChosenGodsValid(String[] chosenGods, int numberOfChoices, PossibleCardsMessage message){
 
@@ -128,22 +138,32 @@ public abstract class View implements Observer<Object>,Runnable {
 
         }
 
+
         //every god must be in the message's arraylist
         boolean trovato = false;
 
-        for(int i=0; i<numberOfChoices-1; i++){
+        for(int i=0; i<numberOfChoices; i++){
 
             for(String god : message.getGods()){
-                if(chosenGods[i].equals(god)) trovato=true;
+                if(chosenGods[i].equals(god)){
+
+                    trovato=true;
+                    break;
+                }
             }
             if(!trovato) return false;
 
             trovato = false;
 
         }
+
+
         return true;
 
     }
+
+
+
 
     public synchronized boolean getCanStart() {
         return canStart;

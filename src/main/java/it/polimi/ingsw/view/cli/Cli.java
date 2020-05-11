@@ -26,6 +26,10 @@ public class Cli extends View {
 
     }
 
+    /**
+     * shows new board-state on command line
+     * @param message
+     */
     public void showNewBoard(NewBoardStateMessage message){
 
         System.out.println("Mostro la board sulla Command Line");
@@ -60,8 +64,7 @@ public class Cli extends View {
                 if(!validDate){System.out.print("Not valid, try again");}
 
             } catch (NumberFormatException e) {
-                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
-                e.printStackTrace();
+
                 System.out.print("Not a number, try again");
             }
         }while(!validDate);
@@ -80,9 +83,9 @@ public class Cli extends View {
                 }
 
             } catch (NumberFormatException e) {
-                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
+
                 System.out.print("Not a number, try again");
-                e.printStackTrace();
+
             }
         }while(!validNumberOfPlayers);
 
@@ -120,9 +123,8 @@ public class Cli extends View {
                 }
 
             } catch (NumberFormatException e) {
-                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
                 System.out.print("Not a number, try again");
-                e.printStackTrace();
+
             }
         }while(!validPos);
 
@@ -142,9 +144,7 @@ public class Cli extends View {
                 }
 
             } catch (NumberFormatException e) {
-                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
                 System.out.print("Not a number, try again");
-                e.printStackTrace();
             }
         }while(!validPos);
 
@@ -177,7 +177,6 @@ public class Cli extends View {
 
 
             do{
-
                 for(int n=0 ; n<message.getNumberOfChoices();n++){
                     System.out.println("Choose a God: ");
                     choice = stdin.nextLine();
@@ -187,11 +186,12 @@ public class Cli extends View {
                     validChosenGods=true;
                 }
 
-
             }while(!validChosenGods);
 
             return(new CardChoice(chosenGods));
         }
+
+
         else if(message.getNumberOfChoices()==1){
 
             chosenGods = new String[1];
@@ -202,7 +202,6 @@ public class Cli extends View {
             }
 
             do{
-
 
                 System.out.println("Choose a God: ");
                 choice = stdin.nextLine();
@@ -217,7 +216,10 @@ public class Cli extends View {
 
             return(new CardChoice(chosenGods));
         }
+
+
         else{
+
             throw new IllegalArgumentException();
         }
     }
