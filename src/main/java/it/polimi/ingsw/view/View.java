@@ -4,7 +4,11 @@ import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.observe.Observer;
 
 import java.text.DateFormat;
@@ -29,6 +33,8 @@ public abstract class View implements Observer<Object>,Runnable {
 
     abstract public void showNewBoard(NewBoardStateMessage message);
     abstract public PlayerInfo createPlayerInfo();
+    abstract public StartingPositionChoice createStartingPositionChoice();
+    abstract public CardChoice createCardChoice(PossibleCardsMessage message);
 
 
 
@@ -38,26 +44,52 @@ public abstract class View implements Observer<Object>,Runnable {
         if(message instanceof NewBoardStateMessage){
             System.out.println("NewBoardStateMessage message arrived to client!");
             showNewBoard((NewBoardStateMessage) message);
-        } else if (message instanceof InfoMessage){
+        }
+
+        else if (message instanceof InfoMessage){
 
             System.out.println("Infomessage arrived to view, here it is: "+((InfoMessage) message).getInfo());
+
             if(((InfoMessage) message).getInfo().equals(GameMessage.welcome)){
+
                 clientSideConnection.asyncSend(createPlayerInfo());
-                //TODO PER ADESSO LO METTO QUI SOTTO, MA VA MESSO A FINE FASE PREPARAZIONE
-                setCanStart(true);
-                System.out.println("Ora canStart: "+getCanStart());
-
-
             }
+        }
+        else if(message instanceof StartingPositionRequestMessage){
 
-        } /*else {
+            clientSideConnection.asyncSend(createStartingPositionChoice());
+        }
+
+        else if(message instanceof PossibleCardsMessage) {
+
+            clientSideConnection.asyncSend(createCardChoice((PossibleCardsMessage) message));
+
+            //TODO VA MESSO A FINE FASE PREPARAZIONE, PER ORA LO METTO QUI
+            setCanStart(true);
+            System.out.println("Ora ho messo canStart a true, sono nella update della View");
+        }
+
+        else {
+
             throw new IllegalArgumentException();
         }
-        */
+
 
     }
 
 
+    public boolean isPositionValid(String pos){
+
+        String delims = ",";
+        String[] tokens = pos.split(delims);
+        if(Integer.parseInt(tokens[0])<0 || Integer.parseInt(tokens[0])>4 || Integer.parseInt(tokens[1])<0 || Integer.parseInt(tokens[1])>4){
+
+            return false;
+        }
+        return true;
+
+
+    }
 
     public boolean isDateValid(String date){
 
@@ -72,6 +104,21 @@ public abstract class View implements Observer<Object>,Runnable {
             e.printStackTrace();
             return false;
         }
+
+    }
+
+    //TODO DA TESTARE BENE PERCHE' E' PROBABILE CHE SBUCHINO ERRORI
+    public boolean isChosenGodsValid(String[] chosenGods, int numberOfChoices){
+
+        for(int i=0; i<numberOfChoices-1; i++){
+            for(int k=i+1; k<numberOfChoices; k++){
+                if(chosenGods[i].equals(chosenGods[k])){
+                    return false;
+                }
+            }
+
+        }
+        return true;
 
     }
 

@@ -2,8 +2,13 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.view.View;
+
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -77,6 +82,131 @@ public class Cli extends View {
         }while(!validNumberOfPlayers);
 
         return (new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
+    }
+
+    @Override
+    public StartingPositionChoice createStartingPositionChoice() {
+
+        String pos;
+        String delims = ",";
+        String[] tokens;
+        int pos1x = 0;
+        int pos1y = 0;
+        int pos2x = 0;
+        int pos2y = 0;
+
+        boolean validPos = false;
+        do{
+            try {
+                System.out.println("Insert first worker position x,y :");
+                pos = stdin.nextLine();
+
+                if(!isPositionValid(pos)){
+                    System.out.print("Not valid, try again");
+                }else{
+                    validPos=true;
+                    tokens = pos.split(delims);
+                    pos1x = Integer.parseInt(tokens[0]);
+                    pos1y = Integer.parseInt(tokens[1]);
+                }
+
+            } catch (NumberFormatException e) {
+                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
+                System.out.print("Not a number, try again");
+                e.printStackTrace();
+            }
+        }while(!validPos);
+
+        validPos = false;
+        do{
+            try {
+                System.out.println("Insert second worker position x,y :");
+                pos = stdin.nextLine();
+
+                if(!isPositionValid(pos)){
+                    System.out.print("Not valid, try again");
+                }else{
+                    validPos=true;
+                    tokens = pos.split(delims);
+                    pos2x = Integer.parseInt(tokens[0]);
+                    pos2y = Integer.parseInt(tokens[1]);
+                }
+
+            } catch (NumberFormatException e) {
+                //TODO non posso stampare la stacktrace su GUI, e in realtà non la voglio vedere nenache su CLI
+                System.out.print("Not a number, try again");
+                e.printStackTrace();
+            }
+        }while(!validPos);
+
+
+        return (new StartingPositionChoice(pos1x,pos1y,pos2x,pos2y));
+
+
+    }
+
+    @Override
+    public CardChoice createCardChoice(PossibleCardsMessage message) {
+
+        String[] chosenGods;
+        String choice;
+        boolean validChosenGods = false;
+
+        if(message.getNumberOfChoices()>1){
+
+            chosenGods = new String[message.getNumberOfChoices()];
+            System.out.println("Scegli "+message.getNumberOfChoices()+" di questi dei: ");
+            for(String s : message.getGods()){
+                System.out.println(s);
+            }
+
+
+            do{
+
+                for(int n=0 ; n<message.getNumberOfChoices();n++){
+                    System.out.println("Choose a God: ");
+                    choice = stdin.nextLine();
+                    //TODO usa funzione simo per la prima lettera maiuscola
+                    chosenGods[n]= choice;
+                }
+                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices())){
+                    validChosenGods=true;
+                }
+
+
+            }while(!validChosenGods);
+
+            return(new CardChoice(chosenGods));
+        }
+        else if(message.getNumberOfChoices()==1){
+
+            chosenGods = new String[1];
+
+            System.out.println("Scegli uno di questi dei: ");
+            for(String s : message.getGods()){
+                System.out.println(s);
+            }
+
+            do{
+
+
+                System.out.println("Choose a God: ");
+                choice = stdin.nextLine();
+                //TODO usa funzione simo per la prima lettera maiuscola
+                chosenGods[0]= choice;
+
+                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices())){
+                    validChosenGods=true;
+                }
+
+            }while(!validChosenGods);
+
+
+            return(new CardChoice(chosenGods));
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
     }
 
 
