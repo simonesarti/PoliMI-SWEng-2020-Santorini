@@ -32,6 +32,11 @@ public class Cli extends View {
 
     }
 
+    /**
+     * Creates a PlayerInfo message based on user's inputs
+     * @return
+     */
+    @Override
     public PlayerInfo createPlayerInfo(){
 
         System.out.println("What's your nickname?");
@@ -84,6 +89,10 @@ public class Cli extends View {
         return (new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
     }
 
+    /**
+     * Creates a StartingPositionChoice message based on user's inputs
+     * @return StartingPositionChoice message
+     */
     @Override
     public StartingPositionChoice createStartingPositionChoice() {
 
@@ -145,6 +154,11 @@ public class Cli extends View {
 
     }
 
+    /**
+     * creates a CardChoice message based on user's inputs
+     * @param message has a number of choices attribute and a list of possible Gods
+     * @return
+     */
     @Override
     public CardChoice createCardChoice(PossibleCardsMessage message) {
 
