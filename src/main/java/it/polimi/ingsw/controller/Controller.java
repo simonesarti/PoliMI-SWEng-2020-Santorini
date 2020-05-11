@@ -1,10 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
+import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observer;
@@ -38,9 +36,45 @@ public class Controller implements Observer<PlayerMessage>{
 
         //assign colours to players
         model.assignColour(players);
+        sendColoursAssigned();
 
         sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards"));
         virtualViews.get(0).reportToClient(new PossibleCardsMessage(model.getSelectionDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
+    }
+
+    /**
+     * Invokes Controller's methods on the basis of message's subclass
+     *
+     * @param message PlayerMessage
+     */
+    @Override
+    public void update(PlayerMessage message) {
+
+        if(message instanceof PlayerMovementChoice){
+            performMove((PlayerMovementChoice) message);
+        }
+
+        else if (message instanceof PlayerBuildChoice){
+            performBuild((PlayerBuildChoice) message);
+        }
+
+        else if(message instanceof PlayerEndOfTurnChoice){
+            endTurn((PlayerEndOfTurnChoice) message);
+        }
+
+        else if(message instanceof PlayerQuitChoice){
+            quitGame((PlayerQuitChoice)message);
+
+        }
+
+        else if(message instanceof PlayerCardChoice){
+            cardSelection((PlayerCardChoice)message);
+        }
+
+        else if(message instanceof PlayerStartingPositionChoice){
+            positionSelection((PlayerStartingPositionChoice)message);
+        }
+
     }
 
     /**
@@ -180,7 +214,6 @@ public class Controller implements Observer<PlayerMessage>{
         }
     }
 
-    //TODO
     /**
      * Checks if it's player's turn, checks this player win conditions and next player lose conditions. Updates turn
      * @param message PlayerEndOfTurnChoice message
@@ -203,11 +236,11 @@ public class Controller implements Observer<PlayerMessage>{
             message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnNotEnded));
             return;
         }
+
         model.updateTurn(getPlayers());
 
     }
 
-    //TODO
     private synchronized void quitGame(PlayerQuitChoice message){
 
         //player can't quit if he isn't eliminated
@@ -221,79 +254,6 @@ public class Controller implements Observer<PlayerMessage>{
         message.getVirtualView().leave();
 
     }
-
-
-    /**
-     * Invokes Controller's methods on the basis of message's subclass
-     *
-     * @param message PlayerMessage
-     */
-    @Override
-    public void update(PlayerMessage message) {
-
-        if(message instanceof PlayerMovementChoice){
-            performMove((PlayerMovementChoice) message);
-        }
-
-        else if (message instanceof PlayerBuildChoice){
-            performBuild((PlayerBuildChoice) message);
-        }
-
-        else if(message instanceof PlayerEndOfTurnChoice){
-            endTurn((PlayerEndOfTurnChoice) message);
-        }
-
-        else if(message instanceof PlayerQuitChoice){
-            quitGame((PlayerQuitChoice)message);
-
-        }
-
-        else if(message instanceof PlayerCardChoice){
-            cardSelection((PlayerCardChoice)message);
-        }
-
-    }
-
-
-    private ArrayList<Player> getPlayers(){
-
-        ArrayList<Player> players=new ArrayList<>();
-
-        for(VirtualView virtualView:virtualViews){
-            players.add(virtualView.getPlayer());
-        }
-        return players;
-    }
-
-    private void sendMessageToEveryone(Object message){
-        for(VirtualView virtualView : virtualViews){
-            //sends only to people who are still in-game
-            if(virtualView.isObservingModel()){
-                virtualView.reportToClient(message);
-            }
-        }
-    }
-
-    private void endGame(){
-
-        //removes every observer in MVC
-        for(VirtualView virtualView: virtualViews){
-            virtualView.removeObserver(this);
-            if(virtualView.isObservingModel()) {
-                model.removeObserver(virtualView);
-            }
-        }
-
-    }
-
-
-
-
-
-
-
-    //TODO WORK IN PROGRESS
-
 
     private synchronized void cardSelection(PlayerCardChoice message) {
 
@@ -333,11 +293,45 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+
+
+    private ArrayList<Player> getPlayers(){
+
+        ArrayList<Player> players=new ArrayList<>();
+
+        for(VirtualView virtualView:virtualViews){
+            players.add(virtualView.getPlayer());
+        }
+        return players;
+    }
+
+    private void sendMessageToEveryone(Object message){
+        for(VirtualView virtualView : virtualViews){
+            //sends only to people who are still in-game
+            if(virtualView.isObservingModel()){
+                virtualView.reportToClient(message);
+            }
+        }
+    }
+
+    private void sendColoursAssigned(){
+        StringBuilder s=new StringBuilder();
+        for(VirtualView virtualView : virtualViews){
+            s.append("Player ").append(virtualView.getPlayer().getNickname()).append(" will be colour ").append(virtualView.getPlayer().getColour().toString()).append("\n");
+        }
+
+        sendMessageToEveryone(new InfoMessage(s.toString()));
+    }
+
     private void assignLastCard(){
         virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().getDeck().get(0));
         model.getGameDeck().getDeck().remove(0);
         sendMessageToEveryone(new InfoMessage("Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname()));
         declaration();
+
+        int index=model.getIndexFromColour(getPlayers(), Colour.WHITE);
+        sendMessageToEveryone(new InfoMessage("From the youngest player, you will be required to select the starting position of your workers"));
+        virtualViews.get(index).reportToClient(new StartingPositionRequestMessage());
     }
 
     private void declaration() {
@@ -352,9 +346,61 @@ public class Controller implements Observer<PlayerMessage>{
         sendMessageToEveryone(new InfoMessage(s.toString()));
     }
 
+    private void endGame(){
+
+        //removes every observer in MVC
+        for(VirtualView virtualView: virtualViews){
+            virtualView.removeObserver(this);
+            if(virtualView.isObservingModel()) {
+                model.removeObserver(virtualView);
+            }
+        }
+
+    }
 
 
 
+
+
+
+    //TODO WORK IN PROGRESS
+    private synchronized void positionSelection(PlayerStartingPositionChoice message){
+
+        String checkOk=model.checkStartingPlacement(message.getX1(),message.getY1(),message.getX2(),message.getY2());
+
+        if(!checkOk.equals(GameMessage.placementOk)){
+            message.getVirtualView().reportToClient(new ErrorMessage(checkOk));
+            message.getVirtualView().reportToClient(new StartingPositionRequestMessage());
+
+        }else{
+
+            if(message.getPlayer().getColour()==Colour.WHITE){
+                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
+                virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).reportToClient(new StartingPositionRequestMessage());
+                return;
+            }
+
+            if(message.getPlayer().getColour()==Colour.BLUE){
+                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
+                if(virtualViews.size()==3){
+                    virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).reportToClient(new StartingPositionRequestMessage());
+                }else{
+                    sendMessageToEveryone(new GameStartMessage());
+                }
+                return;
+            }
+
+            if(message.getPlayer().getColour()==Colour.GREY){
+                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
+                sendMessageToEveryone(new GameStartMessage());
+                return;
+            }
+
+
+        }
+
+
+    }
 
 
 

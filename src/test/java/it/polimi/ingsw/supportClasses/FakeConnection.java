@@ -1,10 +1,7 @@
 package it.polimi.ingsw.supportClasses;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 
@@ -12,7 +9,7 @@ import java.net.Socket;
 
 public class FakeConnection extends ServerSideConnection {
 
-    private String name;
+    private final String name;
 
     public FakeConnection(Socket socket, Server server,String c) {
         super(socket, server);
@@ -30,8 +27,10 @@ public class FakeConnection extends ServerSideConnection {
             System.out.println("error to " + name + ": " + ((ErrorMessage) message).getError());
         }else if(message instanceof PossibleCardsMessage) {
             System.out.println("god list sent to"+name);
-        }else if(message instanceof StartingPositionRequestMessage){
-            System.out.println("starting posotions required to "+name);
+        }else if(message instanceof StartingPositionRequestMessage) {
+            System.out.println("starting position requested to " + name);
+        }else if(message instanceof GameStartMessage){
+            System.out.println(name+", The game is starting!");
         }else{
             System.out.println("this message is neither a board, a InfoMessage, a ErrorMessage, PossibleCardsMessage or StartingPostion message");
             System.out.println(message.toString());

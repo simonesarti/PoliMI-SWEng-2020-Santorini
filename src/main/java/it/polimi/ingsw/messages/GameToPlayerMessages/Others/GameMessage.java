@@ -60,8 +60,11 @@ public class GameMessage {
     public static String invalidWorkerNumber= "This worker number is invalid, try again\n";
 
 
-
-
+    //game start
+    public static String startNotInGameboard="You can't place your workers outside of the gameboard\n";
+    public static String notOnEachOther="You can't place your worker on top of each other\n";
+    public static String notOnOccupiedCell="Your choice is invalid because at least one the cells is already occupied";
+    public static String placementOk="ok";
 
 
     //GOD SPECIFIC MESSAGES

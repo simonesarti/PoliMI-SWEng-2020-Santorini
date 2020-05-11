@@ -239,4 +239,22 @@ class ModelTest {
 
     }
 
+    @Test
+    void getIndexFromColour(){
+
+        Model model=new Model(3);
+        Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1996,Calendar.SEPTEMBER,16),3));
+        Player player2=new Player(new PlayerInfo("olimpia",new GregorianCalendar(1998,Calendar.SEPTEMBER,9),3));
+        Player player3=new Player(new PlayerInfo("alessandro",new GregorianCalendar(1997,Calendar.SEPTEMBER,2),3));
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        model.assignColour(players);
+
+        assertEquals(1,model.getIndexFromColour(players,Colour.WHITE));
+        assertEquals(0,model.getIndexFromColour(players,Colour.GREY));
+        assertEquals(2,model.getIndexFromColour(players,Colour.BLUE));
+    }
+
 }

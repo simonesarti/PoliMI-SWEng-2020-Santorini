@@ -1,9 +1,12 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.*;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
+import it.polimi.ingsw.model.strategy.CheckSupportFunctions;
 import it.polimi.ingsw.observe.Observable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class contains an instance of Gameboard and schedules players' turns
@@ -292,6 +295,48 @@ public class Model extends Observable<NotifyMessages> {
         gameDeck.getDeck().remove(godCard);
     }
 
+
+
+
+
+    //TODO Work in progress
+    public int getIndexFromColour(ArrayList <Player> players, Colour colour){
+
+        for(int i=0;i<players.size();i++){
+            if(players.get(i).getColour()==colour){
+                return i;
+            }
+        }
+
+        throw new IllegalArgumentException("NO PLAYER WITH SUCH COLOUR FOUND TO GIVE INDEX "+colour);
+    }
+    
+    public String checkStartingPlacement(int x1,int y1,int x2,int y2){
+
+        CheckSupportFunctions support=new CheckSupportFunctions();
+
+        if(support.notInGameBoard(x1,y1) || support.notInGameBoard(x2,y2)){
+            return GameMessage.startNotInGameboard;
+        }
+        if(support.notSameCoordinates(x1,y1,x2,y2)){
+            return GameMessage.notOnEachOther;
+        }
+
+        if(support.occupiedTower(gameboard,x1,y1) || support.occupiedTower(gameboard,x2,y2)){
+            return GameMessage.notOnOccupiedCell;
+        }
+
+        return GameMessage.placementOk;
+    }
+
+    public void placeOnBoard(Player player, int x1, int y1, int x2, int y2){
+
+        player.getWorker(0).setStartingPosition(x1,y1);
+        player.getWorker(1).setStartingPosition(x2,y2);
+        gameboard.getTowerCell(x1,y1).getFirstNotPieceLevel().setWorker(player.getWorker(0));
+        gameboard.getTowerCell(x2,y2).getFirstNotPieceLevel().setWorker(player.getWorker(1));
+        notifyNewBoardState();
+    }
 
 
 

@@ -38,6 +38,10 @@ public class CheckSupportFunctions {
         return (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y);
     }
 
+    public boolean notSameCoordinates(int x1, int y1, int x2, int y2){
+        return (x1==x2 && y1==y2);
+    }
+
     public boolean notInSurroundings(Worker worker,int x, int y){
 
         return (!worker.getCurrentPosition().adjacent(x,y));
