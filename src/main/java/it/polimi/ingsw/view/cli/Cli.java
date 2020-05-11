@@ -148,6 +148,7 @@ public class Cli extends View {
     @Override
     public CardChoice createCardChoice(PossibleCardsMessage message) {
 
+        ClientViewSupportFunctions cvsf = new ClientViewSupportFunctions();
         String[] chosenGods;
         String choice;
         boolean validChosenGods = false;
@@ -166,10 +167,9 @@ public class Cli extends View {
                 for(int n=0 ; n<message.getNumberOfChoices();n++){
                     System.out.println("Choose a God: ");
                     choice = stdin.nextLine();
-                    //TODO usa funzione simo per la prima lettera maiuscola
-                    chosenGods[n]= choice;
+                    chosenGods[n]= cvsf.nameToCorrectFormat(choice);
                 }
-                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices())){
+                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(),message)){
                     validChosenGods=true;
                 }
 
@@ -192,10 +192,9 @@ public class Cli extends View {
 
                 System.out.println("Choose a God: ");
                 choice = stdin.nextLine();
-                //TODO usa funzione simo per la prima lettera maiuscola
-                chosenGods[0]= choice;
+                chosenGods[0]= cvsf.nameToCorrectFormat(choice);
 
-                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices())){
+                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(),message)){
                     validChosenGods=true;
                 }
 

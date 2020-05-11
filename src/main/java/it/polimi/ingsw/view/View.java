@@ -109,14 +109,36 @@ public abstract class View implements Observer<Object>,Runnable {
     }
 
     //TODO DA TESTARE BENE PERCHE' E' PROBABILE CHE SBUCHINO ERRORI
-    public boolean isChosenGodsValid(String[] chosenGods, int numberOfChoices){
 
+    /**
+     * all chosen gods must be different and every god must be in the message's gods-arraylist
+     * @param chosenGods Godcards chosen by the user
+     * @param numberOfChoices number of godcards
+     * @return
+     */
+    public boolean isChosenGodsValid(String[] chosenGods, int numberOfChoices, PossibleCardsMessage message){
+
+        //all gods must be different
         for(int i=0; i<numberOfChoices-1; i++){
             for(int k=i+1; k<numberOfChoices; k++){
                 if(chosenGods[i].equals(chosenGods[k])){
                     return false;
                 }
             }
+
+        }
+
+        //every god must be in the message's arraylist
+        boolean trovato = false;
+
+        for(int i=0; i<numberOfChoices-1; i++){
+
+            for(String god : message.getGods()){
+                if(chosenGods[i].equals(god)) trovato=true;
+            }
+            if(!trovato) return false;
+
+            trovato = false;
 
         }
         return true;
