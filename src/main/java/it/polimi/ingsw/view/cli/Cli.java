@@ -8,7 +8,6 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.view.View;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -49,45 +48,52 @@ public class Cli extends View {
         int day=0;
         int month=0;
         int year=0;
+        String dayString;
+        String monthString;
+        String yearString;
+
         boolean validDate=false;
         do{
-            try {
-                System.out.println("Insert birthday day:");
-                day = Integer.parseInt(stdin.nextLine());
-                System.out.println("Insert birthday month:");
-                month = Integer.parseInt(stdin.nextLine());
-                System.out.println("Insert birthday year:");
-                year = Integer.parseInt(stdin.nextLine());
 
-                String dateString = day +"-"+month+"-"+year;
-                validDate=isDateValid(dateString);
-                if(!validDate){System.out.print("Not valid, try again");}
+            System.out.println("Insert birthday day:");
+            dayString = stdin.nextLine();
 
-            } catch (NumberFormatException e) {
+            System.out.println("Insert birthday month:");
+            monthString = stdin.nextLine();
 
-                System.out.print("Not a number, try again");
-            }
+            System.out.println("Insert birthday year:");
+            yearString = stdin.nextLine();
+
+
+            String dateString = day +"-"+month+"-"+year;
+
+            validDate=isDateValid(dateString,dayString,monthString,yearString);
+
+            if(!validDate)System.out.println("Not valid, try again");
+
+
         }while(!validDate);
+
+        day = Integer.parseInt(dayString);
+        month = Integer.parseInt(monthString);
+        year = Integer.parseInt(yearString);
 
         //need to create a new Calendar object with birthdayString data
         int numberOfPlayers = 0;
+        String numberOfPlayersString;
         boolean validNumberOfPlayers=false;
         do{
-            try {
-                System.out.println("Insert number of players:");
-                numberOfPlayers = Integer.parseInt(stdin.nextLine());
-                if(numberOfPlayers!=2 && numberOfPlayers!=3){
-                    System.out.print("Not valid, try again");
-                }else{
-                    validNumberOfPlayers=true;
-                }
 
-            } catch (NumberFormatException e) {
-
-                System.out.print("Not a number, try again");
-
+            System.out.println("Insert number of players:");
+            numberOfPlayersString = stdin.nextLine();
+            if(isValidNumberOfPlayers(numberOfPlayersString)){
+                validNumberOfPlayers = true;
             }
+
+
         }while(!validNumberOfPlayers);
+
+        numberOfPlayers = Integer.parseInt(numberOfPlayersString);
 
         return (new PlayerInfo(nickname,new GregorianCalendar(year,month-1,day),numberOfPlayers));
     }
@@ -180,9 +186,10 @@ public class Cli extends View {
                 for(int n=0 ; n<message.getNumberOfChoices();n++){
                     System.out.println("Choose a God: ");
                     choice = stdin.nextLine();
+                    //correct format is first letter uppercase
                     chosenGods[n]= cvsf.nameToCorrectFormat(choice);
                 }
-                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(),message)){
+                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(), message)){
                     validChosenGods=true;
                 }
 
@@ -205,6 +212,7 @@ public class Cli extends View {
 
                 System.out.println("Choose a God: ");
                 choice = stdin.nextLine();
+                //correct format is first letter uppercase
                 chosenGods[0]= cvsf.nameToCorrectFormat(choice);
 
                 if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(),message)){

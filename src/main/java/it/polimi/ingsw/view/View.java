@@ -76,6 +76,11 @@ public abstract class View implements Observer<Object>,Runnable {
 
     }
 
+
+
+
+
+
     /**
      * checks if position is inside of the borders
      * @param pos
@@ -100,23 +105,64 @@ public abstract class View implements Observer<Object>,Runnable {
     }
 
     /**
-     * checks if parameter is a valid date
+     * Checks if date is a valid date format and if integers are numbers
      * @param date
+     * @param dayString
+     * @param monthString
+     * @param yearString
      * @return
      */
-    public boolean isDateValid(String date){
+    public boolean isDateValid(String date, String dayString, String monthString, String yearString){
 
         String DATE_FORMAT = "dd-MM-yyyy";
+        int day=0;
+        int month=0;
+        int year=0;
 
         try {
             DateFormat df = new SimpleDateFormat(DATE_FORMAT);
             df.setLenient(false);
             df.parse(date);
-            return true;
+
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
         }
+
+        try{
+
+            day = Integer.parseInt(dayString);
+            month = Integer.parseInt(monthString);
+            year = Integer.parseInt(yearString);
+
+        }catch(NumberFormatException e){
+            return false;
+        }
+        return true;
+
+    }
+
+    //TODO BISOGNA TESTARE ISVALIDNUMBEROFPLAYERS()
+    /**
+     * Checks if it's a number and if it's 2||3
+     * @param string
+     * @return
+     */
+    public boolean isValidNumberOfPlayers(String string){
+
+        int number;
+        try{
+
+           number = Integer.parseInt(string);
+        }
+        catch(NumberFormatException e){
+
+            return false;
+
+        }
+        if(number==2 || number ==3)return true;
+
+        else return false;
 
     }
 
@@ -159,10 +205,7 @@ public abstract class View implements Observer<Object>,Runnable {
 
 
         return true;
-
     }
-
-
 
 
     public synchronized boolean getCanStart() {
