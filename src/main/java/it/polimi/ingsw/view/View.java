@@ -144,7 +144,7 @@ public abstract class View implements Observer<Object>,Runnable {
 
     //TODO BISOGNA TESTARE ISVALIDNUMBEROFPLAYERS()
     /**
-     * Checks if it's a number and if it's 2||3
+     * Checks if String is a number and if it's 2||3
      * @param string
      * @return
      */

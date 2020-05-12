@@ -86,9 +86,9 @@ public class Cli extends View {
 
             System.out.println("Insert number of players:");
             numberOfPlayersString = stdin.nextLine();
-            if(isValidNumberOfPlayers(numberOfPlayersString)){
-                validNumberOfPlayers = true;
-            }
+
+            validNumberOfPlayers = isValidNumberOfPlayers(numberOfPlayersString);
+            if(!validNumberOfPlayers)System.out.println("Not valid, try again");
 
 
         }while(!validNumberOfPlayers);
