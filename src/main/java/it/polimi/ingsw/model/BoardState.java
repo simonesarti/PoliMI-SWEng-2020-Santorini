@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
-public class BoardState {
+import java.io.Serializable;
 
-    private TowerState[][] towerStates = new TowerState[5][5];
+public class BoardState implements Serializable {
+
+    private final TowerState[][] towerStates = new TowerState[5][5];
 
     public BoardState(){}
 

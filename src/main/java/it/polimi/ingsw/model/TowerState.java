@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
-public class TowerState {
+import java.io.Serializable;
+
+public class TowerState implements Serializable {
 
     private final int towerHeight;
     private final boolean isCompleted;
