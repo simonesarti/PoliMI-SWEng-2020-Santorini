@@ -100,6 +100,8 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();
             server.lobby(new PlayerConnection(playerInfo,this));
 
+            //continues to read input commands until the connections stay active, and notifies them to the virtualView
+
             while(isActive() && isInUse()){
                 DataMessage dataMessage=(DataMessage)inputStream.readObject();
                 notify(dataMessage);

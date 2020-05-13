@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.view.VirtualView;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,18 @@ class ControllerTest {
     Controller controller;
     Model model;
     ArrayList<VirtualView> virtualViews;
+
+
+    @AfterEach
+    void end() {
+        //closing serverSocket
+        try {
+            server.closeServerSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @BeforeEach
     void init() {
