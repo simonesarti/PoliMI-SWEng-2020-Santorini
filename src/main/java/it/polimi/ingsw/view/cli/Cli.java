@@ -6,8 +6,10 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
+import it.polimi.ingsw.view.ClientViewSupportFunctions;
 import it.polimi.ingsw.view.View;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -15,6 +17,7 @@ public class Cli extends View {
 
 
     private Scanner stdin;
+    private ClientViewSupportFunctions sf;
 
 
     public Cli(ClientSideConnection clientSideConnection) {
@@ -32,6 +35,7 @@ public class Cli extends View {
     public void showNewBoard(NewBoardStateMessage message){
 
         System.out.println("Mostro la board sulla Command Line");
+        //TODO da fare
 
     }
 
@@ -67,7 +71,7 @@ public class Cli extends View {
 
             String dateString = day +"-"+month+"-"+year;
 
-            validDate=isDateValid(dateString,dayString,monthString,yearString);
+            validDate = sf.isDateValid(dateString,dayString,monthString,yearString);
 
             if(!validDate)System.out.println("Not valid, try again");
 
@@ -87,7 +91,7 @@ public class Cli extends View {
             System.out.println("Insert number of players:");
             numberOfPlayersString = stdin.nextLine();
 
-            validNumberOfPlayers = isValidNumberOfPlayers(numberOfPlayersString);
+            validNumberOfPlayers = sf.isValidNumberOfPlayers(numberOfPlayersString);
             if(!validNumberOfPlayers)System.out.println("Not valid, try again");
 
 
@@ -108,54 +112,35 @@ public class Cli extends View {
         String pos;
         String delims = ",";
         String[] tokens;
-        int pos1x = 0;
-        int pos1y = 0;
-        int pos2x = 0;
-        int pos2y = 0;
-
+        ArrayList<Integer> positions = new ArrayList<>();
         boolean validPos = false;
-        do{
-            try {
-                System.out.println("Insert first worker position x,y :");
-                pos = stdin.nextLine();
 
-                if(!isPositionValid(pos)){
-                    System.out.print("Not valid, try again");
-                }else{
-                    validPos=true;
-                    tokens = pos.split(delims);
-                    pos1x = Integer.parseInt(tokens[0]);
-                    pos1y = Integer.parseInt(tokens[1]);
+
+        for(int i=0; i<2;i++){
+
+            do{
+                try {
+                    System.out.println("Insert worker"+(i+1)+" position x,y :");
+                    pos = stdin.nextLine();
+
+                    if(!sf.isPositionValid(pos)){
+                        System.out.print("Not valid, try again");
+                    }else{
+                        validPos=true;
+                        tokens = pos.split(delims);
+                        positions.add(Integer.parseInt(tokens[0]));
+                        positions.add(Integer.parseInt(tokens[1]));
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Not a number, try again");
+
                 }
+            }while(!validPos);
+            validPos = false;
+        }
 
-            } catch (NumberFormatException e) {
-                System.out.print("Not a number, try again");
-
-            }
-        }while(!validPos);
-
-        validPos = false;
-        do{
-            try {
-                System.out.println("Insert second worker position x,y :");
-                pos = stdin.nextLine();
-
-                if(!isPositionValid(pos)){
-                    System.out.print("Not valid, try again");
-                }else{
-                    validPos=true;
-                    tokens = pos.split(delims);
-                    pos2x = Integer.parseInt(tokens[0]);
-                    pos2y = Integer.parseInt(tokens[1]);
-                }
-
-            } catch (NumberFormatException e) {
-                System.out.print("Not a number, try again");
-            }
-        }while(!validPos);
-
-
-        return (new StartingPositionChoice(pos1x,pos1y,pos2x,pos2y));
+        return (new StartingPositionChoice(positions.get(0),positions.get(1),positions.get(2),positions.get(3)));
 
 
     }
@@ -173,14 +158,13 @@ public class Cli extends View {
         String choice;
         boolean validChosenGods = false;
 
-        if(message.getNumberOfChoices()>1){
+        if(message.getNumberOfChoices()>0){
 
             chosenGods = new String[message.getNumberOfChoices()];
             System.out.println("Scegli "+message.getNumberOfChoices()+" di questi dei: ");
             for(String s : message.getGods()){
                 System.out.println(s);
             }
-
 
             do{
                 for(int n=0 ; n<message.getNumberOfChoices();n++){
@@ -189,7 +173,7 @@ public class Cli extends View {
                     //correct format is first letter uppercase
                     chosenGods[n]= cvsf.nameToCorrectFormat(choice);
                 }
-                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(), message)){
+                if(sf.isChosenGodsValid(chosenGods, message.getNumberOfChoices(), message)){
                     validChosenGods=true;
                 }
 
@@ -197,34 +181,6 @@ public class Cli extends View {
 
             return(new CardChoice(chosenGods));
         }
-
-
-        else if(message.getNumberOfChoices()==1){
-
-            chosenGods = new String[1];
-
-            System.out.println("Scegli uno di questi dei: ");
-            for(String s : message.getGods()){
-                System.out.println(s);
-            }
-
-            do{
-
-                System.out.println("Choose a God: ");
-                choice = stdin.nextLine();
-                //correct format is first letter uppercase
-                chosenGods[0]= cvsf.nameToCorrectFormat(choice);
-
-                if(isChosenGodsValid(chosenGods, message.getNumberOfChoices(),message)){
-                    validChosenGods=true;
-                }
-
-            }while(!validChosenGods);
-
-
-            return(new CardChoice(chosenGods));
-        }
-
 
         else{
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 
-
+/*
 public class Cell {
 
     private String[] stripes = new String[4];
@@ -161,3 +161,5 @@ public class Cell {
 
 
 }
+
+ */
