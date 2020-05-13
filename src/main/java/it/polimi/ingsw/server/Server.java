@@ -53,7 +53,6 @@ public class Server {
                 playerConnection.getServerSideConnection().notInUse();
 
             }else{
-
                 twoPlayerWaitingList.add(playerConnection);
 
                 if(twoPlayerWaitingList.size()==2){
