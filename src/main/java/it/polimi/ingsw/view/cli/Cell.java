@@ -128,5 +128,36 @@ public class Cell {
 
 
 
+    private String uniformStripe(String BackgroundAnsiColour){
+        String stripe=...;
+        return stripe;
+    }
+
+    private String domeStripe(String BackgroundAnsiColour){
+        String stripe=...;
+        return stripe;
+    }
+
+    private String coordinateStripe(int value){
+        String stripe=...;
+        //in cui ha i ...+value.toString()+....
+        //scegli tu colore backgruond di questa
+        return stripe;
+    }
+
+    private String workerStripe(String BackgroundAnsiColour,int workerNumber){
+        //concetto di prima con coordinata, ci infili il numero come stringa dentro l'ansi+ il W o W: o come vuoi tu
+    }
+
+    private String levelStripe(int workerNumber){
+        //concetto di prima con coordinata, ci infili il numero come stringa dentro l'ansi+ il W o W: o come vuoi tu
+
+        //2 possibilità: indichiamo sempre il livello, in quel caso ci sia aggiunge anche il colore di sfondo
+        //perchè scriveremmo lv0 anche nella cella vuota e dobbiamo distingue verde/grigio
+        //oppure lasciarlo così e dire che se chiamo levelStrpe è perchè c'è almeno un livello => colore=grigio
+    }
+
+
+
 
 }
