@@ -16,6 +16,16 @@ public class Controller implements Observer<PlayerMessage>{
     private final Model model;
     private final ArrayList<VirtualView> virtualViews=new ArrayList<>();
 
+    /**
+     * creates model passing the number of players
+     * creates one virtualView for each player
+     * every virtualView is added as model's observer, and controller is added as observer for every virtualView
+     * assign colours to players
+     * sends card choice message
+     *
+     * @param players
+     * @param connections
+     */
     public Controller(ArrayList<Player> players, ArrayList<ServerSideConnection> connections){
 
         int numberOfPlayers=players.size();
