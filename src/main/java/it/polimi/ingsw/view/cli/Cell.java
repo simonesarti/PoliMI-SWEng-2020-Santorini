@@ -26,7 +26,7 @@ public class Cell {
         return stripe;
     }
 
-    //TODO: riga con coordinata
+    
     private String coordinateStripe(int value){
        String stripe = "";
        return stripe;
