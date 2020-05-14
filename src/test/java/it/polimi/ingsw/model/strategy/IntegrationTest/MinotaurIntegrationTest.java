@@ -13,7 +13,9 @@ import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
+import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -21,82 +23,93 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 public class MinotaurIntegrationTest {
 
-    GodCard minotaur;
-    Model model;
-    EmptyVirtualView vv;
-    Controller controller;
-    TurnInfo turnInfo;
-    GameBoard gameBoard;
+    Server server;
+    ServerSideConnection c1;
+    ServerSideConnection c2;
+    ServerSideConnection c3;
 
     Player testPlayer;
     Player enemy1Player;
     Player enemy2Player;
-    PlayerInfo playerInfo;
+    PlayerInfo testPlayerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
+    GodCard minotaur;
 
-    ServerSideConnection c;
-    Server s;
-
-    {
-        try {
-            s = new Server();
-            c = new ServerSideConnection(new Socket("127.0.0.1",12345),s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    Controller controller;
+    Model model;
+    ArrayList<VirtualView> virtualViews;
+    GameBoard gameBoard;
+    TurnInfo turnInfo;
+    
     TestSupportFunctions testSupportFunctions=new TestSupportFunctions();
 
     @BeforeEach
     void init() {
 
-        model = new Model(3);
+        try {
+            server = new Server();
+            c1 = new FakeConnection(new Socket(),server,"c1");
+            c2 = new FakeConnection(new Socket(),server,"c2");
+            c3 = new FakeConnection(new Socket(),server,"c3");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        controller = new Controller(model);
+        testPlayerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
+        testPlayer = new Player(testPlayerInfo);
 
-        gameBoard = model.getGameBoard();
-        turnInfo = model.getTurnInfo();
+        enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(1990, Calendar.NOVEMBER, 30),3);
+        enemy1Player = new Player(enemy1Info);
 
-        playerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
-        testPlayer = new Player(playerInfo);
-        vv = new EmptyVirtualView(testPlayer,c);
-
-        testPlayer.setColour(Colour.WHITE);
-        testPlayer.getWorker(0).setStartingPosition(0, 0);
-        testPlayer.getWorker(1).setStartingPosition(1, 0);
-
-        enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
-        enemy1Player = new Player(playerInfo);
-        enemy1Player.setColour(Colour.BLUE);
-        enemy1Player.getWorker(0).setStartingPosition(0, 1);
-        enemy1Player.getWorker(1).setStartingPosition(0, 2);
-
-        enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
-        enemy2Player = new Player(playerInfo);
-        enemy2Player.setColour(Colour.GREY);
-        enemy2Player.getWorker(0).setStartingPosition(0, 3);
-        enemy2Player.getWorker(1).setStartingPosition(0, 4);
+        enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1995, Calendar.DECEMBER, 7),3);
+        enemy2Player = new Player(enemy2Info);
 
         //Instancing testPlayer's godcard
         String godDataString[] = {"Minotaur", "Bull-headed Monster", "Simple", "true", "Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level."};
         minotaur = new GodCard(godDataString);
         testPlayer.setGodCard(minotaur);
+
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(testPlayer);
+        players.add(enemy1Player);
+        players.add(enemy2Player);
+        ArrayList<ServerSideConnection> connections=new ArrayList<>();
+        connections.add(c1);
+        connections.add(c2);
+        connections.add(c3);
+
+        controller=new Controller(players,connections);
+
+        virtualViews=controller.getVirtualViews();
+        model=controller.getModel();
+        turnInfo=model.getTurnInfo();
+        gameBoard=model.getGameBoard();
+
+        testPlayer.getWorker(0).setStartingPosition(0, 0);
+        testPlayer.getWorker(1).setStartingPosition(1, 0);
+
+        enemy1Player.getWorker(0).setStartingPosition(0, 1);
+        enemy1Player.getWorker(1).setStartingPosition(0, 2);
+
+        enemy2Player.getWorker(0).setStartingPosition(0, 3);
+        enemy2Player.getWorker(1).setStartingPosition(0, 4);
     }
 
+    
     @AfterEach
     void end(){
         //closing serverSocket
         try {
-            s.closeServerSocket();
+            server.closeServerSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -146,7 +159,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void EndBeforeEverything(){
-            PlayerMessage message = new PlayerEndOfTurnChoice(vv, testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
             controller.update(message);
             //method returns immediately, can't end yet
 
@@ -156,7 +169,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void buildBeforeEverything(){
-            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(-2, 0, 0, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(-2, 0, 0, "Block"));
             controller.update(message);
             //wrong worker, but should give error for missing move
 
@@ -166,7 +179,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void NoPushableMoveBeforeEverything(){
-            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer, new MoveData(0, 2, 2));
+            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(0, 2, 2));
             controller.update(message);
             //opponent can't be pushed, invalid move
 
@@ -180,7 +193,7 @@ public class MinotaurIntegrationTest {
         @Test
         void PushableMoveBeforeEverythingAndWin(){
 
-            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer, new MoveData(0, 2, 1));
+            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(0, 2, 1));
             controller.update(message);
             //opponent can pushed, valid move
 
@@ -264,7 +277,7 @@ public class MinotaurIntegrationTest {
         @Test
         void EndAfterMove(){
 
-            PlayerMessage message = new PlayerEndOfTurnChoice(vv, testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
             controller.update(message);
             //method returns immediately, can't end yet
 
@@ -274,7 +287,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void moveAfterMove(){
-            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer, new MoveData(0, 2, 1));
+            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer, new MoveData(0, 2, 1));
             controller.update(message);
             //can't move again error, and is moving on his own position
 
@@ -283,7 +296,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void wrongBuildAfterMove(){
-            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(0, 3, 1, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(0, 3, 1, "Block"));
             controller.update(message);
             //error, cell occupied by worker
 
@@ -292,7 +305,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void wrongBuildAfterMove2(){
-            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(1, 3, 2, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(1, 3, 2, "Block"));
             controller.update(message);
             //error, not same worker
 
@@ -303,7 +316,7 @@ public class MinotaurIntegrationTest {
         @Test
         void correctBuildAfterEverything(){
 
-            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(0, 2, 0, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(0, 2, 0, "Block"));
             controller.update(message);
             //build ok
 
@@ -364,7 +377,7 @@ public class MinotaurIntegrationTest {
         }
         @Test
         void EndAfterFinish(){
-            PlayerMessage message = new PlayerEndOfTurnChoice(vv, testPlayer);
+            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
             controller.update(message);
             //ok, turn must end
 
@@ -376,7 +389,7 @@ public class MinotaurIntegrationTest {
 
         @Test
         void MoveAfterFinish(){
-            PlayerMessage message = new PlayerMovementChoice(vv, testPlayer,new MoveData( 0, 0, 1));
+            PlayerMessage message = new PlayerMovementChoice(virtualViews.get(0), testPlayer,new MoveData( 0, 0, 1));
             controller.update(message);
             //can't move again error, turn ended (and invalid position)
             testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
@@ -384,11 +397,10 @@ public class MinotaurIntegrationTest {
 
         @Test
         void BuildAfterFinish(){
-            PlayerMessage message = new PlayerBuildChoice(vv, testPlayer, new BuildData(0, 0, 1, "Block"));
+            PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(0, 0, 1, "Block"));
             controller.update(message);
             //can't build again error, turn ended
             testSupportFunctions.baseTurnInfoChecker(turnInfo,true,1,true,1,0,true,true);
         }
     }
 }
-*/

@@ -77,7 +77,7 @@ public class GameMessage {
     public static String athenaNoMoveUp = "This move isn't allowed due to Athena's power\n";
     //MINOTAUR
     public static String noMovedToOccupiedTowerMinotaur = "This cell is occupied by your other worker, please choose another position\n";
-    public static String CannotForceWorker = "This worker can not be forced by Minotaur's power, please choose another position\n";
+    public static String CannotForceWorker = "The worker in that position can't be forced backwards by Minotaur's power, please choose another position\n";
     //ARTEMIS
     public static String ArtemisFirstPosition = "This is your first position, choose another one\n";
     public static String moveAgainOrBuild = "You can now decide to move again or to build\n";
