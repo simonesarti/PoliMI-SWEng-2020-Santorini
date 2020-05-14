@@ -35,7 +35,7 @@ public class Cli extends View {
     public void showNewBoard(NewBoardStateMessage message){
 
         System.out.println("Mostro la board sulla Command Line");
-        //TODO da fare
+        //TODO da fare questa funzione
 
     }
 
