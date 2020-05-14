@@ -229,6 +229,7 @@ public class Model extends Observable<NotifyMessages> {
         return lost;
 
     }
+
     public boolean performWinCheck(Player player, int chosenWorker){
 
         if(player.getGodCard().getWinStrategy().checkWin(player,chosenWorker)){
@@ -240,10 +241,12 @@ public class Model extends Observable<NotifyMessages> {
         }
 
     }
+
     public String performMoveCheck(Player player, int chosenWorker, int[] movingTo){
 
         return player.getGodCard().getMoveStrategy().checkMove(turnInfo,gameboard,player,chosenWorker,movingTo);
     }
+
     public String performMove(Player player, int chosenWorker, int[] movingTo){
 
         String result;
@@ -251,10 +254,12 @@ public class Model extends Observable<NotifyMessages> {
         notifyNewBoardState();
         return result;
     }
+
     public String performBuildCheck(Player player, int chosenWorker, int[] buildingInto, String pieceType){
 
         return player.getGodCard().getBuildStrategy().checkBuild(turnInfo,gameboard,player,chosenWorker,buildingInto,pieceType);
     }
+
     public String performBuild(Player player, int chosenWorker, int[] buildingInto, String pieceType){
 
         String result;
@@ -294,8 +299,6 @@ public class Model extends Observable<NotifyMessages> {
         player.setGodCard(godCard);
         gameDeck.getDeck().remove(godCard);
     }
-
-
 
 
 
