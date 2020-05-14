@@ -26,10 +26,10 @@ public class Cell {
         return stripe;
     }
 
-    
+
     private String coordinateStripe(int value){
-       String stripe = "";
-       return stripe;
+        String stripe = "";
+        return stripe;
     }
 
     private String workerStripe(String BackgroundAnsiColour,int workerNumber){
