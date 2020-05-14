@@ -12,7 +12,9 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
+import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -20,83 +22,93 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
+
 public class PanIntegrationTest {
 
-    GodCard pan;
-    Model model;
-    EmptyVirtualView vv;
-    Controller controller;
-    TurnInfo turnInfo;
-    GameBoard gameBoard;
+    Server server;
+    ServerSideConnection c1;
+    ServerSideConnection c2;
+    ServerSideConnection c3;
 
     Player testPlayer;
     Player enemy1Player;
     Player enemy2Player;
-    PlayerInfo playerInfo;
+    PlayerInfo testPlayerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
+    GodCard pan;
 
-    ServerSideConnection c;
-    Server s;
-
-    {
-        try {
-            s = new Server();
-            c = new ServerSideConnection(new Socket("127.0.0.1",12345),s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    Controller controller;
+    Model model;
+    ArrayList<VirtualView> virtualViews;
+    GameBoard gameBoard;
+    TurnInfo turnInfo;
 
     TestSupportFunctions testSupportFunctions=new TestSupportFunctions();
 
     @BeforeEach
     void init() {
 
-        model = new Model(3);
+        try {
+            server = new Server();
+            c1 = new FakeConnection(new Socket(),server,"c1");
+            c2 = new FakeConnection(new Socket(),server,"c2");
+            c3 = new FakeConnection(new Socket(),server,"c3");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        controller = new Controller(model);
+        testPlayerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
+        testPlayer = new Player(testPlayerInfo);
 
-        gameBoard = model.getGameBoard();
-        turnInfo = model.getTurnInfo();
+        enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(1990, Calendar.NOVEMBER, 30),3);
+        enemy1Player = new Player(enemy1Info);
 
-        playerInfo = new PlayerInfo("xXoliTheQueenXx", new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
-        testPlayer = new Player(playerInfo);
-        vv = new EmptyVirtualView(testPlayer,c);
+        enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1995, Calendar.DECEMBER, 7),3);
+        enemy2Player = new Player(enemy2Info);
 
-        testPlayer.setColour(Colour.WHITE);
-        testPlayer.getWorker(0).setStartingPosition(0, 0);
-        testPlayer.getWorker(1).setStartingPosition(1, 0);
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(testPlayer);
+        players.add(enemy1Player);
+        players.add(enemy2Player);
+        ArrayList<ServerSideConnection> connections=new ArrayList<>();
+        connections.add(c1);
+        connections.add(c2);
+        connections.add(c3);
 
-        enemy1Info = new PlayerInfo("enemy1", new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
-        enemy1Player = new Player(playerInfo);
-        enemy1Player.setColour(Colour.BLUE);
-        enemy1Player.getWorker(0).setStartingPosition(0, 1);
-        enemy1Player.getWorker(1).setStartingPosition(0, 2);
+        controller=new Controller(players,connections);
 
-        enemy2Info = new PlayerInfo("enemy2", new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
-        enemy2Player = new Player(playerInfo);
-        enemy2Player.setColour(Colour.GREY);
-        enemy2Player.getWorker(0).setStartingPosition(0, 3);
-        enemy2Player.getWorker(1).setStartingPosition(0, 4);
+        virtualViews=controller.getVirtualViews();
+        model=controller.getModel();
+        turnInfo=model.getTurnInfo();
+        gameBoard=model.getGameBoard();
 
         //Instancing testPlayer's godcard
         String godDataString[] = {"Pan", "God of the Wild", "Simple", "true", "You also win if your Worker moves down two or more levels."};
         pan = new GodCard(godDataString);
         testPlayer.setGodCard(pan);
+
+        testPlayer.getWorker(0).setStartingPosition(0, 0);
+        testPlayer.getWorker(1).setStartingPosition(1, 0);
+
+        enemy1Player.getWorker(0).setStartingPosition(0, 1);
+        enemy1Player.getWorker(1).setStartingPosition(0, 2);
+
+        enemy2Player.getWorker(0).setStartingPosition(0, 3);
+        enemy2Player.getWorker(1).setStartingPosition(0, 4);
     }
 
     @AfterEach
     void end(){
         //closing serverSocket
         try {
-            s.closeServerSocket();
+            server.closeServerSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,7 +160,7 @@ public class PanIntegrationTest {
         @Test
         void EndBeforeEverything(){
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(vv,testPlayer);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),testPlayer);
             controller.update(message);
             //method returns immediately
 
@@ -159,7 +171,7 @@ public class PanIntegrationTest {
         @Test
         void BuildBeforeEverything(){
 
-            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,1,2,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),testPlayer,new BuildData(1,1,2,"Block"));
             controller.update(message);
 
             //turnInfo must still have all his initial values
@@ -168,7 +180,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongMoveBeforeEverything(){
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(0,1,0));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(0,1,0));
             controller.update(message);
             //invalid move, denied
 
@@ -178,7 +190,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongMoveBeforeEverything2(){
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(-1,1,0));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(-1,1,0));
             controller.update(message);
             //invalid move, denied, invalid worker
 
@@ -188,7 +200,7 @@ public class PanIntegrationTest {
 
         @Test //ok
         void CorrectMoveBeforeEverything(){
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,1,2));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(1,1,2));
             controller.update(message);
 
             //turnInfo must have been modified
@@ -202,7 +214,7 @@ public class PanIntegrationTest {
             gameBoard.getTowerCell(1,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
             testPlayer.getWorker(1).movedToPosition(1,4,2);
 
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,0,4));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(1,0,4));
             controller.update(message);
             //should return victory message
 
@@ -217,7 +229,7 @@ public class PanIntegrationTest {
             gameBoard.getTowerCell(0,4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
             testPlayer.getWorker(1).movedToPosition(0,4,3);
 
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,0,3));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(1,0,3));
             controller.update(message);
             //should return victory message
 
@@ -279,7 +291,7 @@ public class PanIntegrationTest {
         @Test
         void EndAftertMove() {
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(vv,testPlayer);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),testPlayer);
             controller.update(message);
             //method returns immediately
 
@@ -290,7 +302,7 @@ public class PanIntegrationTest {
         @Test
         void MoveAfterMove() {
 
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,2,3));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(1,2,3));
             controller.update(message);
             //method returns because the player has already moved
 
@@ -300,7 +312,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongBuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(0,1,2,"Dome"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),testPlayer,new BuildData(0,1,2,"Dome"));
             controller.update(message);
             //every parameter is wrong, should give error for the wrong worker
 
@@ -310,7 +322,7 @@ public class PanIntegrationTest {
 
         @Test
         void WrongBuildAfterMove2() {
-            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,0,3,"Dome"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),testPlayer,new BuildData(1,0,3,"Dome"));
             controller.update(message);
             //can't place dome here error
 
@@ -320,7 +332,7 @@ public class PanIntegrationTest {
 
         @Test //ok
         void BuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,0,3,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),testPlayer,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //should work
 
@@ -383,7 +395,7 @@ public class PanIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
-            PlayerMessage message=new PlayerMovementChoice(vv,testPlayer,new MoveData(1,2,3));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(1,2,3));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -393,7 +405,7 @@ public class PanIntegrationTest {
 
         @Test
         void BuildAfterFinish() {
-            PlayerMessage message=new PlayerBuildChoice(vv,testPlayer,new BuildData(1,0,3,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),testPlayer,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -403,32 +415,15 @@ public class PanIntegrationTest {
 
         @Test
         void EndAfterFinish() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(vv,testPlayer);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),testPlayer);
             controller.update(message);
             //correct end of turn
 
             //turnInfo must have been reset
-            assertEquals(0,turnInfo.getNumberOfMoves());
-            assertEquals(0,turnInfo.getNumberOfBuilds());
-            assertFalse(turnInfo.getHasAlreadyMoved());
-            assertFalse(turnInfo.getHasAlreadyBuilt());
-            assertEquals(-1,turnInfo.getChosenWorker());
-            assertFalse(turnInfo.getTurnCanEnd());
-            assertFalse(turnInfo.getTurnHasEnded());
             testSupportFunctions.baseTurnInfoChecker(turnInfo,false,0,false,0,-1,false,false);
 
             assertEquals(Colour.BLUE,model.getTurn());
         }
     }
-
-
-
-
-
-
-
-
-
-
+    
 }
-*/

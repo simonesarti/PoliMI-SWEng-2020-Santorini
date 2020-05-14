@@ -13,8 +13,10 @@ import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level3Block;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
+import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.supportClasses.EmptyVirtualView;
+import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -22,20 +24,18 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 public class ArtemisIntegrationTest {
 
-
-    GodCard artemisCard;
-    Model model;
-    EmptyVirtualView vv;
-    Controller controller;
-    TurnInfo turnInfo;
-    GameBoard gameBoard;
+    Server server;
+    ServerSideConnection c1;
+    ServerSideConnection c2;
+    ServerSideConnection c3;
 
     Player player;
     Player enemy1Player;
@@ -43,55 +43,69 @@ public class ArtemisIntegrationTest {
     PlayerInfo playerInfo;
     PlayerInfo enemy1Info;
     PlayerInfo enemy2Info;
-    TestSupportFunctions testMethods = new TestSupportFunctions();
+    GodCard artemisCard;
 
-    ServerSideConnection c;
-    Server s;
+    Controller controller;
+    Model model;
+    ArrayList<VirtualView> virtualViews;
+    GameBoard gameBoard;
+    TurnInfo turnInfo;
 
-    {
+    TestSupportFunctions testMethods=new TestSupportFunctions();
+
+    @BeforeEach
+    void init() {
+
         try {
-            s = new Server();
-            c = new ServerSideConnection(new Socket("127.0.0.1",12345),s);
+            server = new Server();
+            c1 = new FakeConnection(new Socket(),server,"c1");
+            c2 = new FakeConnection(new Socket(),server,"c2");
+            c3 = new FakeConnection(new Socket(),server,"c3");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-
-    @BeforeEach
-    void init(){
-
-        model = new Model(3);
-
-        controller = new Controller(model);
-
-        gameBoard = model.getGameBoard();
-        turnInfo = model.getTurnInfo();
 
         playerInfo  =new PlayerInfo("xXoliTheQueenXx",new GregorianCalendar(1998, Calendar.SEPTEMBER, 9),3);
         player = new Player(playerInfo);
-        player.setColour(Colour.WHITE);
-        player.getWorker(0).setStartingPosition(3,0);
-        player.getWorker(1).setStartingPosition(0,1);
-        vv = new EmptyVirtualView(player,c);
 
-        enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
-        enemy1Player = new Player(playerInfo);
-        enemy1Player.setColour(Colour.BLUE);
-        enemy1Player.getWorker(0).setStartingPosition(4,1);
-        enemy1Player.getWorker(1).setStartingPosition(3,2);
+        enemy1Info  =new PlayerInfo("enemy1",new GregorianCalendar(1999, Calendar.NOVEMBER, 30),3);
+        enemy1Player = new Player(enemy1Info);
 
-        enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
-        enemy2Player = new Player(playerInfo);
-        enemy2Player.setColour(Colour.GREY);
-        enemy2Player.getWorker(0).setStartingPosition(1,4);
-        enemy2Player.getWorker(1).setStartingPosition(4,4);
+        enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(2000, Calendar.DECEMBER, 7),3);
+        enemy2Player = new Player(enemy2Info);
 
         //Instancing testPlayer's godcard
         String godDataString[] = {"Artemis","God Of ...", "Simple", "true", "Your worker may move another time..."};
         artemisCard = new GodCard(godDataString);
         player.setGodCard(artemisCard);
+
+        ArrayList<Player> players=new ArrayList<>();
+        players.add(player);
+        players.add(enemy1Player);
+        players.add(enemy2Player);
+        ArrayList<ServerSideConnection> connections=new ArrayList<>();
+        connections.add(c1);
+        connections.add(c2);
+        connections.add(c3);
+
+        controller=new Controller(players,connections);
+
+        virtualViews=controller.getVirtualViews();
+        model=controller.getModel();
+        turnInfo=model.getTurnInfo();
+        gameBoard=model.getGameBoard();
+        
+        player.getWorker(0).setStartingPosition(3,0);
+        player.getWorker(1).setStartingPosition(0,1);
+        
+        enemy1Player.getWorker(0).setStartingPosition(4,1);
+        enemy1Player.getWorker(1).setStartingPosition(3,2);
+        
+        enemy2Player.getWorker(0).setStartingPosition(1,4);
+        enemy2Player.getWorker(1).setStartingPosition(4,4);
+
+        //"xXoliTheQueenXx" is the oldest player. but the one i want to test
+        model.setColour(Colour.GREY);
 
         //GAMEBOARD GENERATION
         int[][] towers=
@@ -147,7 +161,7 @@ public class ArtemisIntegrationTest {
     void end(){
         //closing serverSocket
         try {
-            s.closeServerSocket();
+            server.closeServerSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -165,7 +179,7 @@ public class ArtemisIntegrationTest {
         //////////////////////////////////////////MOVING FOR THE FIRST TIME/////////////////////////////
 
         //creating message that should trigger the controller object (in this case, triggering will be "manual")
-        PlayerMovementChoice moveMessage = new PlayerMovementChoice(vv,player, new MoveData(0,3,0));
+        PlayerMovementChoice moveMessage = new PlayerMovementChoice(virtualViews.get(0),player, new MoveData(0,3,0));
         controller.update(moveMessage);
 
         //Artemis has moved not using his power. Did he move correctly?
@@ -180,7 +194,7 @@ public class ArtemisIntegrationTest {
 
         ////////////////////////////////////TRYING TO MOVE ANOTHER TIME BUT IN THE FIRST POSITION/////////////////////////////////
 
-        moveMessage = new PlayerMovementChoice(vv,player,new MoveData(0,2,0));
+        moveMessage = new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(0,2,0));
         controller.update(moveMessage);
 
         //should not move
@@ -195,7 +209,7 @@ public class ArtemisIntegrationTest {
 
         ////////////////////////////////////TRYING TO MOVE ANOTHER TIME/////////////////////////////////
 
-        moveMessage = new PlayerMovementChoice(vv,player, new MoveData(0,3,1));
+        moveMessage = new PlayerMovementChoice(virtualViews.get(0),player, new MoveData(0,3,1));
         controller.update(moveMessage);
 
         //should move
@@ -211,7 +225,7 @@ public class ArtemisIntegrationTest {
         //////////////////////////////////////BUILDING FOR THE FIRST TIME////////////////////////////////
 
         //creating build message
-        PlayerBuildChoice buildMessage = new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Block"));
+        PlayerBuildChoice buildMessage = new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(0,3,0,"Block"));
         controller.update(buildMessage);
 
         //Artemis has built a level1block with his basicBuild strategy
@@ -228,7 +242,7 @@ public class ArtemisIntegrationTest {
         //////////////////////////////////TRYING TO BUILD AGAIN//////////////////////////////////////////
 
         //creating build message
-        buildMessage = new PlayerBuildChoice(vv,player,new BuildData(0,2,0,"Block"));
+        buildMessage = new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(0,2,0,"Block"));
         controller.update(buildMessage);
 
 
@@ -248,7 +262,7 @@ public class ArtemisIntegrationTest {
     @Test
     void EndBeforeEverything(){
 
-        PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
+        PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),player);
         controller.update(message);
         //method returns immediately
 
@@ -260,7 +274,7 @@ public class ArtemisIntegrationTest {
     @Test
     void BuildBeforeEverything(){
 
-        PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,1,1,"Block"));
+        PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(1,1,1,"Block"));
         controller.update(message);
 
         //turnInfo must still have all his initial values
@@ -270,7 +284,7 @@ public class ArtemisIntegrationTest {
 
     @Test
     void WrongMoveBeforeEverything(){
-        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,2,2));
+        PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(0,2,2));
         controller.update(message);
         //invalid move, denied
 
@@ -281,7 +295,7 @@ public class ArtemisIntegrationTest {
 
     @Test
     void WrongMoveBeforeEverything2(){
-        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(-1,1,0));
+        PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(-1,1,0));
         controller.update(message);
         //invalid move, denied, invalid worker
 
@@ -291,7 +305,7 @@ public class ArtemisIntegrationTest {
 
     @Test //ok
     void CorrectMoveBeforeEverything(){
-        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,0,3));
+        PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(1,0,3));
         controller.update(message);
 
         //turnInfo must have been modified
@@ -306,7 +320,7 @@ public class ArtemisIntegrationTest {
         gameBoard.getTowerCell(3,0).getFirstNotPieceLevel().setWorker(player.getWorker(0));
         player.getWorker(0).movedToPosition(3,0,2);
 
-        PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,4,1));
+        PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(0,4,1));
         controller.update(message);
         //should return victory message
 
@@ -336,7 +350,7 @@ public class ArtemisIntegrationTest {
         @Test
         void EndAftertMove() {
 
-            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),player);
             controller.update(message);
             //method returns immediately
 
@@ -348,7 +362,7 @@ public class ArtemisIntegrationTest {
         @Test
         void MoveAfterMove() {
 
-            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(0,1,0));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(0,1,0));
             controller.update(message);
             //method returns because the player has already moved
 
@@ -364,7 +378,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void WrongBuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Dome"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(0,3,0,"Dome"));
             controller.update(message);
             //every parameter is wrong, should give error for the wrong block
 
@@ -375,7 +389,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void WrongBuildAfterMove2() {
-            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,3,0,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(1,3,0,"Block"));
             controller.update(message);
             //wrong worker
 
@@ -386,7 +400,7 @@ public class ArtemisIntegrationTest {
 
         @Test //ok
         void BuildAfterMove() {
-            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(0,3,0,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(0,3,0,"Block"));
             controller.update(message);
             //should work
 
@@ -421,7 +435,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
-            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,0,3));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(1,0,3));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -431,7 +445,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void BuildAfterFinish() {
-            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,0,3,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -442,7 +456,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void EndAfterFinish() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),player);
             controller.update(message);
             //correct end of turn
 
@@ -475,7 +489,7 @@ public class ArtemisIntegrationTest {
         @Test
         void MovingSecondTime() {
 
-            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,2,0));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(1,2,0));
             controller.update(message);
             //cannot
 
@@ -510,7 +524,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void MoveAfterFinish() {
-            PlayerMessage message=new PlayerMovementChoice(vv,player,new MoveData(1,0,3));
+            PlayerMessage message=new PlayerMovementChoice(virtualViews.get(0),player,new MoveData(1,0,3));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -520,7 +534,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void BuildAfterFinish() {
-            PlayerMessage message=new PlayerBuildChoice(vv,player,new BuildData(1,0,3,"Block"));
+            PlayerMessage message=new PlayerBuildChoice(virtualViews.get(0),player,new BuildData(1,0,3,"Block"));
             controller.update(message);
             //can't execute because turn has ended
 
@@ -531,7 +545,7 @@ public class ArtemisIntegrationTest {
 
         @Test
         void EndAfterFinish() {
-            PlayerMessage message=new PlayerEndOfTurnChoice(vv,player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(0),player);
             controller.update(message);
             //correct end of turn
 
@@ -541,4 +555,3 @@ public class ArtemisIntegrationTest {
         }
     }
 }
-*/
