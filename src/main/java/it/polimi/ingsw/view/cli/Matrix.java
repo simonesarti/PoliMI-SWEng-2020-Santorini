@@ -24,81 +24,63 @@ public class Matrix {
 
         //casella (0,0) tutta vuota
         for (int i=0; i<5; i++){
-            matrix.getCell(0,0).getStripe(i).equals(cell.emptyStripe());
+            matrix.getCell(0,0).assignVoid();
         }
 
         //coordinate X
         for(int i=1; i<6;i++){
-            matrix.getCell(i,0).getStripe(0).equals(cell.emptyStripe());
-            matrix.getCell(i,0).getStripe(1).equals(cell.emptyStripe());
-            matrix.getCell(i,0).getStripe(2).equals(cell.coordinateXStripe(i));
-            matrix.getCell(i,0).getStripe(3).equals(cell.emptyStripe());
-            matrix.getCell(i,0).getStripe(4).equals(cell.emptyStripe());
+            matrix.getCell(i,0).assignCoordinate("X",i);
         }
 
         //coordinate Y
         for(int i=1; i<6;i++){
-            matrix.getCell(0,i).getStripe(0).equals(cell.emptyStripe());
-            matrix.getCell(0,i).getStripe(1).equals(cell.emptyStripe());
-            matrix.getCell(0,i).getStripe(2).equals(cell.coordinateYStripe(i));
-            matrix.getCell(0,i).getStripe(3).equals(cell.emptyStripe());
-            matrix.getCell(0,i).getStripe(4).equals(cell.emptyStripe());
+            matrix.getCell(0,1).assignCoordinate("Y",i);
         }
-
 
 
         for (int i=1; i<6; i++){
             for (int j=1; j<6; j++){
-                //livello zero vuota
-                if (message.getBoardState().getTowerState(i,j).getTowerHeight()==0 && message.getBoardState().getTowerState(i,j).getWorkerColour().equals(null)){
-                    for (int k=0; k<5; k++){
-                        matrix.getCell(i,j).getStripe(k).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
+
+                //LEVEL 0
+                if (message.getBoardState().getTowerState(i,j).getTowerHeight()==0){
+
+                    //no worker
+                    if(message.getBoardState().getTowerState(i, j).getWorkerColour() == null) {
+                        matrix.getCell(i, j).assignGreen();
+                    }
+                    //with worker
+                    else{
+                        matrix.getCell(i,j).assignOnlyWorker(message.getBoardState().getTowerState(i,j).getWorkerNumber());
+                    }
+
+                }
+
+                //DOME
+                else if(message.getBoardState().getTowerState(i, j).isCompleted()){
+
+                    //level 0
+                    if(message.getBoardState().getTowerState(i,j).getTowerHeight()==0){
+                        matrix.getCell(i,j).assignDome(AnsiCode.BACKGROUND_GREEN);
+                    }
+                    //level 1/2/3
+                    else{
+                        matrix.getCell(i,j).assignDome(AnsiCode.BACKGROUND_WHITE);
+
                     }
                 }
-                //livello zero con wprker
-                else if (message.getBoardState().getTowerState(i,j).getTowerHeight()==0 && !(message.getBoardState().getTowerState(i,j).getWorkerColour().equals(null))){
-                    matrix.getCell(i,j).getStripe(0).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(1).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(2).equals(cell.workerStripe(AnsiCode.BACKGROUND_GREEN, message.getBoardState().getTowerState(i,j).getWorkerNumber()));
-                    matrix.getCell(i,j).getStripe(3).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(4).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
 
-                }
-                //livello 1/2/3 vuota
-                else if (message.getBoardState().getTowerState(i,j).getTowerHeight()>0 && message.getBoardState().getTowerState(i,j).getWorkerColour().equals(null)){
-                    matrix.getCell(i,j).getStripe(0).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(1).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(2).equals(cell.levelStripe(message.getBoardState().getTowerState(i,j).getTowerHeight()));
-                    matrix.getCell(i,j).getStripe(3).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(4).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-
-                }
-                //livello 1/2/3 con worker
-                else if (message.getBoardState().getTowerState(i,j).getTowerHeight()>0 && !(message.getBoardState().getTowerState(i,j).getWorkerColour().equals(null))){
-                    matrix.getCell(i,j).getStripe(0).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(1).equals(cell.levelStripe(message.getBoardState().getTowerState(i,j).getTowerHeight()));
-                    matrix.getCell(i,j).getStripe(2).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(3).equals(cell.workerStripe(AnsiCode.BACKGROUND_WHITE, message.getBoardState().getTowerState(i,j).getWorkerNumber()));
-                    matrix.getCell(i,j).getStripe(4).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
+                //TOWER 1/2/3
+                else if(message.getBoardState().getTowerState(i,j).getTowerHeight()>0){
+                    //no worker
+                    if(message.getBoardState().getTowerState(i, j).getWorkerColour() == null){
+                        matrix.getCell(i,j).assignOnlyLevel(message.getBoardState().getTowerState(i,j).getTowerHeight());
+                    }
+                    //with worker
+                    else {
+                        matrix.getCell(i,j).assignLevelAndWorker(message.getBoardState().getTowerState(i,j).getTowerHeight(),message.getBoardState().getTowerState(i,j).getWorkerNumber());
+                    }
                 }
 
-                //con cupola a livello 0
-                else if (message.getBoardState().getTowerState(i,j).isCompleted()==true && message.getBoardState().getTowerState(i,j).getTowerHeight()==0){
-                    matrix.getCell(i,j).getStripe(0).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(1).equals(cell.domeStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(2).equals(cell.domeStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(3).equals(cell.domeStripe(AnsiCode.BACKGROUND_GREEN));
-                    matrix.getCell(i,j).getStripe(4).equals(cell.uniformStripe(AnsiCode.BACKGROUND_GREEN));
-                }
-
-                //con cupola a livello 1/2/3
-                else if (message.getBoardState().getTowerState(i,j).isCompleted()==true && message.getBoardState().getTowerState(i,j).getTowerHeight()>0){
-                    matrix.getCell(i,j).getStripe(0).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                matrix.getCell(i,j).getStripe(1).equals(cell.domeStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(2).equals(cell.domeStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(3).equals(cell.domeStripe(AnsiCode.BACKGROUND_WHITE));
-                    matrix.getCell(i,j).getStripe(4).equals(cell.uniformStripe(AnsiCode.BACKGROUND_WHITE));
-                }
             }
         }
 
