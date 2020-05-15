@@ -193,18 +193,33 @@ class ControllerTest {
 
             assertEquals(testPlayer.getWorker(0),gameboard.getTowerCell(0, 0).getFirstNotPieceLevel().getWorker());
             assertEquals(testPlayer.getWorker(1),gameboard.getTowerCell(0, 1).getFirstNotPieceLevel().getWorker());
+            correctInitialization(testPlayer,0,0,0,1);
 
             PlayerMessage message3 = new PlayerStartingPositionChoice(virtualViews.get(2), enemy2Player, new StartingPositionChoice(0, 2, 0, 3));
             controller.update(message3);
 
             assertEquals(enemy2Player.getWorker(0),gameboard.getTowerCell(0, 2).getFirstNotPieceLevel().getWorker());
             assertEquals(enemy2Player.getWorker(1),gameboard.getTowerCell(0, 3).getFirstNotPieceLevel().getWorker());
+            correctInitialization(enemy2Player,0,2,0,3);
 
             PlayerMessage message2 = new PlayerStartingPositionChoice(virtualViews.get(1), enemy1Player, new StartingPositionChoice(1, 2, 1, 3));
             controller.update(message2);
 
             assertEquals(enemy1Player.getWorker(0),gameboard.getTowerCell(1, 2).getFirstNotPieceLevel().getWorker());
             assertEquals(enemy1Player.getWorker(1),gameboard.getTowerCell(1, 3).getFirstNotPieceLevel().getWorker());
+            correctInitialization(enemy1Player,1,2,1,3);
+        }
+
+        private void correctInitialization(Player player,int x1, int y1, int x2, int y2){
+
+            assertAll(
+                    ()->assertEquals(x1,player.getWorker(0).getCurrentPosition().getX()),
+                    ()->assertEquals(y1,player.getWorker(0).getCurrentPosition().getY()),
+                    ()->assertEquals(x2,player.getWorker(1).getCurrentPosition().getX()),
+                    ()->assertEquals(y2,player.getWorker(1).getCurrentPosition().getY())
+
+            );
+
         }
 
 
