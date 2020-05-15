@@ -18,7 +18,7 @@ public class Matrix {
     public Cell getCell(int x, int y){ return board[x][y];}
 
 
-    //ho decrementato indici in getTowerState
+
     public Matrix convertToMatrix(NewBoardStateMessage message){
 
         Matrix matrix = new Matrix();
@@ -36,7 +36,7 @@ public class Matrix {
 
         //coordinate Y
         for(int i=1; i<6;i++){
-            matrix.getCell(0,1).assignCoordinate("Y",i);
+            matrix.getCell(0,i).assignCoordinate("Y",i);
         }
 
 
@@ -92,9 +92,11 @@ public class Matrix {
 
     public void printMatrix(Matrix matrix){
         for (int x=0; x<6; x++){
+            System.out.print("\n");
             for (int j=0; j<5; j++){
+                System.out.print("\n");
                 for (int i=0; i<6; i++){
-                    System.out.println(matrix.getCell(x,i).getStripe(j));
+                    System.out.print(matrix.getCell(x,i).getStripe(j)+" ");
                 }
             }
         }
