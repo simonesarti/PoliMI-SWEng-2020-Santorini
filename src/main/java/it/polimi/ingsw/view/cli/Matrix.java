@@ -87,4 +87,14 @@ public class Matrix {
         return matrix;
 
     }
+
+    public void printMatrix(Matrix matrix){
+        for (int x=0; x<6; x++){
+            for (int j=0; j<5; j++){
+                for (int i=0; i<6; i++){
+                    System.out.println(matrix.getCell(x,i).getStripe(j));
+                }
+            }
+        }
+    }
 }
