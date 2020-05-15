@@ -40,8 +40,17 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     public void notInUse(){inUse=false;}
 
-    public synchronized void send(final Object message){
+    public void asyncSend(final Object message){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                send(message);
+            }
+        }).start();
 
+    }
+
+    private synchronized void send(Object message) {
         try {
             outputStream.reset();
             outputStream.writeObject(message);
@@ -59,7 +68,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     }
 
     public synchronized void closeConnection() {
-
+        
         try {
             outputStream.close();
             inputStream.close();

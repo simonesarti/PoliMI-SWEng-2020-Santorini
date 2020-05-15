@@ -49,7 +49,7 @@ public class Server {
             if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),twoPlayerWaitingList)){
 
                 //if nickname already present, closes user connection
-                playerConnection.getServerSideConnection().send(new ErrorMessage(GameMessage.nicknameTaken));
+                playerConnection.getServerSideConnection().asyncSend(new ErrorMessage(GameMessage.nicknameTaken));
                 playerConnection.getServerSideConnection().notInUse();
 
             }else{
@@ -84,7 +84,7 @@ public class Server {
             if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),threePlayerWaitingList)){
 
                 //if nickname already present, closes user connection
-                playerConnection.getServerSideConnection().send(new ErrorMessage(GameMessage.nicknameTaken));
+                playerConnection.getServerSideConnection().asyncSend(new ErrorMessage(GameMessage.nicknameTaken));
                 playerConnection.getServerSideConnection().notInUse();
 
             }else{
@@ -126,14 +126,14 @@ public class Server {
 
         index=getWaitingGroupIndex2(connection);
         if(index!=-1){
-            connection.send(new InfoMessage(GameMessage.abandonedLobby));
+            connection.asyncSend(new InfoMessage(GameMessage.abandonedLobby));
             twoPlayerWaitingList.remove(index);
             return;
         }
 
         index=getWaitingGroupIndex3(connection);
         if(index!=-1){
-            connection.send(new InfoMessage(GameMessage.abandonedLobby));
+            connection.asyncSend(new InfoMessage(GameMessage.abandonedLobby));
             threePlayerWaitingList.remove(index);
             return;
         }
