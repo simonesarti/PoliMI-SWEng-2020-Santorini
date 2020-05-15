@@ -43,13 +43,20 @@ public abstract class View implements Observer<Object>,Runnable {
 
         else if (message instanceof InfoMessage){
 
-            System.out.println("Infomessage arrived to view, here it is: "+((InfoMessage) message).getInfo());
+            System.out.println(((InfoMessage) message).getInfo());
 
             if(((InfoMessage) message).getInfo().equals(GameMessage.welcome)){
 
                 clientSideConnection.asyncSend(createPlayerInfo());
             }
         }
+
+        else if (message instanceof ErrorMessage){
+
+            System.out.println(((ErrorMessage) message).getError());
+
+        }
+
         else if(message instanceof StartingPositionRequestMessage){
 
             clientSideConnection.asyncSend(createStartingPositionChoice());
@@ -61,6 +68,7 @@ public abstract class View implements Observer<Object>,Runnable {
 
 
         }
+
         else if(message instanceof GameStartMessage) {
 
             //TODO VA MESSO A FINE FASE PREPARAZIONE, PER ORA LO METTO QUI, forse è giusto

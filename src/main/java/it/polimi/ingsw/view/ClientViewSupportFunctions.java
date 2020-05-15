@@ -52,15 +52,6 @@ public class ClientViewSupportFunctions {
         int month=0;
         int year=0;
 
-        try {
-            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
-            df.setLenient(false);
-            df.parse(date);
-
-        } catch (ParseException e) {
-            return false;
-        }
-
         try{
 
             day = Integer.parseInt(dayString);
@@ -68,13 +59,25 @@ public class ClientViewSupportFunctions {
             year = Integer.parseInt(yearString);
 
         }catch(NumberFormatException e){
+
+
             return false;
         }
+
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+
+        } catch (ParseException e) {
+
+            return false;
+        }
+
         return true;
 
     }
 
-    //TODO BISOGNA TESTARE ISVALIDNUMBEROFPLAYERS()
     /**
      * Checks if String is a number and if it's 2||3
      * @param string

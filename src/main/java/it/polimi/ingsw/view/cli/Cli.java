@@ -17,7 +17,7 @@ public class Cli extends View {
 
 
     private Scanner stdin;
-    private ClientViewSupportFunctions sf;
+    public ClientViewSupportFunctions sf = new ClientViewSupportFunctions();
 
 
     public Cli(ClientSideConnection clientSideConnection) {
@@ -69,7 +69,8 @@ public class Cli extends View {
             yearString = stdin.nextLine();
 
 
-            String dateString = day +"-"+month+"-"+year;
+            String dateString = dayString+"-"+monthString+"-"+yearString;
+
 
             validDate = sf.isDateValid(dateString,dayString,monthString,yearString);
 
@@ -175,6 +176,8 @@ public class Cli extends View {
                 }
                 if(sf.isChosenGodsValid(chosenGods, message.getNumberOfChoices(), message)){
                     validChosenGods=true;
+                }else{
+                    System.out.println("Not valid, try again");
                 }
 
             }while(!validChosenGods);
