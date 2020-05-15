@@ -17,6 +17,8 @@ public class Matrix {
 
     public Cell getCell(int x, int y){ return board[x][y];}
 
+
+    //ho decrementato indici in getTowerState
     public Matrix convertToMatrix(NewBoardStateMessage message){
 
         Matrix matrix = new Matrix();
