@@ -68,7 +68,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
     }
 
     public void reportToClient(Object message){
-        connectionToClient.asyncSend(message);
+        connectionToClient.send(message);
     }
 
     public void leave(){

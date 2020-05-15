@@ -17,7 +17,7 @@ public class FakeConnection extends ServerSideConnection {
     }
 
     @Override
-    public void asyncSend(Object message) {
+    public void send(Object message) {
 
         if(message instanceof NewBoardStateMessage){
             System.out.println(name+" received new board state");
