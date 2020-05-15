@@ -7,8 +7,7 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.view.ClientViewSupportFunctions;
 import it.polimi.ingsw.view.View;
 
@@ -205,6 +204,66 @@ public class Cli extends View {
         }
     }
 
+    //TODO testare
+    public void handleInput(String[] tokens){
+
+        sf = new ClientViewSupportFunctions();
+
+
+        switch(sf.nameToCorrectFormat(tokens[0]))
+        {
+            case "End":
+                this.getClientSideConnection().asyncSend(new EndChoice());
+                break;
+            case "Quit":
+                this.getClientSideConnection().asyncSend(new QuitChoice());
+                break;
+            case "Move":
+                this.getClientSideConnection().asyncSend(new MoveData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+                break;
+            case "Build":
+
+                this.getClientSideConnection().asyncSend(new BuildData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4]));
+                break;
+            default:
+                System.out.println("Command not found");
+        }
+
+    }
+
+    //TODO testare
+    public boolean isValidInputString(String[] tokens){
+
+        sf = new ClientViewSupportFunctions();
+
+
+        switch(sf.nameToCorrectFormat(tokens[0]))
+        {
+            case "End":
+                return true;
+
+            case "Quit":
+                return true;
+
+            case "Move":
+            case "Build":
+                try{
+
+                    Integer.parseInt(tokens[1]);
+                    Integer.parseInt(tokens[2]);
+                }
+                catch(NumberFormatException e){
+
+                    return false;
+
+                }
+                return true;
+
+            default:
+                return false;
+        }
+
+    }
 
     @Override
     public void run() {
@@ -213,9 +272,19 @@ public class Cli extends View {
 
             while(getClientSideConnection().isActive()) {
 
+                System.out.println("Insert a command:");
+                System.out.println("move x,y");
+                System.out.println("build x,y block/dome");
+                //in realtà basta che scriva end, ma poi non si capisce la differenza con quit
+                System.out.println("end turn");
+                System.out.println("quit");
                 String inputLine = stdin.nextLine();
-                //trasforma la stringa in un oggetto messaggio in base a cosa c'è scritto e poi chiama clientSideConn.asyncsend(messaggio)
-                System.out.println("thread lettore cli ha letto una stringa");
+                String delims = ",";
+                String[] tokens;
+                tokens = inputLine.split(delims);
+                if(isValidInputString(tokens)) { handleInput(tokens); }
+                else{System.out.println("Command is not valid");}
+
             }
 
         } catch (Exception e) {
