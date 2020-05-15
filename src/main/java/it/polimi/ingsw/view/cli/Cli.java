@@ -2,6 +2,9 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
@@ -28,16 +31,27 @@ public class Cli extends View {
 
     }
 
-    /**
-     * shows new board-state on command line
-     * @param message
-     */
-    public void showNewBoard(NewBoardStateMessage message){
-
-        System.out.println("Mostro la board sulla Command Line");
-        //TODO da fare questa funzione
+    @Override
+    public void handleNewBoardStateMessage(NewBoardStateMessage message) {
+        //print board
+        Matrix matrix = new Matrix();
+        matrix.printMatrix(matrix.convertToMatrix(message));
 
     }
+
+    @Override
+    public void handleInfoMessage(InfoMessage message) {
+        System.out.println(message.getInfo());
+
+    }
+
+    @Override
+    public void handleErrorMessage(ErrorMessage message) {
+        System.out.println(message.getError());
+
+    }
+
+
 
     /**
      * Creates a PlayerInfo message based on user's inputs
