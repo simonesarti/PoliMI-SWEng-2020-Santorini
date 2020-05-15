@@ -26,7 +26,11 @@ public abstract class View implements Observer<Object>,Runnable {
         this.clientSideConnection = clientSideConnection;
     }
 
-    abstract public void showNewBoard(NewBoardStateMessage message);
+
+    abstract public void handleNewBoardStateMessage(NewBoardStateMessage message);
+    abstract public void handleInfoMessage(InfoMessage message);
+    abstract public void handleErrorMessage(ErrorMessage message);
+
     abstract public PlayerInfo createPlayerInfo();
     abstract public StartingPositionChoice createStartingPositionChoice();
     abstract public CardChoice createCardChoice(PossibleCardsMessage message);
@@ -36,14 +40,11 @@ public abstract class View implements Observer<Object>,Runnable {
     @Override
     public void update(Object message){
 
-        if(message instanceof NewBoardStateMessage){
-            System.out.println("NewBoardStateMessage message arrived to client!");
-            showNewBoard((NewBoardStateMessage) message);
-        }
+        if(message instanceof NewBoardStateMessage){ handleNewBoardStateMessage((NewBoardStateMessage) message);}
 
         else if (message instanceof InfoMessage){
 
-            System.out.println(((InfoMessage) message).getInfo());
+            handleInfoMessage((InfoMessage) message);
 
             if(((InfoMessage) message).getInfo().equals(GameMessage.welcome)){
 
@@ -51,11 +52,7 @@ public abstract class View implements Observer<Object>,Runnable {
             }
         }
 
-        else if (message instanceof ErrorMessage){
-
-            System.out.println(((ErrorMessage) message).getError());
-
-        }
+        else if (message instanceof ErrorMessage){ handleErrorMessage((ErrorMessage) message); }
 
         else if(message instanceof StartingPositionRequestMessage){
 
@@ -65,7 +62,6 @@ public abstract class View implements Observer<Object>,Runnable {
         else if(message instanceof PossibleCardsMessage) {
 
             clientSideConnection.asyncSend(createCardChoice((PossibleCardsMessage) message));
-
 
         }
 
