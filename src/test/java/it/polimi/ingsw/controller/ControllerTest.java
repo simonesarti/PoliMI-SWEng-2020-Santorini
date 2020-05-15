@@ -3,7 +3,10 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerCardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerStartingPositionChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
+import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.GodCard;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.Player;
@@ -13,6 +16,7 @@ import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -40,6 +44,7 @@ class ControllerTest {
     Controller controller;
     Model model;
     ArrayList<VirtualView> virtualViews;
+    GameBoard gameboard;
 
 
     @AfterEach
@@ -87,6 +92,7 @@ class ControllerTest {
 
         virtualViews = controller.getVirtualViews();
         model = controller.getModel();
+        gameboard=model.getGameBoard();
     }
 
     @Test
@@ -144,8 +150,68 @@ class ControllerTest {
     }
 
 
-    @Test
-    void positionRequest(){
+    @Nested
+    class statingPositions{
+
+        @Test
+        void onEachOther() {
+
+            PlayerMessage wm1 = new PlayerStartingPositionChoice(virtualViews.get(0), testPlayer, new StartingPositionChoice(0, 0, 0, 0));
+            controller.update(wm1);
+
+            assertNull(gameboard.getTowerCell(0, 0).getFirstNotPieceLevel().getWorker());
+        }
+
+        @Test
+        void outOfGameboard(){
+
+            PlayerMessage wm1 = new PlayerStartingPositionChoice(virtualViews.get(0), testPlayer, new StartingPositionChoice(0, 0, 5, 0));
+            controller.update(wm1);
+
+            //not placed first
+            assertNull(gameboard.getTowerCell(0, 0).getFirstNotPieceLevel().getWorker());
+
+        }
+
+        @Test
+        void occupied(){
+            PlayerMessage message = new PlayerStartingPositionChoice(virtualViews.get(0), testPlayer, new StartingPositionChoice(0, 0, 0, 1));
+            controller.update(message);
+
+            assertEquals(testPlayer.getWorker(0),gameboard.getTowerCell(0, 0).getFirstNotPieceLevel().getWorker());
+            assertEquals(testPlayer.getWorker(1),gameboard.getTowerCell(0, 1).getFirstNotPieceLevel().getWorker());
+
+            PlayerMessage wm2 = new PlayerStartingPositionChoice(virtualViews.get(2), enemy2Player, new StartingPositionChoice(2, 0, 0, 1));
+            controller.update(wm2);
+            assertNull(gameboard.getTowerCell(2, 0).getFirstNotPieceLevel().getWorker());
+        }
+
+        @Test
+        void ok(){
+            PlayerMessage message1 = new PlayerStartingPositionChoice(virtualViews.get(0), testPlayer, new StartingPositionChoice(0, 0, 0, 1));
+            controller.update(message1);
+
+            assertEquals(testPlayer.getWorker(0),gameboard.getTowerCell(0, 0).getFirstNotPieceLevel().getWorker());
+            assertEquals(testPlayer.getWorker(1),gameboard.getTowerCell(0, 1).getFirstNotPieceLevel().getWorker());
+
+            PlayerMessage message3 = new PlayerStartingPositionChoice(virtualViews.get(2), enemy2Player, new StartingPositionChoice(0, 2, 0, 3));
+            controller.update(message3);
+
+            assertEquals(enemy2Player.getWorker(0),gameboard.getTowerCell(0, 2).getFirstNotPieceLevel().getWorker());
+            assertEquals(enemy2Player.getWorker(1),gameboard.getTowerCell(0, 3).getFirstNotPieceLevel().getWorker());
+
+            PlayerMessage message2 = new PlayerStartingPositionChoice(virtualViews.get(1), enemy1Player, new StartingPositionChoice(1, 2, 1, 3));
+            controller.update(message2);
+
+            assertEquals(enemy1Player.getWorker(0),gameboard.getTowerCell(1, 2).getFirstNotPieceLevel().getWorker());
+            assertEquals(enemy1Player.getWorker(1),gameboard.getTowerCell(1, 3).getFirstNotPieceLevel().getWorker());
+        }
+
+
+
+
+
+
 
     }
 
