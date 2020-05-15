@@ -68,7 +68,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     }
 
     public synchronized void closeConnection() {
-        send("Connection closed from server side");
+        
         try {
             outputStream.close();
             inputStream.close();
