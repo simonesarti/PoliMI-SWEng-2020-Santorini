@@ -100,5 +100,6 @@ public class Matrix {
                 }
             }
         }
+        System.out.print("\n");
     }
 }
