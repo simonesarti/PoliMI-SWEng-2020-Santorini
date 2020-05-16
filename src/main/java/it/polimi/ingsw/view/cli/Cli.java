@@ -223,7 +223,7 @@ public class Cli extends View {
                 break;
             case "Build":
 
-                this.getClientSideConnection().asyncSend(new BuildData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),tokens[4]));
+                this.getClientSideConnection().asyncSend(new BuildData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),sf.nameToCorrectFormat(tokens[4])));
                 break;
             default:
                 System.out.println("Command not found");
@@ -231,39 +231,7 @@ public class Cli extends View {
 
     }
 
-    //TODO testare
-    public boolean isValidInputString(String[] tokens){
 
-        sf = new ClientViewSupportFunctions();
-
-
-        switch(sf.nameToCorrectFormat(tokens[0]))
-        {
-            case "End":
-                return true;
-
-            case "Quit":
-                return true;
-
-            case "Move":
-            case "Build":
-                try{
-
-                    Integer.parseInt(tokens[1]);
-                    Integer.parseInt(tokens[2]);
-                }
-                catch(NumberFormatException e){
-
-                    return false;
-
-                }
-                return true;
-
-            default:
-                return false;
-        }
-
-    }
 
     //cambiamento
     @Override
@@ -274,8 +242,8 @@ public class Cli extends View {
             while(getClientSideConnection().isActive()) {
 
                 System.out.println("Insert a command:");
-                System.out.println("move x,y");
-                System.out.println("build x,y block/dome");
+                System.out.println("move worker(0/1) x,y");
+                System.out.println("build worker(0/1) x,y block/dome");
                 //in realtà basta che scriva end, ma poi non si capisce la differenza con quit
                 System.out.println("end turn");
                 System.out.println("quit");
@@ -283,7 +251,7 @@ public class Cli extends View {
                 String delims = ",";
                 String[] tokens;
                 tokens = inputLine.split(delims);
-                if(isValidInputString(tokens)) { handleInput(tokens); }
+                if(sf.isValidInputString(tokens)) { handleInput(tokens); }
                 else{System.out.println("Command is not valid");}
 
             }

@@ -134,4 +134,55 @@ public class ClientViewSupportFunctions {
         return true;
 
     }
+
+    //TODO testare
+    /**
+     * Checks if possible user actions' inputs are valid
+     * @param tokens
+     * @return
+     */
+    public boolean isValidInputString(String[] tokens){
+
+        //TODO risolvi problema qua sotto
+        //se gli passi un array più corto di quello che si aspetta crasha
+        String actionName = nameToCorrectFormat(tokens[0]);
+        switch(actionName)
+        {
+            case "End":
+                return true;
+
+            case "Quit":
+                return true;
+
+            case "Move":
+            case "Build":
+                try{
+                    //checks if array is too short
+                    if( (actionName.equals("Build") && tokens.length < 5) || (actionName.equals("Move") && tokens.length < 4) ){
+                        return false;
+                    }
+
+                    Integer.parseInt(tokens[1]);
+                    Integer.parseInt(tokens[2]);
+                    Integer.parseInt(tokens[3]);
+                }
+                catch(NumberFormatException e){
+
+                    return false;
+
+                }
+                if(actionName.equals("Build")){
+                    //TODO sono sempre maiuscoli?
+                    if(nameToCorrectFormat(tokens[4]).equals("Block")||nameToCorrectFormat(tokens[4]).equals("Dome")){
+                        return true;
+                    }
+                    else{return false;}
+                }
+                return true;
+
+            default:
+                return false;
+        }
+
+    }
 }

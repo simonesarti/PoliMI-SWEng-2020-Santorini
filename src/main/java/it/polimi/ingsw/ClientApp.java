@@ -21,8 +21,6 @@ public class ClientApp {
         clientSideConnection.addObserver(view);
 
 
-        System.out.println("Sono nella clientApp prima di tutto, view.getCanStart: "+ view.getCanStart());
-
         t0 = new Thread(clientSideConnection);
         t0.start();
         //ATTENZIONE: sia questo processo che il thread t0 vanno a guardare/cambiare canStart. Ho sincronizzato set/get sulla classe
@@ -30,10 +28,8 @@ public class ClientApp {
             //do nothing
 
         }
-        System.out.println("Ho superato while getCanstart false");
         t1 = new Thread(view);
         t1.start();
-        System.out.println("Ho superato start t1");
 
         try {
             t0.join();
