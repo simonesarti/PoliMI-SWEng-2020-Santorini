@@ -143,14 +143,11 @@ public class ClientViewSupportFunctions {
      */
     public boolean isValidInputString(String[] tokens){
 
-        //TODO risolvi problema qua sotto
-        //se gli passi un array più corto di quello che si aspetta crasha
         String actionName = nameToCorrectFormat(tokens[0]);
+
         switch(actionName)
         {
             case "End":
-                return true;
-
             case "Quit":
                 return true;
 
@@ -172,7 +169,6 @@ public class ClientViewSupportFunctions {
 
                 }
                 if(actionName.equals("Build")){
-                    //TODO sono sempre maiuscoli?
                     if(nameToCorrectFormat(tokens[4]).equals("Block")||nameToCorrectFormat(tokens[4]).equals("Dome")){
                         return true;
                     }

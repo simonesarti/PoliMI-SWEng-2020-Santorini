@@ -248,7 +248,7 @@ public class Cli extends View {
                 System.out.println("end turn");
                 System.out.println("quit");
                 String inputLine = stdin.nextLine();
-                String delims = ",";
+                String delims = "[, ]";
                 String[] tokens;
                 tokens = inputLine.split(delims);
                 if(sf.isValidInputString(tokens)) { handleInput(tokens); }
