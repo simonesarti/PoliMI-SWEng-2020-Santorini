@@ -26,7 +26,7 @@ public class TurnInfo {
     private int chosenWorker;
 
     //da usare con Demetra, check seconda costruzione
-    private int[] lastBuildCoordinates;
+    private final int[] lastBuildCoordinates;
 
     public TurnInfo(){
 

@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.piece.Dome;
 
 public class TowerCell {
 
-    private TowerLevel[] towerLevels = new TowerLevel[4];
+    private final TowerLevel[] towerLevels = new TowerLevel[4];
     private int towerHeight;
     private boolean towerCompleted;
 
@@ -35,17 +35,12 @@ public class TowerCell {
         return towerHeight;
     }
 
-
     public boolean isTowerCompleted() {
         return towerCompleted;
     }
 
     public void increaseTowerHeight(){
         towerHeight++;
-    }
-
-    public void decreaseTowerHeight(){
-        towerHeight--;
     }
 
     public TowerLevel getFirstNotPieceLevel(){
@@ -64,12 +59,4 @@ public class TowerCell {
         }
     }
 
-    public void resetTower() {
-
-        for(int i=0;i<4;i++){
-            towerLevels[i].workerMoved();
-            towerLevels[i].pieceWasRemoved();
-        }
-        towerHeight=0;
-    }
 }

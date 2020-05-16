@@ -42,8 +42,8 @@ public class PositionTest {
         position.setPosition(1,2,1);
         Position otherPosition = new Position(1,2,1);
         Position anotherPosition = new Position(1,2,2);
-        assertTrue(position.equals(otherPosition));
-        assertFalse(position.equals(anotherPosition));
+        assertEquals(position, otherPosition);
+        assertNotEquals(position, anotherPosition);
 
     }
 

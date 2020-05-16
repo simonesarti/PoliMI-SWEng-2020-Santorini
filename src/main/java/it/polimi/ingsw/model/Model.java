@@ -178,6 +178,10 @@ public class Model extends Observable<NotifyMessages> {
         return eliminated[player.getColour().ordinal()];
     }
 
+    public void setEliminated(Player player){
+        eliminated[player.getColour().ordinal()]=true;
+    }
+
     public void removeFromGame(Player player){
         int x1,y1,x2,y2;
         x1=player.getWorker(0).getCurrentPosition().getX();
@@ -189,7 +193,7 @@ public class Model extends Observable<NotifyMessages> {
         gameboard.getTowerCell(x2,y2).getFirstNotPieceLevel().workerMoved();
         //BUT DOESN'T CHANGE THEIR INTERNAL COORDINATE BECAUSE THEY CAN'T MOVE AGAIN
 
-        eliminated[player.getColour().ordinal()]=true;
+        setEliminated(player);
         playersLeft--;
     }
 

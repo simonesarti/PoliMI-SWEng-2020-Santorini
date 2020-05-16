@@ -30,7 +30,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         alreadyEliminated=false;
     }
 
-    private synchronized boolean isActive(){
+    public synchronized boolean isActive(){
         return active;
     }
 
@@ -38,11 +38,11 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         active=false;
     }
 
-    private synchronized boolean isInUse(){return inUse;}
+    public synchronized boolean isInUse(){return inUse;}
 
     public void notInUse(){inUse=false;}
 
-    private synchronized boolean isAlreadyEliminated(){return alreadyEliminated;}
+    public synchronized boolean isAlreadyEliminated(){return alreadyEliminated;}
 
     public void markAsEliminated(){
         alreadyEliminated=true;

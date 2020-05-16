@@ -8,7 +8,7 @@ public class Player{
 
     private final String nickname;
     private final Calendar birthday;
-    private Worker[] workers = new Worker[2];
+    private final Worker[] workers = new Worker[2];
     private Colour colour;
     private GodCard godCard;
 
