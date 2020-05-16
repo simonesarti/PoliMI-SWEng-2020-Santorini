@@ -44,10 +44,6 @@ public class TowerCell {
         towerHeight++;
     }
 
-    public void decreaseTowerHeight(){
-        towerHeight--;
-    }
-
     public TowerLevel getFirstNotPieceLevel(){
         if (towerHeight==4) throw new NullPointerException("MESSAGE: Towercell[4] doesn't exist");
         return towerLevels[towerHeight];}

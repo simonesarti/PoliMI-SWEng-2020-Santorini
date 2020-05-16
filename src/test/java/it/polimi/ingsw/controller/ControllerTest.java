@@ -1,9 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerCardChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerStartingPositionChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.model.GameBoard;
@@ -230,4 +228,41 @@ class ControllerTest {
 
     }
 
+
+    @Nested
+    class turnEnd{
+
+        @Test
+        void isEliminated(){
+            model.setEliminated(enemy1Player);
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(1),enemy1Player);
+            controller.update(message);
+            //return an error message to the vv, eliminated
+        }
+
+        @Test
+        void isNotHisTurn(){
+            PlayerMessage message=new PlayerEndOfTurnChoice(virtualViews.get(1),enemy1Player);
+            controller.update(message);
+            //sends an error message to the vv, incorrect turn
+        }
+
+        @Test
+        void turnCannotEnd() {
+            PlayerMessage message = new PlayerEndOfTurnChoice(virtualViews.get(0), testPlayer);
+            controller.update(message);
+            //sends error message to the vv, turn not ended
+        }
+
+
+    }
+
+    @Test
+    void quitTest(){
+        model.setEliminated(enemy1Player);
+        PlayerMessage message=new PlayerQuitChoice(virtualViews.get(1),enemy1Player);
+        controller.update(message);
+        assertFalse(virtualViews.get(1).isObservingModel());
+        assertFalse(c2.isInUse());
+    }
 }

@@ -303,6 +303,44 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+    private synchronized void positionSelection(PlayerStartingPositionChoice message){
+
+        String checkOk=model.checkStartingPlacement(message.getX1(),message.getY1(),message.getX2(),message.getY2());
+
+        if(!checkOk.equals(GameMessage.placementOk)){
+            message.getVirtualView().reportToClient(new ErrorMessage(checkOk));
+            message.getVirtualView().reportToClient(new StartingPositionRequestMessage());
+
+        }else{
+
+            if(message.getPlayer().getColour()==Colour.WHITE){
+                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
+                virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).reportToClient(new StartingPositionRequestMessage());
+                return;
+            }
+
+            if(message.getPlayer().getColour()==Colour.BLUE){
+                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
+                if(virtualViews.size()==3){
+                    virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).reportToClient(new StartingPositionRequestMessage());
+                }else{
+                    sendMessageToEveryone(new GameStartMessage());
+                }
+                return;
+            }
+
+            if(message.getPlayer().getColour()==Colour.GREY){
+                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
+                sendMessageToEveryone(new GameStartMessage());
+                return;
+            }
+
+
+        }
+
+
+    }
+
 
 
     private ArrayList<Player> getPlayers(){
@@ -373,44 +411,6 @@ public class Controller implements Observer<PlayerMessage>{
 
 
 
-    //TODO WORK IN PROGRESS
-    private synchronized void positionSelection(PlayerStartingPositionChoice message){
-
-        String checkOk=model.checkStartingPlacement(message.getX1(),message.getY1(),message.getX2(),message.getY2());
-
-        if(!checkOk.equals(GameMessage.placementOk)){
-            message.getVirtualView().reportToClient(new ErrorMessage(checkOk));
-            message.getVirtualView().reportToClient(new StartingPositionRequestMessage());
-
-        }else{
-
-            if(message.getPlayer().getColour()==Colour.WHITE){
-                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
-                virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).reportToClient(new StartingPositionRequestMessage());
-                return;
-            }
-
-            if(message.getPlayer().getColour()==Colour.BLUE){
-                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
-                if(virtualViews.size()==3){
-                    virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).reportToClient(new StartingPositionRequestMessage());
-                }else{
-                    sendMessageToEveryone(new GameStartMessage());
-                }
-                return;
-            }
-
-            if(message.getPlayer().getColour()==Colour.GREY){
-                model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
-                sendMessageToEveryone(new GameStartMessage());
-                return;
-            }
-
-
-        }
-
-
-    }
 
 
 
