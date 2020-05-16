@@ -2,10 +2,7 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.view.ClientViewSupportFunctions;
@@ -32,7 +29,7 @@ public class Cli extends View {
 
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
-        //print board
+        //printing board
         Matrix matrix = new Matrix();
         matrix.printMatrix(matrix.convertToMatrix(message));
 
@@ -57,9 +54,10 @@ public class Cli extends View {
      * @return
      */
     @Override
-    public PlayerInfo createPlayerInfo(){
+    public PlayerInfo createPlayerInfo(PlayerInfoRequest message){
 
-        System.out.println("What's your nickname?");
+        if(message.isNicknameTaken()){ System.out.println("This name already exist, choose another one: ");}
+        else{ System.out.println("What's your nickname?"); }
         String nickname = stdin.nextLine();
 
         int day=0;
@@ -213,17 +211,17 @@ public class Cli extends View {
         switch(sf.nameToCorrectFormat(tokens[0]))
         {
             case "End":
-                this.getClientSideConnection().asyncSend(new EndChoice());
+                this.getClientSideConnection().send(new EndChoice());
                 break;
             case "Quit":
-                this.getClientSideConnection().asyncSend(new QuitChoice());
+                this.getClientSideConnection().send(new QuitChoice());
                 break;
             case "Move":
-                this.getClientSideConnection().asyncSend(new MoveData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+                this.getClientSideConnection().send(new MoveData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
                 break;
             case "Build":
 
-                this.getClientSideConnection().asyncSend(new BuildData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),sf.nameToCorrectFormat(tokens[4])));
+                this.getClientSideConnection().send(new BuildData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),sf.nameToCorrectFormat(tokens[4])));
                 break;
             default:
                 System.out.println("Command not found");

@@ -57,6 +57,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
         return t;
     }
 
+    /*
     public void asyncSend(final Object message){
         new Thread(new Runnable() {
             @Override
@@ -67,7 +68,10 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
     }
 
-    private synchronized void send(Object message) {
+     */
+
+
+    public synchronized void send(Object message) {
         try {
             outputStream.reset();
             outputStream.writeObject(message);

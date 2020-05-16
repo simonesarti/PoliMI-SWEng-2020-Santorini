@@ -8,9 +8,6 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.observe.Observer;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public abstract class View implements Observer<Object>,Runnable {
 
@@ -31,7 +28,8 @@ public abstract class View implements Observer<Object>,Runnable {
     abstract public void handleInfoMessage(InfoMessage message);
     abstract public void handleErrorMessage(ErrorMessage message);
 
-    abstract public PlayerInfo createPlayerInfo();
+
+    abstract public PlayerInfo createPlayerInfo(PlayerInfoRequest message);
     abstract public StartingPositionChoice createStartingPositionChoice();
     abstract public CardChoice createCardChoice(PossibleCardsMessage message);
 
@@ -46,22 +44,24 @@ public abstract class View implements Observer<Object>,Runnable {
 
             handleInfoMessage((InfoMessage) message);
 
-            if(((InfoMessage) message).getInfo().equals(GameMessage.welcome)){
-
-                clientSideConnection.asyncSend(createPlayerInfo());
-            }
         }
+        else if(message instanceof PlayerInfoRequest){
+
+            clientSideConnection.send(createPlayerInfo((PlayerInfoRequest) message));
+
+        }
+
 
         else if (message instanceof ErrorMessage){ handleErrorMessage((ErrorMessage) message); }
 
         else if(message instanceof StartingPositionRequestMessage){
 
-            clientSideConnection.asyncSend(createStartingPositionChoice());
+            clientSideConnection.send(createStartingPositionChoice());
         }
 
         else if(message instanceof PossibleCardsMessage) {
 
-            clientSideConnection.asyncSend(createCardChoice((PossibleCardsMessage) message));
+            clientSideConnection.send(createCardChoice((PossibleCardsMessage) message));
 
         }
 
