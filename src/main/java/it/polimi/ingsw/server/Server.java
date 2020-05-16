@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
 import it.polimi.ingsw.model.Player;
 
 import java.io.IOException;
@@ -48,9 +49,8 @@ public class Server {
 
             if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),twoPlayerWaitingList)){
 
-                //if nickname already present, closes user connection
-                playerConnection.getServerSideConnection().send(new ErrorMessage(GameMessage.nicknameTaken));
-                playerConnection.getServerSideConnection().notInUse();
+                //if nickname already present, asks again
+                playerConnection.getServerSideConnection().send(new PlayerInfoRequest(true));
 
             }else{
                 twoPlayerWaitingList.add(playerConnection);
@@ -83,9 +83,8 @@ public class Server {
 
             if(nicknameAlreadyInUse(playerConnection.getPlayerInfo().getPlayerNickname(),threePlayerWaitingList)){
 
-                //if nickname already present, closes user connection
-                playerConnection.getServerSideConnection().send(new ErrorMessage(GameMessage.nicknameTaken));
-                playerConnection.getServerSideConnection().notInUse();
+                //if nickname already present, asks again
+                playerConnection.getServerSideConnection().send(new PlayerInfoRequest(true));
 
             }else{
 

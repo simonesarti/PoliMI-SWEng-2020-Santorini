@@ -2,6 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.observe.Observable;
@@ -19,12 +20,14 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private ObjectInputStream inputStream;
     private boolean active;
     private boolean inUse;
+    private boolean alreadyEliminated;
 
     public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
         active=true;
         inUse=true;
+        alreadyEliminated=false;
     }
 
     private synchronized boolean isActive(){
@@ -38,6 +41,12 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private synchronized boolean isInUse(){return inUse;}
 
     public void notInUse(){inUse=false;}
+
+    private synchronized boolean isAlreadyEliminated(){return alreadyEliminated;}
+
+    public void markAsEliminated(){
+        alreadyEliminated=true;
+    }
 
     public synchronized void send(Object message){
 
@@ -83,29 +92,33 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             inputStream = new ObjectInputStream(socket.getInputStream());
 
             //sends first message
-            send(new InfoMessage(GameMessage.welcome));
-
-
-            //reads player info and sends them to the server
-            PlayerInfo playerInfo = (PlayerInfo) inputStream.readObject();
-            server.lobby(new PlayerConnection(playerInfo,this));
-
-            //continues to read input commands until the connections stay active, and notifies them to the virtualView
+            send(new PlayerInfoRequest(false));
 
             while(isActive() && isInUse()){
-                DataMessage dataMessage=(DataMessage)inputStream.readObject();
-                notify(dataMessage);
+
+                //until the connections stay active
+                Object message=inputStream.readObject();
+
+                //reads player info and sends them to the server
+                if(message instanceof PlayerInfo){
+                    server.lobby(new PlayerConnection((PlayerInfo)message,this));
+                }
+                //read input commands, and notifies them to the virtualView
+                else{
+                    notify((DataMessage)message);
+                }
+
             }
 
 
             //serialization adds ClassNotFoundException
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error, entered run Catch in ServerSideConnection:  " + e.getMessage());
-
+            e.printStackTrace();
 
         }finally{
 
-            if(!isInUse()){
+            if(!isInUse() || isAlreadyEliminated()){
                 closeConnection();
             }else{
                 //when someone wins (active=false) or with and exception

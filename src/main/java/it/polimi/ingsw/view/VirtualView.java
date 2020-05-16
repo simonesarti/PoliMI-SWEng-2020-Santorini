@@ -91,6 +91,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         else if(message instanceof LoseMessage){
 
             if(((LoseMessage) message).getPlayer() == this.getPlayer()) {
+                connectionToClient.markAsEliminated();
                 reportToClient(new InfoMessage(GameMessage.lose));
             }else{
                 reportToClient(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + " lost\n"));

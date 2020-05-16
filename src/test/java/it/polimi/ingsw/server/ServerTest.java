@@ -84,6 +84,8 @@ class ServerTest {
                 () -> assertEquals(c1, server.getTwoPlayerGames().get(0).getConnection(0)),
                 () -> assertEquals(c3, server.getTwoPlayerGames().get(0).getConnection(1))
         );
+
+
     }
 
     @Test
