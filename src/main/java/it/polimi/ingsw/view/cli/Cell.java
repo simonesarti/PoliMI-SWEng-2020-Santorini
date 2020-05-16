@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 
-
+import it.polimi.ingsw.model.Colour;
 
 public class Cell {
 
@@ -38,9 +38,19 @@ public class Cell {
         return stripe;
     }
 
-    public String workerStripe(String BackgroundAnsiColour, int workerNumber) {
+    public String workerStripe(String BackgroundAnsiColour, int workerNumber, Colour workercolour) {
         String num = String.valueOf(workerNumber);
-        String stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_BLACK + "W" + num + "     " + AnsiCode.RESET;
+        String stripe="";
+        if (workercolour.equals(Colour.BLUE)){
+             stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_BLUE + "W" + num + "     " + AnsiCode.RESET;
+        }
+        else if (workercolour.equals(Colour.WHITE)){
+             stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_RED + "W" + num + "     " + AnsiCode.RESET;
+        }
+        else if (workercolour.equals(Colour.GREY)){
+             stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_YELLOW + "W" + num + "     " + AnsiCode.RESET;
+        }
+
         return stripe;
     }
 
@@ -84,11 +94,11 @@ public class Cell {
         }
     }
 
-    public void assignOnlyWorker(int workerNumber){
+    public void assignOnlyWorker(int workerNumber, Colour workercolour){
 
         stripes[0]=uniformStripe(AnsiCode.BACKGROUND_GREEN);
         stripes[1]=uniformStripe(AnsiCode.BACKGROUND_GREEN);
-        stripes[2]=workerStripe(AnsiCode.BACKGROUND_GREEN,workerNumber);
+        stripes[2]=workerStripe(AnsiCode.BACKGROUND_GREEN,workerNumber, workercolour);
         stripes[3]=uniformStripe(AnsiCode.BACKGROUND_GREEN);
         stripes[4]=uniformStripe(AnsiCode.BACKGROUND_GREEN);
 
@@ -104,12 +114,12 @@ public class Cell {
 
     }
 
-    public void assignLevelAndWorker(int level, int workerNumber){
+    public void assignLevelAndWorker(int level, int workerNumber, Colour workercolour){
 
         stripes[0]=uniformStripe(AnsiCode.BACKGROUND_WHITE);
         stripes[1]=levelStripe(level);
         stripes[2]=uniformStripe(AnsiCode.BACKGROUND_WHITE);
-        stripes[3]=workerStripe(AnsiCode.BACKGROUND_WHITE,workerNumber);
+        stripes[3]=workerStripe(AnsiCode.BACKGROUND_WHITE,workerNumber,workercolour);
         stripes[4]=uniformStripe(AnsiCode.BACKGROUND_WHITE);
 
     }

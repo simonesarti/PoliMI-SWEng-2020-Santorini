@@ -52,7 +52,7 @@ public class Matrix {
                     }
                     //with worker
                     else{
-                        matrix.getCell(i,j).assignOnlyWorker(message.getBoardState().getTowerState(i-1,j-1).getWorkerNumber());
+                        matrix.getCell(i,j).assignOnlyWorker(message.getBoardState().getTowerState(i-1,j-1).getWorkerNumber(), message.getBoardState().getTowerState(i-1,j-1).getWorkerColour());
                     }
 
                 }
@@ -79,7 +79,7 @@ public class Matrix {
                     }
                     //with worker
                     else {
-                        matrix.getCell(i,j).assignLevelAndWorker(message.getBoardState().getTowerState(i-1,j-1).getTowerHeight(),message.getBoardState().getTowerState(i-1,j-1).getWorkerNumber());
+                        matrix.getCell(i,j).assignLevelAndWorker(message.getBoardState().getTowerState(i-1,j-1).getTowerHeight(),message.getBoardState().getTowerState(i-1,j-1).getWorkerNumber(), message.getBoardState().getTowerState(i-1,j-1).getWorkerColour());
                     }
                 }
 
