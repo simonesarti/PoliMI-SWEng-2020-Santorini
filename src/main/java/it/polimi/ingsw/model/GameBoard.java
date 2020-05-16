@@ -7,11 +7,10 @@ import it.polimi.ingsw.model.piece.Level3Block;
 
 /**
  * This class represents the gameboard used to play Santorini. The gamebord is composed by a 5x5 matrix of towerCells.
- *
  */
 public class GameBoard {
 
-    private TowerCell[][] towerCells = new TowerCell[5][5];
+    private final TowerCell[][] towerCells = new TowerCell[5][5];
 
     /**
      * Builds the gameboard. Every "square" is associated with a towerCell object. Sets athenaPowerActive to "false"
@@ -48,17 +47,6 @@ public class GameBoard {
                 );
     }
 
-    /**
-     * resets the board
-     */
-    public void resetBoard(){
-
-        for(int j=0; j<5;j++){
-            for(int i=0;i<5;i++){
-                towerCells[i][j].resetTower();
-            }
-        }
-    }
 
     /**
      * generates a board. Only for testing purpose
@@ -98,7 +86,7 @@ public class GameBoard {
                     this.getTowerCell(j,i).increaseTowerHeight();
                     this.getTowerCell(j,i).checkCompletion();
                 } else {
-                    throw new IllegalArgumentException("HWrong numbers");
+                    throw new IllegalArgumentException("Wrong numbers");
                 }
             }
         }
