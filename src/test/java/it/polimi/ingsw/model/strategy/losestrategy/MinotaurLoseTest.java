@@ -108,4 +108,34 @@ class MinotaurLoseTest {
         assertTrue(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,1));
     }
 
+    @Test
+    void unableToPush(){
+        int[][] towers=
+                {
+                        {0,4,0,0,0},
+                        {4,4,0,0,0},
+                        {0,0,4,0,0},
+                        {0,0,0,1,4},
+                        {0,0,0,4,0}
+                };
+
+        gameBoard.generateBoard(towers);
+
+        //WT (0,0)
+        gameBoard.getTowerCell(0, 0).getFirstNotPieceLevel().setWorker(playerTest.getWorker(0));
+        playerTest.getWorker(0).movedToPosition(0, 0, 0);
+
+        //WT (4,4)
+        gameBoard.getTowerCell(4, 4).getFirstNotPieceLevel().setWorker(playerTest.getWorker(1));
+        playerTest.getWorker(1).movedToPosition(4, 4, 0);
+
+        //ENEMY W2 (3,3)
+        gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(player2.getWorker(0));
+        player2.getWorker(0).movedToPosition(3,3,1);
+
+        //unable to push worker in 3,3
+        assertTrue(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,0));
+        assertTrue(loseStrategy.movementLoss(turnInfo,gameBoard,playerTest,1));
+    }
+
 }
