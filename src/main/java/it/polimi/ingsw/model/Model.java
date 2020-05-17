@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.strategy.CheckSupportFunctions;
 import it.polimi.ingsw.observe.Observable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * This class contains an instance of Gameboard and schedules players' turns
@@ -14,7 +13,7 @@ import java.util.HashMap;
 public class Model extends Observable<NotifyMessages> {
 
     private final GameBoard gameboard;
-    private final Deck selectionDeck;
+    private final Deck completeDeck;
     private final Deck gameDeck;
     private final TurnInfo turnInfo;
     private Colour turn;
@@ -34,8 +33,8 @@ public class Model extends Observable<NotifyMessages> {
             eliminated[2]=true;
         }
 
-        selectionDeck=new Deck();
-        selectionDeck.fill();
+        completeDeck =new Deck();
+        completeDeck.fill();
         gameDeck=new Deck();
 
     }
@@ -44,8 +43,8 @@ public class Model extends Observable<NotifyMessages> {
 
     public TurnInfo getTurnInfo(){return turnInfo;}
 
-    public Deck getSelectionDeck() {
-        return selectionDeck;
+    public Deck getCompleteDeck() {
+        return completeDeck;
     }
     public Deck getGameDeck() {
         return gameDeck;
@@ -290,9 +289,9 @@ public class Model extends Observable<NotifyMessages> {
     public void selectGameCards(String[] names){
 
         for(String name : names){
-            GodCard godCard=selectionDeck.findCard(name);
+            GodCard godCard= completeDeck.findCard(name);
             gameDeck.getDeck().add(godCard);
-            selectionDeck.getDeck().remove(godCard);
+            completeDeck.getDeck().remove(godCard);
         }
     }
 
@@ -304,9 +303,6 @@ public class Model extends Observable<NotifyMessages> {
         gameDeck.getDeck().remove(godCard);
     }
 
-
-
-    //TODO Work in progress
     public int getIndexFromColour(ArrayList <Player> players, Colour colour){
 
         for(int i=0;i<players.size();i++){

@@ -105,11 +105,11 @@ class ControllerTest {
 
         //cards to use selected correctly
         assertEquals(names[0], model.getGameDeck().getDeck().get(0).getGodName());
-        assertThrows(IllegalArgumentException.class, ()->model.getSelectionDeck().findCard("Athena"));
+        assertThrows(IllegalArgumentException.class, ()->model.getCompleteDeck().findCard("Athena"));
         assertEquals(names[1], model.getGameDeck().getDeck().get(1).getGodName());
-        assertThrows(IllegalArgumentException.class, ()->model.getSelectionDeck().findCard("Prometheus"));
+        assertThrows(IllegalArgumentException.class, ()->model.getCompleteDeck().findCard("Prometheus"));
         assertEquals(names[2], model.getGameDeck().getDeck().get(2).getGodName());
-        assertThrows(IllegalArgumentException.class, ()->model.getSelectionDeck().findCard("Artemis"));
+        assertThrows(IllegalArgumentException.class, ()->model.getCompleteDeck().findCard("Artemis"));
         assertEquals(3,model.getGameDeck().getDeck().size());
 
         //first player choice

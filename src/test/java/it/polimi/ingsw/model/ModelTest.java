@@ -38,6 +38,28 @@ class ModelTest {
 */
 
     @Test
+    void isEliminated2(){
+
+        Model model=new Model(2);
+        Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1998,Calendar.SEPTEMBER,16),3));
+        Player player2=new Player(new PlayerInfo("olimpia",new GregorianCalendar(1998,Calendar.SEPTEMBER,9),3));
+        Player player3=new Player(new PlayerInfo("alessandro",new GregorianCalendar(1998,Calendar.SEPTEMBER,2),3));
+        player1.setColour(Colour.WHITE);
+        player2.setColour(Colour.BLUE);
+        player3.setColour(Colour.GREY);
+
+        assertTrue(model.isEliminated(player3));
+        assertFalse(model.isEliminated(player1));
+        assertFalse(model.isEliminated(player2));
+        model.setEliminated(0);
+        assertTrue(model.isEliminated(player1));
+        assertFalse(model.isEliminated(player2));
+        model.setEliminated(player2);
+        assertTrue(model.isEliminated(player2));
+
+    }
+
+    @Test
     void playerEliminationAndOpponentVictory() {
         Model model=new Model(2);
         GameBoard gameBoard=model.getGameBoard();
@@ -255,6 +277,37 @@ class ModelTest {
         assertEquals(1,model.getIndexFromColour(players,Colour.WHITE));
         assertEquals(0,model.getIndexFromColour(players,Colour.GREY));
         assertEquals(2,model.getIndexFromColour(players,Colour.BLUE));
+    }
+
+    @Test
+    void selectCards(){
+
+        Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1998,Calendar.SEPTEMBER,16),3));
+        Player player2=new Player(new PlayerInfo("olimpia",new GregorianCalendar(1998,Calendar.SEPTEMBER,9),3));
+        Model model=new Model(2);
+        Deck selectionDeck=model.getCompleteDeck();
+        Deck gameDeck=model.getGameDeck();
+
+        int initialSelectionDeckSize=selectionDeck.getDeck().size();
+        String[] choices={"Pan","Apollo"};
+        String pan = "Pan";
+        String apollo = "Apollo";
+
+        model.selectGameCards(choices);
+        assertEquals("Pan",gameDeck.getDeck().get(0).getGodName());
+        assertEquals("Apollo",gameDeck.getDeck().get(1).getGodName());
+        assertEquals(initialSelectionDeckSize-2,selectionDeck.getDeck().size());
+        assertEquals(2,gameDeck.getDeck().size());
+        assertThrows(IllegalArgumentException.class, ()->selectionDeck.findCard(apollo));
+        assertThrows(IllegalArgumentException.class, ()->selectionDeck.findCard(pan));
+
+        model.chooseOwnCard(player1,pan);
+        assertEquals(pan,player1.getGodCard().getGodName());
+        assertEquals(1,gameDeck.getDeck().size());
+        model.chooseOwnCard(player2,apollo);
+        assertEquals(apollo,player2.getGodCard().getGodName());
+        assertEquals(0,gameDeck.getDeck().size());
+
     }
 
 }

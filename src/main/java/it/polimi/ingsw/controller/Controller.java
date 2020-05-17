@@ -49,7 +49,7 @@ public class Controller implements Observer<PlayerMessage>{
         sendColoursAssigned();
 
         sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards"));
-        virtualViews.get(0).reportToClient(new PossibleCardsMessage(model.getSelectionDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
+        virtualViews.get(0).reportToClient(new PossibleCardsMessage(model.getCompleteDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
     }   
 
     /**
