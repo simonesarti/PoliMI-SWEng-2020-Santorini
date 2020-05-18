@@ -179,6 +179,7 @@ public class Model extends Observable<NotifyMessages> {
 
     public void setEliminated(Player player){
         eliminated[player.getColour().ordinal()]=true;
+        playersLeft--;
     }
 
     public void removeFromGame(Player player){
@@ -193,7 +194,6 @@ public class Model extends Observable<NotifyMessages> {
         //BUT DOESN'T CHANGE THEIR INTERNAL COORDINATE BECAUSE THEY CAN'T MOVE AGAIN
 
         setEliminated(player);
-        playersLeft--;
     }
 
     public int getPlayersLeft() {

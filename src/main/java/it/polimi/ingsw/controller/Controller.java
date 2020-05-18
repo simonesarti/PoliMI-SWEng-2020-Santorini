@@ -401,6 +401,7 @@ public class Controller implements Observer<PlayerMessage>{
             virtualView.removeObserver(this);
             if(virtualView.isObservingModel()) {
                 model.removeObserver(virtualView);
+                virtualView.stopObservingModel();
             }
         }
 

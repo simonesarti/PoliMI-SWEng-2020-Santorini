@@ -73,11 +73,15 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     public void leave(){
         //the controller removes this virtualView from being model's observer
-        observingModel=false;
+        stopObservingModel();
         //this virtualView stops listening to new inputs
         connectionToClient.removeObserver(playerMessageReceiver);
         //connection thread terminates
         connectionToClient.notInUse();
+    }
+
+    public void stopObservingModel(){
+        observingModel=false;
     }
 
     @Override
@@ -94,7 +98,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 connectionToClient.markAsEliminated();
                 reportToClient(new InfoMessage(GameMessage.lose));
             }else{
-                reportToClient(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + " lost\n"));
+                reportToClient(new InfoMessage("Player " + ((LoseMessage) message).getPlayer().getNickname() + " lost"));
             }
 
         }

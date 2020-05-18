@@ -731,6 +731,54 @@ public class PrometheusIntegrationTest {
 
     }
 
+    @Test
+    void winnerForOtherLoss(){
+
+        //GAMEBOARD GENERATION
+        int[][] towers =
+                {
+                        {2, 4, 1, 2, 2},
+                        {4, 3, 2, 1, 4},
+                        {4, 1, 0, 3, 4},
+                        {0, 2, 2, 1, 4},
+                        {3, 2, 1, 4, 0}
+                };
+
+        gameBoard.generateBoard(towers);
+
+        turnInfo.activateAthenaPower();
+        model.setEliminated(enemy2Player);
+
+        //POSITIONING TEST WORKERS
+        gameBoard.getTowerCell(0, 0).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+        testPlayer.getWorker(0).movedToPosition(0, 0, 2);
+
+        gameBoard.getTowerCell(4, 4).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+        testPlayer.getWorker(1).movedToPosition(4, 4, 0);
+
+        //POSITIONING OPPONENT WORKERS
+
+        gameBoard.getTowerCell(1, 1).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(0));
+        enemy1Player.getWorker(0).movedToPosition(1, 1, 3);
+
+        gameBoard.getTowerCell(2, 0).getFirstNotPieceLevel().setWorker(enemy1Player.getWorker(1));
+        enemy1Player.getWorker(1).movedToPosition(2, 0, 1);
+
+        PlayerMessage move=new PlayerMovementChoice(virtualViews.get(0),testPlayer,new MoveData(1,3,3));
+        controller.update(move);
+        //testPlayer should lose, and be removed from the gameboard
+        assertNull(gameBoard.getTowerCell(0,0).getFirstNotPieceLevel().getWorker());
+        assertNull(gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().getWorker());
+        assertTrue(model.isEliminated(testPlayer));
+        assertEquals(1,model.getPlayersLeft());
+
+        //test player should be declared beaten and enemy1 should win
+
+        assertFalse(virtualViews.get(0).isObservingModel());
+        assertFalse(virtualViews.get(1).isObservingModel());
+        assertFalse(virtualViews.get(2).isObservingModel());
+    }
+
 
 
 }
