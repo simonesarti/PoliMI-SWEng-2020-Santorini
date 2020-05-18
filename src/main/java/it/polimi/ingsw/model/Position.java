@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import java.util.Objects;
-
 public class Position {
 
     private int x;

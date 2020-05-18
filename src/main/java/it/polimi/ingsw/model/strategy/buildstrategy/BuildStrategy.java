@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.strategy.buildstrategy;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.TurnInfo;
 
 /**
  * Build strategies interface

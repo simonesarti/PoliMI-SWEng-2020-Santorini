@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.TurnInfo;
+import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.strategy.CheckSupportFunctions;
 
 /**

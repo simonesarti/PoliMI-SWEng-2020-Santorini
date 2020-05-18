@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;

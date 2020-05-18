@@ -4,8 +4,6 @@ import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.cli.Cli;
 
-import java.io.IOException;
-
 public class ClientApp {
 
     //TODO IMPORTANTE: alla fine della fase di preparazione pre-partita si deve settare view.canStart a true

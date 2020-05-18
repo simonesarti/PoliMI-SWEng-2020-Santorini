@@ -2,7 +2,10 @@ package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.view.ClientViewSupportFunctions;

@@ -3,7 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.strategy.buildstrategy.*;
 import it.polimi.ingsw.model.strategy.losestrategy.*;
 import it.polimi.ingsw.model.strategy.movestrategy.*;
-import it.polimi.ingsw.model.strategy.winstrategy.*;
+import it.polimi.ingsw.model.strategy.winstrategy.BasicWin;
+import it.polimi.ingsw.model.strategy.winstrategy.PanWin;
+import it.polimi.ingsw.model.strategy.winstrategy.WinStrategy;
 
 public class GodCard{
 

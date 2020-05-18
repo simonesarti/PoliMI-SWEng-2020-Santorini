@@ -1,10 +1,8 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
 import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
 import it.polimi.ingsw.observe.Observable;
 
 import java.io.IOException;

@@ -2,13 +2,10 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.observe.Observable;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.NoSuchElementException;
 
 
 /**
