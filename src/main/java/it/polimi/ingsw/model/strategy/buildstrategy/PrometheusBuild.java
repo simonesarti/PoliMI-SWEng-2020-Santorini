@@ -6,12 +6,14 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.piece.*;
+import it.polimi.ingsw.model.strategy.CheckSupportFunctions;
 
 public class PrometheusBuild implements BuildStrategy{
 
     @Override
     public String checkBuild(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] buildingInto, String pieceType) {
 
+        CheckSupportFunctions support=new CheckSupportFunctions();
         int x = buildingInto[0];
         int y = buildingInto[1];
 
@@ -26,13 +28,13 @@ public class PrometheusBuild implements BuildStrategy{
         }
 
         //chosenWorker must be a valid number
-        if(chosenWorker!=0 && chosenWorker!=1){
+        if(support.invalidWorkerNumber(chosenWorker)){
             return GameMessage.invalidWorkerNumber;
         }
         Worker worker = player.getWorker(chosenWorker);
 
         //x e y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
+        if (support.notInGameBoard(x,y)) {
             return GameMessage.notInGameBoard;
         }
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
@@ -46,22 +48,22 @@ public class PrometheusBuild implements BuildStrategy{
         }
 
         //workerPosition must not be the destination position
-        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
+        if (support.notOwnPosition(worker,x,y)){
             return GameMessage.notOwnPosition;
         }
 
         //workerPosition must be adjacent to buildingPosition
-        if (!worker.getCurrentPosition().adjacent(x,y)){
+        if (support.notInSurroundings(worker,x,y)){
             return GameMessage.notInSurroundings;
         }
 
         //tower must not be completed
-        if(gameboard.getTowerCell(x,y).isTowerCompleted()) {
+        if(support.completeTower(gameboard,x,y)) {
             return GameMessage.noBuildToCompleteTower;
         }
 
         //there must not be a worker in the building position
-        if (gameboard.getTowerCell(x, y).hasWorkerOnTop()){
+        if (support.occupiedTower(gameboard,x,y)){
             return GameMessage.noBuildToOccupiedTower;
         }
 
