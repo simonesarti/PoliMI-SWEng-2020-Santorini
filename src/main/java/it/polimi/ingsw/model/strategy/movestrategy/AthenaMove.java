@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.strategy.CheckSupportFunctions;
 
 public class AthenaMove implements MoveStrategy {
 
@@ -20,7 +21,7 @@ public class AthenaMove implements MoveStrategy {
      */
     @Override
     public String checkMove(TurnInfo turnInfo, GameBoard gameboard, Player player, int chosenWorker, int[] movingTo) {
-
+        CheckSupportFunctions support=new CheckSupportFunctions();
         int x = movingTo[0];
         int y = movingTo[1];
 
@@ -30,38 +31,38 @@ public class AthenaMove implements MoveStrategy {
         }
 
         //x and y must be inside the board
-        if (x < 0 || x > 4 || y < 0 || y > 4) {
+        if (support.notInGameBoard(x,y)) {
             return GameMessage.notInGameBoard;
         }
         int z = gameboard.getTowerCell(x, y).getTowerHeight();
 
         //chosenWorker must be a valid number
-        if(chosenWorker!=0 && chosenWorker!=1){
+        if(support.invalidWorkerNumber(chosenWorker)){
             return GameMessage.invalidWorkerNumber;
         }
         Worker worker = player.getWorker(chosenWorker);
 
         //workerPosition must not be the destination position
-        if (worker.getCurrentPosition().getX()==x && worker.getCurrentPosition().getY()==y){
+        if (support.notOwnPosition(worker,x,y)){
             return GameMessage.notOwnPosition;
         }
         //workerPosition must be adjacent to destination position
-        if (!worker.getCurrentPosition().adjacent(x,y)){
+        if (support.notInSurroundings(worker,x,y)){
             return GameMessage.notInSurroundings;
         }
 
         //towerCell must not be completed by a dome
-        if (gameboard.getTowerCell(x,y).isTowerCompleted()){
+        if (support.completeTower(gameboard,x,y)){
             return GameMessage.noMoveToCompleteTower;
         }
 
         //towercell height must be <= (worker height +1)
-        if(z > (worker.getCurrentPosition().getZ() +1)) {
+        if(support.highJump(z,worker)) {
             return GameMessage.noHighJump;
         }
 
         //towercell must be empty
-        if(gameboard.getTowerCell(x,y).hasWorkerOnTop()){
+        if(support.occupiedTower(gameboard,x,y)){
             return GameMessage.noMovedToOccupiedTower;
         }
 
