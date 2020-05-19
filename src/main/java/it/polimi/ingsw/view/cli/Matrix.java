@@ -60,11 +60,11 @@ public class Matrix {
                 //DOME
                 else if(message.getBoardState().getTowerState(i-1, j-1).isCompleted()){
 
-                    //level 0
-                    if(message.getBoardState().getTowerState(i-1,j-1).getTowerHeight()==0){
+                    //level 1
+                    if(message.getBoardState().getTowerState(i-1,j-1).getTowerHeight()==1){
                         matrix.getCell(i,j).assignDome(AnsiCode.BACKGROUND_GREEN);
                     }
-                    //level 1/2/3
+                    //level 2/3
                     else{
                         matrix.getCell(i,j).assignDome(AnsiCode.BACKGROUND_WHITE);
 
