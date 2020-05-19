@@ -23,11 +23,8 @@ public class Matrix {
 
         Matrix matrix = new Matrix();
         Cell cell = new Cell();
-
-        //casella (0,0) tutta vuota
-        for (int i=0; i<5; i++){
-            matrix.getCell(0,0).assignVoid();
-        }
+        
+        matrix.getCell(0,0).assignVoid();
 
         //coordinate X
         for(int i=1; i<6;i++){
