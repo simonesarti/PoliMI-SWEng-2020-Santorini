@@ -100,17 +100,17 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.eliminated));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.eliminated);
             return;
         }
 
         if(model.isNotPlayerTurn(message.getPlayer())){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.wrongTurn));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.wrongTurn);
             return;
         }
 
         if(model.getTurnInfo().getTurnHasEnded()){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnAlreadyEnded));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.turnAlreadyEnded);
             return;
         }
 
@@ -153,8 +153,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             //if check NOT ok, report error
             }else{
-
-                message.getVirtualView().reportToClient(new ErrorMessage(checkResult));
+                model.notifyErrorMessage(message.getPlayer(),checkResult);
 
             }
         }
@@ -173,17 +172,17 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.eliminated));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.eliminated);
             return;
         }
 
         if (model.isNotPlayerTurn(message.getPlayer())) {
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.wrongTurn));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.wrongTurn);
             return;
         }
 
         if (model.getTurnInfo().getTurnHasEnded()) {
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnAlreadyEnded));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.turnAlreadyEnded);
             return;
 
         }
@@ -218,8 +217,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             //if NOT build check ok
             } else {
-
-                message.getVirtualView().reportToClient(new ErrorMessage(checkResult));
+                model.notifyErrorMessage(message.getPlayer(),checkResult);
 
             }
         }
@@ -233,18 +231,17 @@ public class Controller implements Observer<PlayerMessage>{
 
         //eliminated player can't execute this command
         if(model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.eliminated));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.eliminated);
             return;
         }
 
         if(model.isNotPlayerTurn(message.getPlayer())){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.wrongTurn));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.wrongTurn);
             return;
         }
 
         if(!model.getTurnInfo().getTurnCanEnd()){
-
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.turnNotEnded));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.turnNotEnded);
             return;
         }
 
@@ -256,7 +253,7 @@ public class Controller implements Observer<PlayerMessage>{
 
         //player can't quit if he isn't eliminated
         if(!model.isEliminated(message.getPlayer())){
-            message.getVirtualView().reportToClient(new ErrorMessage(GameMessage.notEliminated));
+            model.notifyErrorMessage(message.getPlayer(),GameMessage.notEliminated);
             return;
         }
 
@@ -309,7 +306,7 @@ public class Controller implements Observer<PlayerMessage>{
         String checkOk=model.checkStartingPlacement(message.getX1(),message.getY1(),message.getX2(),message.getY2());
 
         if(!checkOk.equals(GameMessage.placementOk)){
-            message.getVirtualView().reportToClient(new ErrorMessage(checkOk));
+            model.notifyErrorMessage(message.getPlayer(),checkOk);
             message.getVirtualView().reportToClient(new StartingPositionRequestMessage());
 
         }else{

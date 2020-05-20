@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.*;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
@@ -142,6 +143,13 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 reportToClient(new InfoMessage(((InfoMessageNotification) message).getString()));
             }
 
+        }
+
+        else if(message instanceof ErrorMessageNotification){
+
+            if(((ErrorMessageNotification) message).getPlayer()==this.getPlayer()){
+                reportToClient(new ErrorMessage(((ErrorMessageNotification) message).getString()));
+            }
         }
     }
 

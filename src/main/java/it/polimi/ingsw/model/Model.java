@@ -285,6 +285,7 @@ public class Model extends Observable<NotifyMessages> {
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
     public void notifyInfoMessage(Player player, String string){notify(new InfoMessageNotification(player,string));}
+    public void notifyErrorMessage(Player player, String string){notify(new ErrorMessageNotification(player,string));}
 
 
     //check on name validity is done client-side
