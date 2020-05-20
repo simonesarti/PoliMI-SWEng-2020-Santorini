@@ -163,6 +163,13 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 reportToClient(new StartingPositionRequestMessage());
             }
         }
+
+        else if(message instanceof PossibleCardsNotification){
+
+            if(((PossibleCardsNotification)message).getPlayer()==this.getPlayer()){
+                reportToClient(((PossibleCardsNotification)message).getPossibleCardsMessage());
+            }
+        }
     }
 
 }

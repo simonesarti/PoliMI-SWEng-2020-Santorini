@@ -2,7 +2,6 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Model;
@@ -52,7 +51,8 @@ public class Controller implements Observer<PlayerMessage>{
 
         //notifies that the first player will chose the cards used
         model.notifyInfoMessage(null,"Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards");
-        virtualViews.get(0).reportToClient(new PossibleCardsMessage(model.getCompleteDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
+
+        model.notifyCardRequest(virtualViews.get(0).getPlayer(),new PossibleCardsMessage(model.getCompleteDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
     }   
 
     /**
@@ -271,7 +271,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             model.selectGameCards(message.getCardNames());
             model.notifyInfoMessage(null,"Player "+virtualViews.get(1).getPlayer().getNickname()+" will now choose his card");
-            virtualViews.get(1).reportToClient(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+            model.notifyCardRequest(virtualViews.get(1).getPlayer(),new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
             return;
         }
 
@@ -284,7 +284,8 @@ public class Controller implements Observer<PlayerMessage>{
             if(virtualViews.size()==3){
                 //selection reported and card list sent to player 3
                 model.notifyInfoMessage(null,"Player "+virtualViews.get(2).getPlayer().getNickname()+" will now choose his card");
-                virtualViews.get(2).reportToClient(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+                model.notifyCardRequest(virtualViews.get(2).getPlayer(),new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
+
             }else{
 
                 assignLastCard();
