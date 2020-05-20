@@ -1,6 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Model;
@@ -322,14 +324,14 @@ public class Controller implements Observer<PlayerMessage>{
                 if(virtualViews.size()==3){
                     virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).reportToClient(new StartingPositionRequestMessage());
                 }else{
-                    sendMessageToEveryone(new GameStartMessage());
+                    model.notifyGameStart();
                 }
                 return;
             }
 
             if(message.getPlayer().getColour()==Colour.GREY){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
-                sendMessageToEveryone(new GameStartMessage());
+                model.notifyGameStart();
                 return;
             }
 

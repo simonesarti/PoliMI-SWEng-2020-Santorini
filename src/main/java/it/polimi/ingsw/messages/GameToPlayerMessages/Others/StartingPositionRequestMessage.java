@@ -4,6 +4,4 @@ import java.io.Serializable;
 
 public class StartingPositionRequestMessage implements Serializable {
 
-    public StartingPositionRequestMessage() {
-    }
 }

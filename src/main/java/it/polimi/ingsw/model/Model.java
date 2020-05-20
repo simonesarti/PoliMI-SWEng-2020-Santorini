@@ -2,7 +2,6 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.*;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.model.strategy.CheckSupportFunctions;
 import it.polimi.ingsw.observe.Observable;
 
@@ -286,7 +285,7 @@ public class Model extends Observable<NotifyMessages> {
     }
     public void notifyInfoMessage(Player player, String string){notify(new InfoMessageNotification(player,string));}
     public void notifyErrorMessage(Player player, String string){notify(new ErrorMessageNotification(player,string));}
-
+    public void notifyGameStart(){notify(new GameStartMessage());}
 
     //check on name validity is done client-side
     public void selectGameCards(String[] names){

@@ -151,6 +151,10 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
                 reportToClient(new ErrorMessage(((ErrorMessageNotification) message).getString()));
             }
         }
+
+        else if(message instanceof GameStartMessage){
+            reportToClient((GameStartMessage)message);
+        }
     }
 
 }
