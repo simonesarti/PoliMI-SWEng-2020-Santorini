@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ServerSideConnection extends Observable<DataMessage> implements Runnable {
 
@@ -88,6 +89,8 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         try{
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
+
+            socket.setKeepAlive(true);
 
             //sends first message
             send(new PlayerInfoRequest(false));
