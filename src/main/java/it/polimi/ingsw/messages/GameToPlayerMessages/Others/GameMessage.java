@@ -18,8 +18,8 @@ public class GameMessage {
     public static String wrongTurn = "This isn't your turn, please wait";
 
     public static String turnCompleted = "You completed your turn, please confirm that you want to end it";
-    public static String turnNotEnded = "You haven't completed your turn yet, please complete it\n";
-    public static String turnAlreadyEnded = "You have already completed your turn, please confirm that you want to end it\n";
+    public static String turnNotEnded = "You haven't completed your turn yet";
+    public static String turnAlreadyEnded = "You have already completed your turn, please confirm that you want to end it";
 
     //requests
     public static String moveRequest = "Make your move";
@@ -30,7 +30,7 @@ public class GameMessage {
     public static String buildOK= "ok";
 
     //Generic actions error messages
-    public static String NotSameWorker = "You have to use the same worker as before";
+    public static String NotSameWorker = "You have to use the same worker you used before";
     public static String alreadyMoved = "You have already moved";
     public static String hasNotMoved = "You have not moved yet";
     public static String alreadyBuilt = "You have already built";
@@ -70,16 +70,16 @@ public class GameMessage {
     public static String noMovedToOccupiedTowerMinotaur = "This cell is occupied by your other worker, please choose another position";
     public static String CannotForceWorker = "The worker in that position can't be forced backwards by Minotaur's power, please choose another position";
     //ARTEMIS
-    public static String ArtemisFirstPosition = "This is your first position, choose another one";
-    public static String moveAgainOrBuild = "You can now decide to move again or to build";
+    public static String ArtemisFirstPosition = "This is your original position, choose another one";
+    public static String moveAgainOrBuild = "You can now move again or build";
     //DEMETER
     public static String DemeterFirstBuild = "This is your first building position, choose another one";
-    public static String buildAgainOrEnd = "You can now decide to build again or choose END to end your turn";
-    public static String alreadyBuiltTwice = "You have already built twice, end your turn";
+    public static String buildAgainOrEnd = "You can now decide to build again or to end your turn";
+    public static String alreadyBuiltTwice = "You have already built twice";
     //PROMETHEUS
-    public static String prometheusNoMoveUp ="this move isn't allowed due to your decision to build before moving";
-    public static String noBuildMoreThanTwice ="you already built twice, your turn should have already ended, ERROR";
+    public static String prometheusNoMoveUp ="This move isn't allowed due to your decision to build before moving";
+    public static String noBuildMoreThanTwice ="You already built twice, your turn should have already ended, ERROR";
     //HEPHAESTUS
-    public static String HephaestusWrongBuild = "You must build on top of your first block";
+    public static String HephaestusWrongBuild = "You can build only on top of your first block";
     public static String mustBeBlock = "Your second piece must be a Block";
 }
