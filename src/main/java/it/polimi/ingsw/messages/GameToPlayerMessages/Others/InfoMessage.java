@@ -1,5 +1,7 @@
 package it.polimi.ingsw.messages.GameToPlayerMessages.Others;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NotifyMessages;
+
 import java.io.Serializable;
 
 public class InfoMessage implements Serializable {

@@ -135,8 +135,14 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             }
         }
 
+        else if(message instanceof InfoMessageNotification) {
 
+            //message is sent to everyone if player==null, or else il sent only to the correct player
+            if (((InfoMessageNotification) message).getPlayer() == null || ((InfoMessageNotification) message).getPlayer() == this.getPlayer()) {
+                reportToClient(new InfoMessage(((InfoMessageNotification) message).getString()));
+            }
+
+        }
     }
-
 
 }

@@ -44,11 +44,12 @@ public class Controller implements Observer<PlayerMessage>{
             virtualView.addObserver(this);
         }
 
-        //assign colours to players
+        //assign colours to players and notifies them
         model.assignColour(players);
-        sendColoursAssigned();
+        model.notifyInfoMessage(null,getColoursAssignedString());
 
-        sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards"));
+        //notifies that the first player will chose the cards used
+        model.notifyInfoMessage(null,"Player "+virtualViews.get(0).getPlayer().getNickname()+ " will choose this match cards");
         virtualViews.get(0).reportToClient(new PossibleCardsMessage(model.getCompleteDeck().getPresentGods(numberOfPlayers),numberOfPlayers));
     }   
 
@@ -146,7 +147,7 @@ public class Controller implements Observer<PlayerMessage>{
 
                     return;
                 }else{
-                    message.getVirtualView().reportToClient(new InfoMessage(nextStep));
+                    model.notifyInfoMessage(message.getPlayer(),nextStep);
 
                 }
 
@@ -213,7 +214,7 @@ public class Controller implements Observer<PlayerMessage>{
 
                 //EXECUTE BUILD
                 nextStep=model.performBuild(message.getPlayer(), message.getChosenWorker(), message.getBuildingInto(), message.getPieceType());
-                message.getVirtualView().reportToClient(new InfoMessage(nextStep));
+                model.notifyInfoMessage(message.getPlayer(),nextStep);
 
             //if NOT build check ok
             } else {
@@ -259,7 +260,7 @@ public class Controller implements Observer<PlayerMessage>{
             return;
         }
 
-        message.getVirtualView().reportToClient(new InfoMessage(GameMessage.quit));
+        model.notifyInfoMessage(message.getPlayer(),GameMessage.quit);
         model.removeObserver(message.getVirtualView());
         message.getVirtualView().leave();
 
@@ -270,7 +271,7 @@ public class Controller implements Observer<PlayerMessage>{
         if(message.getVirtualView().equals(virtualViews.get(0))){
 
             model.selectGameCards(message.getCardNames());
-            sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(1).getPlayer().getNickname()+" will now choose his card"));
+            model.notifyInfoMessage(null,"Player "+virtualViews.get(1).getPlayer().getNickname()+" will now choose his card");
             virtualViews.get(1).reportToClient(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
             return;
         }
@@ -279,11 +280,11 @@ public class Controller implements Observer<PlayerMessage>{
 
             //player 2 chooses his card
             model.chooseOwnCard(message.getPlayer(),message.getCardNames()[0]);
-            sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(1).getPlayer().getNickname()+" chose "+virtualViews.get(1).getPlayer().getGodCard().getGodName()));
+            model.notifyInfoMessage(null,"Player "+virtualViews.get(1).getPlayer().getNickname()+" chose "+virtualViews.get(1).getPlayer().getGodCard().getGodName());
 
             if(virtualViews.size()==3){
                 //selection reported and card list sent to player 3
-                sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(2).getPlayer().getNickname()+" will now choose his card"));
+                model.notifyInfoMessage(null,"Player "+virtualViews.get(2).getPlayer().getNickname()+" will now choose his card");
                 virtualViews.get(2).reportToClient(new PossibleCardsMessage(model.getGameDeck().getGameGods(),1));
             }else{
 
@@ -295,7 +296,7 @@ public class Controller implements Observer<PlayerMessage>{
         if(message.getVirtualView().equals(virtualViews.get(2))){
             //player 3 chooses his card
             model.chooseOwnCard(message.getPlayer(),message.getCardNames()[0]);
-            sendMessageToEveryone(new InfoMessage("Player "+virtualViews.get(2).getPlayer().getNickname()+" chose "+virtualViews.get(2).getPlayer().getGodCard().getGodName()));
+            model.notifyInfoMessage(null,"Player "+virtualViews.get(2).getPlayer().getNickname()+" chose "+virtualViews.get(2).getPlayer().getGodCard().getGodName());
             assignLastCard();
             return;
         }
@@ -362,23 +363,23 @@ public class Controller implements Observer<PlayerMessage>{
         }
     }
 
-    private void sendColoursAssigned(){
+    private String getColoursAssignedString(){
         StringBuilder s=new StringBuilder();
         for(VirtualView virtualView : virtualViews){
             s.append("Player ").append(virtualView.getPlayer().getNickname()).append(" will be colour ").append(virtualView.getPlayer().getColour().toString()).append("\n");
         }
 
-        sendMessageToEveryone(new InfoMessage(s.toString()));
+        return s.toString();
     }
 
     private void assignLastCard(){
         virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().getDeck().get(0));
         model.getGameDeck().getDeck().remove(0);
-        sendMessageToEveryone(new InfoMessage("Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname()));
+        model.notifyInfoMessage(null,"Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname());
         declaration();
 
         int index=model.getIndexFromColour(getPlayers(), Colour.WHITE);
-        sendMessageToEveryone(new InfoMessage("From the youngest player, you will be required to select the starting position of your workers"));
+        model.notifyInfoMessage(null,"From the youngest player, you will be required to select the starting position of your workers");
         virtualViews.get(index).reportToClient(new StartingPositionRequestMessage());
     }
 
@@ -391,7 +392,7 @@ public class Controller implements Observer<PlayerMessage>{
             s.append("PLAYER: ").append(virtualView.getPlayer().getNickname()).append("\n");
             s.append(virtualView.getPlayer().getGodCard().cardDeclaration());
         }
-        sendMessageToEveryone(new InfoMessage(s.toString()));
+        model.notifyInfoMessage(null,s.toString());
     }
 
     private void endGame(){
