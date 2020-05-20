@@ -283,9 +283,11 @@ public class Model extends Observable<NotifyMessages> {
     private void notifyNewBoardState(){
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
+
     public void notifyInfoMessage(Player player, String string){notify(new InfoMessageNotification(player,string));}
     public void notifyErrorMessage(Player player, String string){notify(new ErrorMessageNotification(player,string));}
     public void notifyGameStart(){notify(new GameStartMessage());}
+    public void notifyPositionRequest(Player player){notify(new PositionRequestNotification(player));}
 
     //check on name validity is done client-side
     public void selectGameCards(String[] names){

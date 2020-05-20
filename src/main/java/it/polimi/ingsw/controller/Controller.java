@@ -309,20 +309,25 @@ public class Controller implements Observer<PlayerMessage>{
 
         if(!checkOk.equals(GameMessage.placementOk)){
             model.notifyErrorMessage(message.getPlayer(),checkOk);
-            message.getVirtualView().reportToClient(new StartingPositionRequestMessage());
+            model.notifyPositionRequest(message.getPlayer());
 
         }else{
 
+            Player nextPlayer;
+
             if(message.getPlayer().getColour()==Colour.WHITE){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
-                virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).reportToClient(new StartingPositionRequestMessage());
+
+                nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).getPlayer();
+                model.notifyPositionRequest(nextPlayer);
                 return;
             }
 
             if(message.getPlayer().getColour()==Colour.BLUE){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
                 if(virtualViews.size()==3){
-                    virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).reportToClient(new StartingPositionRequestMessage());
+                    nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).getPlayer();
+                    model.notifyPositionRequest(nextPlayer);
                 }else{
                     model.notifyGameStart();
                 }
@@ -353,15 +358,6 @@ public class Controller implements Observer<PlayerMessage>{
         return players;
     }
 
-    private void sendMessageToEveryone(Object message){
-        for(VirtualView virtualView : virtualViews){
-            //sends only to people who are still in-game
-            if(virtualView.isObservingModel()){
-                virtualView.reportToClient(message);
-            }
-        }
-    }
-
     private String getColoursAssignedString(){
         StringBuilder s=new StringBuilder();
         for(VirtualView virtualView : virtualViews){
@@ -379,7 +375,7 @@ public class Controller implements Observer<PlayerMessage>{
 
         int index=model.getIndexFromColour(getPlayers(), Colour.WHITE);
         model.notifyInfoMessage(null,"From the youngest player, you will be required to select the starting position of your workers");
-        virtualViews.get(index).reportToClient(new StartingPositionRequestMessage());
+        model.notifyPositionRequest(virtualViews.get(index).getPlayer());
     }
 
     private void declaration() {

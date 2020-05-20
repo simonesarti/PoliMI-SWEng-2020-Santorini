@@ -4,6 +4,7 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.*;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.StartingPositionRequestMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 import it.polimi.ingsw.model.Player;
@@ -154,6 +155,13 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
         else if(message instanceof GameStartMessage){
             reportToClient((GameStartMessage)message);
+        }
+
+        else if(message instanceof PositionRequestNotification){
+
+            if(((PositionRequestNotification) message).getPlayer()==this.getPlayer()){
+                reportToClient(new StartingPositionRequestMessage());
+            }
         }
     }
 
