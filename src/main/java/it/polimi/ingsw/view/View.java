@@ -70,8 +70,7 @@ public abstract class View implements Observer<Object>,Runnable {
 
             //TODO VA MESSO A FINE FASE PREPARAZIONE, PER ORA LO METTO QUI, forse è giusto
             setCanStart(true);
-            System.out.println("Ora ho messo canStart a true, sono nella update della View");
-        }
+         }
 
         else {
 
