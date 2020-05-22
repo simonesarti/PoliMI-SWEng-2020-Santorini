@@ -88,12 +88,14 @@ public class Matrix {
     }
 
     public void printMatrix(Matrix matrix){
-        for (int x=0; x<6; x++){
+        System.out.println(AnsiCode.CLEAR_SCREEN);
+
+        for (int y=0; y<6; y++){
             System.out.print("\n");
-            for (int j=0; j<5; j++){
+            for (int s=0; s<5; s++){
                 System.out.print("\n");
-                for (int i=0; i<6; i++){
-                    System.out.print(matrix.getCell(x,i).getStripe(j)+" ");
+                for (int x=0; x<6; x++){
+                    System.out.print(matrix.getCell(x,y).getStripe(s)+" ");
                 }
             }
         }
