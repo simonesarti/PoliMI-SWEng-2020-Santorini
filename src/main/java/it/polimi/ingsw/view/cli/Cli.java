@@ -21,18 +21,14 @@ public class Cli extends View {
     private Scanner stdin;
     public ClientViewSupportFunctions sf = new ClientViewSupportFunctions();
 
-
     public Cli(ClientSideConnection clientSideConnection) {
 
         super(clientSideConnection);
         stdin = new Scanner(System.in);
-
-
     }
 
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
-        //printing board
         Matrix matrix = new Matrix();
         matrix.printMatrix(matrix.convertToMatrix(message));
 
@@ -73,7 +69,7 @@ public class Cli extends View {
     private PlayerInfo createPlayerInfo(PlayerInfoRequest message){
 
         if(message.isNicknameTaken()){ System.out.println("This name already exist, choose another one: ");}
-        else{ System.out.println("What's your nickname?"); }
+        else{ System.out.println("Insert your nickname:"); }
         String nickname = stdin.nextLine();
 
         int day=0;
@@ -96,14 +92,11 @@ public class Cli extends View {
             System.out.println("Insert birthday year:");
             yearString = stdin.nextLine();
 
-
             String dateString = dayString+"-"+monthString+"-"+yearString;
-
 
             validDate = sf.isDateValid(dateString,dayString,monthString,yearString);
 
-            if(!validDate)System.out.println("Not valid, try again");
-
+            if(!validDate)System.out.println("The date inserted is not valid, try again");
 
         }while(!validDate);
 
@@ -117,11 +110,11 @@ public class Cli extends View {
         boolean validNumberOfPlayers=false;
         do{
 
-            System.out.println("Insert number of players:");
+            System.out.println("Insert number of players in the match (2 or 3):");
             numberOfPlayersString = stdin.nextLine();
 
             validNumberOfPlayers = sf.isValidNumberOfPlayers(numberOfPlayersString);
-            if(!validNumberOfPlayers)System.out.println("Not valid, try again");
+            if(!validNumberOfPlayers)System.out.println("That number is not valid, try again");
 
 
         }while(!validNumberOfPlayers);
@@ -152,7 +145,7 @@ public class Cli extends View {
                     pos = stdin.nextLine();
 
                     if(!sf.isPositionValid(pos)){
-                        System.out.print("Not valid, try again");
+                        System.out.print("Invalid position, try again");
                     }else{
                         validPos=true;
                         tokens = pos.split(delims);
@@ -188,14 +181,14 @@ public class Cli extends View {
         if(message.getNumberOfChoices()>0){
 
             chosenGods = new String[message.getNumberOfChoices()];
-            System.out.println("Scegli "+message.getNumberOfChoices()+" di questi dei: ");
+            System.out.println("Choose "+message.getNumberOfChoices()+" of the following gods: ");
             for(String s : message.getGods()){
                 System.out.println(s);
             }
 
             do{
                 for(int n=0 ; n<message.getNumberOfChoices();n++){
-                    System.out.println("Choose a God: ");
+                    System.out.println("Choose the God: ");
                     choice = stdin.nextLine();
                     //correct format is first letter uppercase
                     chosenGods[n]= cvsf.nameToCorrectFormat(choice);
@@ -203,7 +196,7 @@ public class Cli extends View {
                 if(sf.isChosenGodsValid(chosenGods, message.getNumberOfChoices(), message)){
                     validChosenGods=true;
                 }else{
-                    System.out.println("Not valid, try again");
+                    System.out.println("Invalid choice, try again");
                 }
 
             }while(!validChosenGods);
@@ -257,8 +250,8 @@ public class Cli extends View {
                 System.out.println("move worker(0/1) x,y");
                 System.out.println("build worker(0/1) x,y block/dome");
                 //in realtà basta che scriva end, ma poi non si capisce la differenza con quit
-                System.out.println("end turn");
-                System.out.println("quit");
+                System.out.println("end (to end your turn)");
+                System.out.println("quit (to leave the game, only if already eliminated");
                 String inputLine = stdin.nextLine();
                 String delims = "[, ]";
                 String[] tokens;
