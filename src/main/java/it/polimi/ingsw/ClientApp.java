@@ -22,7 +22,7 @@ public class ClientApp {
         t0 = new Thread(clientSideConnection);
         t0.start();
         //ATTENZIONE: sia questo processo che il thread t0 vanno a guardare/cambiare canStart. Ho sincronizzato set/get sulla classe
-        while(view.getCanStart()==false){
+        while(!view.getCanStart()){
             //do nothing
 
         }
