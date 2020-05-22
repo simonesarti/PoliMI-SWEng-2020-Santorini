@@ -9,11 +9,7 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.observe.Observer;
 
-
 public abstract class View implements Observer<Object>,Runnable {
-
-
-
 
     private final ClientSideConnection clientSideConnection;
     private boolean canStart;
@@ -29,46 +25,27 @@ public abstract class View implements Observer<Object>,Runnable {
     abstract public void handleInfoMessage(InfoMessage message);
     abstract public void handleErrorMessage(ErrorMessage message);
 
-
-    abstract public PlayerInfo createPlayerInfo(PlayerInfoRequest message);
-    abstract public StartingPositionChoice createStartingPositionChoice();
-    abstract public CardChoice createCardChoice(PossibleCardsMessage message);
-
-
+    abstract public void handlePlayerInfoRequest(PlayerInfoRequest message);
+    abstract public void handleCardMessageRequest(PossibleCardsMessage message);
+    abstract public void handleStartingPositionRequest();
 
     @Override
     public void update(Object message){
 
         if(message instanceof NewBoardStateMessage){ handleNewBoardStateMessage((NewBoardStateMessage) message);}
 
-        else if (message instanceof InfoMessage){
-
-            handleInfoMessage((InfoMessage) message);
-
-        }
-        else if(message instanceof PlayerInfoRequest){
-
-            clientSideConnection.send(createPlayerInfo((PlayerInfoRequest) message));
-
-        }
-
+        else if (message instanceof InfoMessage){ handleInfoMessage((InfoMessage) message);}
 
         else if (message instanceof ErrorMessage){ handleErrorMessage((ErrorMessage) message); }
 
-        else if(message instanceof StartingPositionRequestMessage){
+        else if(message instanceof PlayerInfoRequest){ handlePlayerInfoRequest((PlayerInfoRequest) message); }
 
-            clientSideConnection.send(createStartingPositionChoice());
-        }
+        else if(message instanceof PossibleCardsMessage) { handleCardMessageRequest((PossibleCardsMessage) message); }
 
-        else if(message instanceof PossibleCardsMessage) {
-
-            clientSideConnection.send(createCardChoice((PossibleCardsMessage) message));
-
-        }
+        else if(message instanceof StartingPositionRequestMessage){ handleStartingPositionRequest();}
 
         else if(message instanceof GameStartMessage) {
 
-            //TODO VA MESSO A FINE FASE PREPARAZIONE, PER ORA LO METTO QUI, forse è giusto
             setCanStart(true);
          }
 
@@ -79,12 +56,6 @@ public abstract class View implements Observer<Object>,Runnable {
 
 
     }
-
-
-
-
-
-
 
     public synchronized boolean getCanStart() {
         return canStart;
