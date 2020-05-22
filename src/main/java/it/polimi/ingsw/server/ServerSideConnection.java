@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.CloseConnectionMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
 import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
@@ -20,6 +21,8 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private boolean active;
     private boolean inUse;
     private boolean alreadyEliminated;
+
+    private boolean terminatedWithException=false;
 
     public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
@@ -66,6 +69,10 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     }
 
     public synchronized void closeConnection() {
+
+        if(!terminatedWithException){
+           send(new CloseConnectionMessage());
+        }
 
         try {
             outputStream.close();
@@ -116,7 +123,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error, entered run Catch in ServerSideConnection:  " + e.getMessage());
             e.printStackTrace();
-
+            terminatedWithException=true;
         }finally{
 
             if(!isInUse() || isAlreadyEliminated()){

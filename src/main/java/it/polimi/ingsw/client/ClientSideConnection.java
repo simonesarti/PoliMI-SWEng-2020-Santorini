@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.CloseConnectionMessage;
 import it.polimi.ingsw.observe.Observable;
 
 import java.io.IOException;
@@ -46,16 +47,18 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
     }
 
     /**
-     * this method sends the message given to the server through the socket
+     * this method sends the message given to the server through the socket, as long as the connection is active
      * @param message is the message object to be sent through the socket
      */
     public synchronized void send(Object message) {
-        try {
-            outputStream.reset();
-            outputStream.writeObject(message);
-            outputStream.flush();
-        } catch(IOException e){
-            System.err.println(e.getMessage());
+        if(active){
+            try {
+                outputStream.reset();
+                outputStream.writeObject(message);
+                outputStream.flush();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
         }
 
     }
@@ -98,7 +101,12 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
             //now it keeps receiving messages while the connection stays active
             while (isActive()) {
                 Object inputObject = inputStream.readObject();
-                notify(inputObject);
+
+                if(inputObject instanceof CloseConnectionMessage){
+                    setActive(false);
+                }else {
+                    notify(inputObject);
+                }
 
             }
 

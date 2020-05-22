@@ -6,7 +6,7 @@ import it.polimi.ingsw.view.cli.Cli;
 
 public class ClientApp {
 
-    //TODO IMPORTANTE: alla fine della fase di preparazione pre-partita si deve settare view.canStart a true
+//TODO CLI/GUI ASSEGNAMETO INIZIALE
     public static void main(String[] args){
 
         View view;
@@ -21,6 +21,7 @@ public class ClientApp {
 
         t0 = new Thread(clientSideConnection);
         t0.start();
+
         //ATTENZIONE: sia questo processo che il thread t0 vanno a guardare/cambiare canStart. Ho sincronizzato set/get sulla classe
         while(!view.getCanStart()){
             //do nothing
@@ -35,17 +36,6 @@ public class ClientApp {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-        //ORDINE:
-        //Istanzio Client
-        //Chiedere gui o cli a utente
-        //istanziare View (quindi o gui o cli) passandole il client nel costruttore
-        //addObserver
-        //client.run(verranno chieste info giocatore)
-        //una volta finito lo scambio di informazioni iniziali, Cli.run()(e forse per Gui.run() sarà lo stesso?)
-
-
 
     }
 
