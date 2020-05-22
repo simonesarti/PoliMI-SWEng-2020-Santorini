@@ -41,23 +41,36 @@ public class Cli extends View {
     @Override
     public void handleInfoMessage(InfoMessage message) {
         System.out.println(message.getInfo());
-
     }
 
     @Override
     public void handleErrorMessage(ErrorMessage message) {
         System.out.println(message.getError());
+    }
+
+    @Override
+    public void handlePlayerInfoRequest(PlayerInfoRequest message) {
+        getClientSideConnection().send(createPlayerInfo(message));
+    }
+
+    @Override
+    public void handleCardMessageRequest(PossibleCardsMessage message) {
+        getClientSideConnection().send(createCardChoice(message));
 
     }
 
+    @Override
+    public void handleStartingPositionRequest() {
+        getClientSideConnection().send(createStartingPositionChoice());
+    }
 
 
     /**
      * Creates a PlayerInfo message based on user's inputs
      * @return
      */
-    @Override
-    public PlayerInfo createPlayerInfo(PlayerInfoRequest message){
+
+    private PlayerInfo createPlayerInfo(PlayerInfoRequest message){
 
         if(message.isNicknameTaken()){ System.out.println("This name already exist, choose another one: ");}
         else{ System.out.println("What's your nickname?"); }
@@ -122,8 +135,7 @@ public class Cli extends View {
      * Creates a StartingPositionChoice message based on user's inputs
      * @return StartingPositionChoice message
      */
-    @Override
-    public StartingPositionChoice createStartingPositionChoice() {
+    private StartingPositionChoice createStartingPositionChoice() {
 
         String pos;
         String delims = ",";
@@ -166,8 +178,7 @@ public class Cli extends View {
      * @param message has a number of choices attribute and a list of possible Gods
      * @return
      */
-    @Override
-    public CardChoice createCardChoice(PossibleCardsMessage message) {
+    private CardChoice createCardChoice(PossibleCardsMessage message) {
 
         ClientViewSupportFunctions cvsf = new ClientViewSupportFunctions();
         String[] chosenGods;
@@ -210,7 +221,6 @@ public class Cli extends View {
     public void handleInput(String[] tokens){
 
         sf = new ClientViewSupportFunctions();
-
 
         switch(sf.nameToCorrectFormat(tokens[0]))
         {

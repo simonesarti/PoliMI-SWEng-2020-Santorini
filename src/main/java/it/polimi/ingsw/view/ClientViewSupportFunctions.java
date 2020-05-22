@@ -120,7 +120,6 @@ public class ClientViewSupportFunctions {
             while(itr.hasNext()){
 
                 String god = itr.next();
-                System.out.println(god);
 
                 if(chosenGods[i].equals(god)){
                     trovato = true;
