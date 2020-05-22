@@ -19,6 +19,7 @@ public class MainFrame extends JFrame {
         setSize(SettingsGUI.frameWidth,SettingsGUI.frameHeight);
         setResizable(false);
         setDefaultLookAndFeelDecorated(true);
+        setIconImage(Images.getIcon(Images.SANTORINI_LOGO));
     }
 
     private void setFrameProperties(){

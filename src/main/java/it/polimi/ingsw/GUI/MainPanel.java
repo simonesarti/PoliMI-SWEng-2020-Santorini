@@ -5,7 +5,10 @@ import java.awt.*;
 
 public class MainPanel extends JPanel{
 
+    private Image background;
+
     public MainPanel(){
+        background=Images.getIcon(Images.INITIAL_BACKGROUND);
         initializePanel();
     }
 
@@ -16,8 +19,17 @@ public class MainPanel extends JPanel{
 
     private void setPanelLook(){
         setPreferredSize(new Dimension(SettingsGUI.frameWidth,SettingsGUI.frameHeight));
-        setBackground(SettingsGUI.backgroundColour);
     }
+
     private void setPanelProperties(){}
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.drawImage(background,0,0,null);
+    }
+
+
 
 }
