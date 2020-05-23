@@ -14,25 +14,26 @@ public class MainFrame extends JFrame {
         setFrameProperties();
     }
 
+    private void createMainPanel(){
+        add(new MainPanel());
+    }
+
     private void setFrameLook(){
         setTitle(SettingsGUI.TITLE);
         setSize(SettingsGUI.frameWidth,SettingsGUI.frameHeight);
         setResizable(false);
         setDefaultLookAndFeelDecorated(true);
-        setIconImage(Images.getIcon(Images.SANTORINI_LOGO));
+        setIconImage(Images.getImage(Images.GAME_ICON));
     }
 
     private void setFrameProperties(){
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        pack();
+        //pack();
     }
 
-    private void createMainPanel(){
-        add(new MainPanel());
 
-    }
 
 
 
