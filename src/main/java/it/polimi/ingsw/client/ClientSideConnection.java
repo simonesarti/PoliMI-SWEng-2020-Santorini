@@ -51,6 +51,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
      * @param message is the message object to be sent through the socket
      */
     public synchronized void send(Object message) {
+
         if(active){
             try {
                 outputStream.reset();
@@ -101,13 +102,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
             //now it keeps receiving messages while the connection stays active
             while (isActive()) {
                 Object inputObject = inputStream.readObject();
-
-                if(inputObject instanceof CloseConnectionMessage){
-                    setActive(false);
-                }else {
-                    notify(inputObject);
-                }
-
+                notify(inputObject);
             }
 
         } catch ( Exception e) {

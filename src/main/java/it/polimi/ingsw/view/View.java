@@ -29,6 +29,8 @@ public abstract class View implements Observer<Object>,Runnable {
     abstract public void handleCardMessageRequest(PossibleCardsMessage message);
     abstract public void handleStartingPositionRequest();
 
+    abstract  public void handleCloseConnectionMessage();
+
     @Override
     public void update(Object message){
 
@@ -49,11 +51,9 @@ public abstract class View implements Observer<Object>,Runnable {
             setCanStart(true);
          }
 
-        else {
+        else if(message instanceof CloseConnectionMessage){ handleCloseConnectionMessage();}
 
-            throw new IllegalArgumentException();
-        }
-
+        else { throw new IllegalArgumentException(); }
 
     }
 

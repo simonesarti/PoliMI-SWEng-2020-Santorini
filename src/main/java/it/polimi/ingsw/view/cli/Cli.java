@@ -60,6 +60,12 @@ public class Cli extends View {
         getClientSideConnection().send(createStartingPositionChoice());
     }
 
+    @Override
+    public void handleCloseConnectionMessage() {
+        getClientSideConnection().setActive(false);
+        System.out.println("You have been disconnected");
+    }
+
 
     /**
      * Creates a PlayerInfo message based on user's inputs
