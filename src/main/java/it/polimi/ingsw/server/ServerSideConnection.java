@@ -70,16 +70,16 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     public synchronized void closeConnection() {
 
-        if(!terminatedWithException){
-           send(new CloseConnectionMessage());
-        }
+        if (!terminatedWithException) {
+            send(new CloseConnectionMessage());
 
-        try {
-            outputStream.close();
-            inputStream.close();
-        }catch (IOException e){
-            e.printStackTrace();
-            System.err.println("Error while closing the streams!");
+            try {
+                outputStream.close();
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Error while closing the streams!");
+            }
         }
 
         try{

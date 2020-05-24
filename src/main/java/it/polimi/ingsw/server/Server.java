@@ -155,7 +155,8 @@ public class Server {
             return;
         }
 
-        throw new IllegalArgumentException("Connection not found in any waiting list or match list");
+        //else:
+        //still in initial phase, just let it turn off
 
     }
 
