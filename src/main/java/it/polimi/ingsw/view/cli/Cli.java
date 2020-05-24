@@ -62,7 +62,6 @@ public class Cli extends View {
 
     @Override
     public void handleCloseConnectionMessage() {
-        getClientSideConnection().setActive(false);
         System.out.println("You have been disconnected");
     }
 

@@ -102,6 +102,10 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
             //now it keeps receiving messages while the connection stays active
             while (isActive()) {
                 Object inputObject = inputStream.readObject();
+
+                if(inputObject instanceof CloseConnectionMessage) {
+                    setActive(false);
+                }
                 notify(inputObject);
             }
 
