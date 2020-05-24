@@ -99,6 +99,8 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
 
+            socket.setKeepAlive(true);
+
             //now it keeps receiving messages while the connection stays active
             while (isActive()) {
                 Object inputObject = inputStream.readObject();
