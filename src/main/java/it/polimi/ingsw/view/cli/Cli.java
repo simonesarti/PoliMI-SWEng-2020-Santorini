@@ -230,11 +230,11 @@ public class Cli extends View {
                 this.getClientSideConnection().send(new QuitChoice());
                 break;
             case "Move":
-                this.getClientSideConnection().send(new MoveData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
+                this.getClientSideConnection().send(new MoveData(Integer.parseInt(tokens[1])-1,Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
                 break;
             case "Build":
 
-                this.getClientSideConnection().send(new BuildData(Integer.parseInt(tokens[1]),Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),sf.nameToCorrectFormat(tokens[4])));
+                this.getClientSideConnection().send(new BuildData(Integer.parseInt(tokens[1])-1,Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),sf.nameToCorrectFormat(tokens[4])));
                 break;
             default:
                 System.out.println("Command not found");
@@ -253,8 +253,8 @@ public class Cli extends View {
             while(getClientSideConnection().isActive()) {
 
                 System.out.println("Insert a command:");
-                System.out.println("move worker(0/1) x,y");
-                System.out.println("build worker(0/1) x,y block/dome");
+                System.out.println("move worker(1/2) x,y");
+                System.out.println("build worker(1/2) x,y block/dome");
                 //in realtà basta che scriva end, ma poi non si capisce la differenza con quit
                 System.out.println("end (to end your turn)");
                 System.out.println("quit (to leave the game, only if already eliminated");

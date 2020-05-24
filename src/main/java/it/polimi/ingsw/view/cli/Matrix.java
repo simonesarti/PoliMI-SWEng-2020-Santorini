@@ -28,12 +28,12 @@ public class Matrix {
 
         //coordinate X
         for(int i=1; i<6;i++){
-            matrix.getCell(i,0).assignCoordinate("X",i);
+            matrix.getCell(i,0).assignCoordinate("X",i-1);
         }
 
         //coordinate Y
         for(int i=1; i<6;i++){
-            matrix.getCell(0,i).assignCoordinate("Y",i);
+            matrix.getCell(0,i).assignCoordinate("Y",i-1);
         }
 
 

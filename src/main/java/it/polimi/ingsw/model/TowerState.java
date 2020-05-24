@@ -21,7 +21,7 @@ public class TowerState implements Serializable {
         }else{
             isCompleted=false;
             if(towercell.hasWorkerOnTop()){
-                workerNumber=towercell.getFirstNotPieceLevel().getWorker().getNumber();
+                workerNumber=towercell.getFirstNotPieceLevel().getWorker().getNumber()+1;
                 workerColour=towercell.getFirstNotPieceLevel().getWorker().getColour();
             }else{
                 workerNumber=-1;
