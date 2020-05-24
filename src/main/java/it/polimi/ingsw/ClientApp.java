@@ -30,12 +30,17 @@ public class ClientApp {
         t1 = new Thread(view);
         t1.start();
 
+
         try {
             t0.join();
+            System.out.println("superato t0 join");
             t1.join();
+            System.out.println("superato t1 join");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
 
     }
 

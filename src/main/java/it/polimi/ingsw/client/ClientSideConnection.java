@@ -120,6 +120,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
         }finally{
 
+            System.out.println("sono nella finally della client side connection run");
             closeConnection();
 
         }
