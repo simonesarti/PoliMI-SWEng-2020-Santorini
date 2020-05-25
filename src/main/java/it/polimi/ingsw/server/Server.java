@@ -124,14 +124,12 @@ public class Server {
 
         index=getWaitingGroupIndex2(connection);
         if(index!=-1){
-            connection.send(new InfoMessage(GameMessage.abandonedLobby));
             twoPlayerWaitingList.remove(index);
             return;
         }
 
         index=getWaitingGroupIndex3(connection);
         if(index!=-1){
-            connection.send(new InfoMessage(GameMessage.abandonedLobby));
             threePlayerWaitingList.remove(index);
             return;
         }
@@ -139,20 +137,32 @@ public class Server {
 
         index=getMatchGroupIndex2(connection);
         if(index!=-1){
-            twoPlayerGames.get(index).getConnection(0).notInUse();
-            twoPlayerGames.get(index).getConnection(1).notInUse();
+
+            for(int i=0;i<2;i++){
+                twoPlayerGames.get(index).getConnection(i).notInUse();
+                //closes opponent connection
+                if(twoPlayerGames.get(index).getConnection(i)!=connection){
+                    twoPlayerGames.get(index).getConnection(i).closeConnection();
+                }
+            }
+
             twoPlayerGames.remove(index);
             return;
         }
 
         index=getMatchGroupIndex3(connection);
         if(index!=-1){
-            index= getMatchGroupIndex3(connection);
-            threePlayerGames.get(index).getConnection(0).notInUse();
-            threePlayerGames.get(index).getConnection(1).notInUse();
-            threePlayerGames.get(index).getConnection(2).notInUse();
+
+
+            for(int i=0;i<3;i++){
+                threePlayerGames.get(index).getConnection(i).notInUse();
+                //closes opponents connections
+                if(threePlayerGames.get(index).getConnection(i)!=connection){
+                    threePlayerGames.get(index).getConnection(i).closeConnection();
+                }
+            }
+
             threePlayerGames.remove(index);
-            return;
         }
 
         //else:

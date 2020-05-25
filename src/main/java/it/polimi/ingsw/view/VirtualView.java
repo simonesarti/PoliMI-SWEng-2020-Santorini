@@ -51,7 +51,6 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         return observingModel;
     }
 
-    //TODO
     private void notifyController(DataMessage message){
 
         if(message instanceof MoveData){
@@ -80,6 +79,7 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         connectionToClient.removeObserver(playerMessageReceiver);
         //connection thread terminates
         connectionToClient.notInUse();
+        connectionToClient.closeConnection();
     }
 
     public void stopObservingModel(){
@@ -128,12 +128,12 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
             connectionToClient.removeObserver(playerMessageReceiver);
 
 
-        }else if(message instanceof EndOfGameMessage) {
+        }
+
+        else if(message instanceof EndOfGameMessage) {
 
             if(((EndOfGameMessage)message).getPlayer()==this.getPlayer()){
-                connectionToClient.deactivate();
-                //deactivates winner connection, as a result every in-game player's connection is terminated
-                //and the match ends
+                connectionToClient.closeMatch();
             }
         }
 

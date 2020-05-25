@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class ServerSideConnection extends Observable<DataMessage> implements Runnable {
 
@@ -36,10 +35,6 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         return active;
     }
 
-    public void deactivate(){
-        active=false;
-    }
-
     public synchronized boolean isInUse(){return inUse;}
 
     public void notInUse(){inUse=false;}
@@ -52,25 +47,27 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     public synchronized void send(Object message){
 
-        try {
-            outputStream.reset();
-            outputStream.writeObject(message);
-            outputStream.flush();
-        } catch(IOException e){
-            System.err.println(e.getMessage());
-            e.printStackTrace();
+        if(active){
+            try {
+                outputStream.reset();
+                outputStream.writeObject(message);
+                outputStream.flush();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+            }
         }
 
     }
 
-    private void close() {
+    public synchronized void closeMatch() {
         server.unregisterConnection(this);
         closeConnection();
     }
 
     public synchronized void closeConnection() {
 
-        if (!terminatedWithException) {
+        if (!terminatedWithException && active) {
             send(new CloseConnectionMessage());
 
             try {
@@ -88,6 +85,8 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             e.printStackTrace();
             System.err.println("Error while closing socket!");
         }
+
+        active=false;
     }
 
     @Override
@@ -129,8 +128,8 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             if(!isInUse() || isAlreadyEliminated()){
                 closeConnection();
             }else{
-                //when someone wins (active=false) or with and exception
-                close();
+                //when someone wins or with and exception
+                closeMatch();
             }
 
         }
