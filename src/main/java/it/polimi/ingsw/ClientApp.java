@@ -23,7 +23,7 @@ public class ClientApp {
         t0.start();
 
         //ATTENZIONE: sia questo processo che il thread t0 vanno a guardare/cambiare canStart. Ho sincronizzato set/get sulla classe
-        while(!view.getCanStart()){
+        while(!view.getCanStart() && clientSideConnection.isActive()){
             //do nothing
 
         }
@@ -33,9 +33,7 @@ public class ClientApp {
 
         try {
             t0.join();
-            System.out.println("superato t0 join");
             t1.join();
-            System.out.println("superato t1 join");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -21,8 +21,10 @@ public class ClientViewSupportFunctions {
      */
     public boolean isPositionValid(String pos){
 
+
         String delims = ",";
         String[] tokens = pos.split(delims);
+        if(tokens.length != 2) return false;
 
         for(String s : tokens){
             try{
