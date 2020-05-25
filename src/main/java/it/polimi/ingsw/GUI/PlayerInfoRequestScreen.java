@@ -1,25 +1,35 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.client.ClientSideConnection;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-//TODO RESIZE
+//TODO RESIZE, AND INSERT ERROR LABELS
 public class PlayerInfoRequestScreen extends JDialog implements ActionListener {
 
+    ClientSideConnection connection;
+
     JLabel nicknameRequest;
+    JLabel invalidNickname;
     JTextField nickname;
     JLabel birthdayRequest;
+    JLabel invalidDate;
     JTextField birthday;
     JButton confirmButton;
 
-    public PlayerInfoRequestScreen(){
+    public PlayerInfoRequestScreen(ClientSideConnection connection){
+
+        this.connection=connection;
 
         nicknameRequest=new JLabel("Nickname: ");
         nickname=new JTextField();
+        invalidNickname=new JLabel();
         birthdayRequest=new JLabel("Date of birth: ");
         birthday=new JTextField();
+        invalidNickname=new JLabel();
         confirmButton=new JButton("Confirm");
 
         setBounds();
@@ -61,6 +71,7 @@ public class PlayerInfoRequestScreen extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
 
     }
 }
