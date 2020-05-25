@@ -1,28 +1,27 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.client.ClientSideConnection;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MoveButton extends JButton implements ActionListener {
+public class MoveButton extends GameButton implements ActionListener{
 
-    public MoveButton() {
+    public MoveButton(ClientSideConnection connection) {
+        super(connection);
+        //super.setIcons();
+        super.setSize();
+        super.setPosition();
 
-        setIcons();
-        setPosition();
-        setSize();
     }
-
-    //TODO
-    private void setIcons(){
-        setIcon(Images.getIcon(Images.MOVE_BUTTON_ICON));
-    }
-    private void setPosition(){}
-    private void setSize(){}
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
 }
+
+
+
+

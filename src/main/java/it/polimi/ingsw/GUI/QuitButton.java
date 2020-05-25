@@ -1,25 +1,20 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.client.ClientSideConnection;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class QuitButton extends JButton implements ActionListener {
+public class QuitButton extends GameButton implements ActionListener {
 
-    public QuitButton() {
 
-        setIcons();
-        setPosition();
-        setSize();
+    public QuitButton(ClientSideConnection connection) {
+        super(connection);
+        //super.setIcons();
+        super.setSize();
+        super.setPosition();
     }
-
-    //TODO
-    private void setIcons(){
-        setIcon(Images.getIcon(Images.QUIT_BUTTON_ICON));
-        setPressedIcon(Images.getIcon(Images.PRESSED_QUIT_BUTTON_ICON));
-    }
-    private void setPosition(){}
-    private void setSize(){}
 
     @Override
     public void actionPerformed(ActionEvent e) {
