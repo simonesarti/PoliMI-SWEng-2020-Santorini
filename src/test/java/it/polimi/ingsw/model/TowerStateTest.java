@@ -21,7 +21,7 @@ class TowerStateTest {
         Worker worker=new Worker(Colour.WHITE,1);
         towerCell.getFirstNotPieceLevel().setWorker(worker);
         towerState=new TowerState(towerCell);
-        testValues(0,false,1,Colour.WHITE);
+        testValues(0,false,2,Colour.WHITE);
     }
 
     @Test

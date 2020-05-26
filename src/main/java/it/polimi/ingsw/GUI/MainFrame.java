@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
         setResizable(true);
         setLocationRelativeTo(null);
         setVisible(true);
-        pack();
+        //pack();
     }
 
 

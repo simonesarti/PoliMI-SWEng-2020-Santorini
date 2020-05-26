@@ -39,4 +39,14 @@ public class FakeConnection extends ServerSideConnection {
             System.out.println(message.toString());
         }
     }
+
+    @Override
+    public synchronized void closeMatch(){
+        System.out.println("victory");
+    }
+
+    @Override
+    public synchronized void closeConnection(){
+        System.out.println("connection closed");
+    }
 }
