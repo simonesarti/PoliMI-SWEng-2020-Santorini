@@ -20,8 +20,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private boolean active;
     private boolean inUse;
     private boolean alreadyEliminated;
-
-    private boolean terminatedWithException=false;
+    private boolean terminatedWithException;
 
     public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
@@ -29,25 +28,37 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         active=true;
         inUse=true;
         alreadyEliminated=false;
+        terminatedWithException=false;
     }
 
-    public synchronized boolean isActive(){
+    //getter
+
+    private synchronized boolean isActive(){
         return active;
     }
 
-    public synchronized boolean isInUse(){return inUse;}
+    private synchronized boolean isInUse(){return inUse;}
 
-    public void notInUse(){inUse=false;}
+    private synchronized boolean isAlreadyEliminated(){return alreadyEliminated;}
 
-    public synchronized boolean isAlreadyEliminated(){return alreadyEliminated;}
+    private synchronized boolean hasTerminatedWithException(){return terminatedWithException;}
 
-    public void markAsEliminated(){
+
+    //setter
+    private synchronized void setNotActive(){active=false;}
+
+    public synchronized void notInUse(){inUse=false;}
+
+    public synchronized void markAsEliminated(){
         alreadyEliminated=true;
     }
 
+    private synchronized void setTerminatedWithException(){terminatedWithException=true;}
+
+    
     public synchronized void send(Object message){
 
-        if(active){
+        if(isActive()){
             try {
                 outputStream.reset();
                 outputStream.writeObject(message);
@@ -67,7 +78,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     public synchronized void closeConnection() {
 
-        if (!terminatedWithException && active) {
+        if (!hasTerminatedWithException() && isActive()) {
             send(new CloseConnectionMessage());
 
             try {
@@ -86,7 +97,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
             System.err.println("Error while closing socket!");
         }
 
-        active=false;
+        setNotActive();
     }
 
     @Override
@@ -122,7 +133,7 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error, entered run Catch in ServerSideConnection:  " + e.getMessage());
             e.printStackTrace();
-            terminatedWithException=true;
+            setTerminatedWithException();
         }finally{
 
             if(!isInUse() || isAlreadyEliminated()){

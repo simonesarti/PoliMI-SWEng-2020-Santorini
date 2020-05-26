@@ -263,6 +263,5 @@ class ControllerTest {
         PlayerMessage message=new PlayerQuitChoice(virtualViews.get(1),enemy1Player);
         controller.update(message);
         assertFalse(virtualViews.get(1).isObservingModel());
-        assertFalse(c2.isInUse());
     }
 }
