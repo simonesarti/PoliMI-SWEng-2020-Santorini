@@ -1,46 +1,73 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.client.ClientSideConnection;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel{
 
-    private final ClientSideConnection connection;
-    private Image gameBoard;
+    private final Image gameBoard;
+    private final JButton[][] towerButtons =new JButton[5][5];
 
-    public GamePanel(ClientSideConnection connection){
-        this.connection=connection;
-        initializePanel();
-    }
-
-    private void initializePanel(){
-        setPanelLook();
-        setPanelProperties();
-    }
-
-    private void setPanelLook(){
+    public GamePanel() {
         gameBoard=Images.getImage(Images.GAMEBOARD);
-    }
-
-    private void setPanelProperties(){
-        setPreferredSize(new Dimension(SettingsGUI.frameWidth,SettingsGUI.frameHeight));
+        setLayout(new GridLayout(5,5));
+        setTowerButtons();
         setVisible(true);
-        setLayout(new GridBagLayout());
+
     }
 
-    public void refresh(){
-        update();
-        repaint();
+    public void setTowerButtons() {
+
+        for (int j = 0; j < 5; j++) {
+            for (int i = 0; i < 5; i++) {
+                towerButtons[i][j] = new JButton();
+                add(towerButtons[i][j]);
+                towerButtons[i][j].addMouseListener(new towerSelectionListener());
+            }
+        }
     }
+
+    //TODO
+    //update icona pulsanti con nuova
+
+    private class towerSelectionListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        //TODO
+        @Override
+        public void mousePressed(MouseEvent e) {
+            //do nothing
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            //do nothing
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            //do nothing
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            //do nothing
+        }
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         g.drawImage(gameBoard,0,0,null);
     }
 
-    private void update(){}
-
 }
+
