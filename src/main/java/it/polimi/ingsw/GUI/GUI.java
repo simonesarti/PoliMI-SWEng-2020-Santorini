@@ -12,9 +12,11 @@ import javax.swing.*;
 
 public class GUI extends View{
 
-    private JFrame mainFrame;
+    private JFrame frame;
     private JPanel mainPanel;
-    private JPanel gamePanel;
+    private JPanel boardPanel;
+    private JPanel cardPanel;
+    private JPanel buttonPanel;
 
     public GUI(ClientSideConnection connection){
         super(connection);
@@ -22,21 +24,11 @@ public class GUI extends View{
     }
 
     private void createGUI(){
-        mainFrame=new MainFrame();
-        mainPanel=new MainPanel(getClientSideConnection());
-        mainFrame.add(mainPanel);
+        frame =new MainFrame();
+        mainPanel=new MainPanel(frame);
+        frame.add(mainPanel);
+        frame.pack();
     }
-
-    private void createGamePanel(){
-        gamePanel=new GamePanel(getClientSideConnection());
-    }
-
-    private void switchToGamePanel(){
-        mainFrame.remove(mainPanel);
-        mainFrame.add(gamePanel);
-    }
-
-
 
 
     @Override

@@ -7,25 +7,11 @@ import java.awt.*;
 
 public class MainPanel extends JPanel{
 
-    private final ClientSideConnection connection;
-    private Image background;
+    private final Image background;
 
-    public MainPanel(ClientSideConnection connection){
-        this.connection=connection;
-        initializePanel();
-    }
-
-    private void initializePanel(){
-        setPanelLook();
-        setPanelProperties();
-    }
-
-    private void setPanelLook(){
+    public MainPanel(JFrame frame){
         background=Images.getImage(Images.INITIAL_BACKGROUND);
-    }
-
-    private void setPanelProperties(){
-        setPreferredSize(new Dimension(SettingsGUI.frameWidth,SettingsGUI.frameHeight));
+        setPreferredSize(new Dimension(frame.getHeight(),frame.getWidth()));
         setVisible(true);
     }
 

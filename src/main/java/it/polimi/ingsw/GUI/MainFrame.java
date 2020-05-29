@@ -14,19 +14,19 @@ public class MainFrame extends JFrame {
     }
 
     private void setFrameLook(){
-        setTitle(SettingsGUI.TITLE);
+        setTitle("SANTORINI");
         setDefaultLookAndFeelDecorated(true);
         setIconImage(Images.getImage(Images.GAME_ICON));
     }
 
     private void setFrameProperties(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(SettingsGUI.frameWidth,SettingsGUI.frameHeight);
+        setSize(1920,1080);
         setResizable(true);
         setLocationRelativeTo(null);
         setVisible(true);
-        //pack();
     }
+
 
 
 
