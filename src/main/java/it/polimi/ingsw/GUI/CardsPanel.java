@@ -18,12 +18,12 @@ public class CardsPanel extends JPanel {
     }
 
     private void setCardPanels(ArrayList<String> cards, ArrayList<String> nicknames){
-        player1=new PlayerPanel(cards.get(0),nicknames.get(0));
-        player2=new PlayerPanel(cards.get(1),nicknames.get(1));
+        player1=new PlayerPanel(cards.get(0),nicknames.get(0),Color.RED);
+        player2=new PlayerPanel(cards.get(1),nicknames.get(1),Color.BLUE);
         if(cards.size()==3){
-            player3=new PlayerPanel(cards.get(2),nicknames.get(2));
+            player3=new PlayerPanel(cards.get(2),nicknames.get(2),new Color(255,0,255));
         }else{
-            player3=new PlayerPanel("card not used in this match","nickname not used");
+            player3=new PlayerPanel("card not used in this match","nickname not used",Color.DARK_GRAY);
         }
 
         add(player1);

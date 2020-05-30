@@ -47,6 +47,7 @@ public class GUI extends View{
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
 
+        new PlayerInfoRequestScreen(message.isNicknameTaken());
     }
 
     @Override

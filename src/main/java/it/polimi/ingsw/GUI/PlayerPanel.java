@@ -9,18 +9,19 @@ public class PlayerPanel extends JPanel {
 
     private final JButton cardButton=new JButton();
     private String description;
-    private JLabel nicknameLabel;
+    private final JLabel nicknameLabel;
 
-
-    //TODO colore
-    public PlayerPanel(String card, String nickname){
+    public PlayerPanel(String card, String nickname, Color color){
         setCardButton(card);
 
         if(nickname.equals("nickname not used")){
             nicknameLabel=new JLabel();
         }else{
             nicknameLabel=new JLabel("Player "+nickname);
+
         }
+        nicknameLabel.setForeground(Color.WHITE);
+        nicknameLabel.setBackground(color);
 
         setPanel();
     }
@@ -70,7 +71,6 @@ public class PlayerPanel extends JPanel {
         setVisible(true);
 }
 
-    //TODO
     private class CardPressListener implements MouseListener{
 
         @Override
