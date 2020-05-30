@@ -287,7 +287,7 @@ public class Model extends Observable<NotifyMessages> {
 
     public void notifyInfoMessage(Player player, String string){notify(new InfoMessageNotification(player,string));}
     public void notifyErrorMessage(Player player, String string){notify(new ErrorMessageNotification(player,string));}
-    public void notifyGameStart(){notify(new GameStartMessage());}
+    public void notifyGameStart(ArrayList<Player> players){notify(new GameStartMessage(players));}
     public void notifyPositionRequest(Player player){notify(new PositionRequestNotification(player));}
     public void notifyCardRequest(Player player, PossibleCardsMessage message){notify(new PossibleCardsNotification(player,message));}
 

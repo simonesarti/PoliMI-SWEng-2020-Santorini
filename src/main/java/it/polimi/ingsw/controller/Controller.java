@@ -330,14 +330,14 @@ public class Controller implements Observer<PlayerMessage>{
                     nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).getPlayer();
                     model.notifyPositionRequest(nextPlayer);
                 }else{
-                    model.notifyGameStart();
+                    model.notifyGameStart(getPlayers());
                 }
                 return;
             }
 
             if(message.getPlayer().getColour()==Colour.GREY){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
-                model.notifyGameStart();
+                model.notifyGameStart(getPlayers());
                 return;
             }
 
