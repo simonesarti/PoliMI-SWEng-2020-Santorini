@@ -14,9 +14,6 @@ public class GUI extends View{
 
     private JFrame frame;
     private JPanel mainPanel;
-    private JPanel boardPanel;
-    private JPanel cardPanel;
-    private JPanel buttonPanel;
 
     public GUI(ClientSideConnection connection){
         super(connection);
@@ -28,21 +25,23 @@ public class GUI extends View{
         mainPanel=new MainPanel(frame);
         frame.add(mainPanel);
         frame.pack();
+        frame.setVisible(true);
     }
 
 
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
+
     }
 
     @Override
     public void handleInfoMessage(InfoMessage message) {
-
+        JOptionPane.showMessageDialog(mainPanel,message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void handleErrorMessage(ErrorMessage message) {
-
+        JOptionPane.showMessageDialog(mainPanel,message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -62,6 +61,7 @@ public class GUI extends View{
 
     @Override
     public void handleCloseConnectionMessage() {
+        JOptionPane.showMessageDialog(mainPanel,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
 
     }
 

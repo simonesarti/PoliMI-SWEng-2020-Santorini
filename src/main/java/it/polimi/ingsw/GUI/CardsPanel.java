@@ -12,7 +12,7 @@ public class CardsPanel extends JPanel {
 
     public CardsPanel(ArrayList<String> cards, ArrayList<String> nicknames){
 
-        setLayout(new GridLayout(3,1));
+        setLayout(new GridLayout(3,1,0,5));
         setCardPanels(cards,nicknames);
         setVisible(true);
     }

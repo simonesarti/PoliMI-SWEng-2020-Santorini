@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -12,7 +14,7 @@ public class GamePanel extends JPanel{
 
     public GamePanel() {
         gameBoard=Images.getImage(Images.GAMEBOARD);
-        setLayout(new GridLayout(5,5));
+        setLayout(new GridLayout(5,5,5,5));
         setTowerButtons();
         setVisible(true);
 
@@ -61,6 +63,10 @@ public class GamePanel extends JPanel{
         }
     }
 
+    //TODO
+    public void updateBoard(NewBoardStateMessage message){
+
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
