@@ -1,61 +1,69 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.client.ClientSideConnection;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.util.Date;
+import java.util.Calendar;
 
 
-//TODO RESIZE, AND INSERT ERROR LABELS
-public class PlayerInfoRequestScreen extends JDialog implements ActionListener {
-
-    ClientSideConnection connection;
+public class PlayerInfoRequestScreen extends JDialog{
 
     JLabel nicknameRequest;
     JLabel invalidNickname;
     JTextField nickname;
     JLabel birthdayRequest;
-    JLabel invalidDate;
-    JTextField birthday;
+    JSpinner birthday;
     JButton confirmButton;
 
-    public PlayerInfoRequestScreen(ClientSideConnection connection){
-
-        this.connection=connection;
+    public PlayerInfoRequestScreen(boolean isNicknameTaken){
 
         nicknameRequest=new JLabel("Nickname: ");
         nickname=new JTextField();
         invalidNickname=new JLabel();
+
         birthdayRequest=new JLabel("Date of birth: ");
-        birthday=new JTextField();
-        invalidNickname=new JLabel();
+
+        Date date=new Date();
+        birthday=new JSpinner(new SpinnerDateModel(date,null,null, Calendar.DAY_OF_MONTH));
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(birthday, "dd/MM/yyyy");
+        birthday.setEditor(dateEditor);
+
+
         confirmButton=new JButton("Confirm");
 
-        setBounds();
-        addListeners();
+        if(isNicknameTaken){
+            invalidNickname.setText("This username is already taken");
+            invalidNickname.setForeground(Color.RED);
+        }
+
+        setBounds(isNicknameTaken);
         addToDialog();
         dialogSettings();
 
     }
 
-    private void setBounds(){
-        nicknameRequest.setBounds(50,20, 100,20);
-        nickname.setBounds(150,20, 100,20);
+    private void setBounds(boolean taken){
 
-        birthdayRequest.setBounds(50,50, 100,20);
-        birthday.setBounds(150,50, 100,20);
+        int h=0;
+        if(taken) {
+            h = 20;
+        }
 
-        confirmButton.setBounds(50,80, 150,20);
+        nicknameRequest.setBounds(20,20, 100,20);
+        nickname.setBounds(120,20, 200,20);
+        invalidNickname.setBounds(120,40,200,20);
+
+        birthdayRequest.setBounds(20,60+h, 100,20);
+        birthday.setBounds(120,60+h, 200,20);
+
+        confirmButton.setBounds(125,100+h, 150,20);
     }
 
-    private void addListeners(){
-        confirmButton.addActionListener(this);
-    }
 
     private void addToDialog(){
         add(nicknameRequest);
         add(nickname);
+        add(invalidNickname);
         add(birthdayRequest);
         add(birthday);
         add(confirmButton);
@@ -63,15 +71,9 @@ public class PlayerInfoRequestScreen extends JDialog implements ActionListener {
 
     private void dialogSettings(){
         setTitle("Info Request");
-        setSize(300,175);
-        //pack();
+        setSize(400,200);
         setLayout(null);
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-
-    }
 }
