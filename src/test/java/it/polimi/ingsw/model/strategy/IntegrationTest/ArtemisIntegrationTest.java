@@ -15,7 +15,6 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
-import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.view.VirtualView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,7 +104,7 @@ public class ArtemisIntegrationTest {
         enemy2Player.getWorker(1).setStartingPosition(4,4);
 
         //"xXoliTheQueenXx" is the oldest player. but the one i want to test
-        model.setColour(Colour.GREY);
+        model.setColour(Colour.PURPLE);
 
         //GAMEBOARD GENERATION
         int[][] towers=

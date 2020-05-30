@@ -21,19 +21,19 @@ class ModelTest {
         GameBoard gameboard=model.getGameBoard();
 
 
-        assertEquals(Colour.WHITE,model.getTurn());
+        assertEquals(Colour.RED,model.getTurn());
         model.updateTurnColour();
         assertEquals(Colour.BLUE,model.getTurn());
         model.updateTurnColour();
-        assertEquals(Colour.GREY,model.getTurn());
+        assertEquals(Colour.PURPLE,model.getTurn());
         model.setEliminated(0);
         model.updateTurnColour();
         assertEquals(Colour.BLUE,model.getTurn());
         model.setEliminated(1);
         model.updateTurnColour();
-        assertEquals(Colour.GREY,model.getTurn());
+        assertEquals(Colour.PURPLE,model.getTurn());
         model.updateTurnColour();
-        assertEquals(Colour.GREY,model.getTurn());
+        assertEquals(Colour.PURPLE,model.getTurn());
     }
 */
 
@@ -44,9 +44,9 @@ class ModelTest {
         Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1998,Calendar.SEPTEMBER,16),3));
         Player player2=new Player(new PlayerInfo("olimpia",new GregorianCalendar(1998,Calendar.SEPTEMBER,9),3));
         Player player3=new Player(new PlayerInfo("alessandro",new GregorianCalendar(1998,Calendar.SEPTEMBER,2),3));
-        player1.setColour(Colour.WHITE);
+        player1.setColour(Colour.RED);
         player2.setColour(Colour.BLUE);
-        player3.setColour(Colour.GREY);
+        player3.setColour(Colour.PURPLE);
 
         assertTrue(model.isEliminated(player3));
         assertFalse(model.isEliminated(player1));
@@ -64,7 +64,7 @@ class ModelTest {
         Model model=new Model(2);
         GameBoard gameBoard=model.getGameBoard();
         Player player1=new Player(new PlayerInfo("simone",new GregorianCalendar(1998,Calendar.SEPTEMBER,16),2));
-        player1.setColour(Colour.WHITE);
+        player1.setColour(Colour.RED);
         player1.getWorker(0).setStartingPosition(0,0);
         player1.getWorker(1).setStartingPosition(1,0);
         int[][] towers =
@@ -144,21 +144,21 @@ class ModelTest {
             void WB_differentDay() {
                 ArrayList<Player> players = setPlayersBirthDay2(2,1);
                 model.assignColour(players);
-                checkColour2(players, Colour.WHITE, Colour.BLUE);
+                checkColour2(players, Colour.RED, Colour.BLUE);
             }
 
             @Test
             void WB_sameDay() {
                 ArrayList<Player> players = setPlayersBirthDay2(1, 1);
                 model.assignColour(players);
-                checkColour2(players, Colour.WHITE, Colour.BLUE);
+                checkColour2(players, Colour.RED, Colour.BLUE);
             }
 
             @Test
             void BW_differentDay() {
                 ArrayList<Player> players = setPlayersBirthDay2(1,2);
                 model.assignColour(players);
-                checkColour2(players, Colour.BLUE, Colour.WHITE);
+                checkColour2(players, Colour.BLUE, Colour.RED);
             }
 
         }
@@ -175,63 +175,63 @@ class ModelTest {
             void WBG_3sameDay(){
                 ArrayList<Player> players = setPlayersBirthDay3(1,1,1);
                 model.assignColour(players);
-                checkColour3(players,Colour.WHITE,Colour.BLUE,Colour.GREY);
+                checkColour3(players,Colour.RED,Colour.BLUE,Colour.PURPLE);
             }
 
             @Test
             void WBG_sameDay12(){
                 ArrayList<Player> players = setPlayersBirthDay3(2,2,1);
                 model.assignColour(players);
-                checkColour3(players,Colour.WHITE,Colour.BLUE,Colour.GREY);
+                checkColour3(players,Colour.RED,Colour.BLUE,Colour.PURPLE);
             }
 
             @Test
             void WGB_sameDay13(){
                 ArrayList<Player> players = setPlayersBirthDay3(2,1,2);
                 model.assignColour(players);
-                checkColour3(players,Colour.WHITE,Colour.GREY,Colour.BLUE);
+                checkColour3(players,Colour.RED,Colour.PURPLE,Colour.BLUE);
             }
 
             @Test
             void WBG_sameDay23(){
                 ArrayList<Player> players = setPlayersBirthDay3(2,1,1);
                 model.assignColour(players);
-                checkColour3(players,Colour.WHITE,Colour.BLUE,Colour.GREY);
+                checkColour3(players,Colour.RED,Colour.BLUE,Colour.PURPLE);
             }
 
             @Test
             void GWB_sameDay23(){
                 ArrayList<Player> players = setPlayersBirthDay3(1,2,2);
                 model.assignColour(players);
-                checkColour3(players,Colour.GREY,Colour.WHITE,Colour.BLUE);
+                checkColour3(players,Colour.PURPLE,Colour.RED,Colour.BLUE);
             }
 
             @Test
             void reverse(){
                 ArrayList<Player> players = setPlayersBirthDay3(1,2,3);
                 model.assignColour(players);
-                checkColour3(players,Colour.GREY,Colour.BLUE,Colour.WHITE);
+                checkColour3(players,Colour.PURPLE,Colour.BLUE,Colour.RED);
             }
 
             @Test
             void BWG_sameDay13(){
                 ArrayList<Player> players = setPlayersBirthDay3(1,2,1);
                 model.assignColour(players);
-                checkColour3(players,Colour.BLUE,Colour.WHITE,Colour.GREY);
+                checkColour3(players,Colour.BLUE,Colour.RED,Colour.PURPLE);
             }
 
             @Test
             void BGW(){
                 ArrayList<Player> players = setPlayersBirthDay3(2,1,3);
                 model.assignColour(players);
-                checkColour3(players,Colour.BLUE,Colour.GREY,Colour.WHITE);
+                checkColour3(players,Colour.BLUE,Colour.PURPLE,Colour.RED);
             }
 
             @Test
             void WGB(){
                 ArrayList<Player> players = setPlayersBirthDay3(3,1,2);
                 model.assignColour(players);
-                checkColour3(players,Colour.WHITE,Colour.GREY,Colour.BLUE);
+                checkColour3(players,Colour.RED,Colour.PURPLE,Colour.BLUE);
             }
 
 
@@ -251,13 +251,13 @@ class ModelTest {
         players.add(player3);
         model.assignColour(players);
 
-        assertEquals(Colour.WHITE,player1.getColour());
+        assertEquals(Colour.RED,player1.getColour());
         assertEquals(Colour.BLUE,player2.getColour());
-        assertEquals(Colour.GREY,player3.getColour());
+        assertEquals(Colour.PURPLE,player3.getColour());
 
-        assertEquals(player1,model.getPlayerFromColour(players,Colour.WHITE));
+        assertEquals(player1,model.getPlayerFromColour(players,Colour.RED));
         assertEquals(player2,model.getPlayerFromColour(players,Colour.BLUE));
-        assertEquals(player3,model.getPlayerFromColour(players,Colour.GREY));
+        assertEquals(player3,model.getPlayerFromColour(players,Colour.PURPLE));
 
     }
 
@@ -274,8 +274,8 @@ class ModelTest {
         players.add(player3);
         model.assignColour(players);
 
-        assertEquals(1,model.getIndexFromColour(players,Colour.WHITE));
-        assertEquals(0,model.getIndexFromColour(players,Colour.GREY));
+        assertEquals(1,model.getIndexFromColour(players,Colour.RED));
+        assertEquals(0,model.getIndexFromColour(players,Colour.PURPLE));
         assertEquals(2,model.getIndexFromColour(players,Colour.BLUE));
     }
 

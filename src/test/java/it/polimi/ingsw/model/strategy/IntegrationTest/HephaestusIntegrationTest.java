@@ -15,7 +15,6 @@ import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.model.piece.Level3Block;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
-import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.VirtualView;
@@ -108,7 +107,7 @@ public class HephaestusIntegrationTest {
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 
         //"xXoliTheQueenXx" is the oldest player. but the one i want to test
-        model.setColour(Colour.GREY);
+        model.setColour(Colour.PURPLE);
 
 
         //GAMEBOARD GENERATION
@@ -483,7 +482,7 @@ public class HephaestusIntegrationTest {
             //turnInfo must have been reset
             testSupportFunctions.baseTurnInfoChecker(turnInfo, false, 0, false, 0, -1, false, false);
 
-            assertEquals(Colour.WHITE, model.getTurn());
+            assertEquals(Colour.RED, model.getTurn());
         }
 
         @Test

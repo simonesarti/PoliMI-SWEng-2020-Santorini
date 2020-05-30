@@ -38,7 +38,7 @@ class BasicLoseTest {
         playerTest=new Player(playerTestInfo);
         player2=new Player(player2Info);
 
-        playerTest.setColour(Colour.WHITE);
+        playerTest.setColour(Colour.RED);
         playerTest.getWorker(0).setStartingPosition(0,0);
         playerTest.getWorker(1).setStartingPosition(0,1);
         player2.setColour(Colour.BLUE);

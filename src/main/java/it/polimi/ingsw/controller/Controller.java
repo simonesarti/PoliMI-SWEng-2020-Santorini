@@ -316,7 +316,7 @@ public class Controller implements Observer<PlayerMessage>{
 
             Player nextPlayer;
 
-            if(message.getPlayer().getColour()==Colour.WHITE){
+            if(message.getPlayer().getColour()==Colour.RED){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
 
                 nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).getPlayer();
@@ -327,7 +327,7 @@ public class Controller implements Observer<PlayerMessage>{
             if(message.getPlayer().getColour()==Colour.BLUE){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
                 if(virtualViews.size()==3){
-                    nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.GREY)).getPlayer();
+                    nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.PURPLE)).getPlayer();
                     model.notifyPositionRequest(nextPlayer);
                 }else{
                     model.notifyGameStart(getPlayers());
@@ -335,7 +335,7 @@ public class Controller implements Observer<PlayerMessage>{
                 return;
             }
 
-            if(message.getPlayer().getColour()==Colour.GREY){
+            if(message.getPlayer().getColour()==Colour.PURPLE){
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
                 model.notifyGameStart(getPlayers());
                 return;
@@ -374,7 +374,7 @@ public class Controller implements Observer<PlayerMessage>{
         model.notifyInfoMessage(null,"Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname());
         declaration();
 
-        int index=model.getIndexFromColour(getPlayers(), Colour.WHITE);
+        int index=model.getIndexFromColour(getPlayers(), Colour.RED);
         model.notifyInfoMessage(null,"From the youngest player, you will be required to select the starting position of your workers");
         model.notifyPositionRequest(virtualViews.get(index).getPlayer());
     }

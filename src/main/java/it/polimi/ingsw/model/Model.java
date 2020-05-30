@@ -26,7 +26,7 @@ public class Model extends Observable<NotifyMessages> {
     public Model(int numberOfPlayers){
         gameboard = new GameBoard();
         turnInfo=new TurnInfo();
-        turn=Colour.WHITE;
+        turn=Colour.RED;
 
         playersLeft=numberOfPlayers;
 
@@ -63,10 +63,10 @@ public class Model extends Observable<NotifyMessages> {
     private void assignColour2(Player player1, Player player2){
 
         if(player1.getBirthday().compareTo(player2.getBirthday())>=0){
-            player1.setColour(Colour.WHITE);
+            player1.setColour(Colour.RED);
             player2.setColour(Colour.BLUE);
         }else{
-            player2.setColour(Colour.WHITE);
+            player2.setColour(Colour.RED);
             player1.setColour(Colour.BLUE);
         }
     }
@@ -76,38 +76,38 @@ public class Model extends Observable<NotifyMessages> {
         if(player1.getBirthday().compareTo(player2.getBirthday()) >=0 &&
            player1.getBirthday().compareTo(player3.getBirthday()) >=0){
 
-            player1.setColour(Colour.WHITE);
+            player1.setColour(Colour.RED);
 
             if(player2.getBirthday().compareTo(player3.getBirthday())>=0) {
                 player2.setColour(Colour.BLUE);
-                player3.setColour(Colour.GREY);
+                player3.setColour(Colour.PURPLE);
             }else{
                 player3.setColour(Colour.BLUE);
-                player2.setColour(Colour.GREY);
+                player2.setColour(Colour.PURPLE);
             }
 
         }else if(player2.getBirthday().compareTo(player1.getBirthday())>=0 &&
                  player2.getBirthday().compareTo(player3.getBirthday())>=0){
 
-            player2.setColour(Colour.WHITE);
+            player2.setColour(Colour.RED);
 
             if(player1.getBirthday().compareTo(player3.getBirthday())>=0){
                 player1.setColour(Colour.BLUE);
-                player3.setColour(Colour.GREY);
+                player3.setColour(Colour.PURPLE);
             }else{
                 player3.setColour(Colour.BLUE);
-                player1.setColour(Colour.GREY);
+                player1.setColour(Colour.PURPLE);
             }
         }else{
 
-            player3.setColour(Colour.WHITE);
+            player3.setColour(Colour.RED);
 
             if(player1.getBirthday().compareTo(player2.getBirthday())>=0){
                 player1.setColour(Colour.BLUE);
-                player2.setColour((Colour.GREY));
+                player2.setColour((Colour.PURPLE));
             }else{
                 player2.setColour(Colour.BLUE);
-                player1.setColour(Colour.GREY);
+                player1.setColour(Colour.PURPLE);
             }
         }
 
@@ -140,23 +140,23 @@ public class Model extends Observable<NotifyMessages> {
 
         switch(turn){
 
-            case WHITE:
+            case RED:
                 if(!eliminated[1]) turn=Colour.BLUE;
-                else if (!eliminated[2]) turn=Colour.GREY;
-                else turn=Colour.WHITE;
+                else if (!eliminated[2]) turn=Colour.PURPLE;
+                else turn=Colour.RED;
                 break;
 
 
             case BLUE:
-                if(!eliminated[2]) turn=Colour.GREY;
-                else if(!eliminated[0]) turn=Colour.WHITE;
+                if(!eliminated[2]) turn=Colour.PURPLE;
+                else if(!eliminated[0]) turn=Colour.RED;
                 else turn=Colour.BLUE;
                 break;
 
-            case GREY:
-                if(!eliminated[0]) turn=Colour.WHITE;
+            case PURPLE:
+                if(!eliminated[0]) turn=Colour.RED;
                 else if(!eliminated[1]) turn=Colour.BLUE;
-                else turn=Colour.GREY;
+                else turn=Colour.PURPLE;
                 break;
 
             default:
@@ -203,9 +203,9 @@ public class Model extends Observable<NotifyMessages> {
 
     public Colour getWinnerColour(){
 
-        if(!eliminated[0]) return Colour.WHITE;
+        if(!eliminated[0]) return Colour.RED;
         else if(!eliminated[1]) return Colour.BLUE;
-        else return Colour.GREY;
+        else return Colour.PURPLE;
     }
 
     public void declareWinner(ArrayList<Player> players){

@@ -4,10 +4,7 @@ import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.GodCard;
-import it.polimi.ingsw.model.Model;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 import it.polimi.ingsw.supportClasses.FakeConnection;
@@ -186,6 +183,13 @@ class ControllerTest {
 
         @Test
         void ok(){
+            //setting Godcard to be sent
+            GodDescriptions descriptions=new GodDescriptions();
+            ArrayList<String[]> data=descriptions.getDescriptions();
+            testPlayer.setGodCard(new GodCard(data.get(0)));
+            enemy1Player.setGodCard(new GodCard(data.get(1)));
+            enemy2Player.setGodCard(new GodCard(data.get(2)));
+
             PlayerMessage message1 = new PlayerStartingPositionChoice(virtualViews.get(0), testPlayer, new StartingPositionChoice(0, 0, 0, 1));
             controller.update(message1);
 

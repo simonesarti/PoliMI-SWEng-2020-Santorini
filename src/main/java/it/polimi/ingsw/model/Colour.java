@@ -5,7 +5,7 @@ package it.polimi.ingsw.model;
  */
 public enum Colour {
 
-    WHITE, BLUE, GREY;
+    RED, BLUE, PURPLE;
 
     /**
      * checks if another colour is different

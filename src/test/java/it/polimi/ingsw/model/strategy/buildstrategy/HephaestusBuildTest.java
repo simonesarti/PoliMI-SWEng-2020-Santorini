@@ -38,7 +38,7 @@ class HephaestusBuildTest {
         hephaestusbuild = new HephaestusBuild();
         playerInfo  =new PlayerInfo("Gianpaolo",new GregorianCalendar(1970, Calendar.JULY, 15),3);
         player = new Player(playerInfo);
-        player.setColour(Colour.WHITE);
+        player.setColour(Colour.RED);
         player.getWorker(0).setStartingPosition(0,0);
 
 
@@ -51,7 +51,7 @@ class HephaestusBuildTest {
 
         enemy2Info  =new PlayerInfo("enemy2",new GregorianCalendar(1999, Calendar.DECEMBER, 7),3);
         enemy2Player = new Player(playerInfo);
-        enemy2Player.setColour(Colour.GREY);
+        enemy2Player.setColour(Colour.PURPLE);
         enemy2Player.getWorker(0).setStartingPosition(0,3);
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 

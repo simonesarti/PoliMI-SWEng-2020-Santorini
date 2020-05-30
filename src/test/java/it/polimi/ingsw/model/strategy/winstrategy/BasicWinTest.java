@@ -20,7 +20,7 @@ class BasicWinTest {
     void init(){
         playerInfo=new PlayerInfo("simone",new GregorianCalendar(1998, Calendar.SEPTEMBER, 16),3);
         player=new Player(playerInfo);
-        player.setColour(Colour.WHITE);
+        player.setColour(Colour.RED);
         player.getWorker(0).setStartingPosition(0,0);
         win=new BasicWin();
     }

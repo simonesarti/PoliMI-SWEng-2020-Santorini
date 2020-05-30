@@ -84,7 +84,7 @@ class GameBoardTest {
 
         PlayerInfo playerInfo=new PlayerInfo("enemy1",new GregorianCalendar(2000, Calendar.NOVEMBER, 30),3);
         Player enemy=new Player(playerInfo);
-        enemy.setColour(Colour.GREY);
+        enemy.setColour(Colour.PURPLE);
         enemy.getWorker(0).setStartingPosition(0,0);
         gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(enemy.getWorker(0));
         enemy.getWorker(0).movedToPosition(3,3,2);
@@ -131,13 +131,13 @@ class GameBoardTest {
         player2 = new Player(player2Info);
         player3 = new Player(player3Info);
 
-        playerTest.setColour(Colour.WHITE);
+        playerTest.setColour(Colour.RED);
         playerTest.getWorker(0).setStartingPosition(0, 0);
         playerTest.getWorker(1).setStartingPosition(0, 1);
         player2.setColour(Colour.BLUE);
         player2.getWorker(0).setStartingPosition(1, 0);
         player2.getWorker(1).setStartingPosition(1, 1);
-        player3.setColour(Colour.GREY);
+        player3.setColour(Colour.PURPLE);
         player3.getWorker(0).setStartingPosition(2, 0);
         player3.getWorker(1).setStartingPosition(2, 1);
 

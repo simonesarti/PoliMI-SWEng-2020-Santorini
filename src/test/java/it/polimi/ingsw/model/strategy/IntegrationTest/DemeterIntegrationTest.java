@@ -397,7 +397,7 @@ public class DemeterIntegrationTest {
             //turnInfo must have been reset
             testSupportFunctions.baseTurnInfoChecker(turnInfo, false, 0, false, 0, -1, false, false);
 
-            assertEquals(Colour.GREY, model.getTurn());
+            assertEquals(Colour.PURPLE, model.getTurn());
         }
 
         @Test

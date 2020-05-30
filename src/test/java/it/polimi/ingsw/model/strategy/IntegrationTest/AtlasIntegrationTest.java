@@ -13,7 +13,6 @@ import it.polimi.ingsw.model.piece.Dome;
 import it.polimi.ingsw.model.piece.Level3Block;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
-import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.VirtualView;
@@ -106,7 +105,7 @@ public class AtlasIntegrationTest {
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 
         //"xXoliTheQueenXx" is the oldest player. but the one i want to test
-        model.setColour(Colour.GREY);
+        model.setColour(Colour.PURPLE);
 
         //GAMEBOARD GENERATION
         int[][] towers=

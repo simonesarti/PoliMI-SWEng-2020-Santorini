@@ -44,11 +44,11 @@ public class Cell {
         if (workercolour.equals(Colour.BLUE)){
              stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_BLUE + "W" + num + "     " + AnsiCode.RESET;
         }
-        else if (workercolour.equals(Colour.WHITE)){
+        else if (workercolour.equals(Colour.RED)){
              stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_RED + "W" + num + "     " + AnsiCode.RESET;
         }
-        else if (workercolour.equals(Colour.GREY)){
-             stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_YELLOW + "W" + num + "     " + AnsiCode.RESET;
+        else if (workercolour.equals(Colour.PURPLE)){
+             stripe = BackgroundAnsiColour + "     " + AnsiCode.TEXT_PURPLE + "W" + num + "     " + AnsiCode.RESET;
         }
 
         return stripe;

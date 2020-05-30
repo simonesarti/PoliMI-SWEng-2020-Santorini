@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class FakeConnection extends ServerSideConnection {
 
@@ -34,6 +35,17 @@ public class FakeConnection extends ServerSideConnection {
             System.out.println("starting position requested to " + name);
         }else if(message instanceof GameStartMessage){
             System.out.println(name+", The game is starting!");
+            ArrayList<String> nicknames=((GameStartMessage) message).getNicknames();
+            ArrayList<String> descriptions=((GameStartMessage) message).getDescriptions();
+            System.out.println("nicknames: ");
+            for(String name : nicknames){
+                System.out.println(name);
+            }
+            System.out.println("\ndescriprions: ");
+            for(String desc : descriptions){
+                System.out.println(desc);
+            }
+
         }else{
             System.out.println("this message is neither a board, a InfoMessage, a ErrorMessage, PossibleCardsMessage or StartingPostion message");
             System.out.println(message.toString());

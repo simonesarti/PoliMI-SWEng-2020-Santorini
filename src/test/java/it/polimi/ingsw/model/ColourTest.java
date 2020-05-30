@@ -9,9 +9,9 @@ public class ColourTest {
     @Test
     public void isEnemy(){
 
-        assertTrue(Colour.GREY.isEnemy(Colour.WHITE));
-        assertTrue(Colour.GREY.isEnemy(Colour.BLUE));
-        assertFalse(Colour.GREY.isEnemy(Colour.GREY));
+        assertTrue(Colour.PURPLE.isEnemy(Colour.RED));
+        assertTrue(Colour.PURPLE.isEnemy(Colour.BLUE));
+        assertFalse(Colour.PURPLE.isEnemy(Colour.PURPLE));
 
     }
 

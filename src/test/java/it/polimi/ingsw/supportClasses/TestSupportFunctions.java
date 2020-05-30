@@ -6,12 +6,6 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.model.piece.Dome;
-import it.polimi.ingsw.server.Server;
-import it.polimi.ingsw.server.ServerSideConnection;
-import it.polimi.ingsw.view.VirtualView;
-
-import java.io.IOException;
-import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +26,7 @@ public class TestSupportFunctions {
 
 
 
-        player.setColour(Colour.WHITE);
+        player.setColour(Colour.RED);
         player.getWorker(0).setStartingPosition(0,0);
         player.getWorker(1).setStartingPosition(0,0);
 
@@ -42,7 +36,7 @@ public class TestSupportFunctions {
         enemy1Player.getWorker(1).setStartingPosition(0,2);
 
 
-        enemy2Player.setColour(Colour.GREY);
+        enemy2Player.setColour(Colour.PURPLE);
         enemy2Player.getWorker(0).setStartingPosition(0,3);
         enemy2Player.getWorker(1).setStartingPosition(0,4);
 
