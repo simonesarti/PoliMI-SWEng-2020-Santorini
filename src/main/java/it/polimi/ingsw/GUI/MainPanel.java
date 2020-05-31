@@ -4,6 +4,7 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainPanel extends JPanel{
@@ -16,6 +17,16 @@ public class MainPanel extends JPanel{
     public MainPanel(JFrame frame){
         background=Images.getImage(Images.INITIAL_BACKGROUND);
         setPreferredSize(new Dimension(frame.getHeight(),frame.getWidth()));
+        //TODO
+        //DEBUG
+        ArrayList<String> cards=new ArrayList<>();
+        ArrayList<String> nicknames=new ArrayList<>();
+        cards.add("Athena");
+        cards.add("Artemis");
+        nicknames.add("Oli");
+        nicknames.add("Ale");
+
+        setMatchGui(cards,nicknames);
     }
 
     public void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames){
@@ -24,9 +35,9 @@ public class MainPanel extends JPanel{
         gamePanel=new GamePanel();
         choicePanel=new ChoicePanel();
         cardsPanel=new CardsPanel(cards,nicknames);
-        setInternalPanel(cardsPanel,0,0,1,3,100,100,0,0,0,0,0,5,10,1);
-        setInternalPanel(choicePanel,3,0,1,1,100,100,0,0,0,0,0,5,10,1);
-        setInternalPanel(gamePanel,4,0,1,10,100,100,0,0,0,0,0,0,10,1);
+        setInternalPanel(cardsPanel,0,0,1,3,10,1,0,0,0,0,0,0,10,1);
+        setInternalPanel(choicePanel,3,0,1,1,1,1,0,0,0,0,0,0,10,1);
+        setInternalPanel(gamePanel,4,0,1,10,100,1,0,0,0,0,0,0,10,1);
 
     }
 

@@ -7,10 +7,10 @@ import java.awt.event.MouseListener;
 
 public class ChoicePanel extends JPanel {
 
-    JButton moveButton;
-    JButton buildButton;
-    JButton endButton;
-    JButton quitButton;
+    JButton moveButton=new JButton();
+    JButton buildButton=new JButton();
+    JButton endButton=new JButton();
+    JButton quitButton=new JButton();
 
 
     public ChoicePanel(){

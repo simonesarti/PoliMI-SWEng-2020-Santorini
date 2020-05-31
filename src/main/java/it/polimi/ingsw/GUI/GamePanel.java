@@ -14,7 +14,7 @@ public class GamePanel extends JPanel{
 
     public GamePanel() {
         gameBoard=Images.getImage(Images.GAMEBOARD);
-        setLayout(new GridLayout(5,5,5,5));
+        setLayout(new GridLayout(5,5,30,30));
         setTowerButtons();
         setVisible(true);
 

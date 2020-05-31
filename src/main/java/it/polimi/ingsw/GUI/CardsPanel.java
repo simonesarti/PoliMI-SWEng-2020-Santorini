@@ -14,7 +14,6 @@ public class CardsPanel extends JPanel {
 
         setLayout(new GridLayout(3,1,0,5));
         setCardPanels(cards,nicknames);
-        setVisible(true);
     }
 
     private void setCardPanels(ArrayList<String> cards, ArrayList<String> nicknames){
