@@ -25,10 +25,17 @@ public class GamePanel extends JPanel{
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 5; i++) {
                 towerButtons[i][j] = new JButton();
+                setButtonVisibility(towerButtons[i][j]);
                 add(towerButtons[i][j]);
                 towerButtons[i][j].addMouseListener(new towerSelectionListener());
             }
         }
+    }
+
+    private void setButtonVisibility(JButton button){
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(true);
     }
 
     //TODO
