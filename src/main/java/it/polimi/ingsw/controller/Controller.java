@@ -375,7 +375,7 @@ public class Controller implements Observer<PlayerMessage>{
         declaration();
 
         int index=model.getIndexFromColour(getPlayers(), Colour.RED);
-        model.notifyInfoMessage(null,"From the youngest player, you will be required to select the starting position of your workers");
+        model.notifyInfoMessage(null,"From the youngest player, you will be required to select the starting position of your workers.\nPlayer "+model.getPlayerFromColour(getPlayers(),Colour.RED).getNickname()+" will start");
         model.notifyPositionRequest(virtualViews.get(index).getPlayer());
     }
 
