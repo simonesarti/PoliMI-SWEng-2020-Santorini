@@ -39,9 +39,7 @@ public enum Images {
     public String getPath(){return path;}
 
     public static Image getImage(Images resource){
-
-        Toolkit t=Toolkit.getDefaultToolkit();
-        return t.getImage(resource.getPath());
+        return new ImageIcon(resource.getPath()).getImage();
     }
 
     public static ImageIcon getIcon(Images resource){
