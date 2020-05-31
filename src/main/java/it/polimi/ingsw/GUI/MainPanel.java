@@ -38,7 +38,7 @@ public class MainPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(background,0,0,null);
+        g.drawImage(background,0,0,this);
     }
 
     private void setInternalPanel(JPanel panel, int gridx, int gridy, int gridheight, int gridwidth, int weightx, int weighty,int ipadx, int ipady, int insetsTop,int insetsBottom, int insetsLeft, int insetsRight, int anchor, int fill){
