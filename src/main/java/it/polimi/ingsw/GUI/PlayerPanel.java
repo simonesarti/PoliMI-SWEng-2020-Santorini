@@ -21,6 +21,7 @@ public class PlayerPanel extends JPanel {
 
         }
         nicknameLabel.setForeground(Color.WHITE);
+        nicknameLabel.setOpaque(true);
         nicknameLabel.setBackground(color);
 
         setPanel();
