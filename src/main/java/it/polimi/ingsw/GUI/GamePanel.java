@@ -14,7 +14,7 @@ public class GamePanel extends JPanel{
 
     public GamePanel() {
         gameBoard=Images.getImage(Images.GAMEBOARD);
-        setLayout(new GridLayout(5,5,30,30));
+        setLayout(new GridBagLayout());
         setTowerButtons();
         setVisible(true);
 
@@ -26,8 +26,9 @@ public class GamePanel extends JPanel{
             for (int i = 0; i < 5; i++) {
                 towerButtons[i][j] = new JButton();
                 setButtonVisibility(towerButtons[i][j]);
-                add(towerButtons[i][j]);
+                add(towerButtons[i][j],setButtonConstraints(i,j));
                 towerButtons[i][j].addMouseListener(new towerSelectionListener());
+                towerButtons[i][j].setText(""+i+"+"+j+"");
             }
         }
     }
@@ -38,7 +39,43 @@ public class GamePanel extends JPanel{
         button.setBorderPainted(true);
     }
 
-    //TODO
+    private GridBagConstraints setButtonConstraints(int gridx, int gridy) {
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+        //x position of component
+        gridBagConstraints.gridx = gridx;
+        //y position of the component
+        gridBagConstraints.gridy = gridy;
+        //rows used by the component
+        gridBagConstraints.gridheight = 1;
+        // Number of columns the component takes up
+        gridBagConstraints.gridwidth = 1;
+        // Gives the layout manager a hint on how to adjust component width (0 equals fixed)
+        gridBagConstraints.weightx = 1;
+
+        // Gives the layout manager a hint on how to adjust component height (0 equals fixed)
+        gridBagConstraints.weighty = 1;
+
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.ipady = 0;
+
+        // Defines padding top, left, bottom, right
+        gridBagConstraints.insets = new Insets(5,5,5,5);
+
+        // Defines where to place components if they don't
+        // fill the space: CENTER, NORTH, SOUTH, EAST, WEST
+        // NORTHEAST, etc.
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+
+        // How should the component be stretched to fill the
+        // space: NONE, HORIZONTAL, VERTICAL, BOTH
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+
+        return gridBagConstraints;
+    }
+
+        //TODO
     //update icona pulsanti con nuova
 
     private class towerSelectionListener implements MouseListener {
