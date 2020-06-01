@@ -36,7 +36,7 @@ public class GamePanel extends JPanel{
     private void setButtonVisibility(JButton button){
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBorderPainted(true);
+        button.setBorderPainted(false);
     }
 
     private GridBagConstraints setButtonConstraints(int gridx, int gridy) {
