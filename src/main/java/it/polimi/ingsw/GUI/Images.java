@@ -16,16 +16,16 @@ public enum Images {
     END_TURN_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/end_turn_button.png"),
     PRESSED_END_TURN_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/pressed_end_turn_button.png"),
 
-    APOLLO("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Apollo"),
-    ARTEMIS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Artemis"),
-    ATHENA("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Athena"),
-    ATLAS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Atlas"),
-    DEMETER("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Demeter"),
-    HEPHAESTUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Hephaestus"),
-    MINOTAUR("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Minotaur"),
-    PAN("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Pan"),
-    PROMETHEUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Prometheus"),
-    EMPTY_CARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/EmptyCard");
+    APOLLO("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Apollo.png"),
+    ARTEMIS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Artemis.png"),
+    ATHENA("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Athena.png"),
+    ATLAS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Atlas.png"),
+    DEMETER("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Demeter.png"),
+    HEPHAESTUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Hephaestus.png"),
+    MINOTAUR("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Minotaur.png"),
+    PAN("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Pan.png"),
+    PROMETHEUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Prometheus.png"),
+    EMPTY_CARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/EmptyCard.png");
 
 
 
