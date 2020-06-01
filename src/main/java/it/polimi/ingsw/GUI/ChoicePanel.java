@@ -16,7 +16,7 @@ public class ChoicePanel extends JPanel {
     public ChoicePanel(){
 
         setBackground(Color.BLACK);
-        setLayout(new GridLayout(4,1));
+        setLayout(new GridBagLayout());
         setButtons();
         setVisible(true);
     }
@@ -25,13 +25,12 @@ public class ChoicePanel extends JPanel {
 
         setToolTipTexts();
         setButtonIcons();
-        setBorders();
         addListeners();
 
-        add(moveButton);
-        add(buildButton);
-        add(endButton);
-        add(quitButton);
+        add(moveButton,setButtonConstraints(0));
+        add(buildButton,setButtonConstraints(1));
+        add(endButton,setButtonConstraints(2));
+        add(quitButton,setButtonConstraints(3));
     }
 
     private void setToolTipTexts(){
@@ -41,22 +40,15 @@ public class ChoicePanel extends JPanel {
         quitButton.setToolTipText("QUIT GAME (only if eliminated)");
     }
 
-    //TODO
     private void setButtonIcons(){
         moveButton.setIcon(Images.getIcon(Images.MOVE_BUTTON_ICON));
-        //moveButton.setPressedIcon(Images.getIcon(Images.));
         buildButton.setIcon(Images.getIcon(Images.BUILD_BUTTON_ICON));
-        //buildButton.setPressedIcon(Images.getIcon(Images.));
         endButton.setIcon(Images.getIcon(Images.END_TURN_BUTTON_ICON));
         endButton.setPressedIcon(Images.getIcon(Images.PRESSED_END_TURN_BUTTON_ICON));
         quitButton.setIcon(Images.getIcon(Images.QUIT_BUTTON_ICON));
         quitButton.setPressedIcon(Images.getIcon(Images.PRESSED_QUIT_BUTTON_ICON));
     }
 
-    //TODO
-    private void setBorders(){
-
-    }
 
     private void addListeners(){
 
@@ -64,6 +56,42 @@ public class ChoicePanel extends JPanel {
         buildButton.addMouseListener(new ChoiceListener());
         endButton.addMouseListener(new ChoiceListener());
         quitButton.addMouseListener(new ChoiceListener());
+    }
+
+    private GridBagConstraints setButtonConstraints(int gridy) {
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+        //x position of component
+        gridBagConstraints.gridx = 0;
+        //y position of the component
+        gridBagConstraints.gridy = gridy;
+        //rows used by the component
+        gridBagConstraints.gridheight = 1;
+        // Number of columns the component takes up
+        gridBagConstraints.gridwidth = 1;
+        // Gives the layout manager a hint on how to adjust component width (0 equals fixed)
+        gridBagConstraints.weightx = 1;
+
+        // Gives the layout manager a hint on how to adjust component height (0 equals fixed)
+        gridBagConstraints.weighty = 1;
+
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.ipady = 0;
+
+        // Defines padding top, left, bottom, right
+        gridBagConstraints.insets = new Insets(10,30,10,30);
+
+        // Defines where to place components if they don't
+        // fill the space: CENTER, NORTH, SOUTH, EAST, WEST
+        // NORTHEAST, etc.
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+
+        // How should the component be stretched to fill the
+        // space: NONE, HORIZONTAL, VERTICAL, BOTH
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+
+        return gridBagConstraints;
     }
 
     //TODO

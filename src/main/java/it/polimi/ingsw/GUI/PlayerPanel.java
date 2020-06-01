@@ -16,6 +16,7 @@ public class PlayerPanel extends JPanel {
         setCardButton(card);
         setNicknameLabel(nickname,color);
         addComponents();
+
     }
 
     private void setNicknameLabel(String nickname,Color color){
@@ -65,7 +66,7 @@ public class PlayerPanel extends JPanel {
 
     private void addComponents(){
         setLayout(new GridBagLayout());
-        add(cardButton,setConstraints(0,1,100));
+        add(cardButton,setConstraints(0,1,10));
         add(nicknameLabel,setConstraints(1,1,1));
         cardButton.addMouseListener(new CardPressListener());
 }

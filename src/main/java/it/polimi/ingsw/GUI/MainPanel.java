@@ -35,9 +35,9 @@ public class MainPanel extends JPanel{
         gamePanel=new GamePanel();
         choicePanel=new ChoicePanel();
         cardsPanel=new CardsPanel(cards,nicknames);
-        setInternalPanel(cardsPanel,0,0,1,3,10,1,0,0,0,0,0,0,10,1);
-        setInternalPanel(choicePanel,3,0,1,1,1,1,0,0,0,0,0,0,10,1);
-        setInternalPanel(gamePanel,4,0,1,10,100,1,0,0,0,0,0,0,10,1);
+        setInternalPanel(cardsPanel,0,0,1,1,1,1,0,0,0,0,0,0,10,1);
+        setInternalPanel(choicePanel,1,0,1,1,1,1,0,0,0,0,0,0,10,1);
+        setInternalPanel(gamePanel,2,0,1,20,10,1,0,0,0,0,0,0,10,1);
 
     }
 
