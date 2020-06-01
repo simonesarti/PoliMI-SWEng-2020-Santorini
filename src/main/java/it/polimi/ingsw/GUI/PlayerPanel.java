@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public class PlayerPanel extends JPanel {
 
-    private final JButton cardButton=new JButton();
+    private final ImageButton cardButton=new ImageButton();
     private String description;
     private final JLabel nicknameLabel=new JLabel();
 
@@ -33,10 +33,10 @@ public class PlayerPanel extends JPanel {
             cardButton.setIcon(Images.getIcon(Images.APOLLO));
             cardButton.setToolTipText("Apollo");
         }else if(card.contains("Artemis")){
-            cardButton.setIcon(Images.getIcon(Images.ARTEMIS));
+            cardButton.setButtonImage(Images.getImage(Images.ARTEMIS));
             cardButton.setToolTipText("Artemis");
         }else if(card.contains("Athena")){
-            cardButton.setIcon(Images.getIcon(Images.ATHENA));
+            cardButton.setButtonImage(Images.getImage(Images.ATHENA));
             cardButton.setToolTipText("Athena");
         }else if(card.contains("Atlas")){
             cardButton.setIcon(Images.getIcon(Images.ATLAS));
@@ -57,7 +57,7 @@ public class PlayerPanel extends JPanel {
             cardButton.setIcon(Images.getIcon(Images.PROMETHEUS));
             cardButton.setToolTipText("Prometheus");
         }else{
-            cardButton.setIcon(Images.getIcon(Images.EMPTY_CARD));
+            cardButton.setButtonImage(Images.getImage(Images.EMPTY_CARD));
             cardButton.setToolTipText("not used");
         }
 

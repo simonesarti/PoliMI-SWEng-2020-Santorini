@@ -18,15 +18,15 @@ public enum Images {
 
     //TODO correggere i path
     APOLLO("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Apollo.png"),
-    ARTEMIS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Artemis"),
-    ATHENA("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Athena"),
+    ARTEMIS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Artemis.png"),
+    ATHENA("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Athena.png"),
     ATLAS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Atlas.png"),
     DEMETER("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Demeter.png"),
     HEPHAESTUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Hephaestus.png"),
     MINOTAUR("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Minotaur.png"),
     PAN("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Pan.png"),
     PROMETHEUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Prometheus.png"),
-    EMPTY_CARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/EmptyCard");
+    EMPTY_CARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/EmptyCard.png");
 
 
 
