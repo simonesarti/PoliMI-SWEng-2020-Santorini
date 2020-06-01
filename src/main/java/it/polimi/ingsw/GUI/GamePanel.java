@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 public class GamePanel extends JPanel{
 
     private final Image gameBoard;
+
     private final JButton[][] towerButtons =new JButton[5][5];
 
     public GamePanel() {
@@ -35,7 +36,7 @@ public class GamePanel extends JPanel{
     private void setButtonVisibility(JButton button){
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBorderPainted(true);
+        button.setBorderPainted(false);
     }
 
     //TODO
@@ -79,7 +80,8 @@ public class GamePanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(gameBoard,0,0,this.getWidth(),this.getHeight(),this);
+        g.drawImage(gameBoard, 0, 0, this.getWidth(), this.getHeight(), this);
+
     }
 
 }
