@@ -7,7 +7,7 @@ public enum Images {
 
     SANTORINI_LOGO("src\\main\\java\\it\\polimi\\ingsw\\GUI\\graphicResources\\backgounds\\santorini-logo.png"),
     INITIAL_BACKGROUND("src\\main\\java\\it\\polimi\\ingsw\\GUI\\graphicResources\\backgounds\\Odyssey-Olympus.png"),
-    GAMEBOARD("src\\main\\java\\it\\polimi\\ingsw\\GUI\\graphicResources\\backgounds\\SantoriniBoard.png"),
+    GAMEBOARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/SantoriniBoard.png"),
     GAME_ICON("src\\main\\java\\it\\polimi\\ingsw\\GUI\\graphicResources\\backgounds\\om_gloryIcon.png"),
     MOVE_BUTTON_ICON("src\\main\\java\\it\\polimi\\ingsw\\GUI\\graphicResources\\sprite\\move_button.png"),
     BUILD_BUTTON_ICON("src\\main\\java\\it\\polimi\\ingsw\\GUI\\graphicResources\\sprite\\build_button.png"),
