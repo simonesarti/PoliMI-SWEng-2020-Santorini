@@ -29,7 +29,6 @@ public class GamePanel extends JPanel{
                 setButtonVisibility(towerButtons[i][j]);
                 add(towerButtons[i][j],setButtonConstraints(i,j));
                 towerButtons[i][j].addMouseListener(new towerSelectionListener());
-                towerButtons[i][j].setText(""+i+"+"+j+"");
             }
         }
     }
@@ -37,7 +36,7 @@ public class GamePanel extends JPanel{
     private void setButtonVisibility(JButton button){
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
+        button.setBorderPainted(true);
     }
 
     private GridBagConstraints setButtonConstraints(int gridx, int gridy) {

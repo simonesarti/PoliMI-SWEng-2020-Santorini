@@ -9,22 +9,21 @@ public class PlayerPanel extends JPanel {
 
     private final JButton cardButton=new JButton();
     private String description;
-    private final JLabel nicknameLabel;
+    private final JLabel nicknameLabel=new JLabel();
 
     public PlayerPanel(String card, String nickname, Color color){
+
         setCardButton(card);
+        setNicknameLabel(nickname,color);
+        addComponents();
+    }
 
-        if(nickname.equals("nickname not used")){
-            nicknameLabel=new JLabel();
-        }else{
-            nicknameLabel=new JLabel("Player "+nickname);
+    private void setNicknameLabel(String nickname,Color color){
 
-        }
+        nicknameLabel.setText("Player "+nickname);
         nicknameLabel.setForeground(Color.WHITE);
         nicknameLabel.setOpaque(true);
         nicknameLabel.setBackground(color);
-
-        setPanel();
     }
 
     private void setCardButton(String card){
@@ -64,13 +63,47 @@ public class PlayerPanel extends JPanel {
         description=card;
     }
 
-    private void setPanel(){
-        setLayout(new BorderLayout());
-        add(cardButton,BorderLayout.NORTH);
-        add(nicknameLabel,BorderLayout.SOUTH);
+    private void addComponents(){
+        setLayout(new GridBagLayout());
+        add(cardButton,setConstraints(0,1,100));
+        add(nicknameLabel,setConstraints(1,1,1));
         cardButton.addMouseListener(new CardPressListener());
-        setVisible(true);
 }
+
+    private GridBagConstraints setConstraints(int gridy, int gridheight, int weighty) {
+
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+        //x position of component
+        gridBagConstraints.gridx = 0;
+        //y position of the component
+        gridBagConstraints.gridy = gridy;
+        //rows used by the component
+        gridBagConstraints.gridheight = gridheight;
+        // Number of columns the component takes up
+        gridBagConstraints.gridwidth = 1;
+        // Gives the layout manager a hint on how to adjust component width (0 equals fixed)
+        gridBagConstraints.weightx = 1;
+        // Gives the layout manager a hint on how to adjust component height (0 equals fixed)
+        gridBagConstraints.weighty = weighty;
+
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.ipady = 0;
+
+        // Defines padding top, left, bottom, right
+        gridBagConstraints.insets = new Insets(0,0,0,0);
+
+        // Defines where to place components if they don't
+        // fill the space: CENTER, NORTH, SOUTH, EAST, WEST
+        // NORTHEAST, etc.
+        gridBagConstraints.anchor = GridBagConstraints.CENTER;
+
+        // How should the component be stretched to fill the
+        // space: NONE, HORIZONTAL, VERTICAL, BOTH
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+
+        return gridBagConstraints;
+    }
 
     private class CardPressListener implements MouseListener{
 

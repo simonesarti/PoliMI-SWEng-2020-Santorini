@@ -12,7 +12,7 @@ public class CardsPanel extends JPanel {
 
     public CardsPanel(ArrayList<String> cards, ArrayList<String> nicknames){
 
-        setLayout(new GridLayout(3,1,0,5));
+        setLayout(new GridLayout(3,1,0,0));
         setCardPanels(cards,nicknames);
     }
 
@@ -22,7 +22,7 @@ public class CardsPanel extends JPanel {
         if(cards.size()==3){
             player3=new PlayerPanel(cards.get(2),nicknames.get(2),new Color(255,0,255));
         }else{
-            player3=new PlayerPanel("card not used in this match","nickname not used",Color.DARK_GRAY);
+            player3=new PlayerPanel("card not used in this match","not present in match",Color.DARK_GRAY);
         }
 
         add(player1);
