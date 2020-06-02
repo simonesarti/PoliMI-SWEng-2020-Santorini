@@ -11,7 +11,7 @@ public class GamePanel extends JPanel{
 
     private final Image gameBoard;
 
-    private final JButton[][] towerButtons =new JButton[5][5];
+    private final ImageButton[][] towerButtons =new ImageButton[5][5];
 
     public GamePanel() {
         gameBoard=Images.getImage(Images.GAMEBOARD);
@@ -25,7 +25,7 @@ public class GamePanel extends JPanel{
 
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 5; i++) {
-                towerButtons[i][j] = new JButton();
+                towerButtons[i][j] = new ImageButton();
                 setButtonVisibility(towerButtons[i][j]);
                 add(towerButtons[i][j],setButtonConstraints(i,j));
                 towerButtons[i][j].addMouseListener(new towerSelectionListener());

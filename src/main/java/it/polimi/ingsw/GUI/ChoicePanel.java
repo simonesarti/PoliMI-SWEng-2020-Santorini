@@ -7,10 +7,10 @@ import java.awt.event.MouseListener;
 
 public class ChoicePanel extends JPanel {
 
-    JButton moveButton=new JButton();
-    JButton buildButton=new JButton();
-    JButton endButton=new JButton();
-    JButton quitButton=new JButton();
+    ImageButton moveButton=new ImageButton();
+    ImageButton buildButton=new ImageButton();
+    ImageButton endButton=new ImageButton();
+    ImageButton quitButton=new ImageButton();
 
 
     public ChoicePanel(){
@@ -41,12 +41,10 @@ public class ChoicePanel extends JPanel {
     }
 
     private void setButtonIcons(){
-        moveButton.setIcon(Images.getIcon(Images.MOVE_BUTTON_ICON));
-        buildButton.setIcon(Images.getIcon(Images.BUILD_BUTTON_ICON));
-        endButton.setIcon(Images.getIcon(Images.END_TURN_BUTTON_ICON));
-        endButton.setPressedIcon(Images.getIcon(Images.PRESSED_END_TURN_BUTTON_ICON));
-        quitButton.setIcon(Images.getIcon(Images.QUIT_BUTTON_ICON));
-        quitButton.setPressedIcon(Images.getIcon(Images.PRESSED_QUIT_BUTTON_ICON));
+        moveButton.setButtonImage(Images.getImage(Images.MOVE_BUTTON_ICON));
+        buildButton.setButtonImage(Images.getImage(Images.BUILD_BUTTON_ICON));
+        endButton.setButtonImage(Images.getImage(Images.END_TURN_BUTTON_ICON));
+        quitButton.setButtonImage(Images.getImage(Images.QUIT_BUTTON_ICON));
     }
 
 
@@ -80,7 +78,7 @@ public class ChoicePanel extends JPanel {
         gridBagConstraints.ipady = 0;
 
         // Defines padding top, left, bottom, right
-        gridBagConstraints.insets = new Insets(10,30,10,30);
+        gridBagConstraints.insets = new Insets(40,10,40,10);
 
         // Defines where to place components if they don't
         // fill the space: CENTER, NORTH, SOUTH, EAST, WEST
