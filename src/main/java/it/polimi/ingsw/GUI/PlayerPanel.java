@@ -2,6 +2,8 @@ package it.polimi.ingsw.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -68,7 +70,7 @@ public class PlayerPanel extends JPanel {
         setLayout(new GridBagLayout());
         add(cardButton,setConstraints(0,1,10));
         add(nicknameLabel,setConstraints(1,1,1));
-        cardButton.addMouseListener(new CardPressListener());
+        cardButton.addActionListener(new CardPressListener());
 }
 
     private GridBagConstraints setConstraints(int gridy, int gridheight, int weighty) {
@@ -106,31 +108,11 @@ public class PlayerPanel extends JPanel {
         return gridBagConstraints;
     }
 
-    private class CardPressListener implements MouseListener{
+    private class CardPressListener implements ActionListener {
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(cardButton,description,"Card info",JOptionPane.INFORMATION_MESSAGE);
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
         }
     }
 

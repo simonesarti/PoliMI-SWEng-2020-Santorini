@@ -79,7 +79,7 @@ public class GamePanel extends JPanel{
 
     //TODO
     private class CellSelectedListener implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
 

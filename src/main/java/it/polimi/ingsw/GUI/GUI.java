@@ -53,6 +53,7 @@ public class GUI extends View{
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
 
+        new DivinityChoiceScreen(message.getGods(),message.getNumberOfChoices());
     }
 
     @Override
