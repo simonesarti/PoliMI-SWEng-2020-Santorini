@@ -2,6 +2,8 @@ package it.polimi.ingsw.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -50,10 +52,10 @@ public class ChoicePanel extends JPanel {
 
     private void addListeners(){
 
-        moveButton.addMouseListener(new ChoiceListener());
-        buildButton.addMouseListener(new ChoiceListener());
-        endButton.addMouseListener(new ChoiceListener());
-        quitButton.addMouseListener(new ChoiceListener());
+        moveButton.addActionListener(new ChoiceListener());
+        buildButton.addActionListener(new ChoiceListener());
+        endButton.addActionListener(new ChoiceListener());
+        quitButton.addActionListener(new ChoiceListener());
     }
 
     private GridBagConstraints setButtonConstraints(int gridy) {
@@ -93,32 +95,12 @@ public class ChoicePanel extends JPanel {
     }
 
     //TODO
-    private class ChoiceListener implements MouseListener{
+    private class ChoiceListener implements ActionListener {
 
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
 
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            //do nothing
         }
     }
 

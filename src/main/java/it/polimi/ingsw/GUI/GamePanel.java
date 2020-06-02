@@ -4,6 +4,8 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -28,7 +30,7 @@ public class GamePanel extends JPanel{
                 towerButtons[i][j] = new ImageButton();
                 setButtonVisibility(towerButtons[i][j]);
                 add(towerButtons[i][j],setButtonConstraints(i,j));
-                towerButtons[i][j].addMouseListener(new towerSelectionListener());
+                towerButtons[i][j].addActionListener(new CellSelectedListener());
             }
         }
     }
@@ -75,41 +77,17 @@ public class GamePanel extends JPanel{
         return gridBagConstraints;
     }
 
-        //TODO
-    //update icona pulsanti con nuova
-
-    private class towerSelectionListener implements MouseListener {
-
+    //TODO
+    private class CellSelectedListener implements ActionListener {
+        
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
 
-        }
-
-        //TODO
-        @Override
-        public void mousePressed(MouseEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            //do nothing
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            //do nothing
         }
     }
 
     //TODO
     public void updateBoard(NewBoardStateMessage message){
-
     }
 
     @Override

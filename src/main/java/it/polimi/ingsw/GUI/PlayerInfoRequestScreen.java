@@ -5,11 +5,6 @@ import it.polimi.ingsw.view.ClientViewSupportFunctions;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
-
 
 public class PlayerInfoRequestScreen extends JDialog implements ActionListener{
 
@@ -27,27 +22,27 @@ public class PlayerInfoRequestScreen extends JDialog implements ActionListener{
 
     JButton confirmButton;
 
-    public PlayerInfoRequestScreen(boolean isNicknameTaken){
+    public PlayerInfoRequestScreen(boolean isNicknameTaken) {
 
-        nicknameRequest=new JLabel("Nickname: ");
-        nickname=new JTextField();
-        invalidNickname=new JLabel();
+        nicknameRequest = new JLabel("Nickname: ");
+        nickname = new JTextField();
+        invalidNickname = new JLabel();
 
-        birthdayRequest=new JLabel("Date of birth: ");
-        day=new JTextField();
-        month=new JTextField();
-        year=new JTextField();
-        divider1=new JTextField("/");
+        birthdayRequest = new JLabel("Date of birth: ");
+        day = new JTextField();
+        month = new JTextField();
+        year = new JTextField();
+        divider1 = new JTextField("/");
         divider1.setEditable(false);
-        divider2=new JTextField("/");
+        divider2 = new JTextField("/");
         divider2.setEditable(false);
-        invalidBirthday=new JLabel();
+        invalidBirthday = new JLabel();
 
 
-        confirmButton=new JButton("Confirm");
+        confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(this);
 
-        if(isNicknameTaken){
+        if (isNicknameTaken) {
             invalidNickname.setText("This username is already taken");
             invalidNickname.setForeground(Color.RED);
         }
@@ -59,24 +54,24 @@ public class PlayerInfoRequestScreen extends JDialog implements ActionListener{
 
     }
 
-    private void setBounds(){
+    private void setBounds() {
 
-        nicknameRequest.setBounds(20,20, 100,20);
-        nickname.setBounds(120,20, 200,20);
-        invalidNickname.setBounds(120,40,200,20);
+        nicknameRequest.setBounds(20, 20, 100, 20);
+        nickname.setBounds(120, 20, 200, 20);
+        invalidNickname.setBounds(120, 40, 200, 20);
 
-        birthdayRequest.setBounds(20,70, 100,20);
-        day.setBounds(120,70,50,20);
-        divider1.setBounds(170,70,10,20);
-        month.setBounds(180,70,50,20);
-        divider2.setBounds(230,70,10,20);
-        year.setBounds(240,70,50,20);
-        invalidBirthday.setBounds(120,90,200,20);
+        birthdayRequest.setBounds(20, 70, 100, 20);
+        day.setBounds(120, 70, 50, 20);
+        divider1.setBounds(170, 70, 10, 20);
+        month.setBounds(180, 70, 50, 20);
+        divider2.setBounds(230, 70, 10, 20);
+        year.setBounds(240, 70, 50, 20);
+        invalidBirthday.setBounds(120, 90, 200, 20);
 
-        confirmButton.setBounds(125,130, 150,20);
+        confirmButton.setBounds(125, 130, 150, 20);
     }
 
-    private void addToDialog(){
+    private void addToDialog() {
         add(nicknameRequest);
         add(nickname);
         add(invalidNickname);
@@ -97,27 +92,40 @@ public class PlayerInfoRequestScreen extends JDialog implements ActionListener{
         setVisible(true);
     }
 
+    private boolean isNameNotValid(String string) {
+        return (string.equals("") || isOnlySpace(string));
+    }
+
+    private boolean isOnlySpace(String string) {
+
+        char[] array = string.toCharArray();
+
+        for (int i = 0; i < string.length(); i++) {
+            if (array[i] != ' ') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(nickname.getText().equals("")){
+        if (isNameNotValid(nickname.getText())) {
             invalidNickname.setForeground(Color.red);
-            invalidNickname.setText("You can't leave this field blank");
-        }else{
-
-            ClientViewSupportFunctions support=new ClientViewSupportFunctions();
-            if(!support.isDateValid((day.getText()+"-"+month.getText()+"-"+year.getText()),day.getText(),month.getText(),year.getText())){
+            invalidNickname.setText("Invalid nickname");
+            invalidBirthday.setText("");
+        } else {
+            invalidNickname.setText("");
+            ClientViewSupportFunctions support = new ClientViewSupportFunctions();
+            if (!support.isDateValid((day.getText() + "-" + month.getText() + "-" + year.getText()), day.getText(), month.getText(), year.getText())) {
                 invalidBirthday.setForeground(Color.red);
                 invalidBirthday.setText("Invalid date");
-            }else{
+            } else {
+                //TODO COSA SUCCEDE, COSA INVIA
                 dispose();
             }
-
-
-
         }
-
-
     }
-
 }
