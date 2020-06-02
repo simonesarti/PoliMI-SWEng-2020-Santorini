@@ -12,13 +12,16 @@ public class HephaestusBuild implements BuildStrategy{
 
     /**
      * Hephaestus' power: your worker may build one additional block (not dome) on top of your first block
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param buildingInto
-     * @param pieceType
-     * @return
+     * Like BasicBuild's checkBuild but the number of build can be 2
+     * Checks that the second building destination is the same as the first building destination
+     * Checks that the piece is not a dome
+     * @param turnInfo containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the build
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param buildingInto array containing building destination towercell x,y
+     * @param pieceType piece type (Block or Dome) that the player wants to use
+     * @return one of error messages or buildOk message
      */
 
     @Override
@@ -101,6 +104,17 @@ public class HephaestusBuild implements BuildStrategy{
 
         return GameMessage.buildOK;
     }
+
+    /**
+     * Like BasicBuild's checkBuild but the player can choose to build one additional time or end the turn
+     * @param turnInfo containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the build
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param buildingInto array containing building destination towercell x,y
+     * @param pieceType piece type (Block or Dome) that the player wants to use
+     * @return buildAgainOrEnd message or turnCompleted message
+     */
 
     @Override
     public String build(TurnInfo turnInfo, GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType) {

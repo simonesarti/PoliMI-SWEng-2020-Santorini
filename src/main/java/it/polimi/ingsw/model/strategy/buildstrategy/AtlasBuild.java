@@ -13,13 +13,14 @@ public class AtlasBuild implements BuildStrategy {
 
     /**
      * Atlas' power: your worker may build a dome at any level
-     * @param turnInfo
-     * @param gameboard
-     * @param player
-     * @param chosenWorker
-     * @param buildingInto
-     * @param pieceType
-     * @return
+     * Like BasicBuild's checkBuild but the dome can be placed even if the tower's height is not 3
+     * @param turnInfo containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the build
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param buildingInto array containing building destination towercell x,y
+     * @param pieceType piece type (Block or Dome) that the player wants to use
+     * @return one of error messages or buildOk message
      */
 
     @Override
@@ -87,6 +88,17 @@ public class AtlasBuild implements BuildStrategy {
 
         return GameMessage.buildOK;
     }
+
+    /**
+     * Like BasicBuild's build but the dome can be placed even if the tower's height is not 3
+     *
+     * @param turnInfo object containing information about current turn
+     * @param gameboard object representing the gameboard
+     * @param player player performing the build
+     * @param chosenWorker chosen worker (0 or 1)
+     * @param buildingInto array containing building destination towercell x,y
+     * @return turnCompleted message
+     */
 
     @Override
     public String build(TurnInfo turnInfo, GameBoard gameboard, Player player,int chosenWorker, int[] buildingInto, String pieceType) {
