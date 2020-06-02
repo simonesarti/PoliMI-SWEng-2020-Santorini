@@ -64,7 +64,9 @@ public class Cell {
         return stripes[n];
     }
 
-
+    /**
+     * Creates a block representing a dome
+     */
     public void assignDome(String BackgroundAnsiColour){
         stripes[0]=uniformStripe(BackgroundAnsiColour);
         stripes[1]=domeStripe(BackgroundAnsiColour);
@@ -72,7 +74,9 @@ public class Cell {
         stripes[3]=domeStripe(BackgroundAnsiColour);
         stripes[4]=uniformStripe(BackgroundAnsiColour);
     }
-
+    /**
+     * Creates a block with x or y coordinates
+     */
     public void assignCoordinate(String coordinate,int value){
         stripes[0]=emptyStripe();
         stripes[1]=emptyStripe();
@@ -80,7 +84,9 @@ public class Cell {
         stripes[3]=emptyStripe();
         stripes[4]=emptyStripe();
     }
-
+    /**
+     * Creates a level 0 block
+     */
     public void assignGreen(){
 
         for(int i=0;i<5;i++){
@@ -93,7 +99,9 @@ public class Cell {
             stripes[i]=emptyStripe();
         }
     }
-
+    /**
+     * Creates a block with a worker
+     */
     public void assignOnlyWorker(int workerNumber, Colour workercolour){
 
         stripes[0]=uniformStripe(AnsiCode.BACKGROUND_GREEN);
@@ -103,7 +111,9 @@ public class Cell {
         stripes[4]=uniformStripe(AnsiCode.BACKGROUND_GREEN);
 
     }
-
+    /**
+     * Creates a level 1/2/3 block
+     */
     public void assignOnlyLevel(int level){
 
         stripes[0]=uniformStripe(AnsiCode.BACKGROUND_WHITE);
@@ -113,7 +123,9 @@ public class Cell {
         stripes[4]=uniformStripe(AnsiCode.BACKGROUND_WHITE);
 
     }
-
+    /**
+     * Creates a level 1/2/3 block with a worker
+     */
     public void assignLevelAndWorker(int level, int workerNumber, Colour workercolour){
 
         stripes[0]=uniformStripe(AnsiCode.BACKGROUND_WHITE);
@@ -128,11 +140,3 @@ public class Cell {
 
 
 }
-/*
-        stripes[0]=
-        stripes[1]=
-        stripes[2]=
-        stripes[3]=
-        stripes[4]=
-
- */

@@ -18,7 +18,10 @@ public class Matrix {
     public Cell getCell(int x, int y){ return board[x][y];}
 
 
-
+    /**
+     * Creates a matrix assigning the right colours for each cell based on the board state 
+     * @param message state of the board
+     */
     public Matrix convertToMatrix(NewBoardStateMessage message){
 
         Matrix matrix = new Matrix();

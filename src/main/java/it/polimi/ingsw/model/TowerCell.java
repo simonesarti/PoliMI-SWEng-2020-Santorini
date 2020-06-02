@@ -43,6 +43,9 @@ public class TowerCell {
         towerHeight++;
     }
 
+    /**
+     * Returns the first empty level
+     */
     public TowerLevel getFirstNotPieceLevel(){
         if (towerHeight==4) throw new NullPointerException("MESSAGE: Towercell[4] doesn't exist");
         return towerLevels[towerHeight];}
@@ -51,6 +54,10 @@ public class TowerCell {
         return towerLevels[n];
     }
 
+    /**
+     * Checks if there is a worker on the TowerCell
+     * @return boolean
+     */
     public boolean hasWorkerOnTop() {
         if(towerCompleted){
             return false;
