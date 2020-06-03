@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server;
 
+/**
+ * class used to save the associations between the connections of players playing in the same match
+ */
 public class TwoPlayerGameConnection {
 
     private final ServerSideConnection[] connections = new ServerSideConnection[2];

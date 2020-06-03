@@ -2,6 +2,9 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 
+/**
+ * class that contains the couple player-connection
+ */
 public class PlayerConnection {
 
     private final PlayerInfo playerInfo;

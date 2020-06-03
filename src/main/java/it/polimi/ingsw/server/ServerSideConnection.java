@@ -22,6 +22,10 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
     private boolean alreadyEliminated;
     private boolean terminatedWithException;
 
+    /**
+     * @param socket is the socket used
+     * @param server is the server object
+     */
     public ServerSideConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
@@ -55,7 +59,10 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     private synchronized void setTerminatedWithException(){terminatedWithException=true;}
 
-    
+    /**
+     * method used to send an object to the client through socket. Sends only if the connection is still active
+     * @param message is the object to send
+     */
     public synchronized void send(Object message){
 
         if(isActive()){
@@ -71,11 +78,18 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
 
     }
 
+    /**
+     * unregister the match and closes the connection of the player for whom this method was called
+     */
     public synchronized void closeMatch() {
         server.unregisterConnection(this);
         closeConnection();
     }
 
+    /**
+     * closes the streams and then the socket, only when the connection is still active and the client did not
+     * terminated by exception (in that case the connection is already closed)
+     */
     public synchronized void closeConnection() {
 
         if (!hasTerminatedWithException() && isActive()) {
@@ -100,6 +114,11 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
         setNotActive();
     }
 
+    /**
+     * run method of the thread, it keeps listening to messages recived by the client, and forwards them to the
+     * virtualview of the player (except when the message contains the info used to add a player to the lobby).
+     * Once the loop is broken, the connection gets closed
+     */
     @Override
     public void run() {
 
@@ -127,7 +146,6 @@ public class ServerSideConnection extends Observable<DataMessage> implements Run
                 }
 
             }
-
 
             //serialization adds ClassNotFoundException
         } catch (IOException | ClassNotFoundException e) {

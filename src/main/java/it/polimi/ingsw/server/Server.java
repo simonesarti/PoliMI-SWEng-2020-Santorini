@@ -44,7 +44,7 @@ public class Server {
      * adds a playerConnection in a twoPlayerWaitingList or a threePlayerWaitingList
      * if a waiting-list is full it adds a twoPlayerGame/threePlayerGame to a list of matches
      * if a waiting list is full it also creates the Controller, starting the match
-     * @param playerConnection
+     * @param playerConnection contains the player info and his connection
      */
     public synchronized void lobby(PlayerConnection playerConnection) {
 
@@ -125,7 +125,7 @@ public class Server {
     /**
      * if a player's serverSideConnection gets unregistered, inUse becomes false and his
      * opponents' connections get closed
-     * @param connection
+     * @param connection is the connection to search in the waiting lists or game lists
      */
     public synchronized void unregisterConnection(ServerSideConnection connection) {
 
@@ -181,8 +181,8 @@ public class Server {
 
     /**
      * returns connection's position's index in the twoPlayerWaitingList
-     * @param connection
-     * @return
+     * @param connection is the connection to search
+     * @return the index in the waiting list
      */
     private int getWaitingGroupIndex2(ServerSideConnection connection){
 
@@ -196,8 +196,8 @@ public class Server {
 
     /**
      * returns connection's position's index in the threePlayerWaitingList
-     * @param connection
-     * @return
+     * @param connection is the connection to search
+     * @return the index in the waiting list
      */
     private int getWaitingGroupIndex3(ServerSideConnection connection){
 
@@ -211,8 +211,8 @@ public class Server {
 
     /**
      * returns connection's position's index in the twoPlayerGames list
-     * @param connection
-     * @return
+     * @param connection is the connection to search
+     * @return the index in the game list
      */
     private int getMatchGroupIndex2(ServerSideConnection connection) {
 
@@ -227,8 +227,8 @@ public class Server {
 
     /**
      * returns connection's position's index in the threePlayerGames list
-     * @param connection
-     * @return
+     * @param connection is the connection to search
+     * @return the index in the game list
      */
     private int getMatchGroupIndex3(ServerSideConnection connection) {
 
@@ -244,9 +244,9 @@ public class Server {
 
     /**
      * returns true if a nickname is already used by a player in a waiting list
-     * @param nickname
-     * @param waitingList
-     * @return
+     * @param nickname to check
+     * @param waitingList to search in
+     * @return a boolean to say if the nickname was found
      */
     private boolean nicknameAlreadyInUse(String nickname, ArrayList<PlayerConnection> waitingList){
 
