@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

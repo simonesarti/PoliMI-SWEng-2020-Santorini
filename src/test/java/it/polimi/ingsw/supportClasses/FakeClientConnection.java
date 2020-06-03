@@ -1,8 +1,6 @@
 package it.polimi.ingsw.supportClasses;
 
 import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
 
 public class FakeClientConnection extends ClientSideConnection {

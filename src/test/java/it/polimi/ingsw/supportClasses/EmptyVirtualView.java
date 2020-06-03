@@ -4,7 +4,7 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.LoseMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NotifyMessages;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.WinMessage;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.*;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.DataMessage;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.observe.Observer;
 import it.polimi.ingsw.server.ServerSideConnection;

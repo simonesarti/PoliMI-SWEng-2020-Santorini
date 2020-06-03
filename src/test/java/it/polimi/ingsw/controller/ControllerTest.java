@@ -1,8 +1,8 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.messages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.server.Server;

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.CloseConnectionMessage;
 import it.polimi.ingsw.observe.Observable;
 
 import java.io.IOException;

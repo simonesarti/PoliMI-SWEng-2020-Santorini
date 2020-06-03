@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model.strategy.movestrategy;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
-import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.model.*;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
+import it.polimi.ingsw.model.GameBoard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Position;
+import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

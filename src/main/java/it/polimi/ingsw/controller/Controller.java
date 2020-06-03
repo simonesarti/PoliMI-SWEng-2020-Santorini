@@ -12,20 +12,26 @@ import it.polimi.ingsw.view.VirtualView;
 
 import java.util.ArrayList;
 
+
+/**
+ * This class purpose is to implement the logic that allows a match to run. The actions performed are based on player commands,
+ * received through the notify method of the player's virtualView. Once a command is verified to be legal, methods of the
+ * class Model are called, to update the game status
+ */
 public class Controller implements Observer<PlayerMessage>{
 
     private final Model model;
     private final ArrayList<VirtualView> virtualViews=new ArrayList<>();
 
     /**
-     * creates model passing the number of players
+     * creates model, passing the number of players
      * creates one virtualView for each player
      * every virtualView is added as model's observer, and controller is added as observer for every virtualView
-     * assign colours to players
-     * sends card choice message
+     * colours are assigned to the players
+     * a card selection message is sent to to the first player
      *
-     * @param players
-     * @param connections
+     * @param players is the list of players in the game
+     * @param connections is the list that contains the Connection objects associated to each player
      */
     public Controller(ArrayList<Player> players, ArrayList<ServerSideConnection> connections){
 
@@ -56,9 +62,9 @@ public class Controller implements Observer<PlayerMessage>{
     }   
 
     /**
-     * Invokes Controller's methods on the basis of message's subclass
+     * Invokes one of Controller's methods based on the message's subclass
      *
-     * @param message PlayerMessage
+     * @param message PlayerMessage is the message containing the action the player wants to perform
      */
     @Override
     public void update(PlayerMessage message) {
@@ -91,9 +97,12 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
     /**
-     * Checks if it's the player's turn and calls the player's GodCard's MoveStrategy methods;
-     *
-     * @param message oggetto-messaggio contentente le informazioni riguardanti lo spostamento
+     * makes sure the player who sent the command is allowed to move, if not, an error message is notified.
+     * The same thing happens if the player is allowed to move but the move is not permitted
+     * If the player cannot move, he is eliminated from the match, and this could cause his/her opponent to win
+     * After a successful move, the win condition is verified. If true, the match ends.
+     * If the player didn't win, the next step in the turn is notified to him/her
+     * @param message contains the data regarding the which worker to move and where
      */
     private synchronized void performMove(PlayerMovementChoice message) {
 
@@ -162,10 +171,11 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
     /**
-     *
-     * Checks if it's the player's turn and calls the player's GodCard's BuildStrategy
-     *
-     * @param message messaggio di tipo PlayerBuildChoice
+     * makes sure the player who sent the command is allowed to move, if not, an error message is notified.
+     * The same thing happens if the player is allowed to build but the action is not permitted
+     * If the player cannot build, he is eliminated from the match, and this could cause his/her opponent to win
+     * After a successful build, The next step in the turn is the notified to him/her
+     * @param message contains the data regarding the which worker to build with and where to build
      */
     private synchronized void performBuild(PlayerBuildChoice message) {
 
@@ -192,7 +202,6 @@ public class Controller implements Observer<PlayerMessage>{
         //CHECK LOSE
         if(model.performLoseCheck(message.getPlayer(),message.getChosenWorker(),"build")){
 
-            //TODO vittoria per sconfitta altrui
             if(model.getPlayersLeft()==1){
 
                 model.declareWinner(getPlayers());
@@ -226,8 +235,9 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
     /**
-     * Checks if it's player's turn, checks this player win conditions and next player lose conditions. Updates turn
-     * @param message PlayerEndOfTurnChoice message
+     * Checks that the player can end is turn, if not, an error message is notified
+     * Updates the turn
+     * @param message represent the player's will to end his/her turn
      */
     private synchronized void endTurn(PlayerEndOfTurnChoice message){
 
@@ -251,6 +261,12 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+
+    /**
+     * checks if the player is eliminated, only in that case he is allowed to quit
+     * Removes the player from the game. It causes the player to disconnect and the observer objects to detach
+     * @param message represent the player's will to quit from the game
+     */
     private synchronized void quitGame(PlayerQuitChoice message){
 
         //player can't quit if he isn't eliminated
@@ -265,6 +281,15 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+
+    /**
+     * This methods is responsible for the cards' selection. It calls the model's methods responsible for the selection
+     * of the correct card from the game deck, then the selected card is assigned to the player. After a card has been chosen, a
+     * selection request is sent to the next player. The last Player's card is assigned automatically.
+     * In the end, the starting position request is sent to the youngest player
+     *
+     * @param message contains the card chosen by the player
+     */
     private synchronized void cardSelection(PlayerCardChoice message) {
 
         if(message.getVirtualView().equals(virtualViews.get(0))){
@@ -304,6 +329,11 @@ public class Controller implements Observer<PlayerMessage>{
 
     }
 
+    /**
+     * Checks if the position can be selected, in that case the model is updated and a new request
+     * is sent to the next player. In the opposite case, an error message is notified and a new request is sent.
+     * @param message contains the starting position of the player's two workers
+     */
     private synchronized void positionSelection(PlayerStartingPositionChoice message){
 
         String checkOk=model.checkStartingPlacement(message.getX1(),message.getY1(),message.getX2(),message.getY2());
@@ -348,7 +378,10 @@ public class Controller implements Observer<PlayerMessage>{
     }
 
 
-
+    /**
+     * This method uses the VirtualView list to get the players in the match
+     * @return the list of players in the match
+     */
     private ArrayList<Player> getPlayers(){
 
         ArrayList<Player> players=new ArrayList<>();
@@ -359,6 +392,9 @@ public class Controller implements Observer<PlayerMessage>{
         return players;
     }
 
+    /**
+     * @return a string which tells the player-color association
+     */
     private String getColoursAssignedString(){
         StringBuilder s=new StringBuilder();
         for(VirtualView virtualView : virtualViews){
@@ -368,6 +404,10 @@ public class Controller implements Observer<PlayerMessage>{
         return s.toString();
     }
 
+    /**
+     * This method is used by the CardSelection method to assign the last card to the last player, and to send the first
+     * starting position request
+     */
     private void assignLastCard(){
         virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().getDeck().get(0));
         model.getGameDeck().getDeck().remove(0);
@@ -379,6 +419,9 @@ public class Controller implements Observer<PlayerMessage>{
         model.notifyPositionRequest(virtualViews.get(index).getPlayer());
     }
 
+    /**
+     * creates a string which groups the descriptions of the GodCards used in the game
+     */
     private void declaration() {
 
         StringBuilder s = new StringBuilder();
@@ -391,6 +434,9 @@ public class Controller implements Observer<PlayerMessage>{
         model.notifyInfoMessage(null,s.toString());
     }
 
+    /**
+     * detaches all the observers left, because the match has ended.
+     */
     private void endGame(){
 
         //removes every observer in MVC

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 
 public class PlayerConnection {
 

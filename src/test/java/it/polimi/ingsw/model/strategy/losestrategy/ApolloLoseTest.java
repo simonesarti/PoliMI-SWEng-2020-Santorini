@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.strategy.losestrategy;
 
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ApolloLoseTest {
 

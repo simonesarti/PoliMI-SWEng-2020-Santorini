@@ -4,7 +4,6 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainPanel extends JPanel{

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.strategy.winstrategy;
 
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PanWinTest {
 

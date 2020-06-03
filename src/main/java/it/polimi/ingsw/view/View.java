@@ -4,9 +4,6 @@ import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
-import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.observe.Observer;
 
 public abstract class View implements Observer<Object>,Runnable {

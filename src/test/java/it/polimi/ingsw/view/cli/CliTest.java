@@ -1,10 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.supportClasses.FakeClientConnection;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CliTest {
 

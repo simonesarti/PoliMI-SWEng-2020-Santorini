@@ -2,6 +2,10 @@ package it.polimi.ingsw.messages.GameToPlayerMessages.Notify;
 
 import it.polimi.ingsw.model.Player;
 
+/**
+ * This type of message is used by the model to communicate to the virtualView an information, which has to be sent to the player
+ * It contains the message string
+ */
 public class InfoMessageNotification extends NotifyMessages{
 
     private final Player player;

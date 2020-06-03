@@ -1,13 +1,13 @@
 package it.polimi.ingsw.supportClasses;
 
-import it.polimi.ingsw.messages.PlayerInfo;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.model.piece.Dome;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSupportFunctions {
 

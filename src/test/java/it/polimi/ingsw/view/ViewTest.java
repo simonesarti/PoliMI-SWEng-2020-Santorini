@@ -6,8 +6,6 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Others.GameMessage;
 import it.polimi.ingsw.view.cli.Cli;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ViewTest {
 
     View cli = new Cli(new ClientSideConnection("127.0.0.1",12345));

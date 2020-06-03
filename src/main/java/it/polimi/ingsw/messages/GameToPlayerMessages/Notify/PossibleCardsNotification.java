@@ -3,6 +3,9 @@ package it.polimi.ingsw.messages.GameToPlayerMessages.Notify;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
 import it.polimi.ingsw.model.Player;
 
+/**
+ * This type of message is used by the model to communicate to the virtualView that the player must choose his cards
+ */
 public class PossibleCardsNotification extends NotifyMessages{
 
     private final Player player;

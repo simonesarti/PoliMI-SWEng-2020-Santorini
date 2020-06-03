@@ -1,18 +1,17 @@
 package it.polimi.ingsw.model.strategy.IntegrationTest;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerBuildChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerEndOfTurnChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMessage;
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.PlayerMovementChoice;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.MoveData;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.piece.Level2Block;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideConnection;
-import it.polimi.ingsw.supportClasses.EmptyVirtualView;
 import it.polimi.ingsw.supportClasses.FakeConnection;
 import it.polimi.ingsw.supportClasses.TestSupportFunctions;
 import it.polimi.ingsw.view.VirtualView;

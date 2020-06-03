@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.messages.PlayerInfo;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.supportClasses.FakeConnection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,8 @@ import java.net.Socket;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ServerTest {
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.messages;
+package it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages;
 
 import java.io.Serializable;
 import java.util.Calendar;

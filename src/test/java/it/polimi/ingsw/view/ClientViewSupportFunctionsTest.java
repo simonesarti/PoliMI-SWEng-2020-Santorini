@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
-import it.polimi.ingsw.view.ClientViewSupportFunctions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
