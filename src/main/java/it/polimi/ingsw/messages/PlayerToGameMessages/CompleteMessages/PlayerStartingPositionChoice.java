@@ -4,6 +4,9 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositi
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.view.VirtualView;
 
+/**
+ * message that contains the starting position in which the player wants to put his workers
+ */
 public class PlayerStartingPositionChoice extends PlayerMessage{
 
     private final StartingPositionChoice choice;

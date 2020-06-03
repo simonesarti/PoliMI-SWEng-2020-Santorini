@@ -3,6 +3,9 @@ package it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages;
 import java.io.Serializable;
 import java.util.Calendar;
 
+/**
+ * contains the player's information requested at the start of the game
+ */
 public class PlayerInfo implements Serializable {
 
     private final String playerNickname;

@@ -5,8 +5,6 @@ import it.polimi.ingsw.view.VirtualView;
 
 /**
  * End turn message
- * View attribute is needed to report errors
- *
  */
 public class PlayerEndOfTurnChoice extends PlayerMessage {
 

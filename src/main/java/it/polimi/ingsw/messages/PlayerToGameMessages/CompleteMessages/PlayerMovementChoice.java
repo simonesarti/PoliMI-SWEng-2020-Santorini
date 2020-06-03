@@ -6,7 +6,6 @@ import it.polimi.ingsw.view.VirtualView;
 
 /**
  * PlayerMovementChoice message contains information about a specific move (which Player, which worker, which Towercell).
- * View is needed to report errors
  */
 public class PlayerMovementChoice extends PlayerMessage {
 

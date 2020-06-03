@@ -1,5 +1,8 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages;
 
+/**
+ * contains the details regarding the move action requested
+ */
 public class MoveData extends DataMessage{
 
     private final int chosenWorker;

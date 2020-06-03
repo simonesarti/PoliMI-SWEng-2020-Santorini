@@ -1,5 +1,8 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages;
 
+/**
+ * contains the data about the starting position selected by the user
+ */
 public class StartingPositionChoice extends DataMessage{
 
     private final int x1;

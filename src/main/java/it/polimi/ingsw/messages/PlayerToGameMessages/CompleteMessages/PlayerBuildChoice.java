@@ -6,12 +6,10 @@ import it.polimi.ingsw.view.VirtualView;
 
 /**
  * PlayerBuildChoice message contains information about a specific build (what player, what type of Piece, which worker and so on...)
- * View is needed to report errors
  */
 public class PlayerBuildChoice extends PlayerMessage {
 
     private final BuildData buildData;
-
 
     public PlayerBuildChoice(VirtualView virtualView, Player player, BuildData buildData) {
         super(virtualView,player);

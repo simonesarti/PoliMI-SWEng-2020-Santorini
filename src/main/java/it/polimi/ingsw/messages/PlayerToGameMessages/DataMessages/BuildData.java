@@ -1,5 +1,8 @@
 package it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages;
 
+/**
+ * contains the details regarding the build action requested
+ */
 public class BuildData extends DataMessage{
 
     private final int chosenWorker;
