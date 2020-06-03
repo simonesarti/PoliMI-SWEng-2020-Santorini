@@ -86,6 +86,11 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
     }
 
+
+    /**
+     * creates client's socket, inputstream, outputstream and while the client is active reads
+     * input messages from the connection
+     */
     @Override
     public void run(){
 
@@ -120,30 +125,6 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
         }
     }
-
-
-//old version
-/*
-    public Thread asyncReadFromSocket(final ObjectInputStream socketIn, ClientSideConnection thisClientSideConnection){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (isActive()) {
-                        Object inputObject = socketIn.readObject();
-                        thisClientSideConnection.notify(inputObject);
-
-                    }
-                } catch (Exception e){
-                    setActive(false);
-                }
-            }
-        });
-        t.start();
-        return t;
-    }
-*/
-
 
 
 

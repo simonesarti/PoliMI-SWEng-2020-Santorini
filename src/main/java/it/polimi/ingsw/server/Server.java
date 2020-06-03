@@ -40,6 +40,12 @@ public class Server {
         }
     }
 
+    /**
+     * adds a playerConnection in a twoPlayerWaitingList or a threePlayerWaitingList
+     * if a waiting-list is full it adds a twoPlayerGame/threePlayerGame to a list of matches
+     * if a waiting list is full it also creates the Controller, starting the match
+     * @param playerConnection
+     */
     public synchronized void lobby(PlayerConnection playerConnection) {
 
         if(playerConnection.getPlayerInfo().getNumberOfPlayers()==2){
@@ -116,6 +122,11 @@ public class Server {
 
     }
 
+    /**
+     * if a player's serverSideConnection gets unregistered, inUse becomes false and his
+     * opponents' connections get closed
+     * @param connection
+     */
     public synchronized void unregisterConnection(ServerSideConnection connection) {
 
         int index;
@@ -138,7 +149,7 @@ public class Server {
 
             for(int i=0;i<2;i++){
                 twoPlayerGames.get(index).getConnection(i).notInUse();
-                //closes opponent connection
+                //closes opponent's connection
                 if(twoPlayerGames.get(index).getConnection(i)!=connection){
                     twoPlayerGames.get(index).getConnection(i).closeConnection();
                 }
@@ -154,7 +165,7 @@ public class Server {
 
             for(int i=0;i<3;i++){
                 threePlayerGames.get(index).getConnection(i).notInUse();
-                //closes opponents connections
+                //closes opponents' connections
                 if(threePlayerGames.get(index).getConnection(i)!=connection){
                     threePlayerGames.get(index).getConnection(i).closeConnection();
                 }
@@ -168,7 +179,11 @@ public class Server {
 
     }
 
-
+    /**
+     * returns connection's position's index in the twoPlayerWaitingList
+     * @param connection
+     * @return
+     */
     private int getWaitingGroupIndex2(ServerSideConnection connection){
 
         for(int i=0;i<twoPlayerWaitingList.size();i++){
@@ -178,6 +193,12 @@ public class Server {
         }
         return -1;
     }
+
+    /**
+     * returns connection's position's index in the threePlayerWaitingList
+     * @param connection
+     * @return
+     */
     private int getWaitingGroupIndex3(ServerSideConnection connection){
 
         for(int i=0;i<threePlayerWaitingList.size();i++){
@@ -187,6 +208,12 @@ public class Server {
         }
         return -1;
     }
+
+    /**
+     * returns connection's position's index in the twoPlayerGames list
+     * @param connection
+     * @return
+     */
     private int getMatchGroupIndex2(ServerSideConnection connection) {
 
         for (int i = 0; i < twoPlayerGames.size(); i++) {
@@ -197,6 +224,12 @@ public class Server {
         }
         return -1;
     }
+
+    /**
+     * returns connection's position's index in the threePlayerGames list
+     * @param connection
+     * @return
+     */
     private int getMatchGroupIndex3(ServerSideConnection connection) {
 
         for(int i=0;i<threePlayerGames.size();i++){
@@ -209,6 +242,12 @@ public class Server {
         return -1;
     }
 
+    /**
+     * returns true if a nickname is already used by a player in a waiting list
+     * @param nickname
+     * @param waitingList
+     * @return
+     */
     private boolean nicknameAlreadyInUse(String nickname, ArrayList<PlayerConnection> waitingList){
 
         if(waitingList.isEmpty()){
