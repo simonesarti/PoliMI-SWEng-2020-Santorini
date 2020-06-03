@@ -5,18 +5,14 @@ import java.awt.*;
 
 public enum Images {
 
-    SANTORINI_LOGO("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/santorini-logo.png"),
     INITIAL_BACKGROUND("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/Odyssey-Olympus.png"),
     GAMEBOARD("././src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/SantoriniBoard.png"),
     GAME_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/om_gloryIcon.png"),
     MOVE_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/move_button.png"),
     BUILD_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/build_button.png"),
     QUIT_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/quit_button.png"),
-    PRESSED_QUIT_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/pressed_quit_button.png"),
     END_TURN_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/end_turn_button.png"),
-    PRESSED_END_TURN_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/pressed_end_turn_button.png"),
 
-    //TODO correggere i path
     APOLLO("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Apollo.png"),
     ARTEMIS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Artemis.png"),
     ATHENA("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Athena.png"),
@@ -26,7 +22,25 @@ public enum Images {
     MINOTAUR("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Minotaur.png"),
     PAN("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Pan.png"),
     PROMETHEUS("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/Prometheus.png"),
-    EMPTY_CARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/EmptyCard.png");
+    EMPTY_CARD("./src/main/java/it/polimi/ingsw/GUI/graphicResources/godCards/EmptyCard.png"),
+
+    L0D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L1D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L12D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L123D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L0R("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L0B("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L0P("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L1R("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L1B("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L1P("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L12R("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L12B("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L12P("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L123R("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L123B("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/"),
+    L123P("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/");
+    
 
 
 
