@@ -281,7 +281,7 @@ public class Model extends Observable<NotifyMessages> {
     private void notifyLoss(Player player){
         notify(new LoseMessage(player));
     }
-    private void notifyNewBoardState(){
+    public void notifyNewBoardState(){
         notify(new NewBoardStateMessage(gameboard.getBoardState()));
     }
 

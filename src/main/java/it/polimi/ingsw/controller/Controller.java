@@ -412,7 +412,9 @@ public class Controller implements Observer<PlayerMessage>{
         virtualViews.get(0).getPlayer().setGodCard(model.getGameDeck().getDeck().get(0));
         model.getGameDeck().getDeck().remove(0);
         model.notifyInfoMessage(null,"Therefore "+virtualViews.get(0).getPlayer().getGodCard().getGodName()+" has been assigned to "+virtualViews.get(0).getPlayer().getNickname());
+
         declaration();
+        model.notifyNewBoardState();
 
         int index=model.getIndexFromColour(getPlayers(), Colour.RED);
         model.notifyInfoMessage(null,"From the youngest player, you will be required to select the starting position of your workers.\nPlayer "+model.getPlayerFromColour(getPlayers(),Colour.RED).getNickname()+" will start");
