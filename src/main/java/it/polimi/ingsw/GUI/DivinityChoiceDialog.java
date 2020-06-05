@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class DivinityChoiceScreen extends JDialog{
+public class DivinityChoiceDialog extends JDialog{
 
     private final ArrayList<String> selected=new ArrayList<>();
     private final int toSelect;
@@ -14,7 +14,7 @@ public class DivinityChoiceScreen extends JDialog{
     private final GodNameLink[][] links;
 
 
-    public DivinityChoiceScreen(ArrayList<String> names, int n) {
+    public DivinityChoiceDialog(ArrayList<String> names, int n) {
 
         toSelect=n;
         total=names.size();

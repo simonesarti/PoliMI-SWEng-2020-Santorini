@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerInfoRequestScreen extends JDialog implements ActionListener{
+public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
 
     JLabel nicknameRequest;
     JLabel invalidNickname;
@@ -23,7 +23,7 @@ public class PlayerInfoRequestScreen extends JDialog implements ActionListener{
 
     JButton confirmButton;
 
-    public PlayerInfoRequestScreen(boolean isNicknameTaken) {
+    public PlayerInfoRequestDialog(boolean isNicknameTaken) {
 
         nicknameRequest = new JLabel("Nickname: ");
         nickname = new JTextField();

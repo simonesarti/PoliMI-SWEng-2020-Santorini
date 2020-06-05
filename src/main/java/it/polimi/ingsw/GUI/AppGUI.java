@@ -8,9 +8,9 @@ public class AppGUI {
 
     public static void main(String[] args){
 
-        //new GUI(new ClientSideConnection("127.0.0.1",12345));
-        //new PlayerInfoRequestScreen(false);
-
+        new GUI(new ClientSideConnection("127.0.0.1",12345));
+        //new PlayerInfoRequestDialog(false);
+/*
         ArrayList<String> names=new ArrayList<>();
         names.add("Apollo");
         names.add("Artemis");
@@ -21,8 +21,8 @@ public class AppGUI {
         names.add("Minotaur");
         names.add("Pan");
         names.add("Prometheus");
-        new DivinityChoiceScreen(names,3);
-
+        new DivinityChoiceDialog(names,3);
+*/
 
     }
 }

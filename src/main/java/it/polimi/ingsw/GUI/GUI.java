@@ -47,13 +47,13 @@ public class GUI extends View{
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
 
-        new PlayerInfoRequestScreen(message.isNicknameTaken());
+        new PlayerInfoRequestDialog(message.isNicknameTaken());
     }
 
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
 
-        new DivinityChoiceScreen(message.getGods(),message.getNumberOfChoices());
+        new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices());
     }
 
     @Override
