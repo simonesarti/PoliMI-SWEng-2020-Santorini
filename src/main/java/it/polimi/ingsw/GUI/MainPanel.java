@@ -40,10 +40,6 @@ public class MainPanel extends JPanel{
 
     }
 
-    public void updateBoard(NewBoardStateMessage message){
-        gamePanel.updateBoard(message);
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

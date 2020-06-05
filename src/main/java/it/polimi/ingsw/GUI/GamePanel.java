@@ -75,6 +75,21 @@ public class GamePanel extends JPanel{
         return gridBagConstraints;
     }
 
+    private int[] getButtonCoordinates(JButton button){
+
+        int[] res=new int[2];
+
+        for(int j=0;j<5;j++){
+            for(int i=0;i<5;i++){
+                if(button.equals(towerButtons[i][j])){
+                    res[0]=i;
+                    res[1]=j;
+                }
+            }
+        }
+        return res;
+    }
+
     //TODO
     private class CellSelectedListener implements ActionListener {
 
@@ -84,9 +99,7 @@ public class GamePanel extends JPanel{
         }
     }
 
-    //TODO
-    public void updateBoard(NewBoardStateMessage message){
-    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
