@@ -350,6 +350,7 @@ public class Controller implements Observer<PlayerMessage>{
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
 
                 nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.BLUE)).getPlayer();
+                model.notifyInfoMessage(null,"Now Player "+model.getPlayerFromColour(getPlayers(),Colour.BLUE).getNickname()+" will choose");
                 model.notifyPositionRequest(nextPlayer);
                 return;
             }
@@ -358,6 +359,7 @@ public class Controller implements Observer<PlayerMessage>{
                 model.placeOnBoard(message.getPlayer(),message.getX1(),message.getY1(),message.getX2(),message.getY2());
                 if(virtualViews.size()==3){
                     nextPlayer=virtualViews.get(model.getIndexFromColour(getPlayers(),Colour.PURPLE)).getPlayer();
+                    model.notifyInfoMessage(null,"Now Player "+model.getPlayerFromColour(getPlayers(),Colour.PURPLE).getNickname()+" will choose");
                     model.notifyPositionRequest(nextPlayer);
                 }else{
                     model.notifyGameStart(getPlayers());
