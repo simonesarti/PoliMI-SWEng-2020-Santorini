@@ -38,43 +38,50 @@ public class GUI extends View{
         //update board nel panel
     }
 
+    //ok
     @Override
     public void handleInfoMessage(InfoMessage message) {
         JOptionPane.showMessageDialog(mainPanel,message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
     }
 
+    //ok
     @Override
     public void handleErrorMessage(ErrorMessage message) {
         JOptionPane.showMessageDialog(mainPanel,message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
     }
 
+    //ok
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
         new PlayerInfoRequestDialog(message.isNicknameTaken(),guiController);
     }
 
+    //ok
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
         new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices(),guiController);
     }
 
+    //ok
     @Override
     public void handleStartingPositionRequest() {
         new StartingPositionRequestDialog(guiController.getCurrentBoardState(),guiController);
     }
 
+    //TODO
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames());
         setCanStart(true);
     }
 
-
+    //ok
     @Override
     public void handleCloseConnectionMessage() {
         JOptionPane.showMessageDialog(mainPanel,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
     }
 
+    //TODO
     @Override
     public void run() {
 

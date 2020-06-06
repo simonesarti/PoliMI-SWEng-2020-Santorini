@@ -1,6 +1,8 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
+import it.polimi.ingsw.model.BoardState;
+import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.model.TowerState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,6 +92,64 @@ public class GamePanel extends JPanel{
         return res;
     }
 
+    public void updateBoard(BoardState boardState){
+
+        for(int y=0;y<5;y++){
+            for(int x=0;x<5;x++){
+                updateButton(towerButtons[x][y],boardState.getTowerState(x,y));
+            }
+        }
+
+    }
+
+    private void updateButton(ImageButton imageButton, TowerState towerState){
+
+        if(towerState.getWorkerColour()==null){
+
+            if(towerState.isCompleted()){
+                switch (towerState.getTowerHeight()) {
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0D));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1D));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12D));
+                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123D));
+                }
+            }else{
+                switch (towerState.getTowerHeight()) {
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12));
+                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123));
+                }
+            }
+
+        }else{
+
+            if (towerState.getWorkerColour() == Colour.RED) {
+                switch (towerState.getTowerHeight()) {
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0R));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1R));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12R));
+                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123R));
+                }
+            } else if (towerState.getWorkerColour() == Colour.BLUE) {
+                switch (towerState.getTowerHeight()) {
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0B));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1B));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12B));
+                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123B));
+                }
+            } else {
+                switch (towerState.getTowerHeight()) {
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0P));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1P));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12P));
+                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123P));
+                }
+            }
+        }
+    }
+
+
     //TODO
     private class CellSelectedListener implements ActionListener {
 
@@ -98,7 +158,6 @@ public class GamePanel extends JPanel{
 
         }
     }
-
 
 
     @Override
