@@ -49,7 +49,7 @@ public class GUI extends View{
 
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
-        new PlayerInfoRequestDialog(message.isNicknameTaken());
+        new PlayerInfoRequestDialog(message.isNicknameTaken(),guiController);
     }
 
     @Override
@@ -64,6 +64,7 @@ public class GUI extends View{
 
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
+        guiController.setPlayerColor(message.getNicknames());
         setCanStart(true);
     }
 

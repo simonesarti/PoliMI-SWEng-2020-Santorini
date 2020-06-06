@@ -1,13 +1,17 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.view.ClientViewSupportFunctions;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 
 public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
+
+    GuiController guiController;
 
     JLabel nicknameRequest;
     JLabel invalidNickname;
@@ -21,12 +25,19 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
     JTextField divider2;
     JLabel invalidBirthday;
 
+    JLabel numberOfPlayerRequest;
+    JSpinner numberOfPlayers;
+
     JButton confirmButton;
 
-    public PlayerInfoRequestDialog(boolean isNicknameTaken) {
+    public PlayerInfoRequestDialog(boolean isNicknameTaken, GuiController guiController) {
+
+        setTitle("Information request");
+
+        this.guiController=guiController;
 
         nicknameRequest = new JLabel("Nickname: ");
-        nickname = new JTextField();
+        this.nickname = new JTextField();
         invalidNickname = new JLabel();
 
         birthdayRequest = new JLabel("Date of birth: ");
@@ -39,6 +50,9 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
         divider2.setEditable(false);
         invalidBirthday = new JLabel();
 
+        numberOfPlayerRequest=new JLabel("Number of players in game: ");
+        numberOfPlayers=new JSpinner(new SpinnerNumberModel(2,2,3,1));
+        numberOfPlayers.setEditor(new JSpinner.DefaultEditor(numberOfPlayers));
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(this);
@@ -69,13 +83,17 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
         year.setBounds(240, 70, 50, 20);
         invalidBirthday.setBounds(120, 90, 200, 20);
 
-        confirmButton.setBounds(125, 130, 150, 20);
+        numberOfPlayerRequest.setBounds(20,120,160,20);
+        numberOfPlayers.setBounds(200,120,40,20);
+
+        confirmButton.setBounds(125, 160, 150, 20);
     }
 
     private void addToDialog() {
         add(nicknameRequest);
         add(nickname);
         add(invalidNickname);
+
         add(birthdayRequest);
         add(day);
         add(month);
@@ -83,12 +101,16 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
         add(divider1);
         add(divider2);
         add(invalidBirthday);
+
+        add(numberOfPlayerRequest);
+        add(numberOfPlayers);
+
         add(confirmButton);
     }
 
     private void dialogSettings() {
         //setTitle("Info Request");
-        setSize(400, 210);
+        setSize(400, 250);
         setLayout(null);
         setVisible(true);
     }
@@ -124,7 +146,13 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
                 invalidBirthday.setForeground(Color.red);
                 invalidBirthday.setText("Invalid date");
             } else {
-                //TODO COSA SUCCEDE, COSA INVIA
+                //TODO da finire
+
+                guiController.setNickname(nickname.getText());
+
+                //DEBUG
+                System.out.println("sent "+nickname.getText()+"\ndate: "+Integer.parseInt(year.getText())+","+(Integer.parseInt(month.getText())-1)+","+Integer.parseInt(day.getText())+"\n number "+numberOfPlayers.getValue());
+                //guiController.send(new PlayerInfo(nickname.getText(),new GregorianCalendar(Integer.parseInt(year.getText()),(Integer.parseInt(month.getText())-1),Integer.parseInt(day.getText())),(int)numberOfPlayers.getValue()));
                 dispose();
             }
         }

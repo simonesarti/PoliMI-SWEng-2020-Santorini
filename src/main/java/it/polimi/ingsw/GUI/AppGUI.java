@@ -11,8 +11,9 @@ public class AppGUI {
 
     public static void main(String[] args){
 
-        //new GUI(new ClientSideConnection("127.0.0.1",12345));
-        //new PlayerInfoRequestDialog(false);
+        ClientSideConnection connection=new ClientSideConnection("127.0.0.1",12345);
+        //new GUI(connection);
+        new PlayerInfoRequestDialog(false,new GuiController(connection));
 /*
         ArrayList<String> names=new ArrayList<>();
         names.add("Apollo");
@@ -26,13 +27,13 @@ public class AppGUI {
         names.add("Prometheus");
         new DivinityChoiceDialog(names,3);
 */
-
+/*
         GameBoard gameBoard=new GameBoard();
         Worker worker0=new Worker(Colour.PURPLE,0);
         Worker worker1=new Worker(Colour.RED,1);
         gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(worker0);
         gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(worker1);
         new StartingPositionRequestDialog(gameBoard.getBoardState());
-
+*/
     }
 }
