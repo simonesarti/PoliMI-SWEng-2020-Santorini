@@ -1,10 +1,9 @@
 package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.model.BoardState;
+import it.polimi.ingsw.model.Colour;
 
 import javax.swing.*;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class PositionSelectionPanel extends JPanel {
 
     private final Image gameBoard;
-    private final JButton[][] buttons=new JButton[5][5];
+    private final ImageButton[][] buttons=new ImageButton[5][5];
     private final ArrayList<int[]> coordinates=new ArrayList<>();
     private final JDialog dialog;
 
@@ -29,7 +28,7 @@ public class PositionSelectionPanel extends JPanel {
 
         for(int j=0;j<5;j++){
             for(int i=0;i<5;i++){
-                buttons[i][j]=new JButton();
+                buttons[i][j]=new ImageButton();
                 setButtonVisibility(i,j,boardState,buttons[i][j]);
                 this.add(buttons[i][j]);
                 buttons[i][j].addActionListener(new PositionListener());
@@ -37,19 +36,21 @@ public class PositionSelectionPanel extends JPanel {
         }
     }
 
-    private void setButtonVisibility(int x,int y, BoardState boardState, JButton button){
+    private void setButtonVisibility(int x,int y, BoardState boardState, ImageButton button){
 
-        if(boardState.getTowerState(x,y).getWorkerColour()!=null){
-            setOpaque(true);
-            button.setContentAreaFilled(true);
-            button.setBackground(Color.RED);
+        if(boardState.getTowerState(x,y).getWorkerColour()== Colour.RED){
+            button.setButtonImage(Images.getImage(Images.L0R));
+        }else if(boardState.getTowerState(x,y).getWorkerColour()== Colour.BLUE){
+            button.setButtonImage(Images.getImage(Images.L0B));
+        }else if(boardState.getTowerState(x,y).getWorkerColour()== Colour.PURPLE){
+            button.setButtonImage(Images.getImage(Images.L0P));
         }else{
             setOpaque(false);
             button.setContentAreaFilled(false);
         }
     }
 
-    private int[] getButtonCoordinates(JButton button){
+    private int[] getButtonCoordinates(ImageButton button){
 
         int[] res=new int[2];
 
@@ -74,7 +75,7 @@ public class PositionSelectionPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JButton pressed=(JButton)e.getSource();
+            ImageButton pressed=(ImageButton) e.getSource();
             int[] selected=getButtonCoordinates(pressed);
             coordinates.add(selected);
             System.out.println(""+selected[0]+","+selected[1]);
