@@ -26,6 +26,7 @@ public abstract class View implements Observer<Object>,Runnable {
     abstract public void handleCardMessageRequest(PossibleCardsMessage message);
     abstract public void handleStartingPositionRequest();
 
+    abstract public void handleGameStartMessage(GameStartMessage message);
     abstract  public void handleCloseConnectionMessage();
 
     @Override
@@ -43,10 +44,7 @@ public abstract class View implements Observer<Object>,Runnable {
 
         else if(message instanceof StartingPositionRequestMessage){ handleStartingPositionRequest();}
 
-        else if(message instanceof GameStartMessage) {
-
-            setCanStart(true);
-         }
+        else if(message instanceof GameStartMessage) { handleGameStartMessage((GameStartMessage)message);}
 
         else if(message instanceof CloseConnectionMessage){ handleCloseConnectionMessage();}
 

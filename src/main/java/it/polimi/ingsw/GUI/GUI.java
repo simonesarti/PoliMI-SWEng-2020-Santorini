@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.client.ClientSideConnection;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
@@ -14,6 +15,7 @@ public class GUI extends View{
 
     private JFrame frame;
     private JPanel mainPanel;
+    private GuiController guiController;
 
     public GUI(ClientSideConnection connection){
         super(connection);
@@ -26,12 +28,13 @@ public class GUI extends View{
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
+        guiController=new GuiController(getClientSideConnection());
     }
 
 
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
-
+        guiController.setCurrentBoardState(message.getBoardState());
     }
 
     @Override
@@ -46,25 +49,28 @@ public class GUI extends View{
 
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
-
         new PlayerInfoRequestDialog(message.isNicknameTaken());
     }
 
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
-
         new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices());
     }
 
     @Override
     public void handleStartingPositionRequest() {
-
+        new StartingPositionRequestDialog(guiController.getCurrentBoardState());
     }
+
+    @Override
+    public void handleGameStartMessage(GameStartMessage message) {
+        setCanStart(true);
+    }
+
 
     @Override
     public void handleCloseConnectionMessage() {
         JOptionPane.showMessageDialog(mainPanel,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
-
     }
 
     @Override

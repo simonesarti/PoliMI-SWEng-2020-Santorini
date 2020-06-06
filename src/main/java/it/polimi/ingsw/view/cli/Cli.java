@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.cli;
 
 import it.polimi.ingsw.client.ClientSideConnection;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.ErrorMessage;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.InfoMessage;
@@ -57,6 +58,11 @@ public class Cli extends View {
     @Override
     public void handleStartingPositionRequest() {
         getClientSideConnection().send(createStartingPositionChoice());
+    }
+
+    @Override
+    public void handleGameStartMessage(GameStartMessage message) {
+        setCanStart(true);
     }
 
     @Override
