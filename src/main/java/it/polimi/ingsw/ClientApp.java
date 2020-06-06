@@ -10,7 +10,7 @@ public class ClientApp {
     public static void main(String[] args){
 
         View view;
-        ClientSideConnection clientSideConnection = new ClientSideConnection("192.168.1.10",12345);
+        ClientSideConnection clientSideConnection = new ClientSideConnection("127.0.0.1",12345);
         Thread t0;
         Thread t1;
 
