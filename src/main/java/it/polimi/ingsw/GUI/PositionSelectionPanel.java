@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 
@@ -11,12 +12,15 @@ import java.util.ArrayList;
 
 public class PositionSelectionPanel extends JPanel {
 
+    private final GuiController guiController;
     private final Image gameBoard;
     private final ImageButton[][] buttons=new ImageButton[5][5];
     private final ArrayList<int[]> coordinates=new ArrayList<>();
     private final JDialog dialog;
 
-    public PositionSelectionPanel(StartingPositionRequestDialog dialog, BoardState boardState) {
+    public PositionSelectionPanel(StartingPositionRequestDialog dialog, BoardState boardState, GuiController guiController) {
+
+        this.guiController=guiController;
         this.dialog=dialog;
         setPreferredSize(new Dimension(500,500));
         gameBoard=Images.getImage(Images.GAMEBOARD);
@@ -80,7 +84,10 @@ public class PositionSelectionPanel extends JPanel {
             coordinates.add(selected);
             System.out.println(""+selected[0]+","+selected[1]);
             if(coordinates.size()==2){
-                //TODO
+                //TODO finire
+                int[] p1=coordinates.get(0);
+                int[] p2=coordinates.get(1);
+                //guiController.send(new StartingPositionChoice(p1[0],p1[1],p2[0],p2[1]));
                 dialog.dispose();
             }
         }

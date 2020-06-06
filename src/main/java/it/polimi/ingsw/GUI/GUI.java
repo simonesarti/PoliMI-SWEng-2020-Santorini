@@ -31,10 +31,11 @@ public class GUI extends View{
         guiController=new GuiController(getClientSideConnection());
     }
 
-
+    //TODO
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
         guiController.setCurrentBoardState(message.getBoardState());
+        //update board nel panel
     }
 
     @Override
@@ -54,12 +55,12 @@ public class GUI extends View{
 
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
-        new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices());
+        new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices(),guiController);
     }
 
     @Override
     public void handleStartingPositionRequest() {
-        new StartingPositionRequestDialog(guiController.getCurrentBoardState());
+        new StartingPositionRequestDialog(guiController.getCurrentBoardState(),guiController);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,13 +10,16 @@ import java.util.ArrayList;
 
 public class DivinityChoiceDialog extends JDialog{
 
+    private final GuiController guiController;
     private final ArrayList<String> selected=new ArrayList<>();
     private final int toSelect;
     private final int total;
     private final GodNameLink[][] links;
 
 
-    public DivinityChoiceDialog(ArrayList<String> names, int n) {
+    public DivinityChoiceDialog(ArrayList<String> names, int n, GuiController guiController) {
+
+        this.guiController=guiController;
 
         toSelect=n;
         total=names.size();
@@ -90,11 +95,16 @@ public class DivinityChoiceDialog extends JDialog{
                 repaint();
 
                 if (selected.size() == toSelect) {
+
+                    //TODO finire
 /*
-                    for(String selected : selected){
+                    //DEBUG
+                    for(String selected : selected.toArray(String[]::new)){
                         System.out.println(selected+",");
                     }
 */
+
+                    //guiController.send(new CardChoice(selected.toArray(String[]::new)));
                     dispose();
                 }
             }

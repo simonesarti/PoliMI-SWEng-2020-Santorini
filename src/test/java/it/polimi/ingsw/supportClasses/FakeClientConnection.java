@@ -12,17 +12,17 @@ public class FakeClientConnection extends ClientSideConnection {
     @Override
     public synchronized void send(Object message) {
         if (message instanceof BuildData) {
-            //System.out.println("sent BuildData");
+            System.out.println("sent BuildData");
         } else if (message instanceof CardChoice) {
-            //System.out.println("sent CardChoice");
+            System.out.println("sent CardChoice");
         } else if (message instanceof EndChoice) {
-            //System.out.println("sent EndChoice");
+            System.out.println("sent EndChoice");
         } else if (message instanceof QuitChoice) {
-            //System.out.println("sent QuitChoice");
+            System.out.println("sent QuitChoice");
         } else if (message instanceof StartingPositionChoice) {
-            //System.out.println("sent StartingPositionChoice");
+            System.out.println("sent StartingPositionChoice");
         } else if (message instanceof MoveData) {
-            //System.out.println("sent MoveData");
+            System.out.println("sent MoveData");
         }
     }
 }
