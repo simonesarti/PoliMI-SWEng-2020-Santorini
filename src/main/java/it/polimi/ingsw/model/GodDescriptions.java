@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
+/**
+ * Class containing all the strings with Gods' characteristics and power's descriptions
+ */
 public class GodDescriptions {
 
     private final ArrayList<String[]> descriptions=new ArrayList<>();

@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+/**
+ * This class contains all the information regarding the current turn
+ */
+
 public class TurnInfo {
 
     //da usare per verificare che il non possano essere fatte altre mosse nel turno
