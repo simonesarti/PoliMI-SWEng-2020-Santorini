@@ -28,7 +28,6 @@ public enum Images {
     L1D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level1withdome.png"),
     L12D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level2withdome.png"),
     L123D("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level3withdome.png"),
-    L0("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/"),
     L1("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level1.png"),
     L12("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level2.png"),
     L123("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level3.png"),

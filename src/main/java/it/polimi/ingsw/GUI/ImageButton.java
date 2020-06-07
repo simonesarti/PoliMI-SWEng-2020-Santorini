@@ -9,12 +9,14 @@ public class ImageButton extends JButton {
 
     public void setButtonImage(Image buttonImage){
         this.buttonImage=buttonImage;
-        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(buttonImage, 0, 0, this.getWidth(), this.getHeight(), this);
+        repaint();
+        revalidate();
+
     }
 }

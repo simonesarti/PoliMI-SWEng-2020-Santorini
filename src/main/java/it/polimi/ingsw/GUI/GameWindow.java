@@ -9,27 +9,45 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GamePanel extends JPanel{
+public class GameWindow{
 
-    private final Image gameBoard;
+    private class GamePanel extends JPanel{
 
-    private final ImageButton[][] towerButtons =new ImageButton[5][5];
+        private final Image gameBoard;
 
-    public GamePanel() {
-        gameBoard=Images.getImage(Images.GAMEBOARD);
-        setLayout(new GridBagLayout());
-        setTowerButtons();
-        setVisible(true);
+        private GamePanel() {
+            gameBoard=Images.getImage(Images.GAMEBOARD);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            g.drawImage(gameBoard, 0, 0, this.getWidth(), this.getHeight(), this);
+
+        }
 
     }
 
-    public void setTowerButtons() {
+    private final JPanel gamePanel;
+    private final ImageButton[][] towerButtons =new ImageButton[5][5];
+
+    public GameWindow(BoardState boardState) {
+
+        gamePanel=new GamePanel();
+        gamePanel.setLayout(new GridBagLayout());
+        setTowerButtons(boardState);
+        gamePanel.setVisible(true);
+
+    }
+
+    public void setTowerButtons(BoardState boardState) {
 
         for (int j = 0; j < 5; j++) {
             for (int i = 0; i < 5; i++) {
                 towerButtons[i][j] = new ImageButton();
-                setButtonVisibility(towerButtons[i][j]);
-                add(towerButtons[i][j],setButtonConstraints(i,j));
+                updateButton(towerButtons[i][j],boardState.getTowerState(i,j));
+                gamePanel.add(towerButtons[i][j],setButtonConstraints(i,j));
                 towerButtons[i][j].addActionListener(new CellSelectedListener());
             }
         }
@@ -99,56 +117,59 @@ public class GamePanel extends JPanel{
                 updateButton(towerButtons[x][y],boardState.getTowerState(x,y));
             }
         }
-
     }
 
     private void updateButton(ImageButton imageButton, TowerState towerState){
 
-        if(towerState.getWorkerColour()==null){
+        int height=towerState.getTowerHeight();
 
+        if(towerState.getWorkerColour()==null){
             if(towerState.isCompleted()){
-                switch (towerState.getTowerHeight()) {
+                switch (height) {
                     case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0D));
                     case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1D));
                     case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12D));
                     case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123D));
                 }
             }else{
-                switch (towerState.getTowerHeight()) {
-                    case 1 -> {setButtonVisibility(imageButton);}
-                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1));
-                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12));
-                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123));
+                switch (height) {
+                    case 0 -> setButtonVisibility(imageButton);
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L1));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L12));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L123));
                 }
             }
 
         }else{
 
             if (towerState.getWorkerColour() == Colour.RED) {
-                switch (towerState.getTowerHeight()) {
-                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0R));
-                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1R));
-                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12R));
-                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123R));
+                switch (height) {
+                    case 0 -> imageButton.setButtonImage(Images.getImage(Images.L0R));
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L1R));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L12R));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L123R));
                 }
             } else if (towerState.getWorkerColour() == Colour.BLUE) {
-                switch (towerState.getTowerHeight()) {
-                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0B));
-                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1B));
-                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12B));
-                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123B));
+                switch (height) {
+                    case 0 -> imageButton.setButtonImage(Images.getImage(Images.L0B));
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L1B));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L12B));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L123B));
                 }
             } else {
-                switch (towerState.getTowerHeight()) {
-                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0P));
-                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1P));
-                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12P));
-                    case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123P));
+                switch (height) {
+                    case 0 ->imageButton.setButtonImage(Images.getImage(Images.L0P));
+                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L1P));
+                    case 2 -> imageButton.setButtonImage(Images.getImage(Images.L12P));
+                    case 3 -> imageButton.setButtonImage(Images.getImage(Images.L123P));
                 }
             }
         }
     }
 
+    public JPanel getGamePanel() {
+        return gamePanel;
+    }
 
     //TODO
     private class CellSelectedListener implements ActionListener {
@@ -159,14 +180,6 @@ public class GamePanel extends JPanel{
         }
     }
 
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        g.drawImage(gameBoard, 0, 0, this.getWidth(), this.getHeight(), this);
-
-    }
 
 }
 

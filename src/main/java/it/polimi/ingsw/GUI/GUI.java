@@ -14,7 +14,7 @@ import javax.swing.*;
 public class GUI extends View{
 
     private JFrame frame;
-    private JPanel mainPanel;
+    private MainWindow mainWindow;
     private GuiController guiController;
 
     public GUI(ClientSideConnection connection){
@@ -24,30 +24,30 @@ public class GUI extends View{
 
     private void createGUI(){
         frame =new MainFrame();
-        mainPanel=new MainPanel(frame);
-        frame.add(mainPanel);
+        mainWindow=new MainWindow(frame);
+        frame.add(mainWindow.getMainPanel());
         frame.pack();
         frame.setVisible(true);
         guiController=new GuiController(getClientSideConnection());
     }
 
-    //TODO
+    //ok
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
         guiController.setCurrentBoardState(message.getBoardState());
-        //update board nel panel
+        mainWindow.updateBoard(message.getBoardState());
     }
 
     //ok
     @Override
     public void handleInfoMessage(InfoMessage message) {
-        JOptionPane.showMessageDialog(mainPanel,message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(mainWindow.getMainPanel(),message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
     }
 
     //ok
     @Override
     public void handleErrorMessage(ErrorMessage message) {
-        JOptionPane.showMessageDialog(mainPanel,message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(mainWindow.getMainPanel(),message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
     }
 
     //ok
@@ -72,13 +72,14 @@ public class GUI extends View{
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames());
+        mainWindow.setMatchGui(message.getDescriptions(),message.getNicknames(),guiController.getCurrentBoardState());
         setCanStart(true);
     }
 
     //ok
     @Override
     public void handleCloseConnectionMessage() {
-        JOptionPane.showMessageDialog(mainPanel,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(mainWindow.getMainPanel(),"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
     }
 
     //TODO
@@ -87,5 +88,11 @@ public class GUI extends View{
 
     }
 
+    //test
+
+
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
 }
 
