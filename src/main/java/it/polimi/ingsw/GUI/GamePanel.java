@@ -115,7 +115,7 @@ public class GamePanel extends JPanel{
                 }
             }else{
                 switch (towerState.getTowerHeight()) {
-                    case 1 -> imageButton.setButtonImage(Images.getImage(Images.L0));
+                    case 1 -> {setButtonVisibility(imageButton);}
                     case 2 -> imageButton.setButtonImage(Images.getImage(Images.L1));
                     case 3 -> imageButton.setButtonImage(Images.getImage(Images.L12));
                     case 4 -> imageButton.setButtonImage(Images.getImage(Images.L123));
