@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 
+/**
+ * This class has all the information regarding the towers' state (its height, whether there's a worker or not and whether it's completed or not
+ */
+
 public class TowerState implements Serializable {
 
     private final int towerHeight;
@@ -34,6 +38,7 @@ public class TowerState implements Serializable {
     public int getTowerHeight() {
         return towerHeight;
     }
+
 
     public boolean isCompleted() {
         return isCompleted;

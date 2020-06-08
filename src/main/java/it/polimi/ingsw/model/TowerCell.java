@@ -2,6 +2,9 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.piece.Dome;
 
+/**
+ * This class represents the gameboard's towers, with 4 levels each
+ */
 public class TowerCell {
 
     private final TowerLevel[] towerLevels = new TowerLevel[4];
@@ -34,6 +37,7 @@ public class TowerCell {
     public int getTowerHeight() {
         return towerHeight;
     }
+
 
     public boolean isTowerCompleted() {
         return towerCompleted;

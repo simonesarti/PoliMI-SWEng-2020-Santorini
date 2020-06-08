@@ -4,6 +4,9 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 
 import java.util.Calendar;
 
+/**
+ * This class has all the information regarding the players
+ */
 public class Player{
 
     private final String nickname;
