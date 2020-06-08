@@ -78,7 +78,7 @@ public class ChoicePanel extends JPanel {
         gridBagConstraints.ipady = 0;
 
         // Defines padding top, left, bottom, right
-        gridBagConstraints.insets = new Insets(40,10,40,10);
+        gridBagConstraints.insets = new Insets(30,20,30,20);
 
         // Defines where to place components if they don't
         // fill the space: CENTER, NORTH, SOUTH, EAST, WEST

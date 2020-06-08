@@ -26,7 +26,6 @@ public class GUI extends View{
         frame =new MainFrame();
         mainWindow=new MainWindow(frame);
         frame.add(mainWindow.getMainPanel());
-        frame.pack();
         frame.setVisible(true);
         guiController=new GuiController(getClientSideConnection());
     }

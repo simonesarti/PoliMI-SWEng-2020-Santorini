@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
 
     private void setFrameProperties(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1920,1080);
+        setSize(900,600);
         setResizable(true);
         setLocationRelativeTo(null);
     }
