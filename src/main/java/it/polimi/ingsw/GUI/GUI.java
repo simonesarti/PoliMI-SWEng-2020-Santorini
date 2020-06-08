@@ -35,7 +35,9 @@ public class GUI extends View{
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
         guiController.setCurrentBoardState(message.getBoardState());
-        mainWindow.updateBoard(message.getBoardState());
+        if(guiController.gameHasStarted()){
+            mainWindow.updateBoard(message.getBoardState());
+        }
     }
 
     //ok

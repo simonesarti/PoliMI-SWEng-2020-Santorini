@@ -12,9 +12,11 @@ public class GuiController {
     private String nickname;
     private Colour playerColor;
     private BoardState currentBoardState;
+    private boolean gameStarted;
 
     public GuiController(ClientSideConnection connection) {
         this.connection = connection;
+        setGameStarted(false);
     }
 
     public void setNickname(String nickname){
@@ -38,6 +40,8 @@ public class GuiController {
                 }
             }
         }
+
+        setGameStarted(true);
     }
 
     public BoardState getCurrentBoardState() {
@@ -45,6 +49,14 @@ public class GuiController {
     }
     public void setCurrentBoardState(BoardState currentBoardState) {
         this.currentBoardState = currentBoardState;
+    }
+
+    public boolean gameHasStarted() {
+        return gameStarted;
+    }
+
+    private void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
     }
 
     public void send(Object message){
