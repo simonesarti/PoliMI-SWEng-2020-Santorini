@@ -3,29 +3,30 @@ package it.polimi.ingsw.GUI;
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.observe.Observer;
 
 import java.util.ArrayList;
 
-public class GuiController {
+public class GuiController implements Observer<ActionMessage> {
 
-    private final ClientSideConnection connection;
+    private ClientSideConnection connection;
     private String nickname;
     private Colour playerColor;
     private BoardState currentBoardState;
     private boolean gameStarted;
 
-    public GuiController(ClientSideConnection connection) {
-        this.connection = connection;
+    public GuiController() {
         setGameStarted(false);
+    }
+
+    public void setConnection(ClientSideConnection connection) {
+        this.connection = connection;
     }
 
     public void setNickname(String nickname){
         this.nickname=nickname;
     }
 
-    public Colour getPlayerColor() {
-        return playerColor;
-    }
     public void setPlayerColor(ArrayList<String> nicknames){
 
         for(int i=0;i<nicknames.size();i++){
@@ -61,5 +62,11 @@ public class GuiController {
 
     public void send(Object message){
         connection.send(message);
+    }
+
+
+    @Override
+    public void update(ActionMessage message) {
+        System.out.println("azione eseguita");
     }
 }

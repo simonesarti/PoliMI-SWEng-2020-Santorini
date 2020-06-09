@@ -27,7 +27,7 @@ public class AppGUI {
         gui.getMainWindow().updateBoard(gameBoard.getBoardState());
 
 
-        //new PlayerInfoRequestDialog(false,new GuiController(connection));
+        //new PlayerInfoRequestDialog(false,new GuiController());
 /*
         ArrayList<String> names=new ArrayList<>();
         names.add("Apollo");
@@ -39,16 +39,19 @@ public class AppGUI {
         names.add("Minotaur");
         names.add("Pan");
         names.add("Prometheus");
-        new DivinityChoiceDialog(names,3,new GuiController(connection));
+        new DivinityChoiceDialog(names,3,new GuiController());
 */
-        //STARTING POSITION REQUEST TEST
 /*
+        //STARTING POSITION REQUEST TEST
+
+        GuiController testController=new GuiController();
         GameBoard gameBoard=new GameBoard();
         Worker worker0=new Worker(Colour.PURPLE,0);
         Worker worker1=new Worker(Colour.RED,1);
         gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(worker0);
         gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(worker1);
-        new StartingPositionRequestDialog(gameBoard.getBoardState(),new GuiController(connection));
+        testController.setCurrentBoardState(gameBoard.getBoardState());
+        new StartingPositionRequestDialog(testController);
 */
 /*
         //IMAGEBUTTON UPDATE

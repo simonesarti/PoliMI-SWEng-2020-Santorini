@@ -23,11 +23,16 @@ public class GUI extends View{
     }
 
     private void createGUI(){
+
+        guiController=new GuiController();
+        guiController.setConnection(getClientSideConnection());
+
         frame =new MainFrame();
         mainWindow=new MainWindow(frame);
         frame.add(mainWindow.getMainPanel());
         frame.setVisible(true);
-        guiController=new GuiController(getClientSideConnection());
+
+
     }
 
     //ok
@@ -66,14 +71,14 @@ public class GUI extends View{
     //ok
     @Override
     public void handleStartingPositionRequest() {
-        new StartingPositionRequestDialog(guiController.getCurrentBoardState(),guiController);
+        new StartingPositionRequestDialog(guiController);
     }
 
     //TODO
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames());
-        mainWindow.setMatchGui(message.getDescriptions(),message.getNicknames(),guiController.getCurrentBoardState());
+        mainWindow.setMatchGui(message.getDescriptions(),message.getNicknames(),guiController);
         setCanStart(true);
     }
 

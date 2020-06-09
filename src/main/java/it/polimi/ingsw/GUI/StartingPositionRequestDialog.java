@@ -6,10 +6,10 @@ import javax.swing.*;
 
 public class StartingPositionRequestDialog extends JDialog {
 
-    public StartingPositionRequestDialog(BoardState boardState, GuiController guiController) {
+    public StartingPositionRequestDialog(GuiController guiController) {
         setTitle("Starting Position selection");
         setSize(500, 500);
-        add(new PositionSelectionPanel(this,boardState,guiController));
+        add(new PositionSelectionPanel(this,guiController));
         pack();
         setVisible(true);
 

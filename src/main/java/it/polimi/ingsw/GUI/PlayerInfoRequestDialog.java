@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
+import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.view.ClientViewSupportFunctions;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
-public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
+public class PlayerInfoRequestDialog extends JDialog{
 
     GuiController guiController;
 
@@ -55,7 +56,7 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
         numberOfPlayers.setEditor(new JSpinner.DefaultEditor(numberOfPlayers));
 
         confirmButton = new JButton("Confirm");
-        confirmButton.addActionListener(this);
+        confirmButton.addActionListener(new InfoListener());
 
         if (isNicknameTaken) {
             invalidNickname.setText("This username is already taken");
@@ -65,7 +66,6 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
         dialogSettings();
         setBounds();
         addToDialog();
-
 
     }
 
@@ -132,28 +132,39 @@ public class PlayerInfoRequestDialog extends JDialog implements ActionListener{
         return true;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private class InfoListener extends Observable<ActionMessage> implements ActionListener {
 
-        if (isNameNotValid(nickname.getText())) {
-            invalidNickname.setForeground(Color.red);
-            invalidNickname.setText("Invalid nickname");
-            invalidBirthday.setText("");
-        } else {
-            invalidNickname.setText("");
-            ClientViewSupportFunctions support = new ClientViewSupportFunctions();
-            if (!support.isDateValid((day.getText() + "-" + month.getText() + "-" + year.getText()), day.getText(), month.getText(), year.getText())) {
-                invalidBirthday.setForeground(Color.red);
-                invalidBirthday.setText("Invalid date");
+        public InfoListener() {
+            this.addObserver(guiController);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+
+            if (isNameNotValid(nickname.getText())) {
+                invalidNickname.setForeground(Color.red);
+                invalidNickname.setText("Invalid nickname");
+                invalidBirthday.setText("");
             } else {
-                //TODO da finire
+                invalidNickname.setText("");
+                ClientViewSupportFunctions support = new ClientViewSupportFunctions();
+                if (!support.isDateValid((day.getText() + "-" + month.getText() + "-" + year.getText()), day.getText(), month.getText(), year.getText())) {
+                    invalidBirthday.setForeground(Color.red);
+                    invalidBirthday.setText("Invalid date");
+                } else {
+                    //TODO da finire
 
-                guiController.setNickname(nickname.getText());
+                    guiController.setNickname(nickname.getText());
 
-                //DEBUG
-                System.out.println("sent "+nickname.getText()+"\ndate: "+Integer.parseInt(year.getText())+","+(Integer.parseInt(month.getText())-1)+","+Integer.parseInt(day.getText())+"\n number "+numberOfPlayers.getValue());
-                //guiController.send(new PlayerInfo(nickname.getText(),new GregorianCalendar(Integer.parseInt(year.getText()),(Integer.parseInt(month.getText())-1),Integer.parseInt(day.getText())),(int)numberOfPlayers.getValue()));
-                dispose();
+                    //DEBUG
+                    System.out.println("sent " + nickname.getText() + "\ndate: " + Integer.parseInt(year.getText()) + "," + (Integer.parseInt(month.getText()) - 1) + "," + Integer.parseInt(day.getText()) + "\n number " + numberOfPlayers.getValue());
+
+                    //guiController.send(new PlayerInfo(nickname.getText(),new GregorianCalendar(Integer.parseInt(year.getText()),(Integer.parseInt(month.getText())-1),Integer.parseInt(day.getText())),(int)numberOfPlayers.getValue()));
+
+                    dispose();
+                    notify(new ActionMessage());
+                }
             }
         }
     }

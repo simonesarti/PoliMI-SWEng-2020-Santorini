@@ -1,8 +1,8 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
+import it.polimi.ingsw.observe.Observable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +18,15 @@ public class PositionSelectionPanel extends JPanel {
     private final ArrayList<int[]> coordinates=new ArrayList<>();
     private final JDialog dialog;
 
-    public PositionSelectionPanel(StartingPositionRequestDialog dialog, BoardState boardState, GuiController guiController) {
+    public PositionSelectionPanel(StartingPositionRequestDialog dialog,GuiController guiController) {
 
         this.guiController=guiController;
+
         this.dialog=dialog;
         setPreferredSize(new Dimension(500,500));
         gameBoard=Images.getImage(Images.GAMEBOARD);
         setLayout(new GridLayout(5,5));
-        setButtons(boardState);
+        setButtons(guiController.getCurrentBoardState());
     }
 
     private void setButtons(BoardState boardState){
@@ -75,7 +76,11 @@ public class PositionSelectionPanel extends JPanel {
         g.drawImage(gameBoard, 0, 0, 500, 500, this);
     }
 
-    private class PositionListener implements ActionListener{
+    private class PositionListener extends Observable<ActionMessage> implements ActionListener{
+
+        public PositionListener() {
+            this.addObserver(guiController);
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -88,7 +93,9 @@ public class PositionSelectionPanel extends JPanel {
                 int[] p1=coordinates.get(0);
                 int[] p2=coordinates.get(1);
                 //guiController.send(new StartingPositionChoice(p1[0],p1[1],p2[0],p2[1]));
+
                 dialog.dispose();
+                notify(new ActionMessage());
             }
         }
     }

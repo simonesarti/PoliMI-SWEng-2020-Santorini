@@ -3,6 +3,7 @@ package it.polimi.ingsw.GUI;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.TowerState;
+import it.polimi.ingsw.observe.Observable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,14 +30,16 @@ public class GameWindow{
 
     }
 
+    private final GuiController guiController;
     private final JPanel gamePanel;
     private final ImageButton[][] towerButtons =new ImageButton[5][5];
 
-    public GameWindow(BoardState boardState) {
+    public GameWindow(GuiController guiController) {
 
+        this.guiController=guiController;
         gamePanel=new GamePanel();
         gamePanel.setLayout(new GridBagLayout());
-        setTowerButtons(boardState);
+        setTowerButtons(guiController.getCurrentBoardState());
         gamePanel.setVisible(true);
 
     }
@@ -172,11 +175,15 @@ public class GameWindow{
     }
 
     //TODO
-    private class CellSelectedListener implements ActionListener {
+    private class CellSelectedListener extends Observable<ActionMessage> implements ActionListener {
+
+        public CellSelectedListener() {
+            this.addObserver(guiController);
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            notify(new ActionMessage());
         }
     }
 

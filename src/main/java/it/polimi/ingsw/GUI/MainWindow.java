@@ -47,18 +47,20 @@ public class MainWindow{
         nicknames.add("Oli");
         nicknames.add("Ale");
 
+        GuiController testController=new GuiController();
         GameBoard gameBoard=new GameBoard();
         Worker worker0=new Worker(Colour.BLUE,0);
         gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(worker0);
-        setMatchGui(cards,nicknames,gameBoard.getBoardState() );
+        testController.setCurrentBoardState(gameBoard.getBoardState());
+        setMatchGui(cards,nicknames,testController);
         //END DEBUG
     }
 
-    public void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames, BoardState boardState){
+    public void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){
         mainPanel.setLayout(new GridBagLayout());
 
-        gameWindow=new GameWindow(boardState);
-        choicePanel=new ChoicePanel();
+        gameWindow=new GameWindow(guiController);
+        choicePanel=new ChoicePanel(guiController);
         cardsPanel=new CardsPanel(cards,nicknames);
         setInternalPanel(cardsPanel,0,0,1,1,1,1,0,0,0,0,0,0,10,1);
         setInternalPanel(choicePanel,1,0,1,2,2,1,0,0,0,0,0,0,10,1);

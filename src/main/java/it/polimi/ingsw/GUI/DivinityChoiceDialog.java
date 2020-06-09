@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+import it.polimi.ingsw.observe.Observable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,44 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DivinityChoiceDialog extends JDialog{
+
+    private class GodNameLink {
+
+        private String name;
+        private JButton button;
+
+        public String getName() {
+            return name;
+        }
+
+        public JButton getButton() {
+            return button;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setButton(JButton button) {
+            this.button = button;
+        }
+
+        public void setButtonIcon(){
+
+            switch (name) {
+                case "Apollo" -> button.setIcon(new ImageIcon(Images.getImage(Images.APOLLO).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Artemis" -> button.setIcon(new ImageIcon(Images.getImage(Images.ARTEMIS).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Athena" -> button.setIcon(new ImageIcon(Images.getImage(Images.ATHENA).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Atlas" -> button.setIcon(new ImageIcon(Images.getImage(Images.ATLAS).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Demeter" -> button.setIcon(new ImageIcon(Images.getImage(Images.DEMETER).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Hephaestus" -> button.setIcon(new ImageIcon(Images.getImage(Images.HEPHAESTUS).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Minotaur" -> button.setIcon(new ImageIcon(Images.getImage(Images.MINOTAUR).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Pan" -> button.setIcon(new ImageIcon(Images.getImage(Images.PAN).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Prometheus" -> button.setIcon(new ImageIcon(Images.getImage(Images.PROMETHEUS).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                case "Empty" -> button.setIcon(new ImageIcon(Images.getImage(Images.EMPTY_CARD).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+            }
+        }
+    }
 
     private final GuiController guiController;
     private final ArrayList<String> selected=new ArrayList<>();
@@ -72,7 +111,11 @@ public class DivinityChoiceDialog extends JDialog{
     }
 
 
-    private class CardSelectionListener implements ActionListener{
+    private class CardSelectionListener extends Observable<ActionMessage> implements  ActionListener{
+
+        public CardSelectionListener() {
+            this.addObserver(guiController);
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -105,7 +148,9 @@ public class DivinityChoiceDialog extends JDialog{
 */
 
                     //guiController.send(new CardChoice(selected.toArray(String[]::new)));
+
                     dispose();
+                    notify(new ActionMessage());
                 }
             }
 
@@ -114,74 +159,7 @@ public class DivinityChoiceDialog extends JDialog{
     }
 
 
-    private class GodNameLink {
 
-        private String name;
-        private JButton button;
-
-        public String getName() {
-            return name;
-        }
-
-        public JButton getButton() {
-            return button;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setButton(JButton button) {
-            this.button = button;
-        }
-
-        public void setButtonIcon(){
-
-            switch(name){
-
-                case "Apollo":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.APOLLO).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Artemis":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.ARTEMIS).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Athena":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.ATHENA).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Atlas":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.ATLAS).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Demeter":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.DEMETER).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Hephaestus":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.HEPHAESTUS).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Minotaur":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.MINOTAUR).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Pan":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.PAN).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Prometheus":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.PROMETHEUS).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-                case "Empty":
-                    button.setIcon(new ImageIcon(Images.getImage(Images.EMPTY_CARD).getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-                    break;
-
-            }
-        }
-    }
 
 
 }

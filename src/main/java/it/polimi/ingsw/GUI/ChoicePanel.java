@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.observe.Observable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,14 +9,15 @@ import java.awt.event.ActionListener;
 
 public class ChoicePanel extends JPanel {
 
-    ImageButton moveButton=new ImageButton();
-    ImageButton buildButton=new ImageButton();
-    ImageButton endButton=new ImageButton();
-    ImageButton quitButton=new ImageButton();
+    private final GuiController guiController;
+    private final ImageButton moveButton=new ImageButton();
+    private final ImageButton buildButton=new ImageButton();
+    private final ImageButton endButton=new ImageButton();
+    private final ImageButton quitButton=new ImageButton();
 
+    public ChoicePanel(GuiController guiController){
 
-    public ChoicePanel(){
-
+        this.guiController=guiController;
         setBackground(Color.BLACK);
         setLayout(new GridBagLayout());
         setButtons();
@@ -93,12 +96,15 @@ public class ChoicePanel extends JPanel {
     }
 
     //TODO
-    private class ChoiceListener implements ActionListener {
+    private class ChoiceListener extends Observable<ActionMessage> implements ActionListener {
 
+        public ChoiceListener() {
+            this.addObserver(guiController);
+        }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            notify(new ActionMessage());
         }
     }
 
