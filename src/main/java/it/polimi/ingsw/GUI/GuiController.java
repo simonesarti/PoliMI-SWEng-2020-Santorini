@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.GUI.messages.ActionMessage;
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;

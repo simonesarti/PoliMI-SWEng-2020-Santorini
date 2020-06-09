@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
+import it.polimi.ingsw.GUI.messages.ActionMessage;
+import it.polimi.ingsw.GUI.messages.PlayerPersonalData;
 import it.polimi.ingsw.observe.Observable;
 import it.polimi.ingsw.view.ClientViewSupportFunctions;
 
@@ -153,17 +154,11 @@ public class PlayerInfoRequestDialog extends JDialog{
                     invalidBirthday.setForeground(Color.red);
                     invalidBirthday.setText("Invalid date");
                 } else {
-                    //TODO da finire
 
                     guiController.setNickname(nickname.getText());
 
-                    //DEBUG
-                    System.out.println("sent " + nickname.getText() + "\ndate: " + Integer.parseInt(year.getText()) + "," + (Integer.parseInt(month.getText()) - 1) + "," + Integer.parseInt(day.getText()) + "\n number " + numberOfPlayers.getValue());
-
-                    //guiController.send(new PlayerInfo(nickname.getText(),new GregorianCalendar(Integer.parseInt(year.getText()),(Integer.parseInt(month.getText())-1),Integer.parseInt(day.getText())),(int)numberOfPlayers.getValue()));
-
                     dispose();
-                    notify(new ActionMessage());
+                    notify(new PlayerPersonalData(nickname.getText(),new GregorianCalendar(Integer.parseInt(year.getText()),(Integer.parseInt(month.getText())-1),Integer.parseInt(day.getText())),(int)numberOfPlayers.getValue()));
                 }
             }
         }

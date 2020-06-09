@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.GUI.messages.ActionMessage;
+import it.polimi.ingsw.GUI.messages.StartingPlacement;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.observe.Observable;
@@ -89,13 +91,12 @@ public class PositionSelectionPanel extends JPanel {
             coordinates.add(selected);
             System.out.println(""+selected[0]+","+selected[1]);
             if(coordinates.size()==2){
-                //TODO finire
+
                 int[] p1=coordinates.get(0);
                 int[] p2=coordinates.get(1);
-                //guiController.send(new StartingPositionChoice(p1[0],p1[1],p2[0],p2[1]));
 
                 dialog.dispose();
-                notify(new ActionMessage());
+                notify(new StartingPlacement(p1[0],p1[1],p2[0],p2[1]));
             }
         }
     }

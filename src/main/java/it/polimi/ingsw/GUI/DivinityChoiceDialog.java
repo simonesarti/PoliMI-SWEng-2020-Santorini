@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
+import it.polimi.ingsw.GUI.messages.ActionMessage;
+import it.polimi.ingsw.GUI.messages.SelectedGods;
 import it.polimi.ingsw.observe.Observable;
 
 import javax.swing.*;
@@ -139,18 +140,8 @@ public class DivinityChoiceDialog extends JDialog{
 
                 if (selected.size() == toSelect) {
 
-                    //TODO finire
-/*
-                    //DEBUG
-                    for(String selected : selected.toArray(String[]::new)){
-                        System.out.println(selected+",");
-                    }
-*/
-
-                    //guiController.send(new CardChoice(selected.toArray(String[]::new)));
-
                     dispose();
-                    notify(new ActionMessage());
+                    notify(new SelectedGods(selected.toArray(String[]::new)));
                 }
             }
 

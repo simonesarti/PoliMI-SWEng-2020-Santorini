@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.GUI.messages.ActionMessage;
+import it.polimi.ingsw.GUI.messages.ActionRequest;
 import it.polimi.ingsw.observe.Observable;
 
 import javax.swing.*;
@@ -104,7 +106,19 @@ public class ChoicePanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            notify(new ActionMessage());
+
+            ActionMessage actionMessage;
+
+            if(e.getSource()==moveButton){
+                actionMessage=new ActionRequest("move");
+            }else if(e.getSource()==buildButton){
+                actionMessage=new ActionRequest("build");
+            }else if(e.getSource()==endButton){
+                actionMessage=new ActionRequest("end");
+            }else {
+                actionMessage=new ActionRequest("quit");
+            }
+            notify(actionMessage);
         }
     }
 

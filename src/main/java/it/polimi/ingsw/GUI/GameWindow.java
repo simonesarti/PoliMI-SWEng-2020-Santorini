@@ -1,5 +1,7 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.GUI.messages.ActionMessage;
+import it.polimi.ingsw.GUI.messages.BoardSelection;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.TowerState;
@@ -183,7 +185,8 @@ public class GameWindow{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            notify(new ActionMessage());
+            int[] coordinates=getButtonCoordinates((ImageButton) e.getSource());
+            notify(new BoardSelection(coordinates[0],coordinates[1]));
         }
     }
 
