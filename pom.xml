@@ -80,16 +80,17 @@
           <version>2.22.1</version>
         </plugin>
 
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
+       <plugin>
+         <artifactId>maven-jar-plugin</artifactId>
+         <version>3.0.2</version>
+       </plugin>
 
 
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
+       <plugin>
+         <artifactId>maven-install-plugin</artifactId>
+         <version>2.5.2</version>
+       </plugin>
+
 
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
@@ -108,6 +109,7 @@
 
       </plugins>
     </pluginManagement>
+
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -128,7 +130,7 @@
               <goals><goal>single</goal></goals>
               <phase>package</phase>
               <configuration>
-                <finalName>server.jar</finalName>
+                <finalName>server</finalName>
                 <archive>
                   <manifest>
                     <mainClass>it.polimi.ingsw.ServerApp</mainClass>
@@ -137,6 +139,7 @@
                 <descriptorRefs>
                   <descriptorRef>jar-with-dependencies</descriptorRef>
                 </descriptorRefs>
+                <appendAssemblyId>false</appendAssemblyId>
 
               </configuration>
             </execution>
@@ -145,7 +148,7 @@
               <goals><goal>single</goal></goals>
               <phase>package</phase>
               <configuration>
-                <finalName>client.jar</finalName>
+                <finalName>client</finalName>
                 <archive>
                   <manifest>
                     <mainClass>it.polimi.ingsw.ClientApp</mainClass>
@@ -154,6 +157,7 @@
                 <descriptorRefs>
                   <descriptorRef>jar-with-dependencies</descriptorRef>
                 </descriptorRefs>
+                <appendAssemblyId>false</appendAssemblyId>
 
               </configuration>
             </execution>
