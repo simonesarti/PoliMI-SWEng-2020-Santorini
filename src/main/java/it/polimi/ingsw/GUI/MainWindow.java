@@ -38,8 +38,8 @@ public class MainWindow{
 
         mainPanel=new MainPanel(frame);
 
-        //TODO
-        //DEBUG
+        /*  DEBUG test board
+
         ArrayList<String> cards=new ArrayList<>();
         ArrayList<String> nicknames=new ArrayList<>();
         cards.add("Athena");
@@ -52,8 +52,11 @@ public class MainWindow{
         Worker worker0=new Worker(Colour.BLUE,0);
         gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(worker0);
         testController.setCurrentBoardState(gameBoard.getBoardState());
+        testController.setPlayerColor(Colour.BLUE);
         setMatchGui(cards,nicknames,testController);
         //END DEBUG
+*/
+
     }
 
     public void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){

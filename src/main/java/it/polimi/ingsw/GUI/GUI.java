@@ -32,10 +32,10 @@ public class GUI extends View{
         frame.add(mainWindow.getMainPanel());
         frame.setVisible(true);
 
+        guiController.setFrame(frame);
 
     }
 
-    //ok
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
         guiController.setCurrentBoardState(message.getBoardState());
@@ -44,37 +44,31 @@ public class GUI extends View{
         }
     }
 
-    //ok
     @Override
     public void handleInfoMessage(InfoMessage message) {
-        JOptionPane.showMessageDialog(mainWindow.getMainPanel(),message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame,message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
     }
 
-    //ok
     @Override
     public void handleErrorMessage(ErrorMessage message) {
-        JOptionPane.showMessageDialog(mainWindow.getMainPanel(),message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame,message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
     }
 
-    //ok
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
         new PlayerInfoRequestDialog(message.isNicknameTaken(),guiController);
     }
 
-    //ok
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
         new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices(),guiController);
     }
 
-    //ok
     @Override
     public void handleStartingPositionRequest() {
         new StartingPositionRequestDialog(guiController);
     }
 
-    //TODO
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames());
@@ -82,10 +76,9 @@ public class GUI extends View{
         setCanStart(true);
     }
 
-    //ok
     @Override
     public void handleCloseConnectionMessage() {
-        JOptionPane.showMessageDialog(mainWindow.getMainPanel(),"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
     }
 
     //TODO
@@ -95,10 +88,11 @@ public class GUI extends View{
     }
 
     //test
-
-
     public MainWindow getMainWindow() {
         return mainWindow;
+    }
+    public GuiController getGuiController() {
+        return guiController;
     }
 }
 

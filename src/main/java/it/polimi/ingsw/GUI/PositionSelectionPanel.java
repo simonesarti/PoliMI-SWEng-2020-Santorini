@@ -89,7 +89,6 @@ public class PositionSelectionPanel extends JPanel {
             ImageButton pressed=(ImageButton) e.getSource();
             int[] selected=getButtonCoordinates(pressed);
             coordinates.add(selected);
-            System.out.println(""+selected[0]+","+selected[1]);
             if(coordinates.size()==2){
 
                 int[] p1=coordinates.get(0);

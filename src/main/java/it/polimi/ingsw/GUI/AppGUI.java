@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.client.ClientSideConnection;
+import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Worker;
@@ -15,7 +16,7 @@ public class AppGUI {
 
         ClientSideConnection connection=new ClientSideConnection("127.0.0.1",12345);
         GUI gui=new GUI(connection);
-
+/*
         TimeUnit.SECONDS.sleep(5);
         System.out.println("waited");
 
@@ -24,9 +25,9 @@ public class AppGUI {
         Worker worker1=new Worker(Colour.RED,1);
         gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(worker0);
         gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(worker1);
-        gui.getMainWindow().updateBoard(gameBoard.getBoardState());
-
-
+        BoardState boardState=gameBoard.getBoardState();
+        gui.getMainWindow().updateBoard(boardState);
+*/
         //new PlayerInfoRequestDialog(false,new GuiController());
 /*
         ArrayList<String> names=new ArrayList<>();
@@ -41,9 +42,9 @@ public class AppGUI {
         names.add("Prometheus");
         new DivinityChoiceDialog(names,3,new GuiController());
 */
-/*
-        //STARTING POSITION REQUEST TEST
 
+        //STARTING POSITION REQUEST TEST
+/*
         GuiController testController=new GuiController();
         GameBoard gameBoard=new GameBoard();
         Worker worker0=new Worker(Colour.PURPLE,0);
@@ -53,6 +54,9 @@ public class AppGUI {
         testController.setCurrentBoardState(gameBoard.getBoardState());
         new StartingPositionRequestDialog(testController);
 */
+
+        //new HowToUseGuiDialog();
+
 /*
         //IMAGEBUTTON UPDATE
         ImageButton imageButton=new ImageButton();

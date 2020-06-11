@@ -138,6 +138,7 @@ public class GameWindow{
                 }
             }else{
                 switch (height) {
+                    //case 0 can't turn back to invisible once painted
                     case 0 -> setButtonVisibility(imageButton);
                     case 1 -> imageButton.setButtonImage(Images.getImage(Images.L1));
                     case 2 -> imageButton.setButtonImage(Images.getImage(Images.L12));
