@@ -6,14 +6,11 @@ import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.NewBoardStateMessage
 import it.polimi.ingsw.messages.GameToPlayerMessages.Others.*;
 import it.polimi.ingsw.observe.Observer;
 
-public abstract class View implements Observer<Object>,Runnable {
+public abstract class View implements Observer<Object>{
 
     private final ClientSideConnection clientSideConnection;
-    private boolean canStart;
 
     public View(ClientSideConnection clientSideConnection){
-
-        this.setCanStart(false);
         this.clientSideConnection = clientSideConnection;
     }
 
@@ -50,14 +47,6 @@ public abstract class View implements Observer<Object>,Runnable {
 
         else { throw new IllegalArgumentException(); }
 
-    }
-
-    public synchronized boolean getCanStart() {
-        return canStart;
-    }
-
-    public synchronized void setCanStart(boolean canStart) {
-        this.canStart = canStart;
     }
 
     public ClientSideConnection getClientSideConnection() {

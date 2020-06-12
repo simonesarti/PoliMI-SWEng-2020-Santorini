@@ -73,18 +73,11 @@ public class GUI extends View{
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames());
         mainWindow.setMatchGui(message.getDescriptions(),message.getNicknames(),guiController);
-        setCanStart(true);
     }
 
     @Override
     public void handleCloseConnectionMessage() {
         JOptionPane.showMessageDialog(frame,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    //TODO
-    @Override
-    public void run() {
-
     }
 
     //test

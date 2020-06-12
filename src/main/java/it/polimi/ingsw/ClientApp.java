@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.GUI.GUI;
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.view.cli.Cli;
@@ -8,17 +9,15 @@ import java.util.Scanner;
 
 public class ClientApp {
 
-//TODO CHIEDERE IP,CHIEDERE CLI/GUI E ASSEGNARE QUELLA GIUSTA
     public static void main(String[] args){
 
         View view;
         ClientSideConnection clientSideConnection;
         Thread t0;
-        Thread t1;
         Scanner stdin = new Scanner(System.in);
 
 
-        String serverIP = null;
+        String serverIP=null;
         String[] tokens;
         boolean valid;
         //checking serverIp feasibility
@@ -39,8 +38,6 @@ public class ClientApp {
                     Integer.parseInt(tokens[3]);
                 }
 
-
-
             } catch (NumberFormatException e) {
                 System.out.println("Not an ipv4");
                 valid = false;
@@ -50,8 +47,7 @@ public class ClientApp {
         //Creating clientSideConnection
         clientSideConnection = new ClientSideConnection(serverIP,12345);
 
-
-        String viewChoice = null;
+        String viewChoice;
 
         //User must choice cli or gui
         do{
@@ -65,43 +61,18 @@ public class ClientApp {
                 valid = false;
             }
 
-
-
-
-
         }while(!valid);
 
-        //TODO se chiudo stdin dà errore. Lasciandola aperta funziona tutto. Mi sembra strano perché viene istanziata
-        //TODO un'altra volta all'interno del costruttore di Cli. Per sicurezza magari chiediamo a un tutor
 
         if(viewChoice.equals("cli")){
-
             view = new Cli(clientSideConnection);
-            clientSideConnection.addObserver(view);
-
-            t0 = new Thread(clientSideConnection);
-            t0.start();
-
-            //ATTENZIONE: sia questo processo che il thread t0 vanno a guardare/cambiare canStart. Ho sincronizzato set/get sulla classe
-            while(!view.getCanStart() && clientSideConnection.isActive()){
-                //do nothing
-
-            }
-            t1 = new Thread(view);
-            t1.start();
-
-
-            try {
-                t0.join();
-                t1.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
         }else{
-            //TODO fai partire gui
-            //TODO ricorda di fare addObserver!
+            view=new GUI(clientSideConnection);
         }
+
+        clientSideConnection.addObserver(view);
+        t0 = new Thread(clientSideConnection);
+        t0.start();
 
 
 

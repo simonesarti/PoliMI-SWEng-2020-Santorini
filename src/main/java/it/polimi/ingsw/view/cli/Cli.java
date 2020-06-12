@@ -62,7 +62,7 @@ public class Cli extends View {
 
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
-        setCanStart(true);
+        startActionRequestThread();
     }
 
     @Override
@@ -220,68 +220,56 @@ public class Cli extends View {
         }
     }
 
-    //TODO testare
     public void handleInput(String[] tokens){
 
         sf = new ClientViewSupportFunctions();
 
-        switch(sf.nameToCorrectFormat(tokens[0]))
-        {
-            case "End":
-                this.getClientSideConnection().send(new EndChoice());
-                break;
-            case "Quit":
-                this.getClientSideConnection().send(new QuitChoice());
-                break;
-            case "Move":
-                this.getClientSideConnection().send(new MoveData(Integer.parseInt(tokens[1])-1,Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3])));
-                break;
-            case "Build":
-
-                this.getClientSideConnection().send(new BuildData(Integer.parseInt(tokens[1])-1,Integer.parseInt(tokens[2]),Integer.parseInt(tokens[3]),sf.nameToCorrectFormat(tokens[4])));
-                break;
-            default:
-                System.out.println("Command not found");
+        switch (sf.nameToCorrectFormat(tokens[0])) {
+            case "End" -> this.getClientSideConnection().send(new EndChoice());
+            case "Quit" -> this.getClientSideConnection().send(new QuitChoice());
+            case "Move" -> this.getClientSideConnection().send(new MoveData(Integer.parseInt(tokens[1]) - 1, Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3])));
+            case "Build" -> this.getClientSideConnection().send(new BuildData(Integer.parseInt(tokens[1]) - 1, Integer.parseInt(tokens[2]), Integer.parseInt(tokens[3]), sf.nameToCorrectFormat(tokens[4])));
+            default -> System.out.println("Command not found");
         }
 
     }
 
 
+    private void startActionRequestThread() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-    //cambiamento
-    @Override
-    public void run() {
+                    while (getClientSideConnection().isActive()) {
 
-        try {
+                        System.out.println("Insert a command:");
+                        System.out.println("move worker(1/2) x,y");
+                        System.out.println("build worker(1/2) x,y block/dome");
 
-            while(getClientSideConnection().isActive()) {
+                        System.out.println("end (to end your turn)");
+                        System.out.println("quit (to leave the game, only if already eliminated");
+                        String inputLine = stdin.nextLine();
+                        String delims = "[, ]";
+                        String[] tokens;
+                        tokens = inputLine.split(delims);
+                        if (sf.isValidInputString(tokens)) {
+                            handleInput(tokens);
+                        } else {
+                            System.out.println("Command is not valid");
+                        }
 
-                System.out.println("Insert a command:");
-                System.out.println("move worker(1/2) x,y");
-                System.out.println("build worker(1/2) x,y block/dome");
-                //in realtà basta che scriva end, ma poi non si capisce la differenza con quit
-                System.out.println("end (to end your turn)");
-                System.out.println("quit (to leave the game, only if already eliminated");
-                String inputLine = stdin.nextLine();
-                String delims = "[, ]";
-                String[] tokens;
-                tokens = inputLine.split(delims);
-                if(sf.isValidInputString(tokens)) { handleInput(tokens); }
-                else{System.out.println("Command is not valid");}
+                    }
 
+                } catch (Exception e) {
+
+                    getClientSideConnection().setActive(false);
+                    e.printStackTrace();
+                } finally {
+                    stdin.close();
+                }
             }
-
-        } catch (Exception e) {
-
-            getClientSideConnection().setActive(false);
-            e.printStackTrace();
-
-        } finally {
-
-            stdin.close();
-
-        }
-
-
+        });
+        t.start();
     }
 }
