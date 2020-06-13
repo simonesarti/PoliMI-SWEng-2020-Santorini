@@ -86,18 +86,11 @@ public class GuiController implements Observer<ActionMessage> {
         this.nickname=nickname;
     }
 
-    public void setPlayerColor(ArrayList<String> nicknames){
+    public void setPlayerColor(ArrayList<String> nicknames, ArrayList<Colour> colours){
 
         for(int i=0;i<nicknames.size();i++){
             if(nickname.equals(nicknames.get(i))){
-
-                if(i==0){
-                    playerColor=Colour.RED;
-                }else if(i==1){
-                    playerColor=Colour.BLUE;
-                }else{
-                    playerColor=Colour.PURPLE;
-                }
+                playerColor=colours.get(i);
             }
         }
 

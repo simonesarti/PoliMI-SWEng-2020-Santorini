@@ -2,10 +2,7 @@ package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
-import it.polimi.ingsw.model.BoardState;
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,22 +11,55 @@ import java.util.concurrent.TimeUnit;
 public class AppGUI {
 
     public static void main(String[] args) throws InterruptedException {
-
+/*
         //STARTING PANEL TEST
         ClientSideConnection connection=new ClientSideConnection("127.0.0.1",12345);
         GUI gui=new GUI(connection);
+*/
+
+        //MAIN PANEL TEST
+        JFrame jFrame=new MainFrame();
+
+        ArrayList<String> cards=new ArrayList<>();
+        ArrayList<String> nicknames=new ArrayList<>();
+        ArrayList<Colour> colours=new ArrayList<>();
+        cards.add("Athena");
+        cards.add("Artemis");
+        nicknames.add("Oli");
+        nicknames.add("Ale");
+        colours.add(Colour.BLUE);
+        colours.add(Colour.RED);
+        GameStartMessage message=new GameStartMessage(nicknames,colours,cards);
+
+        GuiController testController=new GuiController();
+        //change the name to test different workers selectable
+        testController.setNickname("Ale");
+        testController.setPlayerColor(message.getNicknames(),message.getColours());
+
+        GameBoard gameBoard=new GameBoard();
+        Worker worker0=new Worker(Colour.BLUE,0);
+        gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(worker0);
+        Worker worker3=new Worker(Colour.RED,0);
+        gameBoard.getTowerCell(3,1).getFirstNotPieceLevel().setWorker(worker3);
+        Worker worker4=new Worker(Colour.PURPLE,0);
+        gameBoard.getTowerCell(0,2).getFirstNotPieceLevel().setWorker(worker4);
+        testController.setCurrentBoardState(gameBoard.getBoardState());
+
+        MainWindow mainWindow=new MainWindow(jFrame,message,testController);
+        jFrame.add(mainWindow.getMainPanel());
+        jFrame.setVisible(true);
 
 /*
         TimeUnit.SECONDS.sleep(5);
         System.out.println("waited");
 
-        GameBoard gameBoard=new GameBoard();
-        Worker worker0=new Worker(Colour.PURPLE,0);
-        Worker worker1=new Worker(Colour.RED,1);
-        gameBoard.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(worker0);
-        gameBoard.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(worker1);
-        BoardState boardState=gameBoard.getBoardState();
-        gui.getMainWindow().updateBoard(boardState);
+        GameBoard gameBoard2=new GameBoard();
+        Worker worker1=new Worker(Colour.PURPLE,0);
+        Worker worker2=new Worker(Colour.RED,1);
+        gameBoard2.getTowerCell(4,4).getFirstNotPieceLevel().setWorker(worker1);
+        gameBoard2.getTowerCell(3,3).getFirstNotPieceLevel().setWorker(worker2);
+        BoardState boardState=gameBoard2.getBoardState();
+        mainWindow.updateBoard(boardState);
 */
         //new PlayerInfoRequestDialog(false,new GuiController());
 /*
@@ -78,26 +108,6 @@ public class AppGUI {
 
 */
 
-    //EX MAIN PANEL TEST
-
-        //DEBUG test board
-/*
-        ArrayList<String> cards=new ArrayList<>();
-        ArrayList<String> nicknames=new ArrayList<>();
-        cards.add("Athena");
-        cards.add("Artemis");
-        nicknames.add("Oli");
-        nicknames.add("Ale");
-
-        GuiController testController=new GuiController();
-        GameBoard gameBoard=new GameBoard();
-        Worker worker0=new Worker(Colour.BLUE,0);
-        gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(worker0);
-        testController.setCurrentBoardState(gameBoard.getBoardState());
-        testController.setPlayerColor(Colour.BLUE);
-        setMatchGui(cards,nicknames,testController);
-        //END DEBUG
-*/
 
 
 

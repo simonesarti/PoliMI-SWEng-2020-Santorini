@@ -74,10 +74,12 @@ public class GUI extends View{
 
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
-        guiController.setPlayerColor(message.getNicknames());
-        mainWindow=new MainWindow(frame,message.getDescriptions(),message.getNicknames(),guiController);
+        guiController.setPlayerColor(message.getNicknames(),message.getColours());
+        mainWindow=new MainWindow(frame,message,guiController);
         frame.remove(lobbyPanel);
         frame.add(mainWindow.getMainPanel());
+        frame.repaint();
+        frame.revalidate();
     }
 
     @Override

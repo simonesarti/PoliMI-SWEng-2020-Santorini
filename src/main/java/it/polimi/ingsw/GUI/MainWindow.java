@@ -1,5 +1,6 @@
 package it.polimi.ingsw.GUI;
 
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
@@ -16,20 +17,20 @@ public class MainWindow{
     private JPanel cardsPanel;
     private JPanel choicePanel;
 
-    public MainWindow(JFrame frame,ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){
+    public MainWindow(JFrame frame, GameStartMessage message, GuiController guiController){
 
         mainPanel=new JPanel();
         mainPanel.setPreferredSize(new Dimension(frame.getHeight(),frame.getWidth()));
         mainPanel.setBackground(Color.BLACK);
-        setMatchGui(cards,nicknames,guiController);
+        setMatchGui(message,guiController);
     }
 
-    private void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){
+    private void setMatchGui(GameStartMessage message, GuiController guiController){
         mainPanel.setLayout(new GridBagLayout());
 
         gameWindow=new GameWindow(guiController);
         choicePanel=new ChoicePanel(guiController);
-        cardsPanel=new CardsPanel(cards,nicknames);
+        cardsPanel=new CardsPanel(message);
         setInternalPanel(cardsPanel,0,0,1,1,1,1,0,0,0,0,0,0,10,1);
         setInternalPanel(choicePanel,1,0,1,2,2,1,0,0,0,0,0,0,10,1);
         setInternalPanel(gameWindow.getGamePanel(),3,0,1,20,10,1,0,0,0,0,0,0,10,1);
