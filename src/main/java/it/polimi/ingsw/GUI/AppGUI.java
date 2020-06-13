@@ -1,6 +1,7 @@
 package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.client.ClientSideConnection;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
 import it.polimi.ingsw.model.BoardState;
 import it.polimi.ingsw.model.Colour;
 import it.polimi.ingsw.model.GameBoard;
@@ -14,8 +15,10 @@ public class AppGUI {
 
     public static void main(String[] args) throws InterruptedException {
 
+        //STARTING PANEL TEST
         ClientSideConnection connection=new ClientSideConnection("127.0.0.1",12345);
         GUI gui=new GUI(connection);
+
 /*
         TimeUnit.SECONDS.sleep(5);
         System.out.println("waited");
@@ -68,9 +71,34 @@ public class AppGUI {
         imageButton.setOpaque(false);
         imageButton.setContentAreaFilled(false);
         frame.setVisible(true);
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(3);
         imageButton.setButtonImage(Images.getImage(Images.L0P));
+        TimeUnit.SECONDS.sleep(3);
+        imageButton.setButtonImage(null);
+
 */
+
+    //EX MAIN PANEL TEST
+
+        //DEBUG test board
+/*
+        ArrayList<String> cards=new ArrayList<>();
+        ArrayList<String> nicknames=new ArrayList<>();
+        cards.add("Athena");
+        cards.add("Artemis");
+        nicknames.add("Oli");
+        nicknames.add("Ale");
+
+        GuiController testController=new GuiController();
+        GameBoard gameBoard=new GameBoard();
+        Worker worker0=new Worker(Colour.BLUE,0);
+        gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(worker0);
+        testController.setCurrentBoardState(gameBoard.getBoardState());
+        testController.setPlayerColor(Colour.BLUE);
+        setMatchGui(cards,nicknames,testController);
+        //END DEBUG
+*/
+
 
 
     }

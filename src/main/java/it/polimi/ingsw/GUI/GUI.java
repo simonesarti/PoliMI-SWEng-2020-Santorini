@@ -14,12 +14,13 @@ import javax.swing.*;
 public class GUI extends View{
 
     private JFrame frame;
+    private LobbyPanel lobbyPanel;
     private MainWindow mainWindow;
     private GuiController guiController;
 
     public GUI(ClientSideConnection connection){
         super(connection);
-        SwingUtilities.invokeLater(this::createGUI);
+        createGUI();
     }
 
     private void createGUI(){
@@ -28,8 +29,10 @@ public class GUI extends View{
         guiController.setConnection(getClientSideConnection());
 
         frame =new MainFrame();
-        mainWindow=new MainWindow(frame);
-        frame.add(mainWindow.getMainPanel());
+
+        lobbyPanel=new LobbyPanel(frame);
+        frame.add(lobbyPanel);
+
         frame.setVisible(true);
 
         guiController.setFrame(frame);
@@ -72,7 +75,9 @@ public class GUI extends View{
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames());
-        mainWindow.setMatchGui(message.getDescriptions(),message.getNicknames(),guiController);
+        mainWindow=new MainWindow(frame,message.getDescriptions(),message.getNicknames(),guiController);
+        frame.remove(lobbyPanel);
+        frame.add(mainWindow.getMainPanel());
     }
 
     @Override
@@ -87,5 +92,6 @@ public class GUI extends View{
     public GuiController getGuiController() {
         return guiController;
     }
+    public JFrame getFrame(){return frame;}
 }
 

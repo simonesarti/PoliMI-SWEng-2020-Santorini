@@ -11,55 +11,20 @@ import java.util.ArrayList;
 
 public class MainWindow{
 
-    private class MainPanel extends JPanel{
-
-        private final Image background;
-
-        public MainPanel(JFrame frame) {
-            background=Images.getImage(Images.INITIAL_BACKGROUND);
-            setPreferredSize(new Dimension(frame.getHeight(),frame.getWidth()));
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(background,0,0,this.getWidth(),this.getHeight(),this);
-        }
-
-
-    }
-
     private final JPanel mainPanel;
     private GameWindow gameWindow;
     private JPanel cardsPanel;
     private JPanel choicePanel;
 
-    public MainWindow(JFrame frame){
+    public MainWindow(JFrame frame,ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){
 
-        mainPanel=new MainPanel(frame);
-
-        /*  DEBUG test board
-
-        ArrayList<String> cards=new ArrayList<>();
-        ArrayList<String> nicknames=new ArrayList<>();
-        cards.add("Athena");
-        cards.add("Artemis");
-        nicknames.add("Oli");
-        nicknames.add("Ale");
-
-        GuiController testController=new GuiController();
-        GameBoard gameBoard=new GameBoard();
-        Worker worker0=new Worker(Colour.BLUE,0);
-        gameBoard.getTowerCell(2,2).getFirstNotPieceLevel().setWorker(worker0);
-        testController.setCurrentBoardState(gameBoard.getBoardState());
-        testController.setPlayerColor(Colour.BLUE);
-        setMatchGui(cards,nicknames,testController);
-        //END DEBUG
-*/
-
+        mainPanel=new JPanel();
+        mainPanel.setPreferredSize(new Dimension(frame.getHeight(),frame.getWidth()));
+        mainPanel.setBackground(Color.BLACK);
+        setMatchGui(cards,nicknames,guiController);
     }
 
-    public void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){
+    private void setMatchGui(ArrayList<String> cards, ArrayList<String> nicknames, GuiController guiController){
         mainPanel.setLayout(new GridBagLayout());
 
         gameWindow=new GameWindow(guiController);
@@ -68,8 +33,6 @@ public class MainWindow{
         setInternalPanel(cardsPanel,0,0,1,1,1,1,0,0,0,0,0,0,10,1);
         setInternalPanel(choicePanel,1,0,1,2,2,1,0,0,0,0,0,0,10,1);
         setInternalPanel(gameWindow.getGamePanel(),3,0,1,20,10,1,0,0,0,0,0,0,10,1);
-
-        mainPanel.setBackground(Color.BLACK);
     }
 
 
