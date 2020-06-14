@@ -2,6 +2,7 @@ package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
+import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
 import it.polimi.ingsw.model.*;
 
 import javax.swing.*;
@@ -11,12 +12,13 @@ import java.util.concurrent.TimeUnit;
 public class AppGUI {
 
     public static void main(String[] args) throws InterruptedException {
-/*
+
         //STARTING PANEL TEST
         ClientSideConnection connection=new ClientSideConnection("127.0.0.1",12345);
         GUI gui=new GUI(connection);
-*/
+        gui.handlePlayerInfoRequest(new PlayerInfoRequest(true));
 
+/*
         //MAIN PANEL TEST
         JFrame jFrame=new MainFrame();
 
@@ -48,7 +50,7 @@ public class AppGUI {
         MainWindow mainWindow=new MainWindow(jFrame,message,testController);
         jFrame.add(mainWindow.getMainPanel());
         jFrame.setVisible(true);
-
+*/
 /*
         TimeUnit.SECONDS.sleep(5);
         System.out.println("waited");

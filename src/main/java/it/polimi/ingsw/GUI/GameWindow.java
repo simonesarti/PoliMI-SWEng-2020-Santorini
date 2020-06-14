@@ -180,7 +180,6 @@ public class GameWindow{
         return gamePanel;
     }
 
-    //TODO
     private class CellSelectedListener extends Observable<ActionMessage> implements ActionListener {
 
         public CellSelectedListener() {
