@@ -16,16 +16,16 @@ public class CardsPanel extends JPanel {
     public CardsPanel(GameStartMessage message){
 
         setLayout(new GridLayout(3,1,0,0));
-        setPlayerPanels(message.getDescriptions(),message.getNicknames(),message.getColours());
+        setPlayerPanels(message.getNicknames(),message.getColours(),message.getGodNames(),message.getDescriptions());
     }
 
-    private void setPlayerPanels(ArrayList<String> cards, ArrayList<String> nicknames, ArrayList<Colour> colours){
-        player1=new PlayerPanel(cards.get(0),nicknames.get(0),convertToColor(colours.get(0)));
-        player2=new PlayerPanel(cards.get(1),nicknames.get(1),convertToColor(colours.get(1)));
-        if(cards.size()==3){
-            player3=new PlayerPanel(cards.get(2),nicknames.get(2),convertToColor(colours.get(2)));
+    private void setPlayerPanels(ArrayList<String> nicknames, ArrayList<Colour> colours, ArrayList<String> godNames ,ArrayList<String> descriptions){
+        player1=new PlayerPanel(nicknames.get(0),convertToColor(colours.get(0)),godNames.get(0),descriptions.get(0));
+        player2=new PlayerPanel(nicknames.get(1),convertToColor(colours.get(1)),godNames.get(1),descriptions.get(1));
+        if(nicknames.size()==3){
+            player3=new PlayerPanel(nicknames.get(2),convertToColor(colours.get(2)),godNames.get(2),descriptions.get(2));
         }else{
-            player3=new PlayerPanel("card not used in this match","not present in match",Color.DARK_GRAY);
+            player3=new PlayerPanel("not present in match",Color.DARK_GRAY,"X","card not used in this match");
         }
 
         add(player1);

@@ -57,7 +57,10 @@ public class DivinityChoiceDialog extends JDialog{
     private final GodNameLink[][] links;
 
 
-    public DivinityChoiceDialog(ArrayList<String> names, int n, GuiController guiController) {
+    public DivinityChoiceDialog(JFrame frame, ArrayList<String> names, int n, GuiController guiController) {
+
+        super(frame);
+        setLocationRelativeTo(frame);
 
         this.guiController=guiController;
 

@@ -11,12 +11,11 @@ public class PlayerPanel extends JPanel {
     private String description;
     private final JLabel nicknameLabel=new JLabel();
 
-    public PlayerPanel(String card, String nickname, Color color){
+    public PlayerPanel(String nickname, Color color, String godName,String description){
 
-        setCardButton(card);
         setNicknameLabel(nickname,color);
+        setCardButton(godName,description);
         addComponents();
-
     }
 
     private void setNicknameLabel(String nickname,Color color){
@@ -27,41 +26,21 @@ public class PlayerPanel extends JPanel {
         nicknameLabel.setBackground(color);
     }
 
-    private void setCardButton(String card){
+    private void setCardButton(String godName, String description){
 
-        if(card.contains("Apollo")){
-            cardButton.setIcon(Images.getIcon(Images.APOLLO));
-            cardButton.setToolTipText("Apollo");
-        }else if(card.contains("Artemis")){
-            cardButton.setButtonImage(Images.getImage(Images.ARTEMIS));
-            cardButton.setToolTipText("Artemis");
-        }else if(card.contains("Athena")){
-            cardButton.setButtonImage(Images.getImage(Images.ATHENA));
-            cardButton.setToolTipText("Athena");
-        }else if(card.contains("Atlas")){
-            cardButton.setIcon(Images.getIcon(Images.ATLAS));
-            cardButton.setToolTipText("Atlas");
-        }else if(card.contains("Demeter")){
-            cardButton.setIcon(Images.getIcon(Images.DEMETER));
-            cardButton.setToolTipText("Demeter");
-        }else if(card.contains("Hephaestus")){
-            cardButton.setIcon(Images.getIcon(Images.HEPHAESTUS));
-            cardButton.setToolTipText("Hephaestus");
-        }else if(card.contains("Minotaur")){
-            cardButton.setIcon(Images.getIcon(Images.MINOTAUR));
-            cardButton.setToolTipText("Minotaur");
-        }else if(card.contains("Pan")){
-            cardButton.setIcon(Images.getIcon(Images.PAN));
-            cardButton.setToolTipText("Pan");
-        }else if(card.contains("Prometheus")){
-            cardButton.setIcon(Images.getIcon(Images.PROMETHEUS));
-            cardButton.setToolTipText("Prometheus");
-        }else{
-            cardButton.setButtonImage(Images.getImage(Images.EMPTY_CARD));
-            cardButton.setToolTipText("not used");
+        switch(godName){
+            case "Apollo" -> cardButton.setButtonImage(Images.getImage(Images.APOLLO));
+            case "Artemis" -> cardButton.setButtonImage(Images.getImage(Images.ARTEMIS));
+            case "Athena" -> cardButton.setButtonImage(Images.getImage(Images.ATHENA));
+            case "Atlas" -> cardButton.setButtonImage(Images.getImage(Images.ATLAS));
+            case "Demeter" -> cardButton.setButtonImage(Images.getImage(Images.DEMETER));
+            case "Hephaestus" -> cardButton.setButtonImage(Images.getImage(Images.HEPHAESTUS));
+            case "Minotaur" -> cardButton.setButtonImage(Images.getImage(Images.MINOTAUR));
+            case "Pan" -> cardButton.setButtonImage(Images.getImage(Images.PAN));
+            case "Prometheus" -> cardButton.setButtonImage(Images.getImage(Images.PROMETHEUS));
+            case "X" -> cardButton.setButtonImage(Images.getImage(Images.EMPTY_CARD));
         }
-
-        description=card;
+        this.description=description;
     }
 
     private void addComponents(){

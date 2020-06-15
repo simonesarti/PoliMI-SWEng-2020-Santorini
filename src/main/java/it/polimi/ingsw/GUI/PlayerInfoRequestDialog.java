@@ -32,9 +32,11 @@ public class PlayerInfoRequestDialog extends JDialog{
 
     JButton confirmButton;
 
-    public PlayerInfoRequestDialog(boolean isNicknameTaken, GuiController guiController) {
+    public PlayerInfoRequestDialog(JFrame frame, boolean isNicknameTaken, GuiController guiController) {
 
-        setTitle("Information request");
+        super(frame);
+        setLocationRelativeTo(frame);
+
 
         this.guiController=guiController;
 
@@ -110,7 +112,7 @@ public class PlayerInfoRequestDialog extends JDialog{
     }
 
     private void dialogSettings() {
-        //setTitle("Info Request");
+        setTitle("Info Request");
         setSize(400, 250);
         setLayout(null);
         setVisible(true);

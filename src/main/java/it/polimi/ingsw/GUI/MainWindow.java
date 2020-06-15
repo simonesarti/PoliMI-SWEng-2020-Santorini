@@ -31,10 +31,10 @@ public class MainWindow{
         gameWindow=new GameWindow(guiController);
         choicePanel=new ChoicePanel(guiController);
         cardsPanel=new CardsPanel(message);
-        setInternalPanel(cardsPanel,0,0,1,1,1,1,0,0,0,0,0,0,10,1);
-        setInternalPanel(choicePanel,1,0,1,2,2,1,0,0,0,0,0,0,10,1);
         setInternalPanel(gameWindow.getGamePanel(),3,0,1,20,10,1,0,0,0,0,0,0,10,1);
-        mainPanel.setVisible(true);
+        setInternalPanel(choicePanel,1,0,1,2,2,1,0,0,0,0,0,0,10,1);
+        setInternalPanel(cardsPanel,0,0,1,1,1,1,0,0,0,0,0,0,10,1);
+
     }
 
 

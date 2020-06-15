@@ -59,25 +59,28 @@ public class GUI extends View{
 
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
-        new PlayerInfoRequestDialog(message.isNicknameTaken(),guiController);
+        new PlayerInfoRequestDialog(frame,message.isNicknameTaken(),guiController);
     }
 
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
-        new DivinityChoiceDialog(message.getGods(),message.getNumberOfChoices(),guiController);
+        new DivinityChoiceDialog(frame,message.getGods(),message.getNumberOfChoices(),guiController);
     }
 
     @Override
     public void handleStartingPositionRequest() {
-        new StartingPositionRequestDialog(guiController);
+        new StartingPositionRequestDialog(frame,guiController);
     }
 
     @Override
     public void handleGameStartMessage(GameStartMessage message) {
         guiController.setPlayerColor(message.getNicknames(),message.getColours());
+        frame.getContentPane().removeAll();
+        frame.repaint();
+        frame.revalidate();
         mainWindow=new MainWindow(frame,message,guiController);
-        frame.remove(lobbyPanel);
         frame.add(mainWindow.getMainPanel());
+        //frame.setVisible(true);
     }
 
     @Override
