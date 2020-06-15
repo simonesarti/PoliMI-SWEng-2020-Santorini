@@ -80,7 +80,8 @@ public class GUI extends View{
         frame.revalidate();
         mainWindow=new MainWindow(frame,message,guiController);
         frame.add(mainWindow.getMainPanel());
-        //frame.setVisible(true);
+        frame.repaint();
+        frame.revalidate();
     }
 
     @Override
