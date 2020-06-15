@@ -157,12 +157,12 @@ public class DivinityChoiceDialog extends JDialog{
                 if (selected.contains(link.getName())){
                     selected.remove(link.getName());
                     pressed.setBackground(Color.GRAY);
-                    System.out.println("removed "+link.getName());
+                    //System.out.println("removed "+link.getName());
 
                 } else {
                     pressed.setBackground(Color.CYAN);
                     selected.add(link.getName());
-                    System.out.println("added "+link.getName());
+                    //System.out.println("added "+link.getName());
                 }
                 repaint();
 

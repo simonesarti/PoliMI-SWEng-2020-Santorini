@@ -86,7 +86,7 @@ public class GUI extends View{
 
     @Override
     public void handleCloseConnectionMessage() {
-        JOptionPane.showMessageDialog(frame,"You have been disconnected","disconnection",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame,"You have been disconnected","Disconnection",JOptionPane.INFORMATION_MESSAGE);
     }
 
     //test
