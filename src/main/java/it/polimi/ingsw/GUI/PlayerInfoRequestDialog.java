@@ -35,15 +35,38 @@ public class PlayerInfoRequestDialog extends JDialog{
     public PlayerInfoRequestDialog(JFrame frame, boolean isNicknameTaken, GuiController guiController) {
 
         super(frame);
-        setLocationRelativeTo(frame);
-
 
         this.guiController=guiController;
 
+        dialogSettings();
+        setNameRequest(isNicknameTaken);
+        setBirthdayRequest();
+        setNumberOfPlayers();
+        setConfirmButton();
+        setBounds();
+        addToDialog();
+        showDialog(frame);
+
+    }
+
+
+    private void dialogSettings() {
+        setTitle("Info Request");
+        setSize(400, 250);
+        setLayout(null);
+    }
+
+    private void setNameRequest(boolean isNicknameTaken){
         nicknameRequest = new JLabel("Nickname: ");
-        this.nickname = new JTextField();
+        nickname = new JTextField();
         invalidNickname = new JLabel();
 
+        if (isNicknameTaken) {
+            invalidNickname.setText("This username is already taken");
+            invalidNickname.setForeground(Color.RED);
+        }
+    }
+    private void setBirthdayRequest(){
         birthdayRequest = new JLabel("Date of birth: ");
         day = new JTextField();
         month = new JTextField();
@@ -53,23 +76,15 @@ public class PlayerInfoRequestDialog extends JDialog{
         divider2 = new JTextField("/");
         divider2.setEditable(false);
         invalidBirthday = new JLabel();
-
+    }
+    private void setNumberOfPlayers() {
         numberOfPlayerRequest=new JLabel("Number of players in game: ");
         numberOfPlayers=new JSpinner(new SpinnerNumberModel(2,2,3,1));
         numberOfPlayers.setEditor(new JSpinner.DefaultEditor(numberOfPlayers));
-
+    }
+    private void setConfirmButton() {
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new InfoListener());
-
-        if (isNicknameTaken) {
-            invalidNickname.setText("This username is already taken");
-            invalidNickname.setForeground(Color.RED);
-        }
-
-        dialogSettings();
-        setBounds();
-        addToDialog();
-
     }
 
     private void setBounds() {
@@ -111,10 +126,8 @@ public class PlayerInfoRequestDialog extends JDialog{
         add(confirmButton);
     }
 
-    private void dialogSettings() {
-        setTitle("Info Request");
-        setSize(400, 250);
-        setLayout(null);
+    private void showDialog(JFrame frame){
+        setLocationRelativeTo(frame);
         setVisible(true);
     }
 

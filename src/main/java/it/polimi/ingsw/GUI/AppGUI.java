@@ -13,13 +13,12 @@ import java.util.concurrent.TimeUnit;
 public class AppGUI {
 
     public static void main(String[] args) throws InterruptedException {
-/*
+
         //STARTING PANEL TEST
         ClientSideConnection connection=new ClientSideConnection("127.0.0.1",12345);
         GUI gui=new GUI(connection);
 
-        gui.handlePlayerInfoRequest(new PlayerInfoRequest(true));
-        */
+        //gui.handlePlayerInfoRequest(new PlayerInfoRequest(false));
 
 /*
         ArrayList<String> names=new ArrayList<>();
@@ -46,8 +45,7 @@ public class AppGUI {
         gui.handleStartingPositionRequest();
 */
 
-
-
+/*
         //MAIN PANEL TEST
 
         GodDescriptions descriptions=new GodDescriptions();
@@ -90,7 +88,7 @@ public class AppGUI {
         MainWindow mainWindow=new MainWindow(jFrame,message,testController);
         jFrame.add(mainWindow.getMainPanel());
         jFrame.setVisible(true);
-
+*/
 /*
         TimeUnit.SECONDS.sleep(5);
         System.out.println("waited");
