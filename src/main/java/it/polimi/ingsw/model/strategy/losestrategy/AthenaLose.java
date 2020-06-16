@@ -6,6 +6,15 @@ import it.polimi.ingsw.model.TurnInfo;
 
 public class AthenaLose implements LoseStrategy {
 
+    /**
+     * Like basic lose, but the player doesn't isn't affected by athena's own power.
+     * If the player lose, Athena's power is deactivated
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is not used
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
@@ -50,6 +59,14 @@ public class AthenaLose implements LoseStrategy {
     }
 
 
+    /**
+     * is the basic lose, but if the player loses, Athena's power is deactivated
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is the number of worker to check
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 

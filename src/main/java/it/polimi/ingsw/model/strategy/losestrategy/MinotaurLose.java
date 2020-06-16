@@ -6,6 +6,15 @@ import it.polimi.ingsw.model.TurnInfo;
 
 public class MinotaurLose implements LoseStrategy{
 
+    /**
+     * Like basic lose, but the player doesn't lose if one of his worker can push one of the
+     * opponent's workers backwards, and take his position
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is not used
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean movementLoss(TurnInfo turnInfo,GameBoard gameBoard, Player player,int chosenWorker) {
 

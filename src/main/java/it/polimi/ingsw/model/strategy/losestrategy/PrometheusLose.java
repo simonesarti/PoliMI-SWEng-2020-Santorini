@@ -6,6 +6,15 @@ import it.polimi.ingsw.model.TurnInfo;
 
 public class PrometheusLose implements LoseStrategy {
 
+    /**
+     * If the player has already moved, checks that the previously chosen worker can still move,
+     * otherwise tha player loses. If he has not moved yet, the basic movement lose strategy is used
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is the number of the worker to check
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
@@ -47,6 +56,16 @@ public class PrometheusLose implements LoseStrategy {
 
     }
 
+    /**
+     * If the player has already moved and not built, checks that the previously chosen worker can still build,
+     * otherwise tha player loses. If he has not moved yet, it checks that at least one of the player's worker
+     * can build
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is the number of the worker to check
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 

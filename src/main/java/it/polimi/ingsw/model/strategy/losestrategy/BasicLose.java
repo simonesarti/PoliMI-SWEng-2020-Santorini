@@ -4,10 +4,20 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.TurnInfo;
 
-//based on MOVE BEFORE BUILD
+/**
+ * basicLose is based on the idea that a player has to move before he can build, therefore it can't
+ * be applied to Gods such as prometheus
+ */
 public class BasicLose implements LoseStrategy {
 
-    //chosenWorker is not the base Lose
+    /**
+     * The player loses if none of his worker can move
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is not used
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean movementLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 
@@ -46,6 +56,14 @@ public class BasicLose implements LoseStrategy {
         return possibility==0;
     }
 
+    /**
+     * The player loses if he cannot complete the build phase because not allowed to build
+     * @param turnInfo containing information about current turn
+     * @param gameBoard object representing the gameboard
+     * @param player player whose losing condition has to be checked
+     * @param chosenWorker is the number of the worker to check
+     * @return a boolean which says if the player lost or not
+     */
     @Override
     public boolean buildingLoss(TurnInfo turnInfo, GameBoard gameBoard, Player player, int chosenWorker) {
 

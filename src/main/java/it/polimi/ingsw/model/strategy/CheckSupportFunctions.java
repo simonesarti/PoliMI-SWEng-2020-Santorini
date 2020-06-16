@@ -4,6 +4,10 @@ import it.polimi.ingsw.model.GameBoard;
 import it.polimi.ingsw.model.TurnInfo;
 import it.polimi.ingsw.model.Worker;
 
+
+/**
+ * this class contains support methods used by the move/build checks
+ */
 public class CheckSupportFunctions {
 
 

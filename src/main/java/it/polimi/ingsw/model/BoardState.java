@@ -2,6 +2,10 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 
+/**
+ * contains the complete representation of the gameboard.
+ * This class's objects are sent to the user when the gameboard is updated
+ */
 public class BoardState implements Serializable {
 
     private final TowerState[][] towerStates = new TowerState[5][5];
