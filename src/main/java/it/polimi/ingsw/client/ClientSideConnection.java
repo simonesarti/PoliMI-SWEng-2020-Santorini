@@ -22,7 +22,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
 
     /**
      *
-     * @param ip is the client ip address
+     * @param ip is the ip address
      * @param port is the port on which client and server will communicate
      */
     public ClientSideConnection(String ip, int port){
@@ -46,7 +46,7 @@ public class ClientSideConnection extends Observable<Object> implements Runnable
     }
 
     /**
-     * this method sends the message given to the server through the socket, as long as the connection is active
+     * this method sends the message to the server through the socket, as long as the connection is active
      * @param message is the message object to be sent through the socket
      */
     public synchronized void send(Object message) {

@@ -22,7 +22,9 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
 
     private boolean observingModel;
 
-    //this class's update is triggered by ServerSideConnection reading a player messages and notifies the virtual view itself
+    /**
+     * this class's update is triggered by ServerSideConnection reading a player messages, it notifies the virtual view itself
+     */
     private class PlayerMessageReceiver implements Observer<DataMessage> {
 
         @Override
@@ -51,6 +53,11 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         return observingModel;
     }
 
+    /**
+     * Creates the complete message, which contains the one receive through the connection.
+     * It then notifies the controller
+     * @param message is the received message
+     */
     private void notifyController(DataMessage message){
 
         if(message instanceof MoveData){
@@ -68,10 +75,18 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         }
     }
 
+    /**
+     * send a message to the client through the connection
+     * @param message is the message to be sent
+     */
     public void reportToClient(Object message){
         connectionToClient.send(message);
     }
 
+    /**
+     * VirtualView stops listening to the inputs received through the connection, and
+     * causes the user's connection to be closed.
+     */
     public void leave(){
         //the controller removes this virtualView from being model's observer
         stopObservingModel();
@@ -86,6 +101,11 @@ public class VirtualView extends Observable<PlayerMessage> implements Observer<N
         observingModel=false;
     }
 
+    /**
+     * based on the message received by the observed object (model), it sends the appropriate information
+     * to the user (if the information has to be sent to that user)
+     * @param message is the object received through notify of the observed object
+     */
     @Override
     public void update(NotifyMessages message){
 

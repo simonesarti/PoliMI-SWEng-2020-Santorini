@@ -90,6 +90,10 @@ public class Matrix {
 
     }
 
+    /**
+     * draws the gameBoard on the Cli
+     * @param matrix is the representation of the board to be drawn
+     */
     public void printMatrix(Matrix matrix){
         System.out.println(AnsiCode.CLEAR_SCREEN);
 

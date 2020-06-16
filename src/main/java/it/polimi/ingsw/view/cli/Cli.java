@@ -73,9 +73,8 @@ public class Cli extends View {
 
     /**
      * Creates a PlayerInfo message based on user's inputs
-     * @return
+     * @return the playerInfo object craeted
      */
-
     private PlayerInfo createPlayerInfo(PlayerInfoRequest message){
 
         if(message.isNicknameTaken()){ System.out.println("This name already exist, choose another one: ");}
@@ -179,7 +178,7 @@ public class Cli extends View {
     /**
      * creates a CardChoice message based on user's inputs
      * @param message has a number of choices attribute and a list of possible Gods
-     * @return
+     * @return the CardChoice message created
      */
     private CardChoice createCardChoice(PossibleCardsMessage message) {
 
@@ -220,6 +219,10 @@ public class Cli extends View {
         }
     }
 
+    /**
+     * given the input data, it creates the appropriate message and sends it to the server
+     * @param tokens contains the data to send in the message
+     */
     public void handleInput(String[] tokens){
 
         sf = new ClientViewSupportFunctions();
@@ -235,6 +238,10 @@ public class Cli extends View {
     }
 
 
+    /**
+     * creates a thread that continuously reads the user's inputs, and calls handleInput() is
+     * the command is valid
+     */
     private void startActionRequestThread() {
         Thread t = new Thread(new Runnable() {
             @Override

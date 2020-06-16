@@ -7,6 +7,9 @@ public class Cell {
 
     private String[] stripes = new String[5];
 
+    /**
+     * every cell contains 5 stripe
+     */
     public Cell() {
         for (int i = 0; i < 5; i++) {
             stripes[i] = new String();
@@ -14,30 +17,51 @@ public class Cell {
 
     }
 
-
-
+    /**
+     * this functions create a uniformly coloured stripes
+     * @param BackgroundAnsiColour is the colour of the stripe
+     * @return the string which represents the coloured stripe
+     */
     public String uniformStripe(String BackgroundAnsiColour) {
         String stripe = BackgroundAnsiColour + "            " + AnsiCode.RESET;
         return stripe;
     }
 
+    /**
+     * this functions create a coloured stripes which contains a section of a dome
+     * @param BackgroundAnsiColour is the colour around the dome
+     * @return the string which represents the coloured stripe
+     */
     public String domeStripe(String BackgroundAnsiColour) {
         String stripe = BackgroundAnsiColour + "  " + AnsiCode.BACKGROUND_BLUE + "        " + BackgroundAnsiColour + "  " + AnsiCode.RESET;
         return stripe;
     }
 
+    /**
+     * this functions create a void stripes
+     * @return the string which represents the stripe
+     */
     public String emptyStripe(){
        String stripe = "            ";
        return stripe;
     }
 
 
+    /**
+     * this functions create a stripes which contains the coordinate and its value
+     * @return the string which represents the stripe
+     */
     public String coordinateStripe(String coordinate, int value) {
         String num = String.valueOf(value);
         String stripe = "     "+AnsiCode.TEXT_BLACK + coordinate + num+ "     "+AnsiCode.RESET;
         return stripe;
     }
 
+    /**
+     * this functions create a coloured stripes which contains a worker certain colour worker and its number
+     * @param BackgroundAnsiColour is the colour around the worker
+     * @return the string which represents the coloured stripe
+     */
     public String workerStripe(String BackgroundAnsiColour, int workerNumber, Colour workercolour) {
         String num = String.valueOf(workerNumber);
         String stripe="";
@@ -54,6 +78,10 @@ public class Cell {
         return stripe;
     }
 
+    /**
+     * this functions create a coloured stripes which represents a level
+     * @return the string which represents the coloured stripe
+     */
     public String levelStripe(int level) {
         String num = String.valueOf(level);
         String stripe = AnsiCode.BACKGROUND_WHITE + "    " + AnsiCode.TEXT_BLACK + "LV " + num + "    " + AnsiCode.RESET;

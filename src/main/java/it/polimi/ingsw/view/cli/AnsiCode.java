@@ -1,7 +1,9 @@
 package it.polimi.ingsw.view.cli;
 
 
-//TODO CORREGGERE CODICI (ANCHE A E C FINALI)
+/**
+ * this class contains Strings to which are assigned the ANSI codes used for the CLI
+ */
 public class AnsiCode {
 
     static final String RESET = "\u001B[0m";

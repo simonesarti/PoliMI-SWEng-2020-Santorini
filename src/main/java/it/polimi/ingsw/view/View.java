@@ -14,6 +14,10 @@ public abstract class View implements Observer<Object>{
         this.clientSideConnection = clientSideConnection;
     }
 
+    /**
+     *this set of methods will be implemented by the cli/gui. The appropriate one is called when the client receive
+     * a certain message from the server
+     */
 
     abstract public void handleNewBoardStateMessage(NewBoardStateMessage message);
     abstract public void handleInfoMessage(InfoMessage message);
@@ -26,6 +30,10 @@ public abstract class View implements Observer<Object>{
     abstract public void handleGameStartMessage(GameStartMessage message);
     abstract  public void handleCloseConnectionMessage();
 
+    /**
+     * calls one of the abstract methods above based on the type of message received
+     * @param message is the object received through notify of the observed object
+     */
     @Override
     public void update(Object message){
 

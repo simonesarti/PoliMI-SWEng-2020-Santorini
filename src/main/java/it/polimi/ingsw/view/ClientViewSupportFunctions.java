@@ -10,14 +10,19 @@ import java.util.Iterator;
 
 public class ClientViewSupportFunctions {
 
+    /**
+     * Formats the string so that is the first letter is capitalized, while the others are set to lowercase
+     * @param s is the string to format
+     * @return the formatted string
+     */
     public String nameToCorrectFormat(String s){
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
     /**
      * checks if position is inside of the borders
-     * @param pos
-     * @return
+     * @param pos contains the position to test
+     * @return a boolean which says if the position passed is valid or not
      */
     public boolean isPositionValid(String pos){
 
@@ -41,11 +46,11 @@ public class ClientViewSupportFunctions {
 
     /**
      * Checks if date is a valid date format and if integers are numbers
-     * @param date
-     * @param dayString
-     * @param monthString
-     * @param yearString
-     * @return
+     * @param date is the complete date
+     * @param dayString is the day
+     * @param monthString is the month
+     * @param yearString is the year
+     * @return a boolean which says if the date passed is valid or not
      */
     public boolean isDateValid(String date, String dayString, String monthString, String yearString){
 
@@ -82,8 +87,8 @@ public class ClientViewSupportFunctions {
 
     /**
      * Checks if String is a number and if it's 2||3
-     * @param string
-     * @return
+     * @param string which contain the input
+     * @return a boolean which says if the value passed is valid or not
      */
     public boolean isValidNumberOfPlayers(String string){
 
@@ -136,11 +141,11 @@ public class ClientViewSupportFunctions {
 
     }
 
-    //TODO testare
+
     /**
      * Checks if possible user actions' inputs are valid
-     * @param tokens
-     * @return
+     * @param tokens contains the user's input
+     * @return a boolean which says if the action is valid or not
      */
     public boolean isValidInputString(String[] tokens){
 
