@@ -128,6 +128,7 @@ public class PlayerInfoRequestDialog extends JDialog{
 
     private void showDialog(JFrame frame){
         setLocationRelativeTo(frame);
+        setModal(true);
         setVisible(true);
     }
 

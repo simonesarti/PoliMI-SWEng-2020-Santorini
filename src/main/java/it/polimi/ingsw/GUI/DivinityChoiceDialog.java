@@ -125,6 +125,7 @@ public class DivinityChoiceDialog extends JDialog{
     private void showDialog(JFrame frame){
         pack();
         setLocationRelativeTo(frame);
+        setModal(true);
         setVisible(true);
     }
     
