@@ -3,12 +3,15 @@ package it.polimi.ingsw.GUI;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * this class is used to store the paths to all the images used in the GUI
+ */
 public enum Images {
 
     INITIAL_BACKGROUND("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/Odyssey-Olympus.png"),
-    RULE_BACKGROUND("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/RuleBackground.png"),
     GAMEBOARD("././src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/SantoriniBoard.png"),
     GAME_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/backgounds/om_gloryIcon.png"),
+
     MOVE_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/move_button.png"),
     BUILD_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/build_button.png"),
     QUIT_BUTTON_ICON("./src/main/java/it/polimi/ingsw/GUI/graphicResources/sprite/quit_button.png"),
@@ -46,9 +49,6 @@ public enum Images {
     L123P("./src/main/java/it/polimi/ingsw/GUI/graphicResources/board/level3purpleworker.png");
     
 
-
-
-
     private final String path;
 
     Images(String path){
@@ -57,10 +57,18 @@ public enum Images {
 
     public String getPath(){return path;}
 
+    /**
+     * @param resource is one one the Images values
+     * @return the Image object created from the value given
+     */
     public static Image getImage(Images resource){
         return new ImageIcon(resource.getPath()).getImage();
     }
 
+    /**
+     * @param resource is one one the Images values
+     * @return the Icon object created from the value given
+     */
     public static ImageIcon getIcon(Images resource){
         return new ImageIcon(resource.getPath());
     }

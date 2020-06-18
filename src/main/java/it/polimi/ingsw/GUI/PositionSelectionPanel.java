@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * panel used to ask the user for the positions in which he wants to place his workers at
+ * the beginning of the game
+ */
 public class PositionSelectionPanel extends JPanel {
 
     private final GuiController guiController;
@@ -43,6 +47,13 @@ public class PositionSelectionPanel extends JPanel {
         }
     }
 
+    /**
+     * sets the image shown on the button
+     * @param x coordinate
+     * @param y coordinate
+     * @param boardState is the state of the gameboard
+     * @param button is the button whose image has to be updated
+     */
     private void setButtonVisibility(int x,int y, BoardState boardState, ImageButton button){
 
         if(boardState.getTowerState(x,y).getWorkerColour()== Colour.RED){
@@ -57,6 +68,10 @@ public class PositionSelectionPanel extends JPanel {
         }
     }
 
+    /**
+     * @param button is the button pressed
+     * @return the coordinates of the button pressed
+     */
     private int[] getButtonCoordinates(ImageButton button){
 
         int[] res=new int[2];
@@ -78,6 +93,11 @@ public class PositionSelectionPanel extends JPanel {
         g.drawImage(gameBoard, 0, 0, 500, 500, this);
     }
 
+    /**
+     * this private class implements ActionListener and its objects are Observed by GuiController.
+     * When a position is selected (button pressed), its coordinates are added to a list. When two positions
+     * have been selected, the guiController is notified and the panel+dialog gets closed
+     */
     private class PositionListener extends Observable<ActionMessage> implements ActionListener{
 
         public PositionListener() {

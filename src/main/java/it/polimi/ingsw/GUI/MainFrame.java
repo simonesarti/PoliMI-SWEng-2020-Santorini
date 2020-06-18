@@ -2,6 +2,9 @@ package it.polimi.ingsw.GUI;
 
 import javax.swing.*;
 
+/**
+ * frame of the gui
+ */
 public class MainFrame extends JFrame {
 
     public MainFrame(){

@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 
 public class GameWindow{
 
+    /**
+     * JPanel that displays the gameboard as a background, and on which will be added the tower buttons
+     */
     private class GamePanel extends JPanel{
 
         private final Image gameBoard;
@@ -46,6 +49,11 @@ public class GameWindow{
 
     }
 
+    /**
+     * creates the buttons used to represents the towers, attaches an ActionListener to each one
+     * and adds them to the panel
+     * @param boardState is the current state of the GameBoard
+     */
     public void setTowerButtons(BoardState boardState) {
 
         for (int j = 0; j < 5; j++) {
@@ -58,6 +66,10 @@ public class GameWindow{
         }
     }
 
+    /**
+     * makes a button transparent
+     * @param button is the button to modify
+     */
     private void setButtonVisibility(JButton button){
         button.setOpaque(false);
         button.setContentAreaFilled(false);
@@ -100,6 +112,10 @@ public class GameWindow{
         return gridBagConstraints;
     }
 
+    /**
+     * @param button is the selected button
+     * @return the coordinates of the selected button on the board
+     */
     private int[] getButtonCoordinates(JButton button){
 
         int[] res=new int[2];
@@ -115,6 +131,7 @@ public class GameWindow{
         return res;
     }
 
+
     public void updateBoard(BoardState boardState){
 
         for(int y=0;y<5;y++){
@@ -124,6 +141,11 @@ public class GameWindow{
         }
     }
 
+    /**
+     * changes the image shown by the button to reflect the state of the tower it represents
+     * @param imageButton is the button which is going to be updated
+     * @param towerState is the representation of the tower on the board
+     */
     private void updateButton(ImageButton imageButton, TowerState towerState){
 
         int height=towerState.getTowerHeight();
@@ -180,6 +202,11 @@ public class GameWindow{
         return gamePanel;
     }
 
+    /**
+     * this private class implements ActionListener and its objects are Observed by GuiController, therefore, when
+     * an action is selected (button is pressed), the guiController gets informed through notify. The notified message
+     * contains the coordinates of the button/tower selected from the board
+     */
     private class CellSelectedListener extends Observable<ActionMessage> implements ActionListener {
 
         public CellSelectedListener() {

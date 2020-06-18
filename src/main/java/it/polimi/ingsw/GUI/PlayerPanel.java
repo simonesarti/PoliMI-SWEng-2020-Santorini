@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel that contains the player's name/colour and card
+ */
 public class PlayerPanel extends JPanel {
 
     private final ImageButton cardButton=new ImageButton();
@@ -26,6 +29,11 @@ public class PlayerPanel extends JPanel {
         nicknameLabel.setBackground(color);
     }
 
+    /**
+     * associates the right image to the button based on the name of the god
+     * @param godName is the god name
+     * @param description is the god description
+     */
     private void setCardButton(String godName, String description){
 
         switch(godName){
@@ -85,6 +93,9 @@ public class PlayerPanel extends JPanel {
         return gridBagConstraints;
     }
 
+    /**
+     * shows a JOptionPane containing the god's description when the card button is pressed
+     */
     private class CardPressListener implements ActionListener {
 
         @Override

@@ -2,13 +2,9 @@ package it.polimi.ingsw.GUI;
 
 import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
 import it.polimi.ingsw.model.BoardState;
-import it.polimi.ingsw.model.Colour;
-import it.polimi.ingsw.model.GameBoard;
-import it.polimi.ingsw.model.Worker;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MainWindow{
 
@@ -25,6 +21,11 @@ public class MainWindow{
         setMatchGui(message,guiController);
     }
 
+    /**
+     * creates the panels which show the game gui
+     * @param message contains information about the players and the cards
+     * @param guiController is used to get the current state of the gameboard and is set as observer
+     */
     private void setMatchGui(GameStartMessage message, GuiController guiController){
         mainPanel.setLayout(new GridBagLayout());
 
@@ -82,6 +83,10 @@ public class MainWindow{
         return mainPanel;
     }
 
+    /**
+     * causes the board to be updated
+     * @param boardState is the new boardstate
+     */
     public void updateBoard(BoardState boardState) {
         gameWindow.updateBoard(boardState);
     }

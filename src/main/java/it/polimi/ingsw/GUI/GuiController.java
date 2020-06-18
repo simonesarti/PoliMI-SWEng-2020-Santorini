@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 public class GuiController implements Observer<ActionMessage> {
 
+    /**
+     * private class used to save information about the action that the user is currently trying to execute
+     */
     private class Status{
 
         private PerformingAction currentAction;
@@ -58,6 +61,10 @@ public class GuiController implements Observer<ActionMessage> {
             towardsY=-1;
         }
     }
+
+    /**
+     * lists the possible turn statuses
+     */
     private enum PerformingAction {
         MOVE,BUILD,UNSET
     }
@@ -86,6 +93,10 @@ public class GuiController implements Observer<ActionMessage> {
         this.nickname=nickname;
     }
 
+    /**
+     * @param nicknames the list of the players' nicknames
+     * @param colours the list of colours associated to the list of players
+     */
     public void setPlayerColor(ArrayList<String> nicknames, ArrayList<Colour> colours){
 
         for(int i=0;i<nicknames.size();i++){
@@ -121,6 +132,12 @@ public class GuiController implements Observer<ActionMessage> {
     }
 
 
+    /**
+     * based on the action received in the message, sends the action to the server or, if the action takes multiple
+     * interactions to be executed, saves the intermediates information in Status. Resets status after the action
+     * has been sent. Shows error messages when the order of interactions is not followed.
+     * @param message is the object received through notify of the observed object
+     */
     @Override
     public void update(ActionMessage message) {
 
@@ -201,6 +218,12 @@ public class GuiController implements Observer<ActionMessage> {
         }
     }
 
+    /**
+     * checks if the position selected contains one of the player's workers or nor
+     * @param x coordinate
+     * @param y coordinate
+     * @return a boolean which tells if the cell contains one of the player's workers or not
+     */
     private int checkOwnWorkerPosition(int x, int y){
 
         Colour workerColourOnBoard=currentBoardState.getTowerState(x,y).getWorkerColour();

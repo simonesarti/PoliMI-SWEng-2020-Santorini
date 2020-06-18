@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
+/**
+ * Dialog that requests the player's information
+ */
 public class PlayerInfoRequestDialog extends JDialog{
 
     GuiController guiController;
@@ -136,6 +139,10 @@ public class PlayerInfoRequestDialog extends JDialog{
         return (string.equals("") || isOnlySpace(string));
     }
 
+    /**
+     * @param string is the name inserted
+     * @return a boolean that says if the name is composed only by spaces
+     */
     private boolean isOnlySpace(String string) {
 
         char[] array = string.toCharArray();
@@ -149,6 +156,11 @@ public class PlayerInfoRequestDialog extends JDialog{
         return true;
     }
 
+    /**
+     * this private class implements ActionListener and its objects are Observed by GuiController, therefore, when
+     * an action is selected (button is pressed), the guiController gets informed through notify. The notified message
+     * contains the player's information
+     */
     private class InfoListener extends Observable<ActionMessage> implements ActionListener {
 
         public InfoListener() {

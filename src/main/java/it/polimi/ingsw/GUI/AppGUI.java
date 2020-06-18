@@ -1,17 +1,8 @@
 package it.polimi.ingsw.GUI;
 
-import it.polimi.ingsw.client.ClientSideConnection;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Notify.GameStartMessage;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PlayerInfoRequest;
-import it.polimi.ingsw.messages.GameToPlayerMessages.Others.PossibleCardsMessage;
-import it.polimi.ingsw.model.*;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
+//TEST CLASS FOR THE GUI
 public class AppGUI {
-
+/*
     public static void main(String[] args) throws InterruptedException {
 
         //STARTING PANEL TEST
@@ -19,7 +10,7 @@ public class AppGUI {
         GUI gui=new GUI(connection);
 
         //gui.handlePlayerInfoRequest(new PlayerInfoRequest(false));
-
+*/
 /*
         ArrayList<String> names=new ArrayList<>();
         names.add("Apollo");
@@ -126,6 +117,6 @@ public class AppGUI {
 
 
 
+    //}
 
-    }
 }

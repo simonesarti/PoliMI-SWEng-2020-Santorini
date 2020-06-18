@@ -3,6 +3,9 @@ package it.polimi.ingsw.GUI;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * panel shown while waiting for the game to start
+ */
 public class LobbyPanel extends JPanel {
 
     private final Image background;

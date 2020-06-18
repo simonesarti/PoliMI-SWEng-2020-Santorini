@@ -23,6 +23,10 @@ public class GUI extends View{
         createGUI();
     }
 
+    /**
+     * Creates the base frame for the gui, and adds the Lobby panel.
+     * It also creates the guiController object
+     */
     private void createGUI(){
 
         guiController=new GuiController();
@@ -39,6 +43,11 @@ public class GUI extends View{
 
     }
 
+    /**
+     * updates the state of the board maintained by the user's gui. If the game has already started, and
+     * therefore the GameWindow has already been created, the board shown is updated.
+     * @param message contains the new state of the board
+     */
     @Override
     public void handleNewBoardStateMessage(NewBoardStateMessage message) {
         guiController.setCurrentBoardState(message.getBoardState());
@@ -47,26 +56,45 @@ public class GUI extends View{
         }
     }
 
+    /**
+     * shows a JOptionPane containing the information received
+     * @param message contains the information received
+     */
     @Override
     public void handleInfoMessage(InfoMessage message) {
         JOptionPane.showMessageDialog(frame,message.getInfo(),"Info Message",JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * shows a JOptionPane containing the error received
+     * @param message contains the error received
+     */
     @Override
     public void handleErrorMessage(ErrorMessage message) {
         JOptionPane.showMessageDialog(frame,message.getError(),"Error Message",JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * shows the JDialog that asks for the user's information
+     * @param message is the request
+     */
     @Override
     public void handlePlayerInfoRequest(PlayerInfoRequest message) {
         new PlayerInfoRequestDialog(frame,message.isNicknameTaken(),guiController);
     }
 
+    /**
+     * shows the JDialog that asks to the user which card/s he wants to use
+     * @param message contains the available cards
+     */
     @Override
     public void handleCardMessageRequest(PossibleCardsMessage message) {
         new DivinityChoiceDialog(frame,message.getGods(),message.getNumberOfChoices(),guiController);
     }
 
+    /**
+     * shows the JDialog that asks for the user's starting positions
+     */
     @Override
     public void handleStartingPositionRequest() {
         new StartingPositionRequestDialog(frame,guiController);
@@ -84,6 +112,9 @@ public class GUI extends View{
         frame.revalidate();
     }
 
+    /**
+     * shows a JOptionPane that informs the player that he has been disconnected
+     */
     @Override
     public void handleCloseConnectionMessage() {
         JOptionPane.showMessageDialog(frame,"You have been disconnected","Disconnection",JOptionPane.INFORMATION_MESSAGE);

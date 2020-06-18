@@ -4,6 +4,9 @@ import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 
 import java.util.Calendar;
 
+/**
+ * message containing the personal information requested to the player by the first dialog
+ */
 public class PlayerPersonalData extends ActionMessage{
 
     private final PlayerInfo playerInfo;

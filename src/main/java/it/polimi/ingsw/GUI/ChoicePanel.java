@@ -26,6 +26,9 @@ public class ChoicePanel extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * calls all the methods necessary to properly set the buttons
+     */
     private void setButtons(){
 
         setToolTipTexts();
@@ -97,7 +100,11 @@ public class ChoicePanel extends JPanel {
         return gridBagConstraints;
     }
 
-    //TODO
+    /**
+     * this private class implements ActionListener and its objects are Observed by GuiController, therefore, when
+     * an action is selected (button is pressed), the guiController gets informed through notify. The notified message
+     * contains the information regarding which action was selected
+     */
     private class ChoiceListener extends Observable<ActionMessage> implements ActionListener {
 
         public ChoiceListener() {

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.GUI.messages;
 
+/**
+ * message that contains the coordinates of the cell that the player selected from the board
+ */
 public class BoardSelection extends ActionMessage{
 
     private final int x;

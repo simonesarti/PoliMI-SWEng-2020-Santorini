@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 public class DivinityChoiceDialog extends JDialog{
 
+    /**
+     * this private class contains the association between the buttons displayed and the name of the
+     * god depicted in said button. It is used to find the name of the gods selected by the user
+     */
     private class GodNameLink {
 
         private String name;
@@ -74,8 +78,6 @@ public class DivinityChoiceDialog extends JDialog{
         setGrid(names);
         showDialog(frame);
 
-
-
     }
 
 
@@ -83,6 +85,11 @@ public class DivinityChoiceDialog extends JDialog{
         setTitle("Gods");
         setLayout(new GridLayout(rows, columns));
     }
+
+    /**
+     * sets the disposition in which the button will appear on screen
+     * @param tot is the number of gods to show
+     */
     private void setDisposition(int tot){
         total=tot;
         columns=4;
@@ -93,6 +100,11 @@ public class DivinityChoiceDialog extends JDialog{
             rows=total/columns+1;
         }
     }
+
+    /**
+     * creates the buttons and initializes them
+     * @param names is the list of gods' names
+     */
     private void setGrid(ArrayList<String> names){
 
         links=new GodNameLink[columns][rows];
@@ -122,13 +134,19 @@ public class DivinityChoiceDialog extends JDialog{
             }
         }
     }
+
     private void showDialog(JFrame frame){
         pack();
         setLocationRelativeTo(frame);
         setModal(true);
         setVisible(true);
     }
-    
+
+    /**
+     * finds the button object in the list of GodNameLink objects
+     * @param button is the button pressed
+     * @return is the GodNameLink object that contains that button
+     */
     private GodNameLink findLink(JButton button){
 
         for(int j=0;j<total/4+1;j++){
@@ -141,6 +159,14 @@ public class DivinityChoiceDialog extends JDialog{
         throw new IllegalArgumentException("link not found");
     }
 
+    /**
+     * this private class implements ActionListener and its objects are Observed by GuiController.
+     * When a god is selected (button pressed), its name is added to a list of selected names. If the
+     * god is already in the list, the god is removed. The background colour of a selected god is light blue
+     * while the one for a non selected god is grey. Filler cards are ignored.
+     * When the player has selected the right amount of cards, guiController gets notified and the dialog
+     * gets closed
+     */
     private class CardSelectionListener extends Observable<ActionMessage> implements  ActionListener{
 
         public CardSelectionListener() {
