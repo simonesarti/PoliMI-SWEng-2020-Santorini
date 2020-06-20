@@ -3,13 +3,13 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.GUI.GUI;
 import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.view.View;
-import it.polimi.ingsw.view.cli.Cli;
+import it.polimi.ingsw.cli.Cli;
 
 import java.util.Scanner;
 
 public class ClientApp {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         View view;
         ClientSideConnection clientSideConnection;

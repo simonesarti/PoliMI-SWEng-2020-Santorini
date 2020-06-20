@@ -11,6 +11,7 @@ import it.polimi.ingsw.view.View;
 
 import javax.swing.*;
 
+
 public class GUI extends View{
 
     private JFrame frame;
@@ -18,7 +19,7 @@ public class GUI extends View{
     private MainWindow mainWindow;
     private GuiController guiController;
 
-    public GUI(ClientSideConnection connection){
+    public GUI(ClientSideConnection connection) {
         super(connection);
         createGUI();
     }
@@ -27,7 +28,7 @@ public class GUI extends View{
      * Creates the base frame for the gui, and adds the Lobby panel.
      * It also creates the guiController object
      */
-    private void createGUI(){
+    private void createGUI() {
 
         guiController=new GuiController();
         guiController.setConnection(getClientSideConnection());

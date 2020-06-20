@@ -1,5 +1,8 @@
-package it.polimi.ingsw.view.cli;
+package it.polimi.ingsw.cli;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import it.polimi.ingsw.cli.Cli;
 import it.polimi.ingsw.supportClasses.FakeClientConnection;
 import org.junit.jupiter.api.Test;
 
