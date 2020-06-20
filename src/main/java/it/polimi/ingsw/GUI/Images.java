@@ -9,7 +9,7 @@ import java.awt.*;
 public enum Images {
 
     INITIAL_BACKGROUND("graphicResources/backgounds/Odyssey-Olympus.png"),
-    GAMEBOARD("./graphicResources/backgounds/SantoriniBoard.png"),
+    GAMEBOARD("graphicResources/backgounds/SantoriniBoard.png"),
     GAME_ICON("graphicResources/backgounds/om_gloryIcon.png"),
 
     MOVE_BUTTON_ICON("graphicResources/sprite/move_button.png"),
