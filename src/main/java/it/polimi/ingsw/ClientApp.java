@@ -5,12 +5,11 @@ import it.polimi.ingsw.client.ClientSideConnection;
 import it.polimi.ingsw.view.View;
 import it.polimi.ingsw.cli.Cli;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class ClientApp {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         View view;
         ClientSideConnection clientSideConnection;
