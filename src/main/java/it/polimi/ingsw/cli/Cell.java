@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.cli;
+package it.polimi.ingsw.cli;
 
 
 import it.polimi.ingsw.model.Colour;
