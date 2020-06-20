@@ -21,6 +21,7 @@ public class Matrix {
     /**
      * Creates a matrix assigning the right colours for each cell based on the board state 
      * @param message state of the board
+     * @return a Matrix object
      */
     public Matrix convertToMatrix(NewBoardStateMessage message){
 

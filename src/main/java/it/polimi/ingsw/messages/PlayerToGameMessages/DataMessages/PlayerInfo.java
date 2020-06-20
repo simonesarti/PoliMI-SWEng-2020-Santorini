@@ -15,9 +15,9 @@ public class PlayerInfo implements Serializable {
 
     /**
      * Class Constructor
-     *
-     * @param playerNickname
+     * @param playerNickname is the player's nickname
      * @param birthday must be a valid date
+     * @param numberOfPlayers is the number of players in the game
      */
     public PlayerInfo(String playerNickname, Calendar birthday, int numberOfPlayers){
         this.playerNickname = playerNickname;

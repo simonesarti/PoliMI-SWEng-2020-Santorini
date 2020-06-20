@@ -22,7 +22,7 @@ public class GodCard{
 
     /**
      * The constructor associate every GodCard to the right strategies
-     * @param godsData
+     * @param godsData is the list of data that composes a godCard
      */
     public GodCard(String[] godsData){
         name=godsData[0];

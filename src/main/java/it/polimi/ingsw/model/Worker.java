@@ -9,7 +9,9 @@ public class Worker {
 
     /**
      * Sets the worker's colour on creation
-     * @param colour player's colour
+     * @param colour is the player's colour
+     * @param number is the worker's number
+     * @return the worker
      */
     public Worker(Colour colour, int number) {
         this.colour=colour;

@@ -19,6 +19,7 @@ public class TowerLevel {
 
     /**
      * Returns the piece type of the selected level
+     * @return a piece object
      */
     public Piece getPiece(){
         return piece;

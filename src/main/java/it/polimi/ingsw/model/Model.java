@@ -150,6 +150,7 @@ public class Model extends Observable<NotifyMessages> {
 
     /**
      * updates the turn based on the order of the player, and resets turnInfo
+     * @param players is the list of players in the game
     */
     public void updateTurn(ArrayList<Player> players) {
 
@@ -421,6 +422,7 @@ public class Model extends Observable<NotifyMessages> {
 
     /**
      * return the index in the list of the player whose colour corresponds to the one passed
+     * @param players is the list of players in the game
      * @param colour is the colour to search
      * @return the player's index
      */

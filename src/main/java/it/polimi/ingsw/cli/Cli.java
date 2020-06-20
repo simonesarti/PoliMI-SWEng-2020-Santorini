@@ -73,6 +73,7 @@ public class Cli extends View {
 
     /**
      * Creates a PlayerInfo message based on user's inputs
+     * @param message is the information request message
      * @return the playerInfo object craeted
      */
     private PlayerInfo createPlayerInfo(PlayerInfoRequest message){

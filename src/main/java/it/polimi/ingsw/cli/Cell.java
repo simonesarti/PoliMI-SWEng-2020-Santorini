@@ -49,8 +49,11 @@ public class Cell {
 
     /**
      * this functions create a stripes which contains the coordinate and its value
+     * @param coordinate in the coordinate to show
+     * @param value is the value of the coordinate
      * @return the string which represents the stripe
      */
+
     public String coordinateStripe(String coordinate, int value) {
         String num = String.valueOf(value);
         String stripe = "     "+AnsiCode.TEXT_BLACK + coordinate + num+ "     "+AnsiCode.RESET;
@@ -60,6 +63,8 @@ public class Cell {
     /**
      * this functions create a coloured stripes which contains a worker certain colour worker and its number
      * @param BackgroundAnsiColour is the colour around the worker
+     * @param workerNumber is the number of the worker present in the cell
+     * @param workercolour is the colour of the worker present in the cell
      * @return the string which represents the coloured stripe
      */
     public String workerStripe(String BackgroundAnsiColour, int workerNumber, Colour workercolour) {
@@ -80,6 +85,7 @@ public class Cell {
 
     /**
      * this functions create a coloured stripes which represents a level
+     * @param level is the level of the tower in the cell
      * @return the string which represents the coloured stripe
      */
     public String levelStripe(int level) {
@@ -94,6 +100,7 @@ public class Cell {
 
     /**
      * Creates a block representing a dome
+     * @param BackgroundAnsiColour is the background colour of the stripe
      */
     public void assignDome(String BackgroundAnsiColour){
         stripes[0]=uniformStripe(BackgroundAnsiColour);
@@ -129,6 +136,8 @@ public class Cell {
     }
     /**
      * Creates a block with a worker
+     * @param workercolour is the colour of the worker in the stripe
+     * @param workerNumber is the number of the worker in the stripe
      */
     public void assignOnlyWorker(int workerNumber, Colour workercolour){
 
@@ -141,6 +150,7 @@ public class Cell {
     }
     /**
      * Creates a level 1/2/3 block
+     * @param level is the level to write on the tower
      */
     public void assignOnlyLevel(int level){
 
@@ -153,6 +163,9 @@ public class Cell {
     }
     /**
      * Creates a level 1/2/3 block with a worker
+     * @param workercolour is the colour of the worker in the stripe
+     * @param workerNumber is the number of the worker in the stripe
+     * @param level is the level to write on the tower
      */
     public void assignLevelAndWorker(int level, int workerNumber, Colour workercolour){
 
