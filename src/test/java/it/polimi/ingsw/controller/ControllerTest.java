@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.messages.PlayerToGameMessages.CompleteMessages.*;
+import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.BuildData;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.CardChoice;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.PlayerInfo;
 import it.polimi.ingsw.messages.PlayerToGameMessages.DataMessages.StartingPositionChoice;
@@ -268,4 +269,53 @@ class ControllerTest {
         controller.update(message);
         assertFalse(virtualViews.get(1).isObservingModel());
     }
+
+    @Test
+    void buildTestGameEnd(){
+        GodDescriptions descriptions=new GodDescriptions();
+        ArrayList<String[]> data=descriptions.getDescriptions();
+        //Apollo
+        testPlayer.setGodCard(new GodCard(data.get(0)));
+        //Artemis
+        enemy1Player.setGodCard(new GodCard(data.get(1)));
+        //Athena
+        enemy2Player.setGodCard(new GodCard(data.get(2)));
+
+        int[][] towers =
+                {
+                        {0, 0, 4, 2, 2},
+                        {4, 4, 4, 1, 4},
+                        {4, 1, 0, 3, 4},
+                        {0, 2, 2, 4, 4},
+                        {3, 2, 1, 4, 0}
+                };
+
+        gameboard.generateBoard(towers);
+
+        model.setEliminated(enemy1Player);
+        //->2 players left
+
+        testPlayer.getWorker(0).setStartingPosition(0, 0);
+        testPlayer.getWorker(1).setStartingPosition(1, 0);
+
+        //worker 1 moved
+        model.getTurnInfo().setHasMoved();
+        model.getTurnInfo().addMove();
+        model.getTurnInfo().setChosenWorker(1);
+
+        //POSITIONING TEST WORKERS
+        gameboard.getTowerCell(0, 0).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(0));
+        testPlayer.getWorker(0).movedToPosition(0, 0, 0);
+
+        gameboard.getTowerCell(1, 0).getFirstNotPieceLevel().setWorker(testPlayer.getWorker(1));
+        testPlayer.getWorker(1).movedToPosition(1, 0, 0);
+
+        PlayerMessage message = new PlayerBuildChoice(virtualViews.get(0), testPlayer, new BuildData(0, 1, 1, "Block"));
+        controller.update(message);
+
+        //enemy 2 wins because of Oli build Loss
+
+    }
+
+
 }
