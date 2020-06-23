@@ -32,7 +32,7 @@ Tutte e 9 le divinità base richieste da specifica sono utilizzabili, ed è impl
 |Elelement, %|Class, %|Methods, %| Lines, %|
 |------------|--------|----------|---------|
 |__Model__|100% (41/41)|97% (184/188)| 97% (1137/1168)|
-|__Controller__|100% (1/1)|100% (15/15)|88%(150/169)|
+|__Controller__|100% (1/1)|100% (15/15)|91%(154/169)|
 |__View__|100% (4/4)| 84% (16/19)| 74% (111/149)|
 
 
