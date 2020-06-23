@@ -4,7 +4,7 @@
 Il progetto consiste nello sviluppo di una versione software distribuita del gioco da tavolo Santorini.
 Il codice è scritto in linguaggio Java, ed è stato realizzato applicando il pattern architetturale Model-View-Controller (MVC).
 Le partite possono essere giocate utilizzando un'interfaccia da linea di comando (CLI) oppure un'interfaccia grafica (GUI).
-Tutte e 9 le divinità base richieste da specifica sono utilizzabili, ed è implmementata la funzionalità avanzata di partite multiple. 
+Tutte e 9 le divinità base richieste da specifica sono utilizzabili, ed è implemementata la funzionalità avanzata di partite multiple. 
 
 
 ## Componenti del gruppo:
