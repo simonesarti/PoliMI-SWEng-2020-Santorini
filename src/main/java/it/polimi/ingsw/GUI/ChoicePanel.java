@@ -20,7 +20,7 @@ public class ChoicePanel extends JPanel {
     public ChoicePanel(GuiController guiController){
 
         this.guiController=guiController;
-        setBackground(Color.BLACK);
+        setBackground(Color.GRAY);
         setLayout(new GridBagLayout());
         setButtons();
         setVisible(true);
