@@ -50,7 +50,7 @@ Per giocare sarà necessario lanciare prima il server. Per farlo basta posiziona
 `java -jar server.jar`  
 Una volta che il server è up sarà possibile lanciare i client (la modalità di lancio per **client.jar** è identica).  
 `java -jar client.jar`  
-L'indirizzo ip e il tipo di interfaccia (cli/gui) verranno richiesti all'utente da terminale dopo aver lanciato i client.
+L'indirizzo ip e il tipo di interfaccia (cli/gui) verranno richiesti all'utente da terminale dopo aver lanciato il client.
 
 
 
