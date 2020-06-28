@@ -27,6 +27,7 @@ Tutte e 9 le divinità base richieste da specifica sono utilizzabili, ed è impl
 |__maven__|Strumento di gestione per software basati su Java e build automation|
 |__junit 5__|Framework per testing|
 |__Java Swing__|Libreria grafica di Java|
+|__StarUML__|Tool per creazione di diagrammi UML|
 
 ### Coverage dei test
 |Elelement, %|Class, %|Methods, %| Lines, %|
@@ -37,11 +38,14 @@ Tutte e 9 le divinità base richieste da specifica sono utilizzabili, ed è impl
 
 
 ## UML
-//TODO link UML
+Sono presenti due diagrammi UML:
+* UML di alto livello
+* UML di dettaglio
 
+Entrambi possono essere trovati [qui](https://github.com/simonesarti/ing-sw-2020-Polidori-Rivera-Sarti/tree/master/Deliverables/uml) nelle versioni .mdj e .pdf
 
 ## JavaDocs
-//TODO 
+La documentazione Javadoc relativa al progetto è disponibile [qui](https://github.com/simonesarti/ing-sw-2020-Polidori-Rivera-Sarti/tree/master/JavaDocs)
 
 
 ## Jars
@@ -51,7 +55,10 @@ Per giocare sarà necessario lanciare prima il server. Per farlo basta posiziona
 Una volta che il server è up sarà possibile lanciare i client (la modalità di lancio per **client.jar** è identica).  
 `java -jar client.jar`  
 L'indirizzo ip e il tipo di interfaccia (cli/gui) verranno richiesti all'utente da terminale dopo aver lanciato il client.  
-Attenzione: per una corretta visualizzazione della versione cli è necessario usare un terminale che supporti gli ANSI escape.
+
+Attenzione: 
+* per una corretta visualizzazione della versione cli è necessario utilizzare un terminale che supporti gli ANSI escape
+* il progetto utilizza funzionalità di Java 14 non compatibili con versioni precedenti
 
 
 
