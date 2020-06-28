@@ -111,6 +111,8 @@ public class Cell {
     }
     /**
      * Creates a block with x or y coordinates
+     * @param coordinate is the coordinate
+     * @param value is the value of the coordinate
      */
     public void assignCoordinate(String coordinate,int value){
         stripes[0]=emptyStripe();

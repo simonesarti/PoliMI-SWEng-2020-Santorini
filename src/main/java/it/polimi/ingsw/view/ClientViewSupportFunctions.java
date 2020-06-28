@@ -110,6 +110,7 @@ public class ClientViewSupportFunctions {
 
     /**
      * all chosen gods must be different and every god must be in the message's gods-arraylist
+     * @param message contains the list gods from which the player has to choose
      * @param chosenGods Godcards chosen by the user
      * @param numberOfChoices number of godcards
      * @return boolean

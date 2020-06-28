@@ -49,6 +49,7 @@ public class TowerCell {
 
     /**
      * Returns the first empty level
+     * @return the first unoccupied (by worker or piece) TowerLevel Object
      */
     public TowerLevel getFirstNotPieceLevel(){
         if (towerHeight==4) throw new NullPointerException("MESSAGE: Towercell[4] doesn't exist");

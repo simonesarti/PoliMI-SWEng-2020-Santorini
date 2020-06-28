@@ -38,6 +38,8 @@ public class Position {
      *
      * Checks if otherPosition is adjacent to this position
      * it does not deal with z-axis
+     * @param x is the x coordinate
+     * @param y is the y coordinate
      * @return false if positions are not adjacent
      */
     public boolean adjacent(int x, int y){
