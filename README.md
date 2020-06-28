@@ -45,12 +45,13 @@ Tutte e 9 le divinità base richieste da specifica sono utilizzabili, ed è impl
 
 
 ## Jars
-Sono presenti due file jar.
+Nella cartella **Deliverables** sono presenti due file jar compatibili con Java 14 o versioni più recenti.
 Per giocare sarà necessario lanciare prima il server. Per farlo basta posizionarsi all'interno della cartella contenente il file **server.jar** con un terminale e inserire  
 `java -jar server.jar`  
 Una volta che il server è up sarà possibile lanciare i client (la modalità di lancio per **client.jar** è identica).  
 `java -jar client.jar`  
-L'indirizzo ip e il tipo di interfaccia (cli/gui) verranno richiesti all'utente da terminale dopo aver lanciato il client.
+L'indirizzo ip e il tipo di interfaccia (cli/gui) verranno richiesti all'utente da terminale dopo aver lanciato il client.  
+Attenzione: per una corretta visualizzazione della versione cli è necessario usare un terminale che supporti gli ANSI escape.
 
 
 
