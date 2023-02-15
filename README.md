@@ -1,4 +1,4 @@
-# Progetto di ingegneria del software 2019-2020
+# Progetto di ingegneria del software 2019-2020: Implementazione in Java del gioco da tavolo "Santorini"
 ![alt text](https://images-na.ssl-images-amazon.com/images/I/91irtho0CNL._SL1500_.jpg)
 
 Il progetto consiste nello sviluppo di una versione software distribuita del gioco da tavolo Santorini.
